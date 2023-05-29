@@ -8,16 +8,16 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "size")
+@Table(name = "designs")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class Size {
+public class Designs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_size")
-    private Long id;
+    @Column(name = "id_designs")
+    private Long id_designs;
 
     @Column(name = "name")
     private String name;

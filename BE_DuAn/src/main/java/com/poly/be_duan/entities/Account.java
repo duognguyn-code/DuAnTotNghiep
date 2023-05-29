@@ -1,5 +1,10 @@
 package com.poly.be_duan.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -8,6 +13,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "account")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Account {
     @Id
     @Column(name = "username", length = 250)
@@ -43,6 +52,4 @@ public class Account {
     @Column(columnDefinition = "INT DEFAULT 1")
     private Integer status;
 
-    @OneToMany(mappedBy = "account")
-    private List<Bill> bills;
 }
