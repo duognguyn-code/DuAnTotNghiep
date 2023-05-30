@@ -24,10 +24,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    @Override
-    public Product getProductByID(Integer id) {
-        return productRepository.findProductById_products(id);
-    }
+//    @Override
+//    public Product getProductByID(Integer id_products) {
+//        return productRepository.findProductById_products(id_products);
+//    }
 
     @Override
     public Product update(Product product) {

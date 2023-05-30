@@ -9,7 +9,7 @@ public interface ProductService {
 
     public Product create(Product product);
 
-    public Product getProductByID(Integer id);
+//    public Product getProductByID(Integer id);
 
     public Product update(Product product);
 
