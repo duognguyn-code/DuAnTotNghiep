@@ -1,0 +1,20 @@
+<div xmlns:th="http://wwww.thymeleaf.org">
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h3>PLACE UP <i class="fas fa-angle-down iconM"></i></h3>
+            </div>
+            <div class="body">
+                <ul>
+                    <li><a class="fas fa-home icon"></a> Trang Chủ</li>
+                    <li><a class="fas fa-home icon" th:href="@{/admin/product}"> Sản phẩm</a></li>
+                    <li><a class="fas fa-boxes icon" th:href="@{/admin/productdetail}"> Chi Tiết Sản Phẩm</a></li>
+                    <li><a class="fas fa-table icon" th:href="@{/admin/material}"> Chất Liệu</a></li>
+                    <li><a class="fab fa-wpforms icon"th:href="@{/admin/designs}"> Kiểu Dáng</a></li>
+                    <li><a class="fas fa-chart-pie icon"th:href="@{#}"> Tài Khoản</a></li>
+                    <li><a class="fas fa-chart-pie icon"href=""> Thống Kê</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
