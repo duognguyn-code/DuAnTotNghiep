@@ -17,15 +17,17 @@ import java.io.Serializable;
 @Setter
 public class Image implements Serializable {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "images_id", unique = true, nullable = false, length = 50)
-    private String imagesId;
-    @Column(name = "image_path", nullable = false, length = 255)
-    private String imagePath;
+    @Column(name = "id_image")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_image;
+
+    @Column(name = "url_image", nullable = false, length = 255)
+    private String url_image;
+
     @Column(name = "status", nullable = false, precision = 10)
     private int status;
+
     @ManyToOne
-    @JoinColumn(name = "product_variant_id")
-    private ProductVariant productVariants;
+    @JoinColumn(name = "id_products")
+    private Product product;
 }
