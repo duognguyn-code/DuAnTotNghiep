@@ -20,12 +20,12 @@ import java.util.List;
 @Getter
 @Setter
 public class Product implements Serializable {
-    protected static final String PK = "productId";
+//    protected static final String PK = "productId";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_products", unique = true, nullable = false, precision = 10)
-    private Integer id_products;
+    private Integer id;
 
 
     @Column(name = "name", nullable = false, length = 100)
