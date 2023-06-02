@@ -1,7 +1,8 @@
 package com.poly.be_duan.restcontrollers.admin;
 
+import com.poly.be_duan.entities.Color;
 import com.poly.be_duan.entities.Product;
-import com.poly.be_duan.service.ProductService;
+import com.poly.be_duan.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,31 +12,31 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/product")
-public class ProductRestController {
+@RequestMapping("/api/color")
+public class ColorRestController {
     @Autowired
-    private ProductService productService;
+    private ColorService colorService;
 
-    @GetMapping("")
-    public ResponseEntity<List<Product>> getAll() {
+    @GetMapping()
+    public ResponseEntity<List<Color>> getAll() {
         try {
-            return ResponseEntity.ok(productService.getAll());
+            return ResponseEntity.ok(colorService.getAll());
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }
     @PostMapping
-    public Product create(Product product) {
-        return productService.create(product);
+    public Color create(Color color) {
+        return colorService.create(color);
     }
     @PutMapping("{id}")
-    public Product update(@PathVariable("id") Integer id, Product product) {
-        product.setId(id);
-        return productService.update(product);
+    public Color update(@PathVariable("id") Integer id, Color color) {
+        color.setId(id);
+        return colorService.update(color);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Integer id) {
-        productService.delete(id);
+        colorService.delete(id);
     }
 }
