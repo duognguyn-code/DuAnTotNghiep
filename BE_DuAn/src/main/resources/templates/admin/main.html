@@ -84,7 +84,69 @@
 
             // Gọi hàm để lấy danh sách sản phẩm khi trang được tải
             $scope.getProducts();
-        });
+        }).controller('ColorController', function($scope, $http) {
+        const apiUrl = "http://localhost:8080/api/color";
+        console.log(apiUrl);
+
+        $scope.colors = [];
+        $scope.formColor = {};
+
+        $scope.getColors = function() {
+            $http.get(apiUrl)
+                .then(function(response) {
+                    $scope.colors = response.data;
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.addColor = function() {
+            $http.post(apiUrl, $scope.formColor)
+                .then(function(response) {
+                    $scope.colors.push(response.data);
+                    $scope.formColor = {};
+                    $scope.reset();
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.edit=function(color){
+            $scope.formColor=angular.copy(color);
+        }
+        $scope.update = function(){
+            var item = angular.copy($scope.formColor);
+            $http.put(apiUrl+'/'+item.id , item).then(resp =>{
+                var index = $scope.colors.findIndex( p => p.id == item.id);
+                $scope.colors[index] =item;
+                alert("Cập nhật thành công");
+                $scope.reset();
+            }).xath(error =>{
+                alert("Cập nhật thất bại");
+                console.log("Error",error);
+            });
+        }
+        $scope.deleteColor = function(color) {
+            $http.delete(apiUrl + '/' + color.id)
+                .then(function(response) {
+                    var index = $scope.colors.findIndex(p => p.id === color.id);
+                    if (index !== -1) {
+                        $scope.colors.splice(index, 1);
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.reset=function(){
+            $scope.formColor={
+                status: 1
+            }
+        }
+        $scope.getColors();
+    });
+
 </script>
 </body>
 </html>
