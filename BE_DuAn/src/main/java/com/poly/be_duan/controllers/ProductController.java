@@ -14,11 +14,15 @@ public class ProductController {
         return "admin/Product/TabProduct";
     }
     @GetMapping("/admin/designs")
-    public String view122(){
+    public String design(){
         return "admin/Product/Designs";
     }
     @GetMapping("/admin/material")
-    public String view121(){
+    public String material(){
         return "admin/Product/material";
+    }
+    @GetMapping("/admin/color")
+    public String color(){
+        return "admin/Product/color";
     }
 }
