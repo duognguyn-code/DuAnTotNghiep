@@ -19,7 +19,7 @@ public class Designs {
     @Column(name = "id_designs")
     private Long id_designs;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "status")

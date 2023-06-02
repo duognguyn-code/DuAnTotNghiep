@@ -1,16 +1,16 @@
 package com.poly.be_duan.service;
 
-import com.poly.be_duan.entities.Color;
 import com.poly.be_duan.entities.Material;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MaterialService {
     public List<Material> getAll();
 
     public Material create(Material material);
 
-    public Material getMaterialByID(Long id);
+    public Optional<Material> getMaterialByID(Long id);
 
     public Material update(Material material);
 
