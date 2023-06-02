@@ -16,7 +16,7 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity<List<Product>> getAll() {
         try {
             return ResponseEntity.ok(productService.getAll());
