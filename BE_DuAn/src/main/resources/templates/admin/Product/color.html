@@ -6,22 +6,23 @@
             <div class="col-sm-4">
                 <div class="form-group col-sm-12">
                     <div>Tên màu sắc</div>
-                    <input class="form-control">
+                    <input ng-model="formColor.name" class="form-control"type="text">
                 </div>
                 <div class="form-group col-sm-12">
                     <div>Trạng thái</div>
                     <div class="form-control">
                         <label class="radio-inline">
-                            <input  name="status" type="radio">Yes
+                            <input ng-model="formColor.status" type="radio" ng-value="1" name="available">Yes
                         </label>
                         <label class="radio-inline">
-                            <input  name="status" type="radio">No
+                            <input ng-model="formColor.status" type="radio" ng-value="0" name="available">No
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-12" style="margin-top: 25px;">
-                    <button style="margin-left: 20px;" type="button" class="btn btn-success">Create</button>
-                    <button style="margin-left: 100px;" type="button" class="btn btn-primary">Update</button>
+                    <button  style="margin-left: 20px;" type="button" class="btn btn-success" ng-click="addColor()" >Create</button>
+                    <button  style="margin-left: 50px;" type="button" class="btn btn-primary" ng-click="update()">Update</button>
+                    <button  style="margin-left: 50px;" type="button" class="btn btn-primary" ng-click="reset()">Reset</button>
                 </div>
             </div>
             <div class="col-sm-7">
@@ -36,70 +37,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Màu 1</td>
-                        <td>null</td>
+                    <tr ng-repeat="color in colors">
+                        <td>{{color.id}}</td>
+                        <td>{{color.name}}</td>
+                        <td>{{color.status}}</td>
                         <td><div class="btn-group btn-group-xs">
                             <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
+                                    style="width: 30px; height:30px ;"ng-click="edit(color)"></button>
                             <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Màu 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Màu 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Màu 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Màu 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Màu 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
+                                    style="width: 30px; height:30px ;" ng-click="deleteColor(color)"></button>
                         </div></td>
                     </tr>
                     </tbody>

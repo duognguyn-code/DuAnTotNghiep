@@ -27,12 +27,12 @@ public class ColorRestController {
 
     }
     @PostMapping
-    public Color create(Color color) {
+    public Color create( @RequestBody Color color) {
         return colorService.create(color);
     }
     @PutMapping("{id}")
-    public Color update(@PathVariable("id") Integer id, Color color) {
-        color.setId(id);
+    public Color update(@PathVariable("id") Integer id,@RequestBody Color color) {
+//        color.setId(id);
         return colorService.update(color);
     }
     @DeleteMapping("{id}")
