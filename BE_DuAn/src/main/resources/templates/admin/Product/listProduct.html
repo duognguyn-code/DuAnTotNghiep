@@ -1,6 +1,6 @@
 <!--<div xmlns:th="http://wwww.thymeleaf.org"th:replace="~{/admin/main :: dynamic(~{::main})}">-->
 <main role="main" class="container-fluid">
-    <form>
+    <form >
         <div style="margin-left: 320px; margin-bottom: 40px">
             </div>
         <div class="row">
@@ -28,80 +28,23 @@
             <th scope="col">Tên</th>
             <th scope="col">Giá</th>
             <th scope="col">Trạng thái</th>
+            <th scope="col">Miêu tảt</th>
+            <th scope="col">Image</th>
             <th scope="col">Chức năng</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>01</td>
-            <td>San Pham 1</td>
-            <td>234232</td>
-            <td>Null</td>
+        <tr ng-repeat="product in products">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.status}}</td>
+            <td>{{product.description}}</td>
+            <td>{{ product.image }}</td>
             <td>
-                <div class="btn-group btn-group-xs">
-                    <button class="btn btn-warning glyphicon glyphicon-edit"
-                            style="width: 30px; height:30px ;"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-trash"
-                            style="width: 30px; height:30px ;"></button>
-                </div>
+                <button type="button" ng-click="updateProduct(product)">Update</button>
+                <button type="button" ng-click="deleteProduct(product)">Delete</button>
             </td>
-        </tr>
-        <tr>
-            <td>01</td>
-            <td>San Pham 1</td>
-            <td>234232</td>
-            <td>Null</td>
-            <td>
-                <div class="btn-group btn-group-xs">
-                    <button class="btn btn-warning glyphicon glyphicon-edit"
-                            style="width: 30px; height:30px ;"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-trash"
-                            style="width: 30px; height:30px ;"></button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>01</td>
-            <td>San Pham 1</td>
-            <td>234232</td>
-            <td>Null</td>
-            <td>
-                <div class="btn-group btn-group-xs">
-                    <button class="btn btn-warning glyphicon glyphicon-edit"
-                            style="width: 30px; height:30px ;"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-trash"
-                            style="width: 30px; height:30px ;"></button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>01</td>
-            <td>San Pham 1</td>
-            <td>234232</td>
-            <td>Null</td>
-            <td>
-                <div class="btn-group btn-group-xs">
-                    <button class="btn btn-warning glyphicon glyphicon-edit"
-                            style="width: 30px; height:30px ;"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-trash"
-                            style="width: 30px; height:30px ;"></button>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>01</td>
-            <td>San Pham 1</td>
-            <td>234232</td>
-            <td>Null</td>
-            <td>
-                <div class="btn-group btn-group-xs">
-                    <button class="btn btn-warning glyphicon glyphicon-edit"
-                            style="width: 30px; height:30px ;"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-trash"
-                            style="width: 30px; height:30px ;"></button>
-                </div>
-            </td>
-        </tr>
         </tbody>
     </table>
     <nav aria-label="Page navigation example" style="text-align: center;">
