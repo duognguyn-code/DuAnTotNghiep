@@ -24,7 +24,7 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public Optional<Material> getMaterialByID(Long id) {
+    public Optional<Material> getMaterialByID(Integer id) {
          return materialRepository.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Integer id) {
         materialRepository.deleteById(id);
     }
 }
