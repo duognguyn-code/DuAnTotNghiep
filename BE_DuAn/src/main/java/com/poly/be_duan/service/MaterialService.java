@@ -10,9 +10,9 @@ public interface MaterialService {
 
     public Material create(Material material);
 
-    public Optional<Material> getMaterialByID(Long id);
+    public Optional<Material> getMaterialByID(Integer id);
 
     public Material update(Material material);
 
-    public void delete(Long id);
+    public void delete(Integer id);
 }

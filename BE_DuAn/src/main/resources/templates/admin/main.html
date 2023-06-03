@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body ng-app="myApp">
-<div class="row" ng-controller="ProductController">
+<div class="row" ng-controller="MaterialController">
     <div class="col-sm-2">
         <div th:replace="/admin/navigation.html"></div>
     </div>
@@ -145,6 +145,67 @@
             }
         }
         $scope.getColors();
+    }).controller('MaterialController', function($scope, $http) {
+        const apiUrl = "http://localhost:8080/api/material";
+        console.log(apiUrl);
+
+        $scope.materials = [];
+        $scope.formMaterial = {};
+
+        $scope.getMaterials = function() {
+            $http.get(apiUrl)
+                .then(function(response) {
+                    $scope.materials = response.data;
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.addMaterial = function() {
+            $http.post(apiUrl, $scope.formMaterial)
+                .then(function(response) {
+                    $scope.materials.push(response.data);
+                    $scope.formMaterial = {};
+                    $scope.reset();
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.edit=function(material){
+            $scope.formMaterial=angular.copy(material);
+        }
+        $scope.update = function(){
+            var item = angular.copy($scope.formMaterial);
+            $http.put(apiUrl+'/'+item.id , item).then(resp =>{
+                var index = $scope.materials.findIndex( p => p.id == item.id);
+                $scope.materials[index] =item;
+                alert("Cập nhật thành công");
+                $scope.reset();
+            }).xath(error =>{
+                alert("Cập nhật thất bại");
+                console.log("Error",error);
+            });
+        }
+        $scope.deleteMaterial = function(material) {
+            $http.delete(apiUrl + '/' + material.id)
+                .then(function(response) {
+                    var index = $scope.materials.findIndex(p => p.id === material.id);
+                    if (index !== -1) {
+                        $scope.materials.splice(index, 1);
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.reset=function(){
+            $scope.formMaterial={
+                status: 1
+            }
+        }
+        $scope.getMaterials();
     });
 
 </script>
