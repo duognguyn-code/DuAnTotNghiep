@@ -1,33 +1,40 @@
 package com.poly.be_duan.service.impl;
 
 import com.poly.be_duan.entities.Material;
+import com.poly.be_duan.repositories.MaterialRepository;
 import com.poly.be_duan.service.MaterialService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class MaterialServiceImpl implements MaterialService {
+    @Autowired
+    private MaterialRepository materialRepository;
     @Override
     public List<Material> getAll() {
-        return null;
+        return materialRepository.findAll();
     }
 
     @Override
     public Material create(Material material) {
-        return null;
+        return materialRepository.save(material);
     }
 
     @Override
-    public Material getMaterialByID(Long id) {
-        return null;
+    public Optional<Material> getMaterialByID(Long id) {
+         return materialRepository.findById(id);
     }
 
     @Override
     public Material update(Material material) {
-        return null;
+        return materialRepository.save(material);
     }
 
     @Override
     public void delete(Long id) {
-
+        materialRepository.deleteById(id);
     }
 }

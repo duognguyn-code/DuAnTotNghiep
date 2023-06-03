@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org" th:fragment="dynamic(main)">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body ng-app="myApp">
+<div class="row" ng-controller="ProductController">
+    <div class="col-sm-2">
+        <div th:replace="/admin/navigation.html"></div>
+    </div>
+    <div class="col-sm-10">
+        <div th:replace="/admin/header.html"></div>
+        <div th:replace="${main}"></div>
+    </div>
+</div>
+
+<script>
+    angular.module('myApp', [])
+        .controller('ProductController', function($scope, $http) {
+            const apiUrl = "http://localhost:8080/api/product";
+            console.log(apiUrl);
+
+            $scope.products = [];
+            $scope.formProduct = {};
+
+            // Lấy danh sách sản phẩm
+            $scope.getProducts = function() {
+                $http.get(apiUrl)
+                    .then(function(response) {
+                        $scope.products = response.data;
+                        console.log(response);
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            };
+
+            // Thêm sản phẩm mới
+            $scope.addProduct = function() {
+                $http.post(apiUrl, $scope.formProduct)
+                    .then(function(response) {
+                        $scope.products.push(response.data);
+                        $scope.formProduct = {};
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            };
+
+            // Cập nhật thông tin sản phẩm
+            $scope.updateProduct = function(product) {
+                $http.put(apiUrl + '/' + product.id, product)
+                    .then(function(response) {
+                        // Cập nhật thông tin sản phẩm trong danh sách
+                        var index = $scope.products.findIndex(p => p.id === product.id);
+                        if (index !== -1) {
+                            $scope.products[index] = response.data;
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            };
+
+            // Xóa sản phẩm
+            $scope.deleteProduct = function(product) {
+                $http.delete(apiUrl + '/' + product.id)
+                    .then(function(response) {
+                        // Xóa sản phẩm khỏi danh sách
+                        var index = $scope.products.findIndex(p => p.id === product.id);
+                        if (index !== -1) {
+                            $scope.products.splice(index, 1);
+                        }
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+            };
+
+            // Gọi hàm để lấy danh sách sản phẩm khi trang được tải
+            $scope.getProducts();
+        }).controller('ColorController', function($scope, $http) {
+        const apiUrl = "http://localhost:8080/api/color";
+        console.log(apiUrl);
+
+        $scope.colors = [];
+        $scope.formColor = {};
+
+        $scope.getColors = function() {
+            $http.get(apiUrl)
+                .then(function(response) {
+                    $scope.colors = response.data;
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.addColor = function() {
+            $http.post(apiUrl, $scope.formColor)
+                .then(function(response) {
+                    $scope.colors.push(response.data);
+                    $scope.formColor = {};
+                    $scope.reset();
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.edit=function(color){
+            $scope.formColor=angular.copy(color);
+        }
+        $scope.update = function(){
+            var item = angular.copy($scope.formColor);
+            $http.put(apiUrl+'/'+item.id , item).then(resp =>{
+                var index = $scope.colors.findIndex( p => p.id == item.id);
+                $scope.colors[index] =item;
+                alert("Cập nhật thành công");
+                $scope.reset();
+            }).xath(error =>{
+                alert("Cập nhật thất bại");
+                console.log("Error",error);
+            });
+        }
+        $scope.deleteColor = function(color) {
+            $http.delete(apiUrl + '/' + color.id)
+                .then(function(response) {
+                    var index = $scope.colors.findIndex(p => p.id === color.id);
+                    if (index !== -1) {
+                        $scope.colors.splice(index, 1);
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        };
+        $scope.reset=function(){
+            $scope.formColor={
+                status: 1
+            }
+        }
+        $scope.getColors();
+    });
+
+</script>
+</body>
+</html>
