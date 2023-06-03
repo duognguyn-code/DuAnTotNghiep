@@ -21,17 +21,17 @@ public class MaterialRestController {
     }
 
     @PostMapping
-    public Material create(Material material) {
+    public Material create( @RequestBody Material material) {
         return materialService.create(material);
     }
 
     @PutMapping("{id}")
-    public Material update(@PathVariable("id") Long id, Material material) {
-        material.setId_materials(id);
+    public Material update(@PathVariable("id") Integer id, @RequestBody Material material) {
+//        material.setId_materials(id);
         return materialService.update(material);
     }
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Integer id) {
         materialService.delete(id);
     }
 }
