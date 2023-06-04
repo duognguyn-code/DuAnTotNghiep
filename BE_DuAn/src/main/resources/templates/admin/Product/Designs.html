@@ -1,106 +1,51 @@
-<div xmlns:th="http://wwww.thymeleaf.org"th:replace="~{/admin/main :: dynamic(~{::main})}">
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
     <main class="row">
         <div class="row">
-            <div style="margin-left: 430px; margin-bottom: 40px" >
-                <h2>Kiểu Dáng</h2></div>
+            <div style="margin-left: 430px; margin-bottom: 40px">
+                <h2>Kiểu Dáng</h2>
+            </div>
             <div class="col-sm-4">
                 <div class="form-group col-sm-12">
                     <div>Tên kiểu dáng</div>
-                    <input class="form-control">
+                    <input ng-model="formDesign.name" class="form-control" type="text">
                 </div>
                 <div class="form-group col-sm-12">
                     <div>Trạng thái</div>
                     <div class="form-control">
                         <label class="radio-inline">
-                            <input  name="status" type="radio">Yes
+                            <input name="status" ng-model="formDesign.status" type="radio" ng-value="1">Hoạt động
                         </label>
                         <label class="radio-inline">
-                            <input  name="status" type="radio">No
+                            <input name="status" ng-model="formDesign.status" type="radio" ng-value="0">Ngưng hoạt động
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-12" style="margin-top: 25px;">
-                    <button style="margin-left: 20px;" type="button" class="btn btn-success">Create</button>
+                    <button style="margin-left: 20px;" type="button" class="btn btn-success" ng-click="addDesign()">Create</button>
                     <button style="margin-left: 100px;" type="button" class="btn btn-primary">Update</button>
                 </div>
             </div>
             <div class="col-sm-7">
-                <table  class="table table-sm table-striped table-hover mt-3">
+                <table class="table table-sm table-striped table-hover mt-3">
                     <thead class="thead-med">
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Tên kiểu dáng</th>
                         <th scope="col">Trạng thái</th>
                         <th scope="col">Chức năng</th>
-
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Kiểu dáng 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Kiểu dáng 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Kiểu dáng 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Kiểu dáng 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Kiểu dáng 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Kiểu dáng 1</td>
-                        <td>null</td>
-                        <td><div class="btn-group btn-group-xs">
-                            <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"></button>
-                            <button class="btn btn-danger glyphicon glyphicon-trash"
-                                    style="width: 30px; height:30px ;"></button>
-                        </div></td>
+                    <tr ng-repeat="design in designs">
+                        <td>{{design.id_designs}}</td>
+                        <td>{{design.name}}</td>
+                        <td>{{design.status}}</td>
+                        <td>
+                            <div class="btn-group btn-group-xs">
+                                <button class="btn btn-warning glyphicon glyphicon-edit" style="width: 30px; height:30px ;" ng-click="editDesign()"></button>
+                                <button class="btn btn-danger glyphicon glyphicon-trash" style="width: 30px; height:30px ;" ng-click="deleteDesign()"></button>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -116,6 +61,4 @@
             </div>
         </div>
     </main>
-
-
 </div>

@@ -20,13 +20,14 @@ public class ProductRestController {
     public ResponseEntity<List<Product>> getAll() {
         try {
             return ResponseEntity.ok(productService.getAll());
+
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }
     @PostMapping
-    public Product create(Product product) {
+    public Product create(@RequestBody Product product) {
         return productService.create(product);
     }
     @PutMapping("{id}")
