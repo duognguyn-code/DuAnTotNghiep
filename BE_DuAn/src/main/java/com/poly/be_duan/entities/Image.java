@@ -27,7 +27,4 @@ public class Image implements Serializable {
     @Column(name = "status", nullable = false, precision = 10)
     private int status;
 
-    @ManyToOne
-    @JoinColumn(name = "id_products")
-    private Product product;
 }
