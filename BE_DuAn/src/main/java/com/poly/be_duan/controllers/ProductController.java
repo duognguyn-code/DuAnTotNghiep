@@ -13,6 +13,10 @@ public class ProductController {
     public String view22(){
         return "admin/Product/TabProduct";
     }
+    @GetMapping("/admin/product/create")
+    public String view222(){
+        return "admin/Product/createProduct";
+    }
     @GetMapping("/admin/designs")
     public String design(){
         return "admin/Product/Designs";
