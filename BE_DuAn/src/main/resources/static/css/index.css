@@ -1,15 +1,4 @@
-.container-fluid{
-    width: 1440px;
-}
-.header{
-    background-color: #3b3b3b;
-}
-.navbar-brand{
-    font-size: 30px;
-    font-style: initial;
-    font-weight: bolder;
-    margin-left: 30px;
-}
+
 .logo1{
     font-size: 35px;
     text-decoration: none;
@@ -21,62 +10,7 @@
     font-size:30px;
     color: orange;
 }
-.navbar-collapse{
-    font-size: 18px;
-    font-weight: 600;
-    margin-left: 300px;
-}
-.bi-bag{
-    color: aliceblue;
-}
-.text1{
-    color: aliceblue;
-    margin-right: 10px;
-}
-.selling{
-    font-weight:bold;
-    text-align:center;
-}
-.seller{
-    width:1200px;
-}
-.card-img{
-    text-decoration:none;
-
-}
-.card{
-    text-align:center;
-    width:286px;
-    height:358px;
-    margin-bottom:30px;
-
-}
-.card-img-top{
-    width:262px;
-    height:216px;
-}
-.money{
-    font-weight:600;
-    font-size:20px;
-}
-.see-all{
-    width:200px;
-    text-align:center;
-}
-.footer{
-    background-color: #3b3b3b;
-    margin-top:30px;
-}
-.gist{
-    font-size:25px;
-    font-weight: bold;
-    color:white;
-}
-.information{
-    font-size:20px;
-    color:white;
-    margin-left:20px;
-}
-.logo-footer{
-    margin-left:20px;
+.img-fluid{
+    width:326px;
+    height:224px;
 }
