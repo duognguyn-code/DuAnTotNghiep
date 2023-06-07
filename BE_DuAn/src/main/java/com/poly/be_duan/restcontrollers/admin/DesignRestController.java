@@ -21,7 +21,7 @@ public class DesignRestController {
     }
 
     @PostMapping
-    public Designs create(Designs designs) {
+    public Designs create(@RequestBody Designs designs) {
         return designService.create(designs);
     }
 

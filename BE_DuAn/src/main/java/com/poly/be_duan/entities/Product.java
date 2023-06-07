@@ -42,6 +42,6 @@ public class Product implements Serializable {
     private String description;
 
 
-    @OneToMany(mappedBy = "product")
-    private List<Image> images;
+    @Column(name ="images")
+    private String url_image;
 }
