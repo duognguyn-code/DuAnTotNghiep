@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -41,17 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product update(Product product) {
-        Product existingProduct = productRepository.findById(product.getId()).orElse(null);
-        if (existingProduct != null) {
-            existingProduct.setName(product.getName());
-            existingProduct.setPrice(product.getPrice());
-            existingProduct.setStatus(product.getStatus());
-            existingProduct.setDescription(product.getDescription());
-            // Update any other properties here
-
-            return productRepository.save(existingProduct);
-        }
-        return null;
+            return productRepository.save(product);
     }
 
     @Override

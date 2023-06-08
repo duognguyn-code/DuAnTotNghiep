@@ -44,4 +44,10 @@ public class Product implements Serializable {
 
     @Column(name ="images")
     private String url_image;
+
+    @OneToMany(mappedBy = "product")
+    private List<Bill_detail> billDetails;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Product_detail> productDetails;
 }
