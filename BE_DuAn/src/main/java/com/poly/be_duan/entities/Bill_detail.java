@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "bill_detail")
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 public class Bill_detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_bill_detail")
     private Integer id;
 
     @Column(name = "quantity")
@@ -49,4 +51,8 @@ public class Bill_detail {
     @ManyToOne
     @JoinColumn(name = "previous_bill_detail_id")
     private Bill_detail previousBillDetail;
+
+    @OneToMany(mappedBy = "billDetail")
+    private List<ProductChange> productChanges;
+
 }
