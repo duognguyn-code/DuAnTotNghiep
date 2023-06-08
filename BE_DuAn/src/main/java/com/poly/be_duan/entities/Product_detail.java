@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
@@ -18,8 +19,8 @@ import java.math.BigDecimal;
 public class Product_detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_products")
-    private int id;
+    @Column(name = "id_products_detail")
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -45,4 +46,8 @@ public class Product_detail {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_material", referencedColumnName = "id_materials")
     private Material material;
+
+    @OneToMany(mappedBy = "productDetail")
+    @JoinColumn(name = "id_cart_detail", referencedColumnName = "id_cart_details")
+    private List<Cart_detail> cartDetails;
 }

@@ -44,4 +44,7 @@ public class Product implements Serializable {
 
     @Column(name ="images")
     private String url_image;
+
+    @OneToMany(mappedBy = "product")
+    private List<Bill_detail> billDetails;
 }

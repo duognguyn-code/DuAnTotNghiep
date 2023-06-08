@@ -83,20 +83,22 @@
                         console.log(error);
                     });
             };
-            // Cập nhật thông tin sản phẩm
-            $scope.updateProduct = function(product) {
-                $http.put(apiUrlProduct + '/' + product.id, product)
-                    .then(function(response) {
-                        // Cập nhật thông tin sản phẩm trong danh sách
-                        var index = $scope.products.findIndex(p => p.id === product.id);
-                        if (index !== -1) {
-                            $scope.products[index] = response.data;
-                        }
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    });
+            $scope.selectProduct = function(product) {
+                $scope.formProduct = angular.copy(product);
             };
+            // Cập nhật thông tin sản phẩm
+            $scope.updateProduct = function(){
+                var item = angular.copy($scope.formProduct);
+                $http.put(apiUrlProduct+'/'+item.id , item).then(resp =>{
+                    var index = $scope.products.findIndex( p => p.id == item.id);
+                    $scope.products[index] =item;
+                    alert("Cập nhật thành công");
+                    $scope.resetProducts();
+                }).catch(error =>{
+                    alert("Cập nhật thất bại");
+                    console.log("Error",error);
+                });
+            }
             // Xóa sản phẩm
             $scope.deleteProduct = function(product) {
                 $http.delete(apiUrlProduct + '/' + product.id)
@@ -266,12 +268,17 @@
             $scope.deleteDesign = function(design) {
                 $http.delete(apiUrlDesign + '/' + design.id)
                     .then(function(response) {
-                        var index = $scope.designs.findIndex(p => p.id === design.id);
+                        var index = $scope.designs.findIndex(function(d) {
+                            return d.id === design.id;
+                        });
                         if (index !== -1) {
                             $scope.designs.splice(index, 1);
                         }
+
+                        alert("delete thành công");
                     })
                     .catch(function(error) {
+                        alert("delete thất bại");
                         console.log(error);
                     });
             };

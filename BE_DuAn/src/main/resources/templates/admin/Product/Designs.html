@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-sm-12" style="margin-top: 25px;">
                     <button style="margin-left: 20px;" type="button" class="btn btn-success" ng-click="addDesign()">Create</button>
-                    <button style="margin-left: 100px;" type="button" class="btn btn-primary">Update</button>
+                    <button style="margin-left: 100px;" type="button" class="btn btn-primary" ng-click="updateDesign()">Update</button>
                 </div>
             </div>
             <div class="col-sm-7">
@@ -37,13 +37,13 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="design in designs">
-                        <td>{{design.id_designs}}</td>
+                        <td>{{design.id}}</td>
                         <td>{{design.name}}</td>
                         <td>{{design.status}}</td>
                         <td>
                             <div class="btn-group btn-group-xs">
-                                <button class="btn btn-warning glyphicon glyphicon-edit" style="width: 30px; height:30px ;" ng-click="editDesign()"></button>
-                                <button class="btn btn-danger glyphicon glyphicon-trash" style="width: 30px; height:30px ;" ng-click="deleteDesign()"></button>
+                                <button class="btn btn-warning glyphicon glyphicon-edit" style="width: 30px; height:30px ;" ng-click="editDesign(design)"></button>
+                                <button class="btn btn-danger glyphicon glyphicon-trash" style="width: 30px; height:30px ;" ng-click="deleteDesign(design)"></button>
                             </div>
                         </td>
                     </tr>

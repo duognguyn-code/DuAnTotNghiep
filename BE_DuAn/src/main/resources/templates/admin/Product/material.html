@@ -21,8 +21,8 @@
                 </div>
                 <div class="col-sm-12" style="margin-top: 25px;">
                     <button  style="margin-left: 20px;" type="button" class="btn btn-success" ng-click="addMaterial()" >Create</button>
-                    <button  style="margin-left: 50px;" type="button" class="btn btn-primary" ng-click="update()">Update</button>
-                    <button  style="margin-left: 50px;" type="button" class="btn btn-primary" ng-click="reset()">Reset</button>
+                    <button  style="margin-left: 50px;" type="button" class="btn btn-primary" ng-click="updateMaterial()">Update</button>
+                    <button  style="margin-left: 50px;" type="button" class="btn btn-primary" ng-click="resetMaterial()">Reset</button>
 
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <td>{{material.status}}</td>
                         <td><div class="btn-group btn-group-xs">
                             <button class="btn btn-warning glyphicon glyphicon-edit"
-                                    style="width: 30px; height:30px ;"ng-click="edit(material)"></button>
+                                    style="width: 30px; height:30px ;"ng-click="editMaterial(material)"></button>
                             <button class="btn btn-danger glyphicon glyphicon-trash"
                                     style="width: 30px; height:30px ;" ng-click="deleteMaterial(material)"></button>
                         </div>
