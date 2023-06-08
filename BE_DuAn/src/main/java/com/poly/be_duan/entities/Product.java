@@ -47,4 +47,7 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product")
     private List<Bill_detail> billDetails;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Product_detail> productDetails;
 }

@@ -19,7 +19,7 @@ import java.util.List;
 public class Product_detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_products_detail")
+    @Column(name = "id_products_details")
     private Integer id;
 
     @Column(name = "name")
@@ -30,6 +30,10 @@ public class Product_detail {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "id_product", referencedColumnName = "id_products")
+    private Product product;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_size", referencedColumnName = "id_size")
@@ -48,6 +52,5 @@ public class Product_detail {
     private Material material;
 
     @OneToMany(mappedBy = "productDetail")
-    @JoinColumn(name = "id_cart_detail", referencedColumnName = "id_cart_details")
     private List<Cart_detail> cartDetails;
 }
