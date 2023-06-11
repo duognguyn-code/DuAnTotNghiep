@@ -1,9 +1,13 @@
 package com.poly.be_duan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,16 +25,6 @@ public class Product_detail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_products_details")
     private Integer id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "price")
-    private BigDecimal price;
-
-    @Column(name = "description")
-    private String description;
-
     @ManyToOne
     @JoinColumn(name = "id_product", referencedColumnName = "id_products")
     private Product product;
@@ -51,6 +45,7 @@ public class Product_detail {
     @JoinColumn(name = "id_material", referencedColumnName = "id_materials")
     private Material material;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "productDetail")
     private List<Cart_detail> cartDetails;
 }
