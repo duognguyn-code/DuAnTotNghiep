@@ -1,8 +1,10 @@
 package com.poly.be_duan.service.impl;
 
 import com.poly.be_duan.entities.Color;
+import com.poly.be_duan.entities.Image;
 import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.repositories.ProductRepository;
+import com.poly.be_duan.service.ImageService;
 import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,9 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ImageService imageService;
 
     @Override
     public List<Product> getAll() {

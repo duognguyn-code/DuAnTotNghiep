@@ -1,7 +1,7 @@
 package com.poly.be_duan.restcontrollers.admin;
 
-import com.poly.be_duan.entities.Product;
-import com.poly.be_duan.service.ProductService;
+import com.poly.be_duan.entities.*;
+import com.poly.be_duan.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +16,6 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("")
-    public ResponseEntity<List<Product>> getAll() {
-        try {
-            return ResponseEntity.ok(productService.getAll());
-
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-    }
     @PostMapping
     public Product create(@RequestBody Product product) {
         return productService.create(product);
