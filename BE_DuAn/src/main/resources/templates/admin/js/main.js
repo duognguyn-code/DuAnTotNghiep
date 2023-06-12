@@ -5,11 +5,13 @@ angular.module('myApp', [])
         const apiUrl = "http://localhost:8080/api/material";
         const apiUrlDesign = "http://localhost:8080/api/design";
         const apiUrlImage = "http://localhost:8080/api/image";
-
+        const apiUrlProductDetail = "http://localhost:8080/api/productDetail";
         console.log(apiUrl);
 
         $scope.products = [];
         $scope.formProduct = {};
+        $scope.productDetails = [];
+        $scope.formProductDetail = {};
         $scope.colors = [];
         $scope.formColor = {};
         $scope.materials = [];
@@ -22,6 +24,16 @@ angular.module('myApp', [])
             $http.get(apiUrlProduct)
                 .then(function (response) {
                     $scope.products = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        };
+        $scope.getProductDetails = function () {
+            $http.get(apiUrlProductDetail)
+                .then(function (response) {
+                    $scope.productDetails = response.data;
                     console.log(response);
                 })
                 .catch(function (error) {
@@ -407,4 +419,5 @@ angular.module('myApp', [])
         $scope.getProducts();
         $scope.getMaterials();
         $scope.getColors();
+        $scope.getProductDetails();
     });

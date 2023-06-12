@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface ProductDetailService {
     public List<Product_detail> getAll();
+    public List<Product_detail> getByColor(String color, String design,String material, String size,String product);
 
     public Product_detail create(Product_detail product_detail);
 

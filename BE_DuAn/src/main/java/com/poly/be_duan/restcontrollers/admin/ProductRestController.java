@@ -16,6 +16,10 @@ public class ProductRestController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping()
+    public List<Product> getAll(){
+        return productService.getAll();
+    }
     @PostMapping
     public Product create(@RequestBody Product product) {
         return productService.create(product);
