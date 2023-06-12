@@ -18,7 +18,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/api/productDetail")
 public class ProductdetailRestController {
     @Autowired
-    private ProductDetailService productService;
+
+    private ProductDetailService productDetailService;
+
 
     @Autowired
     private SizeService sizeService;
@@ -39,13 +41,34 @@ public class ProductdetailRestController {
     @GetMapping("")
     public ResponseEntity<List<Product_detail>> getAll() {
         try {
-            return ResponseEntity.ok(productService.getAll());
+            return ResponseEntity.ok(productDetailService.getAll());
 
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }
+
+    @GetMapping("{color}/{design}/{material}/{size}/{product}")
+    public ResponseEntity<List<Product_detail>> getByColor(
+            @PathVariable("color") String color
+            ,@PathVariable("design") String design
+            ,@PathVariable("material") String material
+            ,@PathVariable("size") String size
+            ,@PathVariable("product") String product) {
+        try {
+            if (color.equalsIgnoreCase(null) && design.equalsIgnoreCase(null)&& material.equalsIgnoreCase(null)
+                    && size.equalsIgnoreCase(null)&& product.equalsIgnoreCase(null)){
+                return ResponseEntity.ok(productDetailService.getAll());
+            }else{
+                return ResponseEntity.ok(productDetailService.getByColor(color,design,material,size,product));
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+    }
+
 
     @GetMapping("/getAllSize")
     public ResponseEntity<List<Size>> getAllSize() {
@@ -127,8 +150,8 @@ public class ProductdetailRestController {
         pd.setDesign(saveProductRequest.getDesign());
         pd.setSize(saveProductRequest.getSize());
         pd.setProduct(saveProductRequest.getProduct());
+        productDetailService.create(pd);
 
-        productService.create(pd);
 
     }
 }
