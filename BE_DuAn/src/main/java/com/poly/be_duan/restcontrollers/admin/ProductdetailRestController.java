@@ -18,7 +18,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/api/productDetail")
 public class ProductdetailRestController {
     @Autowired
+
     private ProductDetailService productDetailService;
+
 
     @Autowired
     private SizeService sizeService;
@@ -46,6 +48,7 @@ public class ProductdetailRestController {
         }
 
     }
+
     @GetMapping("{color}/{design}/{material}/{size}/{product}")
     public ResponseEntity<List<Product_detail>> getByColor(
             @PathVariable("color") String color
@@ -65,6 +68,7 @@ public class ProductdetailRestController {
         }
 
     }
+
 
     @GetMapping("/getAllSize")
     public ResponseEntity<List<Size>> getAllSize() {
@@ -146,8 +150,8 @@ public class ProductdetailRestController {
         pd.setDesign(saveProductRequest.getDesign());
         pd.setSize(saveProductRequest.getSize());
         pd.setProduct(saveProductRequest.getProduct());
-
         productDetailService.create(pd);
+
 
     }
 }

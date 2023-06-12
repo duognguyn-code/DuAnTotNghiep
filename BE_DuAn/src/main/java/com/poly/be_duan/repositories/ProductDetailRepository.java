@@ -1,6 +1,7 @@
 package com.poly.be_duan.repositories;
 
 import com.poly.be_duan.entities.Product_detail;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -33,4 +34,5 @@ public interface ProductDetailRepository extends JpaRepository<Product_detail, I
         "or p.product.name LIKE %?5% )")
 //public List<Product> search(String keyword);
     public List<Product_detail> getByColor(String color, String design,String material, String size,String product);
+
 }

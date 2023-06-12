@@ -23,9 +23,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public List<Product_detail> getAll() {
         return (List<Product_detail>) productDetailRepository.findAll();
     }
+
     public List<Product_detail> getByColor(String color, String design,String material, String size,String product) {
         return (List<Product_detail>) productDetailRepository.getByColor(color,design,material,size,product);
     }
+
 
     @Override
     public Product_detail create(Product_detail product_detail) {

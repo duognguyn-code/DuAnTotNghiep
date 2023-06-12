@@ -19,6 +19,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
             integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
             crossorigin="anonymous"></script>
@@ -240,6 +241,7 @@
     </div>
 </div>
 <script src="Product/product-ctrl.js"></script>
+
 <script>
     angular.module('myApp', [])
         .controller('ProductController', function ($scope, $http) {
@@ -249,16 +251,18 @@
             const apiUrlDesign = "http://localhost:8080/api/design";
             const apiUrlImage = "http://localhost:8080/api/image";
 
-            console.log(apiUrl);
 
-            $scope.products = [];
-            $scope.formProduct = {};
-            $scope.colors = [];
-            $scope.formColor = {};
-            $scope.materials = [];
-            $scope.formMaterial = {};
-            $scope.designs = [];
-            $scope.formDesign = {};
+<!--            console.log(apiUrl);-->
+
+<!--            $scope.products = [];-->
+<!--            $scope.formProduct = {};-->
+<!--            $scope.colors = [];-->
+<!--            $scope.formColor = {};-->
+<!--            $scope.materials = [];-->
+<!--            $scope.formMaterial = {};-->
+<!--            $scope.designs = [];-->
+<!--            $scope.formDesign = {};-->
+
 
 
             // Lấy danh sách sản phẩm
@@ -413,10 +417,9 @@
                 get colors() {
                     var start = this.page * this.size;
                     return $scope.colors.slice(start, start + this.size);
-
-                },
-                get count() {
-                    return Math.ceil(1.0 * $scope.colors.length / this.size);
+<!--                },-->
+<!--                get count() {-->
+<!--                    return Math.ceil(1.0 * $scope.colors.length / this.size);-->
 
                 },
                 first() {
@@ -447,9 +450,9 @@
                     var start = this.page * this.size;
                     return $scope.designs.slice(start, start + this.size);
 
-                },
-                get count() {
-                    return Math.ceil(1.0 * $scope.designs.length / this.size);
+<!--                },-->
+<!--                get count() {-->
+<!--                    return Math.ceil(1.0 * $scope.designs.length / this.size);-->
 
                 },
                 first() {
@@ -478,12 +481,10 @@
                 size: 5,
                 get materials() {
                     var start = this.page * this.size;
-                    return $scope.materials.slice(start, start + this.size);
-
-                },
-                get count() {
-                    return Math.ceil(1.0 * $scope.materials.length / this.size);
-
+                    return $scope.materials.slice(start, start + this.size)
+                    },
+                    get count() {
+                        return Math.ceil(1.0 * $scope.materials.length / this.size);
                 },
                 first() {
                     this.page = 0;
@@ -506,7 +507,7 @@
                     this.page = this.count - 1;
                 }
             }
-            $scope.pagerProduct = {
+            $scope.pagerProduct= {
                 page: 0,
                 size: 5,
                 get products() {
@@ -539,7 +540,6 @@
                     this.page = this.count - 1;
                 }
             }
-            console.log(apiUrlColor);
 
             $scope.getMaterials = function () {
                 $http.get(apiUrl)
@@ -716,12 +716,12 @@
             $scope.getSize();
         });
 </script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('.js-select2').select2();
     });
 </script>
-
 
 <script src="./js/main.js"></script>
 </body>
