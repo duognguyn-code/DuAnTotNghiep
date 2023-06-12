@@ -6,16 +6,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ProductController {
     @GetMapping("/admin/productdetail")
-    public String view(){
-        return "admin/ProductDetail/TabProductDetail";
+    public String viewPD(){
+        return "admin/ProductDetail/List_ProductDetail";
+    }
+    @GetMapping("/admin/addproductdetail")
+    public String addPD(){
+        return "admin/ProductDetail/Product_detail";
     }
     @GetMapping("/admin/product")
-    public String view22(){
-        return "admin/Product/TabProduct";
+    public String viewProduct(){
+        return "admin/Product/listProduct";
     }
-    @GetMapping("/admin/product/create")
-    public String view222(){
-        return "admin/Product/createProduct";
+    @GetMapping("/admin/addproduct")
+    public String addProduct(){
+        return "admin/Product/addproduct";
     }
     @GetMapping("/admin/designs")
     public String design(){

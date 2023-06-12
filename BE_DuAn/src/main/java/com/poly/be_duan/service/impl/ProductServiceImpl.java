@@ -1,8 +1,10 @@
 package com.poly.be_duan.service.impl;
 
 import com.poly.be_duan.entities.Color;
+import com.poly.be_duan.entities.Image;
 import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.repositories.ProductRepository;
+import com.poly.be_duan.service.ImageService;
 import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,11 +13,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ImageService imageService;
 
     @Override
     public List<Product> getAll() {
@@ -41,17 +47,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product update(Product product) {
-        Product existingProduct = productRepository.findById(product.getId()).orElse(null);
-        if (existingProduct != null) {
-            existingProduct.setName(product.getName());
-            existingProduct.setPrice(product.getPrice());
-            existingProduct.setStatus(product.getStatus());
-            existingProduct.setDescription(product.getDescription());
-            // Update any other properties here
-
-            return productRepository.save(existingProduct);
-        }
-        return null;
+            return productRepository.save(product);
     }
 
     @Override
