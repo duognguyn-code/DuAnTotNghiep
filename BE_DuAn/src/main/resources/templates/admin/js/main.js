@@ -6,10 +6,16 @@ angular.module('myApp', [])
         const apiUrlDesign = "http://localhost:8080/api/design";
         const apiUrlImage = "http://localhost:8080/api/image";
 
+        const apiUrlProductDetail = "http://localhost:8080/api/productDetail";
+
         console.log(apiUrl);
 
         $scope.products = [];
         $scope.formProduct = {};
+
+        $scope.productDetails = [];
+        $scope.formProductDetail = {};
+
         $scope.colors = [];
         $scope.formColor = {};
         $scope.materials = [];
@@ -28,6 +34,18 @@ angular.module('myApp', [])
                     console.log(error);
                 });
         };
+
+        $scope.getProductDetails = function () {
+            $http.get(apiUrlProductDetail)
+                .then(function (response) {
+                    $scope.productDetails = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        };
+
         $scope.previewImage = function () {
             var input = document.getElementById('image');
             if (input.files && input.files.length > 0) {
@@ -407,4 +425,7 @@ angular.module('myApp', [])
         $scope.getProducts();
         $scope.getMaterials();
         $scope.getColors();
+
+        $scope.getProductDetails();
+
     });
