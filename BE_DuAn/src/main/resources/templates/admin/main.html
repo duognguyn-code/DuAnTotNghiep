@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -15,8 +17,23 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     <script src="../js/init-alpine.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.3/angular-route.min.js"></script>
     <script type="text/javascript">
     </script>
 </head>
@@ -223,6 +240,8 @@
         </div>
     </div>
 </div>
+<script src="Product/product-ctrl.js"></script>
+
 <script>
     angular.module('myApp', [])
         .controller('ProductController', function ($scope, $http) {
@@ -230,17 +249,21 @@
             const apiUrlColor = "http://localhost:8080/api/color";
             const apiUrl = "http://localhost:8080/api/material";
             const apiUrlDesign = "http://localhost:8080/api/design";
+            const apiUrlImage = "http://localhost:8080/api/image";
 
-            console.log(apiUrl);
 
-            $scope.products = [];
-            $scope.formProduct = {};
-            $scope.colors = [];
-            $scope.formColor = {};
-            $scope.materials = [];
-            $scope.formMaterial = {};
-            $scope.designs = [];
-            $scope.formDesign = {};
+<!--            console.log(apiUrl);-->
+
+<!--            $scope.products = [];-->
+<!--            $scope.formProduct = {};-->
+<!--            $scope.colors = [];-->
+<!--            $scope.formColor = {};-->
+<!--            $scope.materials = [];-->
+<!--            $scope.formMaterial = {};-->
+<!--            $scope.designs = [];-->
+<!--            $scope.formDesign = {};-->
+
+
 
             // Lấy danh sách sản phẩm
             $scope.getProducts = function () {
@@ -255,18 +278,28 @@
             };
             $scope.previewImage = function () {
                 var input = document.getElementById('image');
-                if (input.files && input.files[0]) {
+                if (input.files && input.files.length > 0) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $scope.imagePreview = e.target.result;
                         $scope.$apply(); // Cập nhật lại scope để hiển thị hình ảnh
                     };
-                    reader.readAsDataURL(input.files[0]);
-                    var fileName = input.files[0].name;
-                    console.log("Tên tệp tin:", fileName);
-                    $scope.formProduct.url_image = fileName; // Lưu tên tệp tin vào biến trong $scope
+                    $scope.formProduct.url_images = []; // Xóa các hình ảnh hiện có trong danh sách
+                    for (var i = 0; i < input.files.length; i++) {
+                        var file = input.files[i];
+                        var reader1 = new FileReader();
+                        reader.onload = (function (file) {
+                            return function (e) {
+                                $scope.formProduct.url_image.push(e.target.result);
+                                $scope.$apply(); // Cập nhật lại scope để hiển thị hình ảnh
+                            };
+                        })(file);
+                        reader1.readAsDataURL(file);
+                        console.log("Tên tệp tin:", file.name);
+                    }
                 } else {
                     $scope.imagePreview = ""; // Đặt giá trị rỗng nếu không có tệp tin được chọn
+                    $scope.formProduct.url_image = []; // Đặt danh sách hình ảnh thành rỗng
                 }
             };
             // Thêm sản phẩm mới
@@ -274,7 +307,7 @@
                 // Lấy tên tệp tin từ đường dẫn
                 var input = document.getElementById('image');
                 if (input.files && input.files[0]) {
-                    $scope.formProduct.url_image = input.files[0].name;
+                    $scope.formProduct.image = input.files[0].name;
                 }
 
                 $http.post(apiUrlProduct, $scope.formProduct)
@@ -287,6 +320,9 @@
                         console.log(error);
                     });
             };
+            $scope.editProduct = function (product) {
+                $scope.formProduct = angular.copy(product);
+            }
             // Cập nhật thông tin sản phẩm
             $scope.updateProduct = function (product) {
                 $http.put(apiUrlProduct + '/' + product.id, product)
@@ -375,16 +411,15 @@
                     status: 1
                 }
             }
-            $scope.pagerColor= {
+            $scope.pagerColor = {
                 page: 0,
                 size: 5,
                 get colors() {
                     var start = this.page * this.size;
                     return $scope.colors.slice(start, start + this.size);
-
-                },
-                get count() {
-                    return Math.ceil(1.0 * $scope.colors.length / this.size);
+<!--                },-->
+<!--                get count() {-->
+<!--                    return Math.ceil(1.0 * $scope.colors.length / this.size);-->
 
                 },
                 first() {
@@ -408,16 +443,16 @@
                     this.page = this.count - 1;
                 }
             }
-            $scope.pagerDesign= {
+            $scope.pagerDesign = {
                 page: 0,
                 size: 5,
                 get designs() {
                     var start = this.page * this.size;
                     return $scope.designs.slice(start, start + this.size);
 
-                },
-                get count() {
-                    return Math.ceil(1.0 * $scope.designs.length / this.size);
+<!--                },-->
+<!--                get count() {-->
+<!--                    return Math.ceil(1.0 * $scope.designs.length / this.size);-->
 
                 },
                 first() {
@@ -441,17 +476,15 @@
                     this.page = this.count - 1;
                 }
             }
-            $scope.pagerMaterial= {
+            $scope.pagerMaterial = {
                 page: 0,
                 size: 5,
                 get materials() {
                     var start = this.page * this.size;
-                    return $scope.materials.slice(start, start + this.size);
-
-                },
-                get count() {
-                    return Math.ceil(1.0 * $scope.materials.length / this.size);
-
+                    return $scope.materials.slice(start, start + this.size)
+                    },
+                    get count() {
+                        return Math.ceil(1.0 * $scope.materials.length / this.size);
                 },
                 first() {
                     this.page = 0;
@@ -507,7 +540,6 @@
                     this.page = this.count - 1;
                 }
             }
-            console.log(apiUrlColor);
 
             $scope.getMaterials = function () {
                 $http.get(apiUrl)
@@ -619,22 +651,78 @@
             $scope.getProducts();
             $scope.getMaterials();
             $scope.getColors();
+
+            const apiUrlProductDetail = "http://localhost:8080/api/productDetail";
+            const apiUrlSize = "http://localhost:8080/api/size";
+            $scope.productDetails = [];
+            $scope.formProductDetail = {};
+            $scope.getProductDetails = function () {
+                $http.get(apiUrlProductDetail)
+                    .then(function (response) {
+                        $scope.productDetails = response.data;
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            };
+            $scope.getProductDetailsColor = function () {
+                if ($scope.searchColor === 'null' && $scope.searchDesigns === 'null' && $scope.searchMaterial === 'null'
+                    && $scope.searchSize === 'null' && $scope.searchProduct === 'null') {
+                    $scope.getProductDetails();
+                } else {
+                    $http.get(apiUrlProductDetail + '/' +
+                        $scope.searchColor + '/' + $scope.searchDesigns + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchProduct)
+                        .then(function (response) {
+                            $scope.productDetails = response.data;
+                            console.log(response);
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
+                }
+                ;
+            };
+            $scope.getProductDetails();
+
+            $scope.sizes = [];
+            $scope.formSize = {};
+            $scope.getresetSe = function () {
+                $('#matesearch').prop('selectedIndex', 0);
+                $('#colorSearch').prop('selectedIndex', 0);
+                $('#designSearch').prop('selectedIndex', 0);
+                $('#productSearch').prop('selectedIndex', 0);
+                $('#sizeSearch').prop('selectedIndex', 0);
+                $scope.getProductDetails();
+            }
+            $scope.startOption = function () {
+                $('#matesearch').prop('selectedIndex', 2);
+                $('#colorSearch').prop('selectedIndex', 2);
+                $('#designSearch').prop('selectedIndex', 2);
+                $('#productSearch').prop('selectedIndex', 2);
+                $('#sizeSearch').prop('selectedIndex', 2);
+            }
+            $scope.startOption();
+            $scope.getSize = function () {
+                $http.get(apiUrlSize)
+                    .then(function (response) {
+                        $scope.sizes = response.data;
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            };
+            $scope.getSize();
         });
 </script>
+
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.js-select2').select2();
     });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-        crossorigin="anonymous"></script>
-
+<script src="./js/main.js"></script>
 </body>
 </html>
