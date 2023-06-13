@@ -12,39 +12,22 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/index.css">
 </head>
-<body ng-app="userApp">
-<div class="container-fluid" ng-controller="Usercontroller">
-    <div th:replace="/user/menu.html"></div>
-    <div th:replace="/user/banner.html"></div>
-    <div th:replace="${main}"></div>
-    <div th:replace="/user/footer.html"></div>
-</div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <body>
+    <div class="container-fluid">
+      <div th:replace="/user/menu.html"></div>
+      <div th:replace="/user/banner.html"></div>
+      <div th:replace="${main}"></div>
+      <div th:replace="/user/footer.html"></div>
+      <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-<!-- Contact Javascript File -->
-<script src="mail/jqBootstrapValidation.min.js"></script>
-<script src="mail/contact.js"></script>
-<script>
-    angular.module('userApp', [])
-        .controller('Usercontroller', function ($scope, $http) {
-            const apiUrlProduct = "http://localhost:8080/api/product";
-            $scope.products = [];
-
-            $scope.getProducts = function () {
-                $http.get(apiUrlProduct)
-                    .then(function (response) {
-                        $scope.products = response.data;
-                        console.log(response);
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    });
-            };
-            $scope.getProducts();
-        });
-</script>
-</body>
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="mail/contact.js"></script>
+  </body>
 </html>
