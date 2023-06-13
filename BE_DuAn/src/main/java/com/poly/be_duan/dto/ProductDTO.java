@@ -1,5 +1,6 @@
 package com.poly.be_duan.dto;
 
+import com.poly.be_duan.entities.Image;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,8 @@ public class ProductDTO {
 
     private int status;
 
-    private List<MultipartFile> images;
+    private List<MultipartFile> files;
+
+    private List<Image> listImage;
 
 }

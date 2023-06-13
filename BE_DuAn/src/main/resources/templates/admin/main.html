@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
@@ -11,7 +12,9 @@
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
             crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="../css/tailwind.output.css"/>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
@@ -20,12 +23,9 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
             integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
@@ -38,13 +38,12 @@
     </script>
 </head>
 <body ng-app="myApp">
-
 <div class="row" ng-controller="ProductController">
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen}">
 
         <aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
             <div class="py-4 text-gray-500 dark:text-gray-400">
-                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">
+                <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="/">
                     PLACE UP
                 </a>
                 <ul class="mt-6">
@@ -131,6 +130,11 @@
                                 <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                     <a class="w-full" href="/admin/material">
                                         Chất Liệu
+                                    </a>
+                                </li>
+                                <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                    <a class="w-full" href="/admin/size">
+                                       Size
                                     </a>
                                 </li>
                             </ul>
@@ -241,7 +245,6 @@
     </div>
 </div>
 <script src="Product/product-ctrl.js"></script>
-
 <script>
     angular.module('myApp', [])
         .controller('ProductController', function ($scope, $http) {
@@ -250,20 +253,24 @@
             const apiUrl = "http://localhost:8080/api/material";
             const apiUrlDesign = "http://localhost:8080/api/design";
             const apiUrlImage = "http://localhost:8080/api/image";
+            const apiUrlSize = "http://localhost:8080/api/size";
+            const apiUrlProductDetail = "http://localhost:8080/api/productDetail";
 
 
-<!--            console.log(apiUrl);-->
+            console.log(apiUrl);
 
-<!--            $scope.products = [];-->
-<!--            $scope.formProduct = {};-->
-<!--            $scope.colors = [];-->
-<!--            $scope.formColor = {};-->
-<!--            $scope.materials = [];-->
-<!--            $scope.formMaterial = {};-->
-<!--            $scope.designs = [];-->
-<!--            $scope.formDesign = {};-->
-
-
+            $scope.products = [];
+            $scope.formProduct = {};
+            $scope.colors = [];
+            $scope.formColor = {};
+            $scope.materials = [];
+            $scope.formMaterial = {};
+            $scope.designs = [];
+            $scope.formDesign = {};
+            $scope.sizes = [];
+            $scope.formSize = {};
+            $scope.productDetails = [];
+            $scope.formProductDetail = {};
 
             // Lấy danh sách sản phẩm
             $scope.getProducts = function () {
@@ -284,13 +291,13 @@
                         $scope.imagePreview = e.target.result;
                         $scope.$apply(); // Cập nhật lại scope để hiển thị hình ảnh
                     };
-                    $scope.formProduct.url_images = []; // Xóa các hình ảnh hiện có trong danh sách
+                    $scope.formProduct.image = []; // Xóa các hình ảnh hiện có trong danh sách
                     for (var i = 0; i < input.files.length; i++) {
                         var file = input.files[i];
                         var reader1 = new FileReader();
-                        reader.onload = (function (file) {
+                        reader1.onload = (function (file) {
                             return function (e) {
-                                $scope.formProduct.url_image.push(e.target.result);
+                                $scope.formProduct.image.push(e.target.result);
                                 $scope.$apply(); // Cập nhật lại scope để hiển thị hình ảnh
                             };
                         })(file);
@@ -379,6 +386,7 @@
                         console.log(error);
                     });
             };
+
             $scope.editColor = function (color) {
                 $scope.formColor = angular.copy(color);
             }
@@ -406,6 +414,9 @@
                         console.log(error);
                     });
             };
+
+            console.log(apiUrlProduct);
+
             $scope.resetColor = function () {
                 $scope.formColor = {
                     status: 1
@@ -417,9 +428,9 @@
                 get colors() {
                     var start = this.page * this.size;
                     return $scope.colors.slice(start, start + this.size);
-<!--                },-->
-<!--                get count() {-->
-<!--                    return Math.ceil(1.0 * $scope.colors.length / this.size);-->
+                },
+                get count() {
+                        return Math.ceil(1.0 * $scope.colors.length / this.size);
 
                 },
                 first() {
@@ -443,16 +454,16 @@
                     this.page = this.count - 1;
                 }
             }
-            $scope.pagerDesign = {
+            $scope.pagerDesign= {
                 page: 0,
                 size: 5,
                 get designs() {
                     var start = this.page * this.size;
                     return $scope.designs.slice(start, start + this.size);
 
-<!--                },-->
-<!--                get count() {-->
-<!--                    return Math.ceil(1.0 * $scope.designs.length / this.size);-->
+                },
+                get count() {
+                    return Math.ceil(1.0 * $scope.designs.length / this.size);
 
                 },
                 first() {
@@ -476,7 +487,8 @@
                     this.page = this.count - 1;
                 }
             }
-            $scope.pagerMaterial = {
+
+            $scope.pagerMaterial= {
                 page: 0,
                 size: 5,
                 get materials() {
@@ -517,6 +529,11 @@
                 },
                 get count() {
                     return Math.ceil(1.0 * $scope.products.length / this.size);
+                    return $scope.materials.slice(start, start + this.size);
+
+                },
+                get count() {
+                    return Math.ceil(1.0 * $scope.materials.length / this.size);
 
                 },
                 first() {
@@ -647,15 +664,38 @@
                     status: 1
                 }
             }
-            $scope.getDesign();
-            $scope.getProducts();
-            $scope.getMaterials();
-            $scope.getColors();
 
-            const apiUrlProductDetail = "http://localhost:8080/api/productDetail";
-            const apiUrlSize = "http://localhost:8080/api/size";
-            $scope.productDetails = [];
-            $scope.formProductDetail = {};
+            $scope.onSaveProductDetail = function (){
+                var formData = new FormData();
+                formData.append('status', $scope.formProductDetail.status = 1)
+                formData.append('design', $scope.formProductDetail.design)
+                formData.append('color', $scope.formProductDetail.color)
+                formData.append('size', $scope.formProductDetail.size)
+                formData.append('material', $scope.formProductDetail.material)
+                formData.append('product', $scope.formProductDetail.productDetails)
+                console.log($scope.formProduct.productDetails)
+
+                let req = {
+                    method: 'POST',
+                    url: apiUrlProductDetail + '/saveProduct',
+                    headers: {
+                        'Content-Type': undefined,
+                    },
+                    data: formData
+                }
+                $http(req).then(response => {
+                    console.log("ddd " + response);
+                    $scope.message("thêm mới sản phẩm thành công");
+                    $scope.getresetSe();
+                    $scope.getProductDetails();
+                }).catch(error => {
+                    $scope.error('thêm mới thất bại');
+                });
+            };
+
+
+
+
             $scope.getProductDetails = function () {
                 $http.get(apiUrlProductDetail)
                     .then(function (response) {
@@ -683,16 +723,19 @@
                 }
                 ;
             };
-            $scope.getProductDetails();
 
-            $scope.sizes = [];
-            $scope.formSize = {};
+
             $scope.getresetSe = function () {
                 $('#matesearch').prop('selectedIndex', 0);
                 $('#colorSearch').prop('selectedIndex', 0);
                 $('#designSearch').prop('selectedIndex', 0);
                 $('#productSearch').prop('selectedIndex', 0);
                 $('#sizeSearch').prop('selectedIndex', 0);
+                $('#size').prop('selectedIndex', 0);
+                $('#material').prop('selectedIndex', 0);
+                $('#color').prop('selectedIndex', 0);
+                $('#design').prop('selectedIndex', 0);
+                $('#product').prop('selectedIndex', 0);
                 $scope.getProductDetails();
             }
             $scope.startOption = function () {
@@ -714,15 +757,22 @@
                     });
             };
             $scope.getSize();
+            $scope.getDesign();
+            $scope.getProducts();
+            $scope.getMaterials();
+            $scope.getColors();
+            $scope.getProductDetails();
+
+
         });
 </script>
-
+</script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.js-select2').select2();
     });
 </script>
 
-<script src="./js/main.js"></script>
+
 </body>
 </html>

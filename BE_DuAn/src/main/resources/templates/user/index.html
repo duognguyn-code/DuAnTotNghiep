@@ -1,30 +1,50 @@
 <!doctype html>
-<html xmlns:th="http://wwww.thymeleaf.org" th:fragment="dynamic(main)">
-  <head>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="dynamic(main)">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/index.css">
 </head>
-  <body>
-    <div class="container-fluid">
-      <div th:replace="/user/menu.html"></div>
-      <div th:replace="/user/banner.html"></div>
-      <div th:replace="${main}"></div>
-      <div th:replace="/user/footer.html"></div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<body ng-app="userApp">
+<div class="container-fluid" ng-controller="Usercontroller">
+    <div th:replace="/user/menu.html"></div>
+    <div th:replace="/user/banner.html"></div>
+    <div th:replace="${main}"></div>
+    <div th:replace="/user/footer.html"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
-  </body>
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+<script>
+    angular.module('userApp', [])
+        .controller('Usercontroller', function ($scope, $http) {
+            const apiUrlProduct = "http://localhost:8080/api/product";
+            $scope.products = [];
+
+            $scope.getProducts = function () {
+                $http.get(apiUrlProduct)
+                    .then(function (response) {
+                        $scope.products = response.data;
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            };
+            $scope.getProducts();
+        });
+</script>
+</body>
 </html>

@@ -1,44 +1,48 @@
+
 <div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Chất Liệu
+                Size
             </h2>
+
             <div class="grid gap-6 mb-8 md:grid-cols-2">
                 <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Tên Chất Liệu</span>
-                        <input ng-model="formMaterial.name"
-                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        <span class="text-gray-700 dark:text-gray-400">Tên size</span>
+                        <input
+                                ng-model="formSize.name"
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         />
                     </label>
+
                     <div class="mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
                   Trạng Thái
                 </span>
                         <div class="mt-2">
                             <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                <input type="radio" ng-model="formMaterial.status"ng-value="1"
+                                <input type="radio"ng-model="formSize.status"ng-value="1"
                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                       name="accountType" value="personal"/>
+                                />
                                 <span class="ml-2">Hoạt Động</span>
                             </label>
                             <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                <input type="radio" ng-model="formMaterial.status"ng-value="0"
+                                <input type="radio"ng-model="formSize.status"ng-value="0"
                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                                       name="accountType" value="busines"/>
+                                />
                                 <span class="ml-2">Không Hoạt Động</span>
                             </label>
                         </div>
-                        <button style="margin-top: 30px; margin-left: 120px;"ng-click="addMaterial()"
+                        <button style="margin-top: 30px; margin-left: 120px;"ng-click="addSize()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Thêm Mới
                         </button>
-                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="updateMaterial()"
+                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="updateColor()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Sửa
                         </button>
-                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="resetMaterial()"
+                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="resetColor()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Làm Mới
                         </button>
@@ -55,7 +59,7 @@
             <h4
                     class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
             >
-                Danh Sách Chất Liệu
+                Danh Sách Size
             </h4>
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -65,7 +69,7 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3" scope="col">ID</th>
-                            <th class="px-4 py-3" scope="col">Tên chất liệu</th>
+                            <th class="px-4 py-3" scope="col">SỐ</th>
                             <th class="px-4 py-3" scope="col">Trạng thái</th>
                             <th class="px-4 py-3" scope="col">Chức năng</th>
                         </tr>
@@ -73,22 +77,22 @@
                         <tbody
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
-                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="material in pagerMaterial.materials">
+                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="size in sizes">
                             <td class="px-4 py-3 text-sm">
-                                {{material.id}}
+                                {{size.id}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{material.name}}
+                                {{size.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
 
-                                {{material.status==0?'Ngưng Hoạt Động':'Hoạt Động'}}
+                                {{size.status==0?'Ngưng Hoạt Động':'Hoạt Động'}}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                            aria-label="Edit"ng-click="editMaterial(material)"
+                                            aria-label="Edit" ng-click="editColor(color)"
                                     >
                                         <svg
                                                 class="w-5 h-5"
@@ -103,7 +107,7 @@
                                     </button>
                                     <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                            aria-label="Delete"ng-click="deleteMaterial(material)"
+                                            aria-label="Delete" ng-click="deleteColor(color)"
                                     >
                                         <svg
                                                 class="w-5 h-5"
@@ -124,17 +128,17 @@
                         </tbody>
                     </table>
                     <div class="panel-footer text-center">
-                        <button ng-click="pagerMaterial.first()" style="margin-right: 10px;">
+                        <button ng-click="pagerColor.first()" style="margin-right: 10px;">
                             <b class="text-sm"> |< </b>
                         </button>
-                        <button ng-click="pagerMaterial.prev()" style="margin-right: 10px;">
+                        <button ng-click="pagerColor.prev()" style="margin-right: 10px;">
                             <b class="text-sm"> < </b>
                         </button>
-                        <button>{{pager.page +1}}of {{pagerMaterial.count}}</button>
-                        <button ng-click="pagerMaterial.next()" style="margin-left: 10px;">
+                        <button>{{pager.page +1}}of {{pagerColor.count}}</button>
+                        <button ng-click="pagerColor.next()" style="margin-left: 10px;">
                             <b class="text-sm"> > </b>
                         </button>
-                        <button ng-click="pagerMaterial.last()" style="margin-left: 10px;">
+                        <button ng-click="pagerColor.last()" style="margin-left: 10px;">
                             <b class="text-sm"> >| </b>
                         </button>
                     </div>
