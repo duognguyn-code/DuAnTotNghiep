@@ -4,6 +4,7 @@ import com.poly.be_duan.entities.Image;
 import com.poly.be_duan.entities.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ImageService {
     public List<Image> findAll();
@@ -14,15 +15,13 @@ public interface ImageService {
      * @param id
      * @return
      */
-    public Image findById(Integer id);
-
     /**
      * Thêm mới image
      *
      * @param images
      * @return
      */
-    public void create(Image images);
+    public Image create(Image images);
 
     /**
      * Cập nhật image
@@ -30,7 +29,7 @@ public interface ImageService {
      * @param images
      * @return
      */
-    public Image update(Image images);
+    public Image update(Image images, Integer id);
 
     /**
      * Xoá image theo id
@@ -49,5 +48,7 @@ public interface ImageService {
      * @return
      */
     public List<Image> createList(List<Image> images);
+
+    Optional<Image> findById(Integer id);
 
 }
