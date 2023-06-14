@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
@@ -33,8 +35,9 @@ public class Product implements Serializable {
     @Column(name = "status", nullable = false, precision = 10)
     private int status;
 
-    @Column(name = "image_name")
-    private String image;
+    @OneToMany(mappedBy = "products")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Image> images;
 
 
     @Column(name = "price", nullable = false)
@@ -44,6 +47,9 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product")
     private List<Bill_detail> billDetails;
 
+    @ManyToOne
+    @JoinColumn(name = "id_category")
+    private Category category;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_size", referencedColumnName = "id_size")

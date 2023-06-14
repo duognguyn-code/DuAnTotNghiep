@@ -1,26 +1,26 @@
 package com.poly.be_duan.dto;
 
+import com.poly.be_duan.entities.Color;
+import com.poly.be_duan.entities.Designs;
+import com.poly.be_duan.entities.Material;
+import com.poly.be_duan.entities.Size;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
+import java.math.BigDecimal;
+import java.util.List;
+
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
 public class ProductDetailDTO {
     private Integer id;
-
-    private Integer idProduct;
-
-    private Integer idsize;
-
-    private Integer idColor;
-
-    private Integer idDesign;
-
-    private  Integer idMaterial;
-
-
+    private String name;
+    private BigDecimal priceMin;
+    private BigDecimal priceMax;
+    private List<Material> materials;
+    private List<Designs> designs;
+    private List<Size> sizes;
+    private List<Color> colors;
 }

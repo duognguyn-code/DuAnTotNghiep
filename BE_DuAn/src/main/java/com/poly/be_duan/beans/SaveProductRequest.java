@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +16,11 @@ import lombok.Setter;
 @Setter
 public class SaveProductRequest {
     private Integer id;
-    private Product product;
+    private String name;
+    private List<MultipartFile> files;
+    private BigDecimal price;
+    private int status;
+    private Category category;
     private Size size;
     private Color color;
     private Designs design;

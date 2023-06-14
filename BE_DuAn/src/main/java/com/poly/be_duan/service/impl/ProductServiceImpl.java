@@ -4,6 +4,7 @@ import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.repositories.ProductRepository;
 import com.poly.be_duan.service.ProductService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,24 +20,20 @@ public class ProductServiceImpl implements ProductService {
         this.productDetailRepository = productDetailRepository1;
     }
 
-    @Override
-    public List<Product> getAll() {
-        return  productDetailRepository.findAll();
-    }
-
     public List<Product> getByColor(String color, String design, String material, String size) {
         return (List<Product>) productDetailRepository.getByColor(color,design,material,size);
     }
 
 
-    @Override
-    public Product create(Product product) {
-        return productDetailRepository.save(product);
-    }
 
     @Override
     public Page<Product> getAll(Pageable page) {
-        return null;
+        return productDetailRepository.findAll(page);
+    }
+
+    @Override
+    public Product save(Product entity) {
+        return productDetailRepository.save(entity);
     }
 
     @Override
@@ -45,22 +42,36 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void deleteById(Integer id) {
+
+        productDetailRepository.deleteById(id);
+    }
+
+
+    @Override
     public Optional<Product> findById(Integer id) {
         return productDetailRepository.findById(id);
     }
 
+    @Override
+    public List<Product> findAll() {
+        return (List<Product>) productDetailRepository.findAll();
+    }
 
     @Override
-    public Product update(Product product, Integer id) {
+    public Page<Product> findAll(Pageable pageable) {
+        Page<Product> entityPage = productDetailRepository.findAll(pageable);
+        List<Product> entities = entityPage.getContent();
+        return new PageImpl<>(entities, pageable, entityPage.getTotalElements());
+    }
+
+    @Override
+    public Product update(Product entity, Integer id) {
         Optional<Product> optional = findById(id);
         if (optional.isPresent()) {
-            return create(product);
+            return save(entity);
         }
         return null;
     }
 
-    @Override
-    public void delete(Integer id) {
-
-    }
 }
