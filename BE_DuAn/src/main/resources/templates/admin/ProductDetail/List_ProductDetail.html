@@ -11,17 +11,14 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Tên chi tiết sản phẩm</span>
-                            <input
+                            <input ng-model="formProductDetail.name"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
-                        <label class="block text-sm">
+                        <label class="block text-sm" >
                             <span class="text-gray-700 dark:text-gray-400">Tên sản phẩm</span>
-                            <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option>SP 1</option>
-                                <option>SP 2</option>
-                                <option>SP 3</option>
-                                <option>SP 4</option>
+                            <select ng-model="formProductDetail.product" id="product" name="name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option ng-repeat="product in products" ng-value="product.id">{{product.name}}</option>
                             </select>
                         </label>
                     </div>
@@ -29,17 +26,14 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Giá</span>
-                            <input
+                            <input ng-model="formProductDetail.price"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
-                        <label class="block text-sm">
+                        <label class="block text-sm" >
                             <span class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
-                            <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option>Kiểu Dáng 1</option>
-                                <option>Kiểu Dáng 2</option>
-                                <option>Kiểu Dáng 3</option>
-                                <option>Kiểu Dáng 4</option>
+                            <select ng-model="formProductDetail.design" id="design" name="design" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option ng-repeat="design in pagerDesign.designs" ng-value="design.id">{{design.name}}</option>
                             </select>
                         </label>
                     </div>
@@ -47,20 +41,14 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
-                            <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option>Màu Sắc 1</option>
-                                <option>Màu Sắc 2</option>
-                                <option>Màu Sắc 3</option>
-                                <option>Màu Sắc 4</option>
+                            <select ng-model="formProductDetail.color" id="color" name="color" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option ng-repeat="color in pagerColor.colors" ng-value="color.id">{{color.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
-                            <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option>Chất Liệu 1</option>
-                                <option>Chất Liệu 2</option>
-                                <option>Chất Liệu 3</option>
-                                <option>Chất Liệu 4</option>
+                            <select ng-model="formProductDetail.material" id="material" name="material" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option ng-repeat="material in pagerMaterial.materials" ng-value="material.id">{{material.name}}</option>
                             </select>
                         </label>
                     </div>
@@ -68,24 +56,21 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
-                            <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option>35</option>
-                                <option>36</option>
-                                <option>37</option>
-                                <option>38</option>
+                            <select ng-model="formProductDetail.size" name="size" id="size" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                <option ng-repeat="size in sizes" ng-value="size.id">{{size.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Trạng thái</span>
                             <div class="mt-2">
                                 <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                    <input type="radio" ng-model="formProduct.status" ng-value="Hoạt Động"name="available"
+                                    <input type="radio" ng-model="formProductDetail.status" ng-value="0"name="available"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
                                     <span class="ml-2">Hoạt Động</span>
                                 </label>
                                 <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                    <input type="radio" ng-model="formProduct.status" ng-value="Ngừng hoạt động"name="available"
+                                    <input type="radio" ng-model="formProductDetail.status" ng-value="1"name="available"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
                                     <span class="ml-2">Ngừng Hoạt Động</span>
@@ -95,7 +80,7 @@
                     </div>
 
                     <div class="mt-4 text-sm">
-                        <button style="margin-top: 10px; margin-left: 120px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        <button ng-click="onSaveProductDetail()"  style="margin-top: 10px; margin-left: 120px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Thêm Mới
                         </button>
                         <button style="margin-top: 10px; margin-left: 45px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">

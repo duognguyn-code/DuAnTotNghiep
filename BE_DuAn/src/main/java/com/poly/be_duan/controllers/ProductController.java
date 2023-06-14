@@ -33,4 +33,9 @@ public class ProductController {
     public String color(){
         return "admin/Product/color";
     }
+
+    @GetMapping("/admin/size")
+    public String size(){
+        return "admin/Product/size";
+    }
 }
