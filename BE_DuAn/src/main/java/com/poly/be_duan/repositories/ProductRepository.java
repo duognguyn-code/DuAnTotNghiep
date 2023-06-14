@@ -3,12 +3,13 @@ package com.poly.be_duan.repositories;
 import com.poly.be_duan.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 //    public Product findProductById_products(Integer id_products);
 
     @Query("SELECT p FROM Product p WHERE (p.color.name LIKE %?1% " +
