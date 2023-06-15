@@ -25,13 +25,9 @@ public class Image implements Serializable {
     @Column(name = "url_image", nullable = false, length = 255)
     private String urlimage;
 
-    @Column(name = "status", nullable = false, precision = 10)
-    private int status;
 
     @ManyToOne
     @JoinColumn(name = "id_products")
     private Product products;
 
-    @Transient
-    private MultipartFile file;
 }
