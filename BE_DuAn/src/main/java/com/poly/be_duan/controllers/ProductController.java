@@ -38,4 +38,39 @@ public class ProductController {
     public String size(){
         return "admin/Product/size";
     }
+
+
+
+    @GetMapping("/admin/createProduct")
+    public String viewPD1(){
+        return "admin/Product/CreateProduct";
+    }
+    @GetMapping("/admin/ListProduct")
+    public String viewPD11(){
+        return "admin/Product/ListProduct";
+    }
+    @GetMapping("/admin/UpdateProduct")
+    public String viewPD111(){
+        return "admin/Product/UpdateProduct";
+    }
+
+
+//    ------------------dialog----------------
+    @GetMapping("/admin/DialogDesigns")
+    public String viewDialogDesigns(){
+    return "admin/Product/Dialog_Designs";
+    }
+    @GetMapping("/admin/DialogColor")
+    public String viewDialogColor(){
+        return "admin/Product/Dialog_Color";
+    }
+    @GetMapping("/admin/DialogMaterial")
+    public String viewDialogMaterial(){
+        return "admin/Product/Dialog_Material";
+    }
+    @GetMapping("/admin/DialogSize")
+    public String viewDialogSize(){
+        return "admin/Product/Dialog_Size";
+    }
+
 }
