@@ -1,15 +1,15 @@
-<div xmlns:th="http://wwww.thymeleaf.org"th:replace="~{/user/index :: dynamic(~{::main})}">
-    <main class="row">
+
+    <main>
         <div id="header-carousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active" style="height: 410px; width:1526px">
-                    <img class="img-fluid" src="images/banner.png" alt="Image">
+                    <img class="img-fluid" src="../images/banner.png" alt="Image">
                 </div>
                 <div class="carousel-item" style="height: 410px; width:1526px">
-                    <img class="img-fluid" src="images/banner2.png" alt="Image">
+                    <img class="img-fluid" src="../images/banner2.png" alt="Image">
                 </div>
                 <div class="carousel-item" style="height: 410px; width:1526px">
-                    <img class="img-fluid" src="images/banner3.png" alt="Image">
+                    <img class="img-fluid" src="../images/banner3.png" alt="Image">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
@@ -55,7 +55,7 @@
         <!-- Featured End -->
 
         <!-- Products Start -->
-        <div class="container-fluid pt-5" ng-repeat="product in pagerProduct.products">
+        <div class="container-fluid pt-5">
             <div class="text-center mb-4">
                 <h2 class="section-title px-5"><span class="px-2">Sản phẩm nổi bật</span></h2>
             </div>
@@ -63,7 +63,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/{{product.image}}" alt="">
+                            <img class="img-fluid w-100" src="../images/shoe1.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">{{product.name}}</h6>
@@ -80,7 +80,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/shoe2.png" alt="">
+                            <img class="img-fluid w-100" src="../images/shoe2.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày Loafers nam da bò GNLA1268-NDO</h6>
@@ -97,7 +97,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/shoe3.png" alt="">
+                            <img class="img-fluid w-100" src="../images/shoe3.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày tây nam Oxford Brogues GNLA08-8-D</h6>
@@ -114,7 +114,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/shoe4.png" alt="">
+                            <img class="img-fluid w-100" src="../images/shoe4.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày nam da bóng phối chun hai bên hông GNLA79201-80-D</h6>
@@ -131,7 +131,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/oxford1.png" alt="">
+                            <img class="img-fluid w-100" src="../images/oxford1.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày Derby tăng chiều cao nam GCLAXL911-A6-N</h6>
@@ -148,7 +148,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/oxford2.png" alt="">
+                            <img class="img-fluid w-100" src="../images/oxford2.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày tây nam họa tiết GNLA3027-M005-CF</h6>
@@ -165,7 +165,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/oxford3.png" alt="">
+                            <img class="img-fluid w-100" src="../images/oxford3.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày nam Bit Loafer họa tiết đục lỗ GNLA20-1-D</h6>
@@ -182,7 +182,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                     <div class="card product-item border-0 mb-4">
                         <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                            <img class="img-fluid w-100" src="images/oxford4.png" alt="">
+                            <img class="img-fluid w-100" src="../images/oxford4.png" alt="">
                         </div>
                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                             <h6 class="text-truncate mb-3">Giày Chukka da bò trẻ trung GNLAAZ65-1-D</h6>
