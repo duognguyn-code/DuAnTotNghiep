@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
-//    @GetMapping("/")
+//    @GetMapping
 //    public String index(){
-//        return "user/viewProduct";
+//        return "redirect:/user/index.html";
 //    }
 //    @GetMapping("/product")
 //    public String product(){
