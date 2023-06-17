@@ -1,5 +1,4 @@
-angular.module('myApp', [])
-    .controller('ProductController', function ($scope, $http) {
+ app.controller('main', function ($rootScope,$scope, $http) {
         const apiUrlProduct = "http://localhost:8080/api/product";
         const apiUrlColor = "http://localhost:8080/api/color";
         const apiUrl = "http://localhost:8080/api/material";

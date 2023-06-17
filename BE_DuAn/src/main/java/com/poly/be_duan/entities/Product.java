@@ -28,7 +28,6 @@ public class Product implements Serializable {
     @Column(name = "id_products", unique = true, nullable = false, precision = 10)
     private Integer id;
 
-
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
