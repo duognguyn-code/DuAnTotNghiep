@@ -17,6 +17,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
 
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
+        alert("abc")
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
@@ -293,9 +294,96 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }
 
     }
+    $scope.searchProduct=function(){
+        if ($scope.searchPriceMin===""){
+            $scope.searchPriceMin="Min"
+
+        }
+        if ($scope.searchPriceMax===""){
+            $scope.searchPriceMax="Max"
+        }
+        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
+            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === ""&& $scope.searchPriceMax === ""&& $scope.searchProducts === 'undefined'
+        ) {
+            $scope.getProducts();
+        } else {
+            $http.get(apiUrlProduct+'/search' + '/' +$scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign+'/'+$scope.searchPriceMin+'/'+$scope.searchPriceMax+'/'+ $scope.searchStatus )
+                .then(function (response) {
+                    $scope.products = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    };
+    $scope.GetresetForm=function(){
+            $http.get(apiUrlProduct+'/search' + '/' +"undefined" + '/' +"undefined"+ '/' + "undefined" + '/' + "undefined" + '/' + "undefined"+'/'+"undefined"+'/'+"undefined"+'/'+"1")
+                .then(function (response) {
+                    $scope.products = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+    };
+    $scope.pagerProducts= {
+        page: 0,
+        size: 5,
+        get products() {
+            var start = this.page * this.size;
+            return $scope.products.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.products.length / this.size);
+            return $scope.products.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.products.length / this.size);
+
+        },
+        first() {
+            this.page = 0;
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.first();
+                alert("Bạn đang ở trang đầu")
+            }
+        },
+        next() {
+            this.page++;
+            if (this.page >= this.count) {
+                this.last();
+                alert("Bạn đang ở trang cuối")
+            }
+        },
+        last() {
+            this.page = this.count - 1;
+        }
+    }
+    $scope.resetSearch = function () {
+        $('#matesearch').prop('selectedIndex', 0);
+        $('#colorSearch').prop('selectedIndex', 0);
+        $('#designSearch').prop('selectedIndex', 0);
+        $('#statusSearch').prop('selectedIndex', 0);
+        $scope.searchColor = "undefined";
+        $scope.searchDesign = "undefined";
+        $scope.searchMaterial = "undefined";
+        $scope.searchSize = "undefined";
+        $scope.searchStatus = "1";
+        $scope.searchPriceMin = "";
+        $scope.searchPriceMax = "";
+        $scope.searchProducts =" ";
+        $('#sizeSearch').prop('selectedIndex', 0);
+        $scope.GetresetForm();
+    }
     $scope.getSize()
     $scope.getDesign();
-    $scope.getProducts();
+    $scope.GetresetForm();
     $scope.getMaterials();
     $scope.getColors();
     $scope.getCategory();
