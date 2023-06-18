@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "designs")
+@Table(name = "design")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -16,10 +16,12 @@ import javax.persistence.*;
 public class Designs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_designs")
-    private Integer id;
+    @Column(name = "id_design")
+//    private Integer id;
+    private Long id;
 
-    @Column(name = "name", nullable = false)
+//    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "status")

@@ -60,7 +60,7 @@ public class Product implements Serializable {
     private Color color;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_design", referencedColumnName = "id_designs")
+    @JoinColumn(name = "id_design", referencedColumnName = "id_design")
     private Designs design;
 
     @OneToOne(cascade = CascadeType.ALL)

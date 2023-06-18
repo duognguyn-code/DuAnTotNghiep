@@ -10,9 +10,9 @@ public interface DesignService {
 
     public Designs create(Designs designs);
 
-    public Optional<Designs> getDesignByID(Integer id);
+    public Optional<Designs> getDesignByID(Long id);
 
     public Designs update(Designs designs);
 
-    public void delete(Integer id);
+    public void delete(Long id);
 }

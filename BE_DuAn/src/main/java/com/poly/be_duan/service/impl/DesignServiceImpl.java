@@ -24,7 +24,7 @@ public class DesignServiceImpl implements DesignService {
     }
 
     @Override
-    public Optional<Designs> getDesignByID(Integer id) {
+    public Optional<Designs> getDesignByID(Long id) {
         return designRepository.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class DesignServiceImpl implements DesignService {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         designRepository.deleteById(id);
     }
 }

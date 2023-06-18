@@ -11,31 +11,31 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
-                            <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
-                                <option value="null">--Chọn Mục--</option>
+                            <select  ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                                <option selected="selected" value="undefined">--Chọn Mục--</option>
                                 <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
                             </select>
                         </label>
 
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
-                            <select id="designSearch" ng-model="searchDesigns" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
-                                <option value="null">--Chọn Mục--</option>
+                            <select  ng-model="searchDesign" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                                <option active value="undefined" >--Chọn Mục--</option>
                                 <option ng-repeat="design in designs" value="{{design.name}}">{{design.name}}</option>
                             </select>
                         </label>
 
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
-                            <select id="matesearch" ng-model="searchMaterial" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
-                                <option value="null">--Chọn Mục--</option>
+                            <select  ng-model="searchMaterial" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                                <option value="undefined" >--Chọn Mục--</option>
                                 <option ng-repeat="material in materials" value="{{material.name}}">{{material.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
-                            <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
-                                <option value="null" >--Chọn Mục--</option>
+                            <select  ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                                <option value="undefined" >--Chọn Mục--</option>
                                 <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
                             </select>
                         </label>
@@ -44,26 +44,33 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Tên Sản Phẩm</span>
-                            <input ng-model="formProduct.name" id="name"
+                            <input ng-model="searchProducts"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
+                        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Giá</span>
-                            <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
-                                <option value="null" >--Chọn Mục--</option>
-                                <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
-                            </select>
+                            <span  class="text-gray-700 dark:text-gray-400">Khoảng Từ</span>
+                            <input ng-model="searchPriceMin" PLACEHOLDER="Min"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            />
                         </label>
+                            <label class="block text-sm">
+                                <span  class="text-gray-700 dark:text-gray-400">Đến</span>
+                                <input ng-model="searchPriceMax" PLACEHOLDER="Max"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                />
+                            </label>
+                        </div>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Trạng Thái</span>
-                            <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
-                                <option value="null" >--Chọn Mục--</option>
-                                <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
+                            <select  ng-model="searchStatus"     class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                                <option ng-selected="selected" value="1">Hoạt Động</option>
+                                <option value="0">Không Hoạt Động</option>
                             </select>
                         </label>
                         <label class="block text-sm" style="margin-top: 18px; margin-left: 30px">
-                            <button ng-click="getProductDetailsColor()" style="margin-top: 10px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            <button ng-click="searchProduct()" style="margin-top: 10px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 Tìm Kiếm
                             </button>
                             <button ng-click="getresetSe()"style="margin-top: 10px;margin-left: 10px" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -97,31 +104,31 @@
                         <tbody
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
-                        <tr class="text-gray-700 dark:text-gray-400">
+                        <tr  class="text-gray-700 dark:text-gray-400" ng-repeat="product in pagerProducts.products">
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.id}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.color.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.design.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.material.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.size.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.price}}
                             </td>
 
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.status}}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
@@ -146,17 +153,17 @@
                         </tbody>
                     </table>
                     <div class="panel-footer text-center">
-                        <button ng-click="pagerColor.first()" style="margin-right: 10px;">
+                        <button ng-click="pagerProducts.first()" style="margin-right: 10px;">
                             <b class="text-sm"> |< </b>
                         </button>
-                        <button ng-click="pagerColor.prev()"  style="margin-right: 10px;">
+                        <button ng-click="pagerProducts.prev()"  style="margin-right: 10px;">
                             <b class="text-sm"> < </b>
                         </button>
-                        <button>{{pager.page +1}}of {{pager.count}}</button>
-                        <button ng-click="pagerColor.next()"  style="margin-left: 10px;">
+                        <button>{{pagerProducts.page +1}}of {{pagerProducts.count}}</button>
+                        <button ng-click="pagerProducts.next()"  style="margin-left: 10px;">
                             <b class="text-sm"> > </b>
                         </button>
-                        <button ng-click="pagerColor.last()"  style="margin-left: 10px;">
+                        <button ng-click="pagerProducts.last()"  style="margin-left: 10px;">
                             <b class="text-sm"> >| </b>
                         </button>
                     </div>

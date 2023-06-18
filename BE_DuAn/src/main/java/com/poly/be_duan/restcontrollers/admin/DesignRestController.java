@@ -26,12 +26,12 @@ public class DesignRestController {
     }
 
     @PutMapping("{id}")
-    public Designs update(@PathVariable("id") Integer id,@RequestBody Designs designs) {
+    public Designs update(@PathVariable("id") Long id,@RequestBody Designs designs) {
 //        designs.setId_designs(id);
         return designService.update(designs);
     }
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Integer id) {
+    public void delete(@PathVariable("id") Long id) {
         designService.delete(id);
     }
 }

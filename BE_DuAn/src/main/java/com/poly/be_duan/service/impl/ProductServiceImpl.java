@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> getAll(Pageable page) {
         return productDetailRepository.findAll(page);
+    }
+
+    @Override
+    public List<Product> search(String name, String color, String material, String size, String design,BigDecimal min,BigDecimal max, Integer status) {
+        return  productDetailRepository.search(name,color,material,size,design,min,max,status);
+    }
+
+    @Override
+    public BigDecimal searchPriceMin() {
+        return productDetailRepository.searchMin();
+    }
+
+    @Override
+    public BigDecimal searchPriceMAX() {
+        return productDetailRepository.searchMax();
     }
 
     @Override

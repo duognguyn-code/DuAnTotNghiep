@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -51,10 +52,67 @@ public class ProductRestController {
         try {
             return ResponseEntity.ok(productService.findAll());
 
+
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
+    }
+    @GetMapping("search/{name}/{color}/{material}/{size}/{design}/{min}/{max}/{status}")
+    public ResponseEntity<List<Product>> search(@PathVariable(value = "name")String name, @PathVariable(value = "color")String color
+               ,@PathVariable(value = "material")String material,@PathVariable(value = "size")String size, @PathVariable(value = "design")String design,
+            @PathVariable(value = "min")String min,@PathVariable(value = "max")String max,@PathVariable(value = "status")String status) {
+        BigDecimal mn=null;
+        BigDecimal mx=null;
+        System.out.println("abc"+"/"+min);
+        if (name.equals("undefined")){
+            name= "";
+        } if (color.equals("undefined")){
+            color="";
+        }
+         if (material.equals("undefined")){
+             material="";
+        }
+         if (size.equals("undefined")){
+            size="";
+        }
+        if (status.equals("undefined")){
+            status="1";
+        }
+         if (design.equals("undefined")){
+             design="";
+        }
+        if (min.equals("undefined") || min.equals("Min")){
+             mn = new BigDecimal(0);
+        }else{
+            mn = new BigDecimal(min);
+        }
+        if (max.equals("undefined") || max.equals("Max")){
+            mx = productService.searchPriceMAX();
+        }else{
+            mx = new BigDecimal(max);
+        }
+        System.out.println("abc"+"/"+min);
+        System.out.println(productService.searchPriceMin());
+        System.out.println(productService.searchPriceMAX());
+         int sts = Integer.parseInt(String.valueOf(status));
+//         mn = new BigDecimal(min);
+//        BigDecimal mx = new BigDecimal(max);
+
+        System.out.println(mn + "" + mx);
+        System.out.println(design);
+        System.out.println(productService.search(name,color,material,size,design,mn,mx,sts));
+        try {
+            return ResponseEntity.ok(productService.search(name,color,material,size,design,mn,mx,sts));
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+    }
+    @GetMapping("/max")
+    public BigDecimal getMax(){
+        return productService.searchPriceMAX();
     }
 
     @GetMapping("{color}/{design}/{material}/{size}/{product}")
