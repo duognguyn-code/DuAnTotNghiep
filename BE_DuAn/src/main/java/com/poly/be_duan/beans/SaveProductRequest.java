@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class SaveProductRequest implements Serializable {
+public class SaveProductRequest {
     private Integer id;
     private String name;
     private List<MultipartFile> files;

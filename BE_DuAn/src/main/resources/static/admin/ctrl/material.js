@@ -1,6 +1,6 @@
 app.controller('material', function ($rootScope,$scope, $http) {
 
-    const apiUrlDesign = "http://localhost:8080/api/design";
+    const apiUrlDesign = "http://localhost:8080/api/material";
     $scope.materials = [];
     $scope.formMaterial = {};
 
@@ -39,7 +39,7 @@ app.controller('material', function ($rootScope,$scope, $http) {
     }
 
     $scope.getMaterials = function () {
-        $http.get(apiUrl)
+        $http.get(apiUrlDesign)
             .then(function (response) {
                 $scope.materials = response.data;
                 console.log(response);
@@ -49,7 +49,7 @@ app.controller('material', function ($rootScope,$scope, $http) {
             });
     };
     $scope.addMaterial = function () {
-        $http.post(apiUrl, $scope.formMaterial)
+        $http.post(apiUrlDesign, $scope.formMaterial)
             .then(function (response) {
                 $scope.materials.push(response.data);
                 $scope.formMaterial = {};
@@ -64,7 +64,7 @@ app.controller('material', function ($rootScope,$scope, $http) {
     }
     $scope.updateMaterial = function () {
         var item = angular.copy($scope.formMaterial);
-        $http.put(apiUrl + '/' + item.id, item).then(resp => {
+        $http.put(apiUrlDesign + '/' + item.id, item).then(resp => {
             var index = $scope.materials.findIndex(p => p.id == item.id);
             $scope.materials[index] = item;
             alert("Cập nhật thành công");
@@ -75,7 +75,7 @@ app.controller('material', function ($rootScope,$scope, $http) {
         });
     }
     $scope.deleteMaterial = function (material) {
-        $http.delete(apiUrl + '/' + material.id)
+        $http.delete(apiUrlDesign + '/' + material.id)
             .then(function (response) {
                 var index = $scope.materials.findIndex(p => p.id === material.id);
                 if (index !== -1) {

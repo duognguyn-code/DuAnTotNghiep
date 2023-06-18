@@ -54,7 +54,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             method: 'POST',
             url: '/api/product/saveProduct',
             data: formData,
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: { 'Content-Type': undefined }
         }
         let timerInterval
         Swal.fire({
@@ -108,7 +108,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 }
             })
         } else {
-
             let timerInterval
             Swal.fire({
                 title: 'Đang lưu mới!',
@@ -152,18 +151,48 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             });
     };
     // Xóa sản phẩm
-    $scope.deleteProduct = function (product) {
-        $http.delete(apiUrlProduct + '/' + product.id)
-            .then(function (response) {
-                // Xóa sản phẩm khỏi danh sách
-                var index = $scope.products.findIndex(p => p.id === product.id);
-                if (index !== -1) {
-                    $scope.products.splice(index, 1);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    $scope.deleteProduct = function (formProduct) {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa: ' + formProduct.name + '?',
+            text: "Xóa không thể khôi phục lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang xóa: ' + formProduct.name + '!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        $http.post(apiUrlProduct + `/delete?id=${formProduct.id}`, formProduct.id).then(response => {
+                            $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
+                            $scope.getProducts();
+                        }).catch(error => {
+                            $scope.error('xóa thất bại');
+                        });
+                        console.log('I was closed by the timer')
+                    }
+                })
+
+            }
+        })
+
     };
     $scope.resetProducts = function () {
         $scope.formProduct = {
@@ -259,7 +288,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }
         if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
-                if ($scope.formProduct.category == $scope.categories[i].id) {
+                if ($scope.formProduct.category == $scope.categories[i].idCategory) {
                     $scope.formProduct.name = $scope.categories[i].name;
                 }
             }
@@ -297,6 +326,10 @@ app.controller('productController', function ($rootScope,$scope, $http) {
     $scope.searchProduct=function(){
         if ($scope.searchPriceMin===""){
             $scope.searchPriceMin="Min"
+
+        }
+        if ($scope.searchProducts === ""){
+            $scope.searchProducts=" "
 
         }
         if ($scope.searchPriceMax===""){
@@ -381,6 +414,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         $('#sizeSearch').prop('selectedIndex', 0);
         $scope.GetresetForm();
     }
+    $scope.resetSearch();
     $scope.getSize()
     $scope.getDesign();
     $scope.GetresetForm();
