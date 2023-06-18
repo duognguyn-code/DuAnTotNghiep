@@ -202,8 +202,8 @@ public class ProductRestController {
         }
     }
 
-    @RequestMapping(path = "/saveProduct", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> save(@RequestBody SaveProductRequest saveProductRequest) {
+    @RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<String> save(@ModelAttribute SaveProductRequest saveProductRequest) {
         Product pd = new Product();
         pd.setName(generationName(saveProductRequest));
         pd.setColor(saveProductRequest.getColor());
@@ -214,7 +214,25 @@ public class ProductRestController {
         pd.setStatus(saveProductRequest.getStatus());
         pd.setPrice(saveProductRequest.getPrice());
         productService.save(pd);
-
+        try {
+            System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+            for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
+                Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
+                        ObjectUtils.asMap(
+                                "cloud_name", "dcll6yp9s",
+                                "api_key", "916219768485447",
+                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                "secure", true,
+                                "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                        ));
+                Image i = new Image();
+                i.setUrlimage(r.get("secure_url").toString());
+                i.setProducts(pd);
+                imageService.create(i);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         return ResponseEntity.ok("Success");
 
 

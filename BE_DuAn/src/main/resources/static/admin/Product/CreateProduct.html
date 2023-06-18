@@ -7,13 +7,14 @@
 
             <div class="grid gap-6 mb-8 md:grid-cols-1">
                 <div class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                    <form role="formProduct" method="post" class="row" name="myForm"
+                           enctype="multipart/form-data">
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Thể Loại</span>
-                            <select ng-model="formProduct.category" name="design"
+                            <select ng-model="formProduct.category" name="category" required ng-change="generationName()"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}
-                                </option>
+                                <option ng-repeat="category in categories" ng-value="category.idCategory">{{category.name}}</option>
                             </select>
                         </label>
                         <button data-bs-target="#exampleModaladdCategory" data-bs-toggle="modal" style="height: 35px; width: 40px; margin-top: 24px;"
@@ -79,7 +80,7 @@
                             <div class="grid gap-6  md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Tên sản phẩm</span>
-                                    <input ng-model="formProduct.name"
+                                    <input disabled ng-model="formProduct.name" placeholder="Tên sản phẩm"
                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     />
                                 </label>
@@ -418,6 +419,8 @@
                             </button>
                         </div>
                     </div>
+
+                    </form>>
                 </div>
 
             </div>

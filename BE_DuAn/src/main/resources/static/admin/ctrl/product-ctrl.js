@@ -53,7 +53,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             method: 'POST',
             url: '/api/product/saveProduct',
             data: formData,
-            headers: { 'Content-Type': 'multipart/form-data' }
+            headers: { 'Content-Type': undefined }
         }
         let timerInterval
         Swal.fire({
@@ -107,7 +107,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 }
             })
         } else {
-
             let timerInterval
             Swal.fire({
                 title: 'Đang lưu mới!',
@@ -258,7 +257,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }
         if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
-                if ($scope.formProduct.category == $scope.categories[i].id) {
+                if ($scope.formProduct.category == $scope.categories[i].idCategory) {
                     $scope.formProduct.name = $scope.categories[i].name;
                 }
             }
