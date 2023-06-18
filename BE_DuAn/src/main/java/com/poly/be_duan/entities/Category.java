@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,8 +30,7 @@ public class Category {
     @Column(name = "status")
     private Integer status;
 
-
     @JsonIgnore
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Product> products;
 }

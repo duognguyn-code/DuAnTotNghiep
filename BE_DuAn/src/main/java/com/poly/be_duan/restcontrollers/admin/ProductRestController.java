@@ -24,7 +24,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/api/product")
 public class ProductRestController {
     @Autowired
-
     private ProductService productService;
 
 
@@ -46,12 +45,15 @@ public class ProductRestController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping("")
     public ResponseEntity<List<Product>> getAll() {
         try {
             return ResponseEntity.ok(productService.findAll());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
@@ -60,18 +62,18 @@ public class ProductRestController {
     @GetMapping("{color}/{design}/{material}/{size}/{product}")
     public ResponseEntity<List<Product>> getByColor(
             @PathVariable("color") String color
-            ,@PathVariable("design") String design
-            ,@PathVariable("material") String material
-            ,@PathVariable("size") String size
-            ) {
+            , @PathVariable("design") String design
+            , @PathVariable("material") String material
+            , @PathVariable("size") String size
+    ) {
         try {
-            if (color.equalsIgnoreCase(null) && design.equalsIgnoreCase(null)&& material.equalsIgnoreCase(null)
-                    && size.equalsIgnoreCase(null)){
+            if (color.equalsIgnoreCase(null) && design.equalsIgnoreCase(null) && material.equalsIgnoreCase(null)
+                    && size.equalsIgnoreCase(null)) {
                 return ResponseEntity.ok(productService.findAll());
-            }else{
-                return ResponseEntity.ok(productService.getByColor(color,design,material,size));
+            } else {
+                return ResponseEntity.ok(productService.getByColor(color, design, material, size));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
@@ -83,7 +85,7 @@ public class ProductRestController {
         try {
             return ResponseEntity.ok(sizeService.getAll());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
@@ -94,67 +96,92 @@ public class ProductRestController {
         try {
             return ResponseEntity.ok(materialService.getAll());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }
+
     @GetMapping("/getAllColor")
     public ResponseEntity<List<Color>> getAllColor() {
         try {
             return ResponseEntity.ok(colorService.getAll());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
     @GetMapping("/getAllDesign")
     public ResponseEntity<List<Designs>> getAllDesign() {
         try {
             return ResponseEntity.ok(designService.getAll());
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-    private String generationName(SaveProductRequest prd){
-        String name="";
-        List<Material> listMate =materialService.getAll();
+
+    @GetMapping("/getAllCategory")
+    public ResponseEntity<List<Category>> getAllCategory() {
+        try {
+            return ResponseEntity.ok(categoryService.findAll());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    private String generationName(SaveProductRequest prd) {
+        StringBuilder name = new StringBuilder();
+        List<Material> listMate = materialService.getAll();
         List<Designs> Designs = designService.getAll();
         List<Color> listColor = colorService.getAll();
         List<Size> listSize = sizeService.getAll();
-        for (Material cate:listMate
-        ) {
-            if(prd.getMaterial().getId()==cate.getId()){
-                name+= cate.getName();
+        List<Category> listCategory = categoryService.findAll();
+        System.out.println(listCategory);
+
+        if (prd.getMaterial() != null) {
+            for (Material mate : listMate) {
+                if (Objects.equals(prd.getMaterial().getId(), mate.getId())) {
+                    name.append(mate.getName());
+                }
             }
         }
-        for (Designs des:Designs
-        ) {
-            if(prd.getDesign().getId()==des.getId()){
-                name+=des.getName();
+
+        if (prd.getDesign() != null) {
+            for (Designs des : Designs) {
+                if (prd.getDesign().getId() == des.getId()) {
+                    name.append(des.getName());
+                }
             }
         }
-        for (Color color:listColor
-        ) {
-            if(prd.getColor().getId()==color.getId()){
-                name+=" Màu " + color.getName();
+
+        if (prd.getColor() != null) {
+            for (Color color : listColor) {
+                if (prd.getColor().getId() == color.getId()) {
+                    name.append(" Màu ").append(color.getName());
+                }
             }
         }
-        for (Size size:listSize
-        ) {
-            if(prd.getSize().getId() == size.getId()){
-                name+=" Size " +size.getName();
+
+        if (prd.getSize() != null) {
+            for (Size size : listSize) {
+                if (prd.getSize().getId() == size.getId()) {
+                    name.append(" Size ").append(size.getName());
+                }
             }
         }
-        return name;
+        return name.toString();
     }
-    public List<Product> findAllPageable(@PathVariable("page") Optional<Integer> page){
+
+    public List<Product> findAllPageable(@PathVariable("page") Optional<Integer> page) {
         Pageable pageable = PageRequest.of(page.get(), 5);
         List<Product> products = productService.getAll(pageable).getContent();
         return products;
     }
-    @GetMapping(value="/page/pushedlist")
+
+    @GetMapping(value = "/page/pushedlist")
     public ResponseEntity<Map<String, Object>> findByPublished(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
@@ -175,8 +202,8 @@ public class ProductRestController {
         }
     }
 
-    @RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public void save(@ModelAttribute SaveProductRequest saveProductRequest){
+    @RequestMapping(path = "/saveProduct", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> save(@RequestBody SaveProductRequest saveProductRequest) {
         Product pd = new Product();
         pd.setName(generationName(saveProductRequest));
         pd.setColor(saveProductRequest.getColor());
@@ -187,25 +214,8 @@ public class ProductRestController {
         pd.setStatus(saveProductRequest.getStatus());
         pd.setPrice(saveProductRequest.getPrice());
         productService.save(pd);
-        try {
-            System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
-            for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
-                Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
-                        ObjectUtils.asMap(
-                                "cloud_name", "dcll6yp9s",
-                                "api_key", "916219768485447",
-                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                                "secure", true,
-                                "folders","c202a2cae1893315d8bccb24fd1e34b816"
-                        ));
-                Image i = new Image();
-                i.setUrlimage(r.get("secure_url").toString());
-                i.setProducts(pd);
-                imageService.create(i);
-            }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+
+        return ResponseEntity.ok("Success");
 
 
     }

@@ -29,4 +29,8 @@ app.config(function($routeProvider){
             templateUrl:"/admin/Product/size.html",
             controller:"size-ctrl"
         })
+        .when("/category",{
+            templateUrl:"/admin/Product/Category.html",
+            controller:"category-ctrl"
+        })
 })
