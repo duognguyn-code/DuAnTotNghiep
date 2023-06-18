@@ -203,6 +203,19 @@ public class ProductRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @RequestMapping(value = "/delete", method = POST)
+    public void delete(@RequestParam("id") Integer id){
+        Optional<Product> p = productService.findById(id);
+        if(p!=null){
+            p.ifPresent(product -> {
+                product.setStatus(0);
+                productService.save(product);
+            });
+
+        }else{
+            System.out.println("không tồn tại");
+        }
+    }
 
     @RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<String> save(@ModelAttribute SaveProductRequest saveProductRequest) {
