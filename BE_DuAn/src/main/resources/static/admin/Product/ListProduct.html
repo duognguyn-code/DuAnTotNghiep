@@ -13,7 +13,7 @@
                             <span  class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
                             <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
-                                <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
+                                <option ng-repeat="color in colors" value="{{color.id}}">{{color.name}}</option>
                             </select>
                         </label>
 
@@ -21,7 +21,7 @@
                             <span  class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
                             <select id="designSearch" ng-model="searchDesigns" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
-                                <option ng-repeat="design in designs" value="{{design.name}}">{{design.name}}</option>
+                                <option ng-repeat="design in designs" value="{{design.id}}">{{design.name}}</option>
                             </select>
                         </label>
 
@@ -29,14 +29,14 @@
                             <span  class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
                             <select id="matesearch" ng-model="searchMaterial" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
-                                <option ng-repeat="material in materials" value="{{material.name}}">{{material.name}}</option>
+                                <option ng-repeat="material in materials" value="{{material.id}}">{{material.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
                             <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null" >--Chọn Mục--</option>
-                                <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
+                                <option ng-repeat="size in sizes" value="{{size.id}}">{{size.name}}</option>
                             </select>
                         </label>
                     </div>
@@ -50,16 +50,16 @@
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Giá</span>
-                            <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                            <select id="giaSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null" >--Chọn Mục--</option>
-                                <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
+                                <option></option>
                             </select>
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Trạng Thái</span>
-                            <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                            <select  ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null" >--Chọn Mục--</option>
-                                <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
+                                <option></option>
                             </select>
                         </label>
                         <label class="block text-sm" style="margin-top: 18px; margin-left: 30px">
@@ -97,31 +97,31 @@
                         <tbody
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
-                        <tr class="text-gray-700 dark:text-gray-400">
+                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="product in products">
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{$index + 1}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.color.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.design.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.material.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.size.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.price|number}}
                             </td>
 
                             <td class="px-4 py-3 text-sm">
-                                1
+                                {{product.status==0?'Ngưng Hoạt Động':'Hoạt Động'}}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">

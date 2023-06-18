@@ -17,18 +17,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO {
+public class CategoryDTO {
+    private Integer idCategory;
     @NotEmpty(message = "Tên sản phẩm không được để trống")
     private String name;
 
-    @DecimalMin(value = "1", message = "Số lượng không được để trống")
-    @NotNull(message = "Số lượng không được để trống")
-    private BigDecimal price;
+    private Integer type;
 
-    private int status;
+    private Integer status;
 
-    private List<MultipartFile> files;
-
-    private List<Image> listImage;
 
 }
