@@ -22,7 +22,7 @@ public class SizeRestController {
     }
 
     @PostMapping
-    public Size create(Size size) {
+    public Size create(@RequestBody Size size) {
         return sizeService.create(size);
     }
 

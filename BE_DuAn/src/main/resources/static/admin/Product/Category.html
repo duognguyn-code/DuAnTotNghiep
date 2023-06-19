@@ -3,15 +3,29 @@
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Size
+                Danh mục
             </h2>
 
             <div class="grid gap-6 mb-8 md:grid-cols-2">
                 <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                    <div class="mt-2">
+                        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                            <input type="radio"ng-model="formCategory.type"ng-value="1"
+                                   class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            />
+                            <span class="ml-2">Sản Phẩm</span>
+                        </label>
+                        <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                            <input type="radio"ng-model="formCategory.type"ng-value="0"
+                                   class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            />
+                            <span class="ml-2">Phụ kiện</span>
+                        </label>
+                    </div>
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Tên size</span>
+                        <span class="text-gray-700 dark:text-gray-400">Tên thể loại</span>
                         <input
-                                ng-model="formSize.name"
+                                ng-model="formCategory.name"
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                         />
                     </label>
@@ -22,27 +36,27 @@
                 </span>
                         <div class="mt-2">
                             <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                <input type="radio"ng-model="formSize.status"ng-value="1"
+                                <input type="radio"ng-model="formCategory.status"ng-value="1"
                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                 />
                                 <span class="ml-2">Hoạt Động</span>
                             </label>
                             <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                <input type="radio"ng-model="formSize.status"ng-value="0"
+                                <input type="radio"ng-model="formCategory.status"ng-value="0"
                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                 />
                                 <span class="ml-2">Không Hoạt Động</span>
                             </label>
                         </div>
-                        <button style="margin-top: 30px; margin-left: 120px;"ng-click="addSize()"
+                        <button style="margin-top: 30px; margin-left: 120px;"ng-click="addCategory()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Thêm Mới
                         </button>
-                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="updateSize()"
+                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="updateCategory()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Sửa
                         </button>
-                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="resetSize()"
+                        <button style="margin-top: 30px; margin-left: 45px;"ng-click="resetCategory()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Làm Mới
                         </button>
@@ -59,7 +73,7 @@
             <h4
                     class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
             >
-                Danh Sách Size
+                Danh Sách Màu Sắc
             </h4>
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -69,7 +83,8 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3" scope="col">ID</th>
-                            <th class="px-4 py-3" scope="col">SỐ</th>
+                            <th class="px-4 py-3" scope="col">Danh mục</th>
+                            <th class="px-4 py-3" scope="col">Tên thể loại</th>
                             <th class="px-4 py-3" scope="col">Trạng thái</th>
                             <th class="px-4 py-3" scope="col">Chức năng</th>
                         </tr>
@@ -77,22 +92,25 @@
                         <tbody
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
-                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="size in sizes">
+                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="category in categories">
                             <td class="px-4 py-3 text-sm">
-                                {{size.id}}
+                                {{category.idCategory}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{size.name}}
+                                {{category.type== 0 ? 'Phụ Kiện' : 'Sản Phẩm'}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{category.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
 
-                                {{size.status==0?'Ngưng Hoạt Động':'Hoạt Động'}}
+                                {{color.status==0?'Ngưng Hoạt Động':'Hoạt Động'}}
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
                                     <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                            aria-label="Edit" ng-click="editSize(size)"
+                                            aria-label="Edit" ng-click="editCategory(category)"
                                     >
                                         <svg
                                                 class="w-5 h-5"
@@ -107,7 +125,7 @@
                                     </button>
                                     <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                            aria-label="Delete" ng-click="deleteSize(size)"
+                                            aria-label="Delete" ng-click="deleteCategory(category)"
                                     >
                                         <svg
                                                 class="w-5 h-5"
@@ -127,21 +145,21 @@
                         </tr>
                         </tbody>
                     </table>
-                    <div class="panel-footer text-center">
-                        <button ng-click="pagerColor.first()" style="margin-right: 10px;">
-                            <b class="text-sm"> |< </b>
-                        </button>
-                        <button ng-click="pagerColor.prev()" style="margin-right: 10px;">
-                            <b class="text-sm"> < </b>
-                        </button>
-                        <button>{{pager.page +1}}of {{pagerColor.count}}</button>
-                        <button ng-click="pagerColor.next()" style="margin-left: 10px;">
-                            <b class="text-sm"> > </b>
-                        </button>
-                        <button ng-click="pagerColor.last()" style="margin-left: 10px;">
-                            <b class="text-sm"> >| </b>
-                        </button>
-                    </div>
+<!--                    <div class="panel-footer text-center">-->
+<!--                        <button ng-click="pagerColor.first()" style="margin-right: 10px;">-->
+<!--                            <b class="text-sm"> |< </b>-->
+<!--                        </button>-->
+<!--                        <button ng-click="pagerColor.prev()" style="margin-right: 10px;">-->
+<!--                            <b class="text-sm"> < </b>-->
+<!--                        </button>-->
+<!--                        <button>{{pager.page +1}}of {{pagerColor.count}}</button>-->
+<!--                        <button ng-click="pagerColor.next()" style="margin-left: 10px;">-->
+<!--                            <b class="text-sm"> > </b>-->
+<!--                        </button>-->
+<!--                        <button ng-click="pagerColor.last()" style="margin-left: 10px;">-->
+<!--                            <b class="text-sm"> >| </b>-->
+<!--                        </button>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
