@@ -92,6 +92,10 @@ public class ProductRestController {
         }
 
     }
+    @PostMapping("/createSize")
+    public Size create(@RequestBody Size size) {
+        return sizeService.create(size);
+    }
 
     @GetMapping("/getAllMaterial")
     public ResponseEntity<List<Material>> getAllMaterial() {
@@ -103,6 +107,10 @@ public class ProductRestController {
         }
 
     }
+    @PostMapping("/createMaterial")
+    public Material create(@RequestBody Material material) {
+        return materialService.create(material);
+    }
 
     @GetMapping("/getAllColor")
     public ResponseEntity<List<Color>> getAllColor() {
@@ -112,6 +120,10 @@ public class ProductRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+    @PostMapping("/createColor")
+    public Color create( @RequestBody Color color) {
+        return colorService.create(color);
     }
 
     @GetMapping("/getAllDesign")
@@ -123,6 +135,11 @@ public class ProductRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    @PostMapping("/createDesign")
+    public Designs create(@RequestBody Designs designs) {
+        return designService.create(designs);
+    }
+
 
     @GetMapping("/getAllCategory")
     public ResponseEntity<List<Category>> getAllCategory() {
@@ -132,6 +149,10 @@ public class ProductRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+    @PostMapping("/createCategory")
+    public Category create(@RequestBody Category category) {
+        return categoryService.save(category);
     }
 
     private String generationName(SaveProductRequest prd) {
