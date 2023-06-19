@@ -50,19 +50,19 @@ public class Product implements Serializable {
     @JoinColumn(name = "id_category")
     private Category category;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_size", referencedColumnName = "id_size")
     private Size size;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_color", referencedColumnName = "id_colors")
     private Color color;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_design", referencedColumnName = "id_designs")
     private Designs design;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_material", referencedColumnName = "id_materials")
     private Material material;
 

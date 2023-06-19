@@ -92,6 +92,10 @@ public class ProductRestController {
         }
 
     }
+    @PostMapping("/createSize")
+    public Size create(@RequestBody Size size) {
+        return sizeService.create(size);
+    }
 
     @GetMapping("/getAllMaterial")
     public ResponseEntity<List<Material>> getAllMaterial() {
@@ -103,6 +107,10 @@ public class ProductRestController {
         }
 
     }
+    @PostMapping("/createMaterial")
+    public Material create(@RequestBody Material material) {
+        return materialService.create(material);
+    }
 
     @GetMapping("/getAllColor")
     public ResponseEntity<List<Color>> getAllColor() {
@@ -112,6 +120,10 @@ public class ProductRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+    @PostMapping("/createColor")
+    public Color create( @RequestBody Color color) {
+        return colorService.create(color);
     }
 
     @GetMapping("/getAllDesign")
@@ -123,6 +135,11 @@ public class ProductRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    @PostMapping("/createDesign")
+    public Designs create(@RequestBody Designs designs) {
+        return designService.create(designs);
+    }
+
 
     @GetMapping("/getAllCategory")
     public ResponseEntity<List<Category>> getAllCategory() {
@@ -132,6 +149,10 @@ public class ProductRestController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+    @PostMapping("/createCategory")
+    public Category create(@RequestBody Category category) {
+        return categoryService.save(category);
     }
 
     private String generationName(SaveProductRequest prd) {
@@ -203,9 +224,22 @@ public class ProductRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @RequestMapping(value = "/delete", method = POST)
+    public void delete(@RequestParam("id") Integer id){
+        Optional<Product> p = productService.findById(id);
+        if(p!=null){
+            p.ifPresent(product -> {
+                product.setStatus(0);
+                productService.save(product);
+            });
 
-    @RequestMapping(path = "/saveProduct", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> save(@RequestBody SaveProductRequest saveProductRequest) {
+        }else{
+            System.out.println("không tồn tại");
+        }
+    }
+
+    @RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<String> save(@ModelAttribute SaveProductRequest saveProductRequest) {
         Product pd = new Product();
         pd.setName(generationName(saveProductRequest));
         pd.setColor(saveProductRequest.getColor());
@@ -216,7 +250,25 @@ public class ProductRestController {
         pd.setStatus(saveProductRequest.getStatus());
         pd.setPrice(saveProductRequest.getPrice());
         productService.save(pd);
-
+        try {
+            System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+            for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
+                Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
+                        ObjectUtils.asMap(
+                                "cloud_name", "dcll6yp9s",
+                                "api_key", "916219768485447",
+                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                "secure", true,
+                                "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                        ));
+                Image i = new Image();
+                i.setUrlimage(r.get("secure_url").toString());
+                i.setProducts(pd);
+                imageService.create(i);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         return ResponseEntity.ok("Success");
 
 

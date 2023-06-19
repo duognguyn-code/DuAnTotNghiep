@@ -48,16 +48,76 @@ app.controller('design', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
+    $scope.message = function (mes) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error = function (err) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
     $scope.addDesign = function () {
-        $http.post(apiUrlDesign, $scope.formDesign)
-            .then(function (response) {
-                $scope.designs.push(response.data);
-                $scope.formDesign = {};
-                $scope.resetDesign();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        var designData = {
+            name: $scope.formDesign.name,
+            status: $scope.formDesign.status
+        };
+        var req = {
+            method: 'POST',
+            url: apiUrlDesign,
+            data: designData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("thêm mới kiểu dáng thành công");
+            $scope.resetDesign();
+            $scope.getDesign();
+        }).catch(error => {
+            $scope.error('thêm mới thất bại');
+        });
     };
     $scope.editDesign = function (design) {
         $scope.formDesign = angular.copy(design);

@@ -1,4 +1,4 @@
-app.controller('productController', function ($rootScope,$scope, $http) {
+app.controller('UserController', function ($rootScope,$scope, $http) {
     const apiUrlProduct = "http://localhost:8080/api/product";
 
     $scope.products = [];
@@ -12,47 +12,12 @@ app.controller('productController', function ($rootScope,$scope, $http) {
     $scope.designs = [];
     $scope.formDesign = {};
     $scope.categories = [];
-    $scope.formCategory = {};
     $scope.index = 0;
 
-    $scope.message = function (mes) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-        Toast.fire({
-            icon: 'success',
-            title: mes,
-        })
-    }
-    $scope.error = function (err) {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-
-        Toast.fire({
-            icon: 'error',
-            title: err,
-        })
-    }
 
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
+        alert("abc")
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
@@ -238,7 +203,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
 
 
 
-
     $scope.previewImage = function () {
         var input = document.getElementById('image');
         if (input.files && input.files.length > 0) {
@@ -278,42 +242,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-    $scope.addColor = function () {
-        var colorData = {
-            name: $scope.formColor.name,
-            status: $scope.formColor.status
-        };
-        var req = {
-            method: 'POST',
-            url: `${apiUrlProduct}/createColor`,
-            data: colorData
-        }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới màu thành công");
-            $scope.resetCategory();
-            $scope.getColors();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
-    };
     $scope.getMaterials = function () {
         $http.get(`${apiUrlProduct}/getAllMaterial`)
             .then(function (response) {
@@ -323,42 +251,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             .catch(function (error) {
                 console.log(error);
             });
-    };
-    $scope.addMaterial = function () {
-        var materialData = {
-            name: $scope.formMaterial.name,
-            status: $scope.formMaterial.status
-        };
-        var req = {
-            method: 'POST',
-            url: `${apiUrlProduct}/createMaterial`,
-            data: materialData
-        }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới chất liệu thành công");
-            $scope.resetCategory();
-            $scope.getMaterials();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
     };
     $scope.getDesign = function () {
         $http.get(`${apiUrlProduct}/getAllDesign`)
@@ -370,42 +262,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-    $scope.addDesign = function () {
-        var designData = {
-            name: $scope.formDesign.name,
-            status: $scope.formDesign.status
-        };
-        var req = {
-            method: 'POST',
-            url: `${apiUrlProduct}/createDesign`,
-            data: designData
-        }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới kiểu dáng thành công");
-            $scope.resetCategory();
-            $scope.getDesign();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
-    };
     $scope.getSize = function () {
         $http.get(`${apiUrlProduct}/getAllSize`)
             .then(function (response) {
@@ -415,42 +271,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             .catch(function (error) {
                 console.log(error);
             });
-    };
-    $scope.addSize = function () {
-        var sizeData = {
-            name: $scope.formSize.name,
-            status: $scope.formSize.status
-        };
-        var req = {
-            method: 'POST',
-            url: `${apiUrlProduct}/createSize`,
-            data: sizeData
-        }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới size nhanh thành công");
-            $scope.resetCategory();
-            $scope.getSize();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
     };
     $scope.getCategory = function () {
         $http.get(`${apiUrlProduct}/getAllCategory`)
@@ -462,59 +282,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-    $scope.addCategory = function () {
-        var categoryData = {
-            name: $scope.formCategory.name,
-            status: $scope.formCategory.status
-        };
-        var req = {
-            method: 'POST',
-            url: `${apiUrlProduct}/createCategory`,
-            data: categoryData
-        }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới thể loại thành công");
-            $scope.resetCategory();
-            $scope.getCategory();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
-    };
-    $scope.resetCategory = function () {
-        $scope.formCategory = {
-            status: 1
-        }
-        $scope.formSize = {
-            status: 1
-        }
-        $scope.formDesign = {
-            status: 1
-        }
-        $scope.formColor = {
-            status: 1
-        }
-        $scope.formMaterial = {
-            status: 1
-        }
-    }
     $scope.generationName = function () {
         if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
             $scope.formProduct.name = '';

@@ -7,13 +7,14 @@
 
             <div class="grid gap-6 mb-8 md:grid-cols-1">
                 <div class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                    <form role="formProduct" method="post" class="row" name="myForm"
+                           enctype="multipart/form-data">
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Thể Loại</span>
-                            <select ng-model="formProduct.category" name="design"
+                            <select ng-model="formProduct.category" name="category" required ng-change="generationName()"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option ng-repeat="category in categories" ng-value="category.id">{{category.name}}
-                                </option>
+                                <option ng-repeat="category in categories" ng-value="category.idCategory">{{category.name}}</option>
                             </select>
                         </label>
                         <button data-bs-target="#exampleModaladdCategory" data-bs-toggle="modal" style="height: 35px; width: 40px; margin-top: 24px;"
@@ -34,7 +35,7 @@
                                         <label class="block text-sm">
                                             <span class="text-gray-700 dark:text-gray-400">Tên thể loại</span>
                                             <input
-                                                    ng-model="formSize.name"
+                                                    ng-model="formCategory.name"
                                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                             />
                                         </label>
@@ -45,20 +46,20 @@
                 </span>
                                             <div class="mt-2">
                                                 <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                                    <input type="radio" ng-model="formSize.status" ng-value="1"
+                                                    <input type="radio" ng-model="formCategory.status" ng-value="1"
                                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                     />
                                                     <span class="ml-2">Hoạt Động</span>
                                                 </label>
                                                 <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                                    <input type="radio" ng-model="formSize.status" ng-value="0"
+                                                    <input type="radio" ng-model="formCategory.status" ng-value="0"
                                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                     />
                                                     <span class="ml-2">Không Hoạt Động</span>
                                                 </label>
                                             </div>
                                             <button style="margin-top: 30px; margin-left: 120px;"
-                                                    ng-click="addSize()"
+                                                    ng-click="addCategory()"
                                                     class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                 Thêm Mới
                                             </button>
@@ -79,7 +80,7 @@
                             <div class="grid gap-6  md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">Tên sản phẩm</span>
-                                    <input ng-model="formProduct.name"
+                                    <input disabled ng-model="formProduct.name" placeholder="Tên sản phẩm"
                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     />
                                 </label>
@@ -158,9 +159,9 @@
                                         </div>
                                         <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                             <label class="block text-sm">
-                                                <span class="text-gray-700 dark:text-gray-400">Tên size</span>
+                                                <span class="text-gray-700 dark:text-gray-400">Tên kiểu dáng</span>
                                                 <input
-                                                        ng-model="formSize.name"
+                                                        ng-model="formDesign.name"
                                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 />
                                             </label>
@@ -171,25 +172,25 @@
                 </span>
                                                 <div class="mt-2">
                                                     <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                                        <input type="radio" ng-model="formSize.status" ng-value="1"
+                                                        <input type="radio" ng-model="formDesign.status" ng-value="1"
                                                                class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                         />
                                                         <span class="ml-2">Hoạt Động</span>
                                                     </label>
                                                     <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                                        <input type="radio" ng-model="formSize.status" ng-value="0"
+                                                        <input type="radio" ng-model="formDesign.status" ng-value="0"
                                                                class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                         />
                                                         <span class="ml-2">Không Hoạt Động</span>
                                                     </label>
                                                 </div>
                                                 <button style="margin-top: 30px; margin-left: 120px;"
-                                                        ng-click="addSize()"
+                                                        ng-click="addDesign()"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Thêm Mới
                                                 </button>
                                                 <button style="margin-top: 30px; margin-left: 45px;"
-                                                        ng-click="resetSize()"
+                                                        ng-click="resetCategory()"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Làm Mới
                                                 </button>
@@ -257,7 +258,7 @@
                                                     Thêm Mới
                                                 </button>
                                                 <button style="margin-top: 30px; margin-left: 45px;"
-                                                        ng-click="resetSize()"
+                                                        ng-click="resetCategory()"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Làm Mới
                                                 </button>
@@ -297,7 +298,7 @@
                                             <label class="block text-sm">
                                                 <span class="text-gray-700 dark:text-gray-400">Tên màu</span>
                                                 <input
-                                                        ng-model="formSize.name"
+                                                        ng-model="formColor.name"
                                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 />
                                             </label>
@@ -308,13 +309,13 @@
                 </span>
                                                 <div class="mt-2">
                                                     <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                                        <input type="radio" ng-model="formSize.status" ng-value="1"
+                                                        <input type="radio" ng-model="formColor.status" ng-value="1"
                                                                class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                         />
                                                         <span class="ml-2">Hoạt Động</span>
                                                     </label>
                                                     <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                                        <input type="radio" ng-model="formSize.status" ng-value="0"
+                                                        <input type="radio" ng-model="formColor.status" ng-value="0"
                                                                class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                         />
                                                         <span class="ml-2">Không Hoạt Động</span>
@@ -364,7 +365,7 @@
                                             <label class="block text-sm">
                                                 <span class="text-gray-700 dark:text-gray-400">Tên chất liệu</span>
                                                 <input
-                                                        ng-model="formSize.name"
+                                                        ng-model="formMaterial.name"
                                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                 />
                                             </label>
@@ -375,25 +376,25 @@
                 </span>
                                                 <div class="mt-2">
                                                     <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                                        <input type="radio" ng-model="formSize.status" ng-value="1"
+                                                        <input type="radio" ng-model="formMaterial.status" ng-value="1"
                                                                class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                         />
                                                         <span class="ml-2">Hoạt Động</span>
                                                     </label>
                                                     <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                                        <input type="radio" ng-model="formSize.status" ng-value="0"
+                                                        <input type="radio" ng-model="formMaterial.status" ng-value="0"
                                                                class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                         />
                                                         <span class="ml-2">Không Hoạt Động</span>
                                                     </label>
                                                 </div>
                                                 <button style="margin-top: 30px; margin-left: 120px;"
-                                                        ng-click="addSize()"
+                                                        ng-click="addMaterial()"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Thêm Mới
                                                 </button>
                                                 <button style="margin-top: 30px; margin-left: 45px;"
-                                                        ng-click="resetSize()"
+                                                        ng-click="resetCategory()"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Làm Mới
                                                 </button>
@@ -418,6 +419,8 @@
                             </button>
                         </div>
                     </div>
+
+                    </form>>
                 </div>
 
             </div>
