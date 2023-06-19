@@ -14,17 +14,76 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
+    $scope.message = function (mes) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error = function (err) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
     $scope.addSize = function () {
-        $http.post(apiUrlSize, $scope.formSize)
-            .then(function (response) {
-                $scope.sizes.push(response.data);
-                $scope.formSize = {};
-                $scope.resetSize();
-                $scope.getSize();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        var sizeData = {
+            name: $scope.formSize.name,
+            status: $scope.formSize.status
+        };
+        var req = {
+            method: 'POST',
+            url: apiUrlSize,
+            data: sizeData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("thêm mới size thành công");
+            $scope.resetSize();
+            $scope.getSize();
+        }).catch(error => {
+            $scope.error('thêm mới thất bại');
+        });
     };
     $scope.editSize = function (size) {
         $scope.formSize = angular.copy(size);

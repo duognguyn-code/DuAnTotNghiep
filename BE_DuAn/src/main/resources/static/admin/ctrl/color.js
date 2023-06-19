@@ -4,23 +4,83 @@ app.controller('color', function ($rootScope,$scope, $http) {
     $scope.colors = [];
     $scope.formColor = {};
 
+    $scope.message = function (mes) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error = function (err) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
+    $scope.addColor = function () {
+        var colorData = {
+            name: $scope.formColor.name,
+            status: $scope.formColor.status
+        };
+        var req = {
+            method: 'POST',
+            url: apiUrlColor,
+            data: colorData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("thêm mới màu thành công");
+            $scope.resetColor();
+            $scope.getColors();
+        }).catch(error => {
+            $scope.error('thêm mới thất bại');
+        });
+    };
 
     $scope.getColors = function () {
         $http.get(apiUrlColor)
             .then(function (response) {
                 $scope.colors = response.data;
                 console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.addColor = function () {
-        $http.post(apiUrlColor, $scope.formColor)
-            .then(function (response) {
-                $scope.colors.push(response.data);
-                $scope.formColor = {};
-                $scope.resetColor();
             })
             .catch(function (error) {
                 console.log(error);
