@@ -21,7 +21,7 @@ public class MaterialRestController {
     }
 
     @PostMapping
-    public Material create( @RequestBody Material material) {
+    public Material create(@RequestBody Material material) {
         return materialService.create(material);
     }
 
