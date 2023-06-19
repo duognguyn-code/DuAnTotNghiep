@@ -4,6 +4,42 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
     $scope.categories = [];
     $scope.formCategory = {};
 
+    $scope.message = function (mes) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error = function (err) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
+    }
+
     $scope.getCategory = function () {
         $http.get(apiUrlCategory)
             .then(function (response) {
@@ -15,16 +51,41 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
             });
     };
     $scope.addCategory = function () {
-        $http.post(apiUrlCategory, $scope.formCategory)
-            .then(function (response) {
-                $scope.categories.push(response.data);
-                $scope.formCategory = {};
-                $scope.resetCategory();
-                $scope.getCategory();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        var categoryData = {
+            name: $scope.formCategory.name,
+            status: $scope.formCategory.status,
+            type: $scope.formCategory.type
+        };
+        var req = {
+            method: 'POST',
+            url: apiUrlCategory,
+            data: categoryData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("thêm mới thể loại thành công");
+            $scope.resetCategory();
+            $scope.getCategory();
+        }).catch(error => {
+            $scope.error('thêm mới thất bại');
+        });
     };
     $scope.editCategory = function (category) {
         $scope.formCategory = angular.copy(category);
