@@ -1,29 +1,23 @@
 app.controller('UserController', function ($rootScope,$scope, $http) {
     const apiUrlProduct = "http://localhost:8080/api/product";
-    const apiUrlColor = "http://localhost:8080/api/color";
-    const apiUrl = "http://localhost:8080/api/material";
-    const apiUrlDesign = "http://localhost:8080/api/design";
-    const apiUrlImage = "http://localhost:8080/api/image";
-
-    const apiUrlProductDetail = "http://localhost:8080/api/productDetail";
-
-    console.log(apiUrl);
 
     $scope.products = [];
     $scope.formProduct = {};
-
-    $scope.productDetails = [];
-    $scope.formProductDetail = {};
-
+    $scope.sizes = [];
+    $scope.formSize = {};
     $scope.colors = [];
     $scope.formColor = {};
     $scope.materials = [];
     $scope.formMaterial = {};
     $scope.designs = [];
     $scope.formDesign = {};
+    $scope.categories = [];
+    $scope.index = 0;
+
 
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
+        alert("abc")
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
@@ -33,17 +27,181 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-
-    $scope.getProductDetails = function () {
-        $http.get(apiUrlProductDetail)
+    // $scope.addProduct = function () {
+    //     $http.post(apiUrlProduct, $scope.formProduct)
+    //         .then(function (response) {
+    //             $scope.products.push(response.data);
+    //             $scope.formProduct = {};
+    //             $scope.resetProducts();
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // };
+    $scope.addProduct = function () {
+        // Lấy tên tệp tin từ đường dẫn
+        var formData = new FormData();
+        formData.append('name', $scope.formProduct.name);
+        formData.append('size', $scope.formProduct.size);
+        formData.append('price', $scope.formProduct.price);
+        formData.append('status', $scope.formProduct.status = 1)
+        formData.append('category', $scope.formProduct.category)
+        formData.append('material', $scope.formProduct.material)
+        formData.append('design', $scope.formProduct.design)
+        formData.append('color', $scope.formProduct.color)
+        console.log($scope.formProduct.category)
+        var req = {
+            method: 'POST',
+            url: '/api/product/saveProduct',
+            data: formData,
+            headers: { 'Content-Type': undefined }
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response);
+            $scope.message("thêm mới sản phẩm thành công");
+            $scope.resetProducts();
+            $scope.getProducts();
+        }).catch(error => {
+            $scope.error('thêm mới thất bại');
+        });
+    };
+    $scope.doSubmit = function () {
+        if ($scope.formProduct.idProduct) {
+            let timerInterval
+            Swal.fire({
+                title: 'Đang cập nhật!',
+                html: 'Vui lòng chờ <b></b> milliseconds.',
+                timer: 1500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    $scope.onUpdate();
+                    console.log('I was closed by the timer')
+                }
+            })
+        } else {
+            let timerInterval
+            Swal.fire({
+                title: 'Đang lưu mới!',
+                html: 'Vui lòng chờ <b></b> milliseconds.',
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    $scope.onSave();
+                    console.log('I was closed by the timer')
+                }
+            })
+        }
+    };
+    $scope.editProduct = function (product) {
+        $scope.formProduct = angular.copy(product);
+    }
+    // Cập nhật thông tin sản phẩm
+    $scope.updateProduct = function (product) {
+        $http.put(apiUrlProduct + '/' + product.id, product)
             .then(function (response) {
-                $scope.productDetails = response.data;
-                console.log(response);
+                // Cập nhật thông tin sản phẩm trong danh sách
+                var index = $scope.products.findIndex(p => p.id === product.id);
+                if (index !== -1) {
+                    $scope.products[index] = response.data;
+                }
             })
             .catch(function (error) {
                 console.log(error);
             });
     };
+    // Xóa sản phẩm
+    $scope.deleteProduct = function (formProduct) {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa: ' + formProduct.name + '?',
+            text: "Xóa không thể khôi phục lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang xóa: ' + formProduct.name + '!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        $http.post(apiUrlProduct + `/delete?id=${formProduct.id}`, formProduct.id).then(response => {
+                            $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
+                            $scope.getProducts();
+                        }).catch(error => {
+                            $scope.error('xóa thất bại');
+                        });
+                        console.log('I was closed by the timer')
+                    }
+                })
+
+            }
+        })
+
+    };
+    $scope.resetProducts = function () {
+        $scope.formProduct = {
+            status: 1
+        }
+    }
+
+
+
 
     $scope.previewImage = function () {
         var input = document.getElementById('image');
@@ -72,63 +230,10 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
         }
     };
     // Thêm sản phẩm mới
-    $scope.addProduct = function () {
-        // Lấy tên tệp tin từ đường dẫn
-        var input = document.getElementById('image');
-        if (input.files && input.files[0]) {
-            $scope.formProduct.image = input.files[0].name;
-        }
 
-        $http.post(apiUrlProduct, $scope.formProduct)
-            .then(function (response) {
-                $scope.products.push(response.data);
-                $scope.formProduct = {};
-                $scope.resetProducts();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.editProduct = function (product) {
-        $scope.formProduct = angular.copy(product);
-    }
-    // Cập nhật thông tin sản phẩm
-    $scope.updateProduct = function (product) {
-        $http.put(apiUrlProduct + '/' + product.id, product)
-            .then(function (response) {
-                // Cập nhật thông tin sản phẩm trong danh sách
-                var index = $scope.products.findIndex(p => p.id === product.id);
-                if (index !== -1) {
-                    $scope.products[index] = response.data;
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    // Xóa sản phẩm
-    $scope.deleteProduct = function (product) {
-        $http.delete(apiUrlProduct + '/' + product.id)
-            .then(function (response) {
-                // Xóa sản phẩm khỏi danh sách
-                var index = $scope.products.findIndex(p => p.id === product.id);
-                if (index !== -1) {
-                    $scope.products.splice(index, 1);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.resetProducts = function () {
-        $scope.formProduct = {
-            status: 1
-        }
-    }
-    console.log(apiUrlProduct);
 
     $scope.getColors = function () {
-        $http.get(apiUrlColor)
+        $http.get(`${apiUrlProduct}/getAllColor`)
             .then(function (response) {
                 $scope.colors = response.data;
                 console.log(response);
@@ -137,153 +242,134 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-    $scope.addColor = function () {
-        $http.post(apiUrlColor, $scope.formColor)
+    $scope.getMaterials = function () {
+        $http.get(`${apiUrlProduct}/getAllMaterial`)
             .then(function (response) {
-                $scope.colors.push(response.data);
-                $scope.formColor = {};
-                $scope.resetColor();
+                $scope.materials = response.data;
+                console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
     };
-    $scope.editColor = function (color) {
-        $scope.formColor = angular.copy(color);
-    }
-    $scope.updateColor = function () {
-        var item = angular.copy($scope.formColor);
-        $http.put(apiUrlColor + '/' + item.id, item).then(resp => {
-            var index = $scope.colors.findIndex(p => p.id == item.id);
-            $scope.colors[index] = item;
-            alert("Cập nhật thành công");
-            $scope.resetColor();
-        }).catch(error => {
-            alert("Cập nhật thất bại");
-            console.log("Error", error);
-        });
-    }
-    $scope.deleteColor = function (color) {
-        $http.delete(apiUrlColor + '/' + color.id)
+    $scope.getDesign = function () {
+        $http.get(`${apiUrlProduct}/getAllDesign`)
             .then(function (response) {
-                var index = $scope.colors.findIndex(p => p.id === color.id);
-                if (index !== -1) {
-                    $scope.colors.splice(index, 1);
+                $scope.designs = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+    $scope.getSize = function () {
+        $http.get(`${apiUrlProduct}/getAllSize`)
+            .then(function (response) {
+                $scope.sizes = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+    $scope.getCategory = function () {
+        $http.get(`${apiUrlProduct}/getAllCategory`)
+            .then(function (response) {
+                $scope.categories = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+    $scope.generationName = function () {
+        if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
+            $scope.formProduct.name = '';
+        }
+        if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
+            for (let i = 0; i < $scope.categories.length; i++) {
+                if ($scope.formProduct.category == $scope.categories[i].idCategory) {
+                    $scope.formProduct.name = $scope.categories[i].name;
                 }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            }
+        }
+        if ($scope.formProduct.color != undefined || $scope.formProduct.color != null || $scope.formProduct.color != '') {
+            for (let i = 0; i < $scope.colors.length; i++) {
+                if ($scope.formProduct.color == $scope.colors[i].id) {
+                    $scope.formProduct.name += ' Màu ' + $scope.colors[i].name;
+                }
+            }
+        }
+        if ($scope.formProduct.design != undefined || $scope.formProduct.design != null || $scope.formProduct.design != '') {
+            for (let i = 0; i < $scope.designs.length; i++) {
+                if ($scope.formProduct.design == $scope.designs[i].id) {
+                    $scope.formProduct.name += ' Thiết kế ' + $scope.designs[i].name;
+                }
+            }
+        }
+        if ($scope.formProduct.material != undefined || $scope.formProduct.material != null || $scope.formProduct.material != '') {
+            for (let i = 0; i < $scope.colors.length; i++) {
+                if ($scope.formProduct.material == $scope.materials[i].id) {
+                    $scope.formProduct.name += ' Chất Liệu ' + $scope.materials[i].name;
+                }
+            }
+        }
+        if ($scope.formProduct.size != undefined || $scope.formProduct.size != null || $scope.formProduct.size != '') {
+            for (let i = 0; i < $scope.sizes.length; i++) {
+                if ($scope.formProduct.size == $scope.sizes[i].id) {
+                    $scope.formProduct.name += ' Size ' + $scope.sizes[i].name;
+                }
+            }
+        }
+
+    }
+    $scope.searchProduct=function(){
+        if ($scope.searchPriceMin===""){
+            $scope.searchPriceMin="Min"
+
+        }
+        if ($scope.searchProducts === ""){
+            $scope.searchProducts=" "
+
+        }
+        if ($scope.searchPriceMax===""){
+            $scope.searchPriceMax="Max"
+        }
+        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
+            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === ""&& $scope.searchPriceMax === ""&& $scope.searchProducts === 'undefined'
+        ) {
+            $scope.getProducts();
+        } else {
+            $http.get(apiUrlProduct+'/search' + '/' +$scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign+'/'+$scope.searchPriceMin+'/'+$scope.searchPriceMax+'/'+ $scope.searchStatus )
+                .then(function (response) {
+                    $scope.products = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
     };
-    $scope.resetColor = function () {
-        $scope.formColor = {
-            status: 1
-        }
-    }
-    $scope.pagerColor = {
-        page: 0,
-        size: 5,
-        get colors() {
-            var start = this.page * this.size;
-            return $scope.colors.slice(start, start + this.size);
-
-        },
-        get count() {
-            return Math.ceil(1.0 * $scope.colors.length / this.size);
-
-        },
-        first() {
-            this.page = 0;
-        },
-        prev() {
-            this.page--;
-            if (this.page < 0) {
-                this.first();
-                alert("Bạn đang ở trang đầu")
-            }
-        },
-        next() {
-            this.page++;
-            if (this.page >= this.count) {
-                this.last();
-                alert("Bạn đang ở trang cuối")
-            }
-        },
-        last() {
-            this.page = this.count - 1;
-        }
-    }
-    $scope.pagerDesign = {
-        page: 0,
-        size: 5,
-        get designs() {
-            var start = this.page * this.size;
-            return $scope.designs.slice(start, start + this.size);
-
-        },
-        get count() {
-            return Math.ceil(1.0 * $scope.designs.length / this.size);
-
-        },
-        first() {
-            this.page = 0;
-        },
-        prev() {
-            this.page--;
-            if (this.page < 0) {
-                this.first();
-                alert("Bạn đang ở trang đầu")
-            }
-        },
-        next() {
-            this.page++;
-            if (this.page >= this.count) {
-                this.last();
-                alert("Bạn đang ở trang cuối")
-            }
-        },
-        last() {
-            this.page = this.count - 1;
-        }
-    }
-    $scope.pagerMaterial = {
-        page: 0,
-        size: 5,
-        get materials() {
-            var start = this.page * this.size;
-            return $scope.materials.slice(start, start + this.size);
-
-        },
-        get count() {
-            return Math.ceil(1.0 * $scope.materials.length / this.size);
-
-        },
-        first() {
-            this.page = 0;
-        },
-        prev() {
-            this.page--;
-            if (this.page < 0) {
-                this.first();
-                alert("Bạn đang ở trang đầu")
-            }
-        },
-        next() {
-            this.page++;
-            if (this.page >= this.count) {
-                this.last();
-                alert("Bạn đang ở trang cuối")
-            }
-        },
-        last() {
-            this.page = this.count - 1;
-        }
-    }
-    $scope.pagerProduct = {
+    $scope.GetresetForm=function(){
+            $http.get(apiUrlProduct+'/search' + '/' +"undefined" + '/' +"undefined"+ '/' + "undefined" + '/' + "undefined" + '/' + "undefined"+'/'+"undefined"+'/'+"undefined"+'/'+"1")
+                .then(function (response) {
+                    $scope.products = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+    };
+    $scope.pagerProducts= {
         page: 0,
         size: 5,
         get products() {
             var start = this.page * this.size;
+            return $scope.products.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.products.length / this.size);
             return $scope.products.slice(start, start + this.size);
 
         },
@@ -312,119 +398,28 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
             this.page = this.count - 1;
         }
     }
-    console.log(apiUrlColor);
-
-    $scope.getMaterials = function () {
-        $http.get(apiUrl)
-            .then(function (response) {
-                $scope.materials = response.data;
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.addMaterial = function () {
-        $http.post(apiUrl, $scope.formMaterial)
-            .then(function (response) {
-                $scope.materials.push(response.data);
-                $scope.formMaterial = {};
-                $scope.resetMaterial();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.editMaterial = function (material) {
-        $scope.formMaterial = angular.copy(material);
+    $scope.resetSearch = function () {
+        $('#matesearch').prop('selectedIndex', 0);
+        $('#colorSearch').prop('selectedIndex', 0);
+        $('#designSearch').prop('selectedIndex', 0);
+        $('#statusSearch').prop('selectedIndex', 0);
+        $scope.searchColor = "undefined";
+        $scope.searchDesign = "undefined";
+        $scope.searchMaterial = "undefined";
+        $scope.searchSize = "undefined";
+        $scope.searchStatus = "1";
+        $scope.searchPriceMin = "";
+        $scope.searchPriceMax = "";
+        $scope.searchProducts =" ";
+        $('#sizeSearch').prop('selectedIndex', 0);
+        $scope.GetresetForm();
     }
-    $scope.updateMaterial = function () {
-        var item = angular.copy($scope.formMaterial);
-        $http.put(apiUrl + '/' + item.id, item).then(resp => {
-            var index = $scope.materials.findIndex(p => p.id == item.id);
-            $scope.materials[index] = item;
-            alert("Cập nhật thành công");
-            $scope.resetMaterial();
-        }).catch(error => {
-            alert("Cập nhật thất bại");
-            console.log("Error", error);
-        });
-    }
-    $scope.deleteMaterial = function (material) {
-        $http.delete(apiUrl + '/' + material.id)
-            .then(function (response) {
-                var index = $scope.materials.findIndex(p => p.id === material.id);
-                if (index !== -1) {
-                    $scope.materials.splice(index, 1);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.resetMaterial = function () {
-        $scope.formMaterial = {
-            status: 1
-        }
-    }
-    $scope.getDesign = function () {
-        $http.get(apiUrlDesign)
-            .then(function (response) {
-                $scope.designs = response.data;
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.addDesign = function () {
-        $http.post(apiUrlDesign, $scope.formDesign)
-            .then(function (response) {
-                $scope.designs.push(response.data);
-                $scope.formDesign = {};
-                $scope.resetDesign();
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.editDesign = function (design) {
-        $scope.formDesign = angular.copy(design);
-    }
-    $scope.updateDesign = function () {
-        var item = angular.copy($scope.formDesign);
-        $http.put(apiUrlDesign + '/' + item.id, item).then(resp => {
-            var index = $scope.designs.findIndex(p => p.id == item.id);
-            $scope.designs[index] = item;
-            alert("Cập nhật thành công");
-            $scope.resetDesign();
-        }).catch(error => {
-            alert("Cập nhật thất bại");
-            console.log("Error", error);
-        });
-    }
-    $scope.deleteDesign = function (design) {
-        $http.delete(apiUrlDesign + '/' + design.id)
-            .then(function (response) {
-                var index = $scope.designs.findIndex(p => p.id === design.id);
-                if (index !== -1) {
-                    $scope.designs.splice(index, 1);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    $scope.resetDesign = function () {
-        $scope.formDesign = {
-            status: 1
-        }
-    }
+    $scope.resetSearch();
+    $scope.getSize()
     $scope.getDesign();
-    $scope.getProducts();
+    $scope.GetresetForm();
     $scope.getMaterials();
     $scope.getColors();
-
-    $scope.getProductDetails();
+    $scope.getCategory();
 
 });
