@@ -86,7 +86,6 @@ app.controller('material', function ($rootScope,$scope, $http) {
     $scope.addMaterial = function () {
         var materialData = {
             name: $scope.formMaterial.name,
-            status: $scope.formMaterial.status
         };
         var req = {
             method: 'POST',

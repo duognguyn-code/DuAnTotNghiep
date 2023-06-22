@@ -52,7 +52,6 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
     $scope.addSize = function () {
         var sizeData = {
             name: $scope.formSize.name,
-            status: $scope.formSize.status
         };
         var req = {
             method: 'POST',

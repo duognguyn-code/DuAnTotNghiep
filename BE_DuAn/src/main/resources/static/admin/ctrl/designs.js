@@ -86,7 +86,6 @@ app.controller('design', function ($rootScope,$scope, $http) {
     $scope.addDesign = function () {
         var designData = {
             name: $scope.formDesign.name,
-            status: $scope.formDesign.status
         };
         var req = {
             method: 'POST',

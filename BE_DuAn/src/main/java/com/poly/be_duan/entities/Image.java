@@ -1,5 +1,6 @@
 package com.poly.be_duan.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Image implements Serializable {
+public class Image {
     @Id
     @Column(name = "id_image")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,7 @@ public class Image implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_products")
+    @JsonBackReference
     private Product products;
 
 }
