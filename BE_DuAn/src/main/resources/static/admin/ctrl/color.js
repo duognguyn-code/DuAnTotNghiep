@@ -42,7 +42,6 @@ app.controller('color', function ($rootScope,$scope, $http) {
     $scope.addColor = function () {
         var colorData = {
             name: $scope.formColor.name,
-            status: $scope.formColor.status
         };
         var req = {
             method: 'POST',
