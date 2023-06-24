@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.poly.be_duan.beans.SaveProductRequest;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,6 +61,7 @@ public class ProductRestController {
         }
 
     }
+
 
     @GetMapping("{color}/{design}/{material}/{size}/{product}")
     public ResponseEntity<List<Product>> getByColor(
@@ -264,14 +266,46 @@ public class ProductRestController {
                 Image i = new Image();
                 i.setUrlimage(r.get("secure_url").toString());
                 i.setProducts(pd);
+                System.out.println(i+ "I ở đây là gì");
                 imageService.create(i);
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
         return ResponseEntity.ok("Success");
+    }
+    @RequestMapping(path = "/updateProduct", method = POST)
+    public void update (@RequestParam("id") Integer id, @ModelAttribute SaveProductRequest saveProductRequest){
+        Optional<Product> p = productService.findById(id);
+        if(p != null){
+            p.orElseThrow(() -> new RuntimeException("not found")).setName(saveProductRequest.getName());
+            p.orElseThrow(() -> new RuntimeException("not found")).setPrice(saveProductRequest.getPrice());
+            p.orElseThrow(() -> new RuntimeException("not found")).setCategory(saveProductRequest.getCategory());
+            p.orElseThrow(() -> new RuntimeException("not found")).setColor(saveProductRequest.getColor());
+            p.orElseThrow(() -> new RuntimeException("not found")).setDesign(saveProductRequest.getDesign());
+            p.orElseThrow(() -> new RuntimeException("not found")).setMaterial(saveProductRequest.getMaterial());
+            p.orElseThrow(() -> new RuntimeException("not found")).setStatus(saveProductRequest.getStatus());
+            p.orElseThrow(() -> new RuntimeException("not found")).setSize(saveProductRequest.getSize());
+            productService.save(p.get());
+        }
+        else {
+            throw new StaleStateException("Bản ghi này không tòn tại");
+        }
+        System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+    }
 
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getById(@PathVariable Integer id) {
+        try {
+            Optional<Product> product = productService.findById(id);
+            if (product.isPresent()) {
+                return ResponseEntity.ok(product.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
     @GetMapping("search/{name}/{color}/{material}/{size}/{design}/{min}/{max}/{status}")
     public ResponseEntity<List<Product>> search(@PathVariable(value = "name")String name, @PathVariable(value = "color")String color

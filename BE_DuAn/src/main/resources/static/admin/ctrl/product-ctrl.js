@@ -1,4 +1,4 @@
-app.controller('productController', function ($rootScope,$scope, $http) {
+app.controller('productController', function ($rootScope, $scope, $http) {
     const apiUrlProduct = "http://localhost:8080/api/product";
 
     $scope.products = [];
@@ -62,20 +62,16 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-    // $scope.addProduct = function () {
-    //     $http.post(apiUrlProduct, $scope.formProduct)
-    //         .then(function (response) {
-    //             $scope.products.push(response.data);
-    //             $scope.formProduct = {};
-    //             $scope.resetProducts();
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // };
+    $scope.uploadFile = function (files) {
+        $scope.files = files;
+        console.log($scope.files);
+    }
     $scope.addProduct = function () {
         // Lấy tên tệp tin từ đường dẫn
         var formData = new FormData();
+        angular.forEach($scope.files, function (file) {
+            formData.append('files', file);
+        });
         formData.append('name', $scope.formProduct.name);
         formData.append('size', $scope.formProduct.size);
         formData.append('price', $scope.formProduct.price);
@@ -89,7 +85,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             method: 'POST',
             url: '/api/product/saveProduct',
             data: formData,
-            headers: { 'Content-Type': undefined }
+            headers: {'Content-Type': undefined}
         }
         let timerInterval
         Swal.fire({
@@ -116,6 +112,69 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }).catch(error => {
             $scope.error('thêm mới thất bại');
         });
+    };
+    $scope.edit = function (productId) {
+        $http.get('/api/product/' +  productId)
+            .then(function (response) {
+                var productData = response.data;
+                $scope.formProduct = angular.copy(formProduct);
+                $scope.formProduct.category = productData.category.idCategory;
+                $scope.formProduct.size = productData.size.id;
+                $scope.formProduct.color = productData.color.id;
+                $scope.formProduct.design = productData.design.id;
+                $scope.formProduct.material = productData.material.id;
+                $scope.checkSubmit = true;
+                $scope.checkButton = false;
+            })
+            .catch(function (error) {
+                console.error('Lỗi khi lấy dữ liệu sản phẩm:', error);
+            });
+    };
+    $scope.onUpdate = function () {
+        var formData = new FormData();
+        angular.forEach($scope.files, function (file) {
+            formData.append('files', file);
+        });
+        formData.append('id', $scope.formProduct.id);
+        formData.append('name', $scope.formProduct.name);
+        formData.append('size', $scope.formProduct.size);
+        formData.append('price', $scope.formProduct.price);
+        formData.append('status', $scope.formProduct.status)
+        formData.append('category', $scope.formProduct.category)
+        formData.append('material', $scope.formProduct.material)
+        formData.append('design', $scope.formProduct.design)
+        formData.append('color', $scope.formProduct.color)
+        let req = {
+            method: 'POST',
+            url: '/api/product/updateProduct?id=' + $scope.formProduct.id,
+            data: formData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            console.log("ddd " + response.data);
+            $scope.message("Cập nhật sản phẩm thành công");
+            $scope.refresh();
+            $scope.getProducts();
+        }).catch(error => {
+            $scope.error('Cập nhật thất bại');
+        });
+
     };
     $scope.doSubmit = function () {
         if ($scope.formProduct.idProduct) {
@@ -168,23 +227,8 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             })
         }
     };
-    $scope.editProduct = function (product) {
-        $scope.formProduct = angular.copy(product);
-    }
     // Cập nhật thông tin sản phẩm
-    $scope.updateProduct = function (product) {
-        $http.put(apiUrlProduct + '/' + product.id, product)
-            .then(function (response) {
-                // Cập nhật thông tin sản phẩm trong danh sách
-                var index = $scope.products.findIndex(p => p.id === product.id);
-                if (index !== -1) {
-                    $scope.products[index] = response.data;
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
+
     // Xóa sản phẩm
     $scope.deleteProduct = function (formProduct) {
         Swal.fire({
@@ -234,9 +278,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             status: 1
         }
     }
-
-
-
 
 
     $scope.previewImage = function () {
@@ -556,24 +597,24 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }
 
     }
-    $scope.searchProduct=function(){
-        if ($scope.searchPriceMin===""){
-            $scope.searchPriceMin="Min"
+    $scope.searchProduct = function () {
+        if ($scope.searchPriceMin === "") {
+            $scope.searchPriceMin = "Min"
 
         }
-        if ($scope.searchProducts === ""){
-            $scope.searchProducts=" "
+        if ($scope.searchProducts === "") {
+            $scope.searchProducts = " "
 
         }
-        if ($scope.searchPriceMax===""){
-            $scope.searchPriceMax="Max"
+        if ($scope.searchPriceMax === "") {
+            $scope.searchPriceMax = "Max"
         }
         if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
-            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === ""&& $scope.searchPriceMax === ""&& $scope.searchProducts === 'undefined'
+            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
-            $http.get(apiUrlProduct+'/search' + '/' +$scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign+'/'+$scope.searchPriceMin+'/'+$scope.searchPriceMax+'/'+ $scope.searchStatus )
+            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
@@ -583,17 +624,17 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 })
         }
     };
-    $scope.GetresetForm=function(){
-            $http.get(apiUrlProduct+'/search' + '/' +"undefined" + '/' +"undefined"+ '/' + "undefined" + '/' + "undefined" + '/' + "undefined"+'/'+"undefined"+'/'+"undefined"+'/'+"1")
-                .then(function (response) {
-                    $scope.products = response.data;
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+    $scope.GetresetForm = function () {
+        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
+            .then(function (response) {
+                $scope.products = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     };
-    $scope.pagerProducts= {
+    $scope.pagerProducts = {
         page: 0,
         size: 5,
         get products() {
@@ -643,7 +684,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         $scope.searchStatus = "1";
         $scope.searchPriceMin = "";
         $scope.searchPriceMax = "";
-        $scope.searchProducts =" ";
+        $scope.searchProducts = " ";
         $('#sizeSearch').prop('selectedIndex', 0);
         $scope.GetresetForm();
     }

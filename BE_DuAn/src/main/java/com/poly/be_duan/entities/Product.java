@@ -2,6 +2,7 @@ package com.poly.be_duan.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Indexed;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Product implements Serializable {
+public class Product  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_products", unique = true, nullable = false, precision = 10)
@@ -36,7 +38,13 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "products")
     @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonManagedReference
     private List<Image> images;
+
+    @JsonManagedReference
+    public List<Image> getImages(){
+        return images;
+    }
 
 
     @Column(name = "price", nullable = false)
@@ -70,4 +78,20 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "productDetail")
     private List<Cart_detail> cartDetails;
 
+    @Transient
+    private List<MultipartFile> files;
+
+    public Product(Integer id, String name, int status, List<Image> images, BigDecimal price, Category category, Size size, Color color, Designs design, Material material, List<MultipartFile> files) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+        this.images = images;
+        this.price = price;
+        this.category = category;
+        this.size = size;
+        this.color = color;
+        this.design = design;
+        this.material = material;
+        this.files = files;
+    }
 }
