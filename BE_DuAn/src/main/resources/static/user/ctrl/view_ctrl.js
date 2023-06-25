@@ -17,11 +17,11 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
 
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
-        alert("abc")
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
                 console.log(response);
+                console.log($scope.products.images.urlimage);
             })
             .catch(function (error) {
                 console.log(error);
@@ -362,7 +362,7 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
     };
     $scope.pagerProducts= {
         page: 0,
-        size: 5,
+        size: 9,
         get products() {
             var start = this.page * this.size;
             return $scope.products.slice(start, start + this.size);
@@ -422,4 +422,34 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
     $scope.getColors();
     $scope.getCategory();
 
+//    $scope.idCheck=undefined;
+//    $scope.getDetailProduct = function(id){
+//        console.log(id);
+//        if(id==0){
+//        id = localStorage.getItem('idDetail');
+//        $http.post(apiUrlProduct + `/id=${formProduct.id}`, formProduct.id).then(function(response){
+//            $scope.formProduct = response.data;
+//        }).catch(error => {
+//            console.log(error,'xin loi')
+//        })
+//        }else{
+//        localStorage.removeItem('idDetail');
+//        localStorage.setItem('idDetail',id);
+//        $window.location.href=#!product_detail;
+//        }
+//    }
+$scope.detail = function(categoryId) {
+        // Chuyển hướng đến trang UpdateProduct.html với tham số id
+        if (!$scope.isRedirected) {
+            // Chuyển hướng đến trang UpdateProduct.html với tham số id
+            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
+            $location.path('/product_detail/').search({id: categoryId});
+        }
+    };
+    $scope.carts = [];
+    $scope.add_cart = function(product){
+        if(product){
+            $scope.carts.push(apiUrlProduct);
+        }
+    }
 });

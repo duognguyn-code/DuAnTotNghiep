@@ -7,6 +7,7 @@ app.config(function($routeProvider){
         })
         .when("/product",{
             templateUrl:"/user/Product.html",
+            controller:"UserController"
         })
         .when("/cart",{
             templateUrl:"/user/Cart.html",
