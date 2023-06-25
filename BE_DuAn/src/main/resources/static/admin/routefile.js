@@ -13,7 +13,7 @@ app.config(function($routeProvider){
             templateUrl:"/admin/Product/CreateProduct.html",
             controller:"productController"
         })
-        .when("/updateproduct",{
+        .when("/Pageupdateproduct",{
             templateUrl:"/admin/Product/UpdateProduct.html",
             controller:"productController"
         })

@@ -166,6 +166,13 @@ public class ProductRestController {
         List<Category> listCategory = categoryService.findAll();
         System.out.println(listCategory);
 
+        if (prd.getCategory() != null) {
+            for (Category cate : listCategory) {
+                if (Objects.equals(prd.getCategory().getIdCategory(), cate.getIdCategory())) {
+                    name.append(cate.getName());
+                }
+            }
+        }
         if (prd.getMaterial() != null) {
             for (Material mate : listMate) {
                 if (Objects.equals(prd.getMaterial().getId(), mate.getId())) {
@@ -266,7 +273,6 @@ public class ProductRestController {
                 Image i = new Image();
                 i.setUrlimage(r.get("secure_url").toString());
                 i.setProducts(pd);
-                System.out.println(i+ "I ở đây là gì");
                 imageService.create(i);
             }
         } catch (Exception e) {
@@ -274,24 +280,23 @@ public class ProductRestController {
         }
         return ResponseEntity.ok("Success");
     }
-    @RequestMapping(path = "/updateProduct", method = POST)
-    public void update (@RequestParam("id") Integer id, @ModelAttribute SaveProductRequest saveProductRequest){
-        Optional<Product> p = productService.findById(id);
-        if(p != null){
-            p.orElseThrow(() -> new RuntimeException("not found")).setName(saveProductRequest.getName());
-            p.orElseThrow(() -> new RuntimeException("not found")).setPrice(saveProductRequest.getPrice());
-            p.orElseThrow(() -> new RuntimeException("not found")).setCategory(saveProductRequest.getCategory());
-            p.orElseThrow(() -> new RuntimeException("not found")).setColor(saveProductRequest.getColor());
-            p.orElseThrow(() -> new RuntimeException("not found")).setDesign(saveProductRequest.getDesign());
-            p.orElseThrow(() -> new RuntimeException("not found")).setMaterial(saveProductRequest.getMaterial());
-            p.orElseThrow(() -> new RuntimeException("not found")).setStatus(saveProductRequest.getStatus());
-            p.orElseThrow(() -> new RuntimeException("not found")).setSize(saveProductRequest.getSize());
-            productService.save(p.get());
+    @PostMapping("/updateProduct/{id}")
+    public void updateProduct(@PathVariable Integer id,@ModelAttribute SaveProductRequest saveProductRequest) {
+        Optional<Product> optionalProduct = productService.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setName(generationName(saveProductRequest));
+            product.setPrice(saveProductRequest.getPrice());
+            product.setCategory(saveProductRequest.getCategory());
+            product.setColor(saveProductRequest.getColor());
+            product.setDesign(saveProductRequest.getDesign());
+            product.setMaterial(saveProductRequest.getMaterial());
+            product.setStatus(saveProductRequest.getStatus());
+            product.setSize(saveProductRequest.getSize());
+            productService.save(product);
+        } else {
+            throw new RuntimeException("Bản ghi này không tồn tại");
         }
-        else {
-            throw new StaleStateException("Bản ghi này không tòn tại");
-        }
-        System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
     }
 
     @GetMapping("/{id}")
