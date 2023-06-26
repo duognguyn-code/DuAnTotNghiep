@@ -1,4 +1,4 @@
-app.controller('UserController', function ($rootScope,$scope, $http) {
+app.controller('UserController', function ($rootScope,$scope, $http,$window) {
     const apiUrlProduct = "http://localhost:8080/api/product";
 
     $scope.products = [];
@@ -422,34 +422,30 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
     $scope.getColors();
     $scope.getCategory();
 
-//    $scope.idCheck=undefined;
-//    $scope.getDetailProduct = function(id){
-//        console.log(id);
-//        if(id==0){
-//        id = localStorage.getItem('idDetail');
-//        $http.post(apiUrlProduct + `/id=${formProduct.id}`, formProduct.id).then(function(response){
-//            $scope.formProduct = response.data;
-//        }).catch(error => {
-//            console.log(error,'xin loi')
-//        })
-//        }else{
-//        localStorage.removeItem('idDetail');
-//        localStorage.setItem('idDetail',id);
-//        $window.location.href=#!product_detail;
-//        }
-//    }
-$scope.detail = function(categoryId) {
-        // Chuyển hướng đến trang UpdateProduct.html với tham số id
-        if (!$scope.isRedirected) {
-            // Chuyển hướng đến trang UpdateProduct.html với tham số id
-            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
-            $location.path('/product_detail/').search({id: categoryId});
-        }
-    };
-    $scope.carts = [];
-    $scope.add_cart = function(product){
-        if(product){
-            $scope.carts.push(apiUrlProduct);
-        }
+     $scope.detailProduct={}
+     $scope.idCheck=undefined;
+    $scope.getDetailProduct = function (id){
+    console.log(id)
+    if(id==0){
+    id = localStorage.getItem("idDetail");
+    $http.post(`/rest/guest/product/detail_product/` + id).then(function(response){
+        $scope.detailProduct = response.data;
+    }).catch(error => {
+        console.log(error, "lỗi")
+    })
+    }else{
+         localStorage.removeItem('idDetail');
+         localStorage.setItem('idDetail', id);
+         $window.location.href='#!product_detail';
     }
+    }
+
+//$scope.edit = function(productId) {
+//        // Chuyển hướng đến trang UpdateProduct.html với tham số id
+//        if (!$scope.isRedirected) {
+//            // Chuyển hướng đến trang UpdateProduct.html với tham số id
+//            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
+//            $location.path('/product_detail/').search({id: productId});
+//        }
+//    };
 });

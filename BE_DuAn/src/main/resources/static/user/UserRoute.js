@@ -14,5 +14,6 @@ app.config(function($routeProvider){
         })
         .when("/product_detail",{
             templateUrl:"/user/ProductDetail.html",
+            controller:"UserController"
         })
 })

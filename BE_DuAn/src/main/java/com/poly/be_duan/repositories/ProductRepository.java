@@ -1,5 +1,6 @@
 package com.poly.be_duan.repositories;
 
+import com.poly.be_duan.entities.Category;
 import com.poly.be_duan.entities.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
 //    public Product findProductById_products(Integer id_products);
-
+    List<Product> findByCategoryAndStatus(Category category, int status);
     @Query("SELECT p FROM Product p WHERE (p.color.name LIKE %?1% " +
             "or p.design.name LIKE %?2% o" +
             "r p.material.name LIKE %?3% " +
@@ -32,4 +33,27 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     public BigDecimal searchMin();
     @Query("select MAX(p.price) FROM Product p")
     public BigDecimal searchMax();
+    @Query(value = "select distinct id_color from products where id_category=?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductColor(Integer id);
+    @Query(value = "select distinct id_size from products where id_category = ?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductSize(Integer id);
+    @Query(value = "select distinct id_design from products where id_category =?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductDesign(Integer id);
+    @Query(value = "select distinct id_material from products where id_category =?1 and status=1",nativeQuery = true)
+    List<Integer> getlistDetailProductMaterial(Integer id);
+    @Query(value = "select * from products where id_color =?1 and id_size  =?2 and id_design=?3 and id_material =?4 and status=1 limit 1",nativeQuery = true)
+    Product getDetailPrd(Integer idCapa, Integer idRam, Integer idColor);
+    @Query(value = "SELECT products.id_product  FROM products where id_category = ?1 and status = 1", nativeQuery = true)
+    List<Integer> getIdimage(Integer id);
+    @Query(value = "select name from images where id_product =?1 limit 1",nativeQuery = true)
+    String getImg(Integer id);
+    @Query(value = "select distinct id_category from products where status = 1",nativeQuery = true)
+    List<Integer> getlistDetailProductCategory();
+    @Query(value = "select MIN(price) from products where id_category = ?1 and status=1 order by price",nativeQuery = true)
+    BigDecimal getMinPrice(Integer id);
+
+    @Query(value = "select MAX(price) from products where id_category = ?1 and status=1 order by price",nativeQuery = true)
+    BigDecimal getMaxPrice(Integer id);
+    @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
+    List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
 }
