@@ -23,4 +23,5 @@ public class ProductDetailDTO {
     private List<Designs> designs;
     private List<Size> sizes;
     private List<Color> colors;
+    private List<String> Images;
 }
