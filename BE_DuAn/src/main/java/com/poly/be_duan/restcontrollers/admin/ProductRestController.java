@@ -3,6 +3,7 @@ package com.poly.be_duan.restcontrollers.admin;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.poly.be_duan.beans.SaveProductRequest;
+import com.poly.be_duan.dto.ProductDetailDTO;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
 import org.hibernate.StaleStateException;
