@@ -4,7 +4,7 @@
         <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
             <h1 class="font-weight-semi-bold text-uppercase mb-3">Sản phẩm chi tiết</h1>
             <div class="d-inline-flex">
-                <p class="m-0"><a href="/">Trang chủ</a></p>
+                <p class="m-0"><a href="/static">Trang chủ</a></p>
                 <p class="m-0 px-2">-</p>
                 <p class="m-0"><a href="/product">Sản phẩm</a></p>
                 <p class="m-0 px-2">-</p>
@@ -20,10 +20,10 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="../images/shoe1.png" alt="Image">
+                            <img class="w-100 h-100" src="../../images/shoe1.png" alt="Image">
                         </div>
                         <div class="carousel-item">
-                            <img class="w-100 h-100" src="../images/shoe2.png" alt="Image">
+                            <img class="w-100 h-100" src="../../images/shoe2.png" alt="Image">
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
@@ -47,31 +47,31 @@
                     </div>
                     <small class="pt-1">(50 Reviews)</small>
                 </div>
-                <h3 class="font-weight-semi-bold mb-4" ng-repeat="product in products">{{detailProduct.price}}</h3>
+                <h3 class="font-weight-semi-bold mb-4">{{detailProduct.price}}</h3>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kiểu dáng:</p>
                     <form>
-                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="design in designs">
-                            <input type="radio" class="custom-control-input" id="design-{{design.name}}" name="design">
-                            <label class="custom-control-label" for="design-{{design.name}}">{{design.name}}</label>
+                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="desig in detailProduct.designs">
+                            <input type="radio" class="custom-control-input" id="design-{{desig.name}}" name="design">
+                            <label class="custom-control-label" for="design-{{desig.name}}">{{desig.name}}</label>
                         </div>
                     </form>
                 </div>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kích cỡ:</p>
                     <form>
-                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="size in sizes">
-                            <input type="radio" class="custom-control-input" id="{{size.name}}" name="size">
-                            <label class="custom-control-label" for="{{size.name}}">{{size.name}}</label>
+                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="s in detailProduct.sizes">
+                            <input type="radio" class="custom-control-input" id="{{s.name}}" name="size">
+                            <label class="custom-control-label" for="{{s.name}}">{{s.name}}</label>
                         </div>
                     </form>
                 </div>
                 <div class="d-flex mb-4">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
                     <form>
-                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="color in colors">
-                            <input type="radio" class="custom-control-input" id="{{color.name}}" name="color">
-                            <label class="custom-control-label" for="{{color.name}}">{{color.name}}</label>
+                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="cor in detailProduct.colors">
+                            <input type="radio" class="custom-control-input" id="{{cor.name}}" name="color">
+                            <label class="custom-control-label" for="{{cor.name}}">{{cor.name}}</label>
                         </div>
                     </form>
                 </div>
@@ -79,9 +79,9 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Chất liệu:</p>
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
-                             ng-repeat="material in materials">
-                            <input type="radio" class="custom-control-input" id="{{material.name}}" name="material">
-                            <label class="custom-control-label" for="{{material.name}}">{{material.name}}</label>
+                             ng-repeat="mat in detailProduct.materials">
+                            <input type="radio" class="custom-control-input" id="{{mat.name}}" name="material">
+                            <label class="custom-control-label" for="{{mat.name}}">{{mat.name}}</label>
                         </div>
                     </form>
                 </div>

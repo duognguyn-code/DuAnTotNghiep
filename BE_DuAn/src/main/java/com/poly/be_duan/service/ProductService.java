@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ProductService extends GenericService<Product, Integer> {
 
   
-    public List<Product> getByColor(String color, String design, String material, String size);
+    List<Product> getByColor(String color, String design, String material, String size);
 
 
     Page<Product> getAll (Pageable page);

@@ -10,9 +10,9 @@ public interface SizeService {
 
     public Size create(Size size);
 
-    public Optional<Size> getSizeByID(Long id);
+    public Optional<Size> getSizeByID(Integer id);
 
     public Size update(Size size);
 
-    public void delete(Long id);
+    public void delete(Integer id);
 }
