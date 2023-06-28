@@ -1,5 +1,6 @@
 package com.poly.be_duan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Role {
     @Column(name = "status")
     private Integer status;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<Account> accounts;
 
