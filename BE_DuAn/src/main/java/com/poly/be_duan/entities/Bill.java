@@ -1,13 +1,16 @@
 package com.poly.be_duan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -36,10 +39,12 @@ public class Bill {
     private String personTake;
 
     @Column(name = "create_date")
-    private LocalDateTime createDate;
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date createDate;
 
     @Column(name = "time_receive")
-    private LocalDateTime timeReceive;
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date timeReceive;
 
     @Column(name = "total_money")
     private BigDecimal totalMoney;
@@ -59,13 +64,16 @@ public class Bill {
     @Column(name = "status")
     private Integer status;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "id_bill_old")
     private Bill oldBill;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bill")
     private List<Bill_detail> billDetails;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "bill")
     private List<Sale_detail> saleDetails;
 }

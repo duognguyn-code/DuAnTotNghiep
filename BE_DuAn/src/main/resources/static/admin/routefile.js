@@ -37,4 +37,20 @@ app.config(function($routeProvider){
             templateUrl:"/admin/Product/Category.html",
             controller:"category-ctrl"
         })
+        .when("/cart",{
+            templateUrl:"/admin/Cart/List_Cart.html",
+            controller:"cart-ctrl"
+        })
+        .when("/cartdetail",{
+            templateUrl:"/admin/Cart/CartDetails.html",
+            controller:"cart-ctrl"
+        })
+        .when("/bill",{
+            templateUrl:"/admin/Bill/List_Bill.html",
+            controller:"bill-ctrl"
+        })
+        .when("/billDetail",{
+            templateUrl:"/admin/Bill/List_BillDetail.html",
+            controller:"billDetails-ctrl"
+        })
 })
