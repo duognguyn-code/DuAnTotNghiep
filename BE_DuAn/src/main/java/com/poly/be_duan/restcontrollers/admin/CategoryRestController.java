@@ -32,4 +32,5 @@ public class CategoryRestController {
     public void delete(@PathVariable("id") Integer id) {
         categoryService.deleteById(id);
     }
+
 }

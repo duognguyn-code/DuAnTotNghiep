@@ -24,9 +24,6 @@ public class Color {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "status")
-    private Integer status;
-
     @JsonIgnore
     @OneToMany(mappedBy = "color")
     private List<Product> products;

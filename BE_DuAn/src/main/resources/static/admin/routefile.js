@@ -13,6 +13,10 @@ app.config(function($routeProvider){
             templateUrl:"/admin/Product/CreateProduct.html",
             controller:"productController"
         })
+        .when("/Pageupdateproduct",{
+            templateUrl:"/admin/Product/UpdateProduct.html",
+            controller:"productController"
+        })
         .when("/listproduct",{
             templateUrl:"/admin/Product/ListProduct.html",
             controller:"productController"

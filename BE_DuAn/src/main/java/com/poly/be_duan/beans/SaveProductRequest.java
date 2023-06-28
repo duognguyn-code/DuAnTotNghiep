@@ -21,6 +21,7 @@ public class SaveProductRequest {
     private List<MultipartFile> files;
     private BigDecimal price;
     private int status;
+    private List<Image> listImage;
     private Category category;
     private Size size;
     private Color color;

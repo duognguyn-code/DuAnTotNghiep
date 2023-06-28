@@ -51,7 +51,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public List<Image> createList(List<Image> images) {
-        return null;
+        return imageRepository.saveAll(images);
     }
 
     @Override

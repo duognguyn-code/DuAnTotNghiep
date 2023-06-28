@@ -1,9 +1,6 @@
 package com.poly.be_duan.dto;
 
-import com.poly.be_duan.entities.Color;
-import com.poly.be_duan.entities.Designs;
-import com.poly.be_duan.entities.Material;
-import com.poly.be_duan.entities.Size;
+import com.poly.be_duan.entities.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +20,5 @@ public class ProductDetailDTO {
     private List<Designs> designs;
     private List<Size> sizes;
     private List<Color> colors;
+    private List<String> Images;
 }

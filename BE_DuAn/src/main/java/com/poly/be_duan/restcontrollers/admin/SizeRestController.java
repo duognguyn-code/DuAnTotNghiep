@@ -27,12 +27,12 @@ public class SizeRestController {
     }
 
     @PutMapping("{id}")
-    public Size update(@PathVariable("id") Long id, Size size) {
+    public Size update(@PathVariable("id") Integer id, Size size) {
         size.setId(id);
         return sizeService.update(size);
     }
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Integer id) {
         sizeService.delete(id);
     }
 }

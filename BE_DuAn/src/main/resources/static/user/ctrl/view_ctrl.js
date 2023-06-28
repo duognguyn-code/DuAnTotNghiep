@@ -1,5 +1,6 @@
-app.controller('UserController', function ($rootScope,$scope, $http) {
+app.controller('UserController', function ($rootScope, $scope, $http, $window) {
     const apiUrlProduct = "http://localhost:8080/api/product";
+
 
     $scope.products = [];
     $scope.formProduct = {};
@@ -17,11 +18,11 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
 
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
-        alert("abc")
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
                 console.log(response);
+                console.log($scope.products.images.urlimage);
             })
             .catch(function (error) {
                 console.log(error);
@@ -54,7 +55,7 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
             method: 'POST',
             url: '/api/product/saveProduct',
             data: formData,
-            headers: { 'Content-Type': undefined }
+            headers: {'Content-Type': undefined}
         }
         let timerInterval
         Swal.fire({
@@ -201,8 +202,6 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
     }
 
 
-
-
     $scope.previewImage = function () {
         var input = document.getElementById('image');
         if (input.files && input.files.length > 0) {
@@ -323,24 +322,24 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
         }
 
     }
-    $scope.searchProduct=function(){
-        if ($scope.searchPriceMin===""){
-            $scope.searchPriceMin="Min"
+    $scope.searchProduct = function () {
+        if ($scope.searchPriceMin === "") {
+            $scope.searchPriceMin = "Min"
 
         }
-        if ($scope.searchProducts === ""){
-            $scope.searchProducts=" "
+        if ($scope.searchProducts === "") {
+            $scope.searchProducts = " "
 
         }
-        if ($scope.searchPriceMax===""){
-            $scope.searchPriceMax="Max"
+        if ($scope.searchPriceMax === "") {
+            $scope.searchPriceMax = "Max"
         }
         if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
-            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === ""&& $scope.searchPriceMax === ""&& $scope.searchProducts === 'undefined'
+            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
-            $http.get(apiUrlProduct+'/search' + '/' +$scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign+'/'+$scope.searchPriceMin+'/'+$scope.searchPriceMax+'/'+ $scope.searchStatus )
+            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
@@ -350,19 +349,19 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
                 })
         }
     };
-    $scope.GetresetForm=function(){
-            $http.get(apiUrlProduct+'/search' + '/' +"undefined" + '/' +"undefined"+ '/' + "undefined" + '/' + "undefined" + '/' + "undefined"+'/'+"undefined"+'/'+"undefined"+'/'+"1")
-                .then(function (response) {
-                    $scope.products = response.data;
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+    $scope.GetresetForm = function () {
+        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
+            .then(function (response) {
+                $scope.products = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     };
-    $scope.pagerProducts= {
+    $scope.pagerProducts = {
         page: 0,
-        size: 5,
+        size: 9,
         get products() {
             var start = this.page * this.size;
             return $scope.products.slice(start, start + this.size);
@@ -410,7 +409,7 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
         $scope.searchStatus = "1";
         $scope.searchPriceMin = "";
         $scope.searchPriceMax = "";
-        $scope.searchProducts =" ";
+        $scope.searchProducts = " ";
         $('#sizeSearch').prop('selectedIndex', 0);
         $scope.GetresetForm();
     }
@@ -422,4 +421,30 @@ app.controller('UserController', function ($rootScope,$scope, $http) {
     $scope.getColors();
     $scope.getCategory();
 
+    $scope.detailProduct = {}
+    $scope.idCheck = undefined;
+    $scope.getDetailProduct = function (id) {
+        console.log(id)
+        if (id == 0) {
+            id = localStorage.getItem('idDetail');
+            $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
+                $scope.detailProduct = response.data;
+            }).catch(error => {
+                console.log(error, "lỗi")
+            })
+        } else {
+            localStorage.removeItem('idDetail');
+            localStorage.setItem('idDetail', id);
+            $window.location.href = '#!product_detail';
+        }
+    }
+
+//$scope.edit = function(productId) {
+//        // Chuyển hướng đến trang UpdateProduct.html với tham số id
+//        if (!$scope.isRedirected) {
+//            // Chuyển hướng đến trang UpdateProduct.html với tham số id
+//            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
+//            $location.path('/product_detail/').search({id: productId});
+//        }
+//    };
 });

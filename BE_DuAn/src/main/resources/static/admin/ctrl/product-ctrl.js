@@ -1,8 +1,9 @@
-app.controller('productController', function ($rootScope,$scope, $http) {
+app.controller('productController', function ($rootScope, $scope, $http ,$location,$routeParams) {
     const apiUrlProduct = "http://localhost:8080/api/product";
 
     $scope.products = [];
     $scope.formProduct = {};
+    $scope.productData = {};
     $scope.sizes = [];
     $scope.formSize = {};
     $scope.colors = [];
@@ -62,20 +63,16 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 console.log(error);
             });
     };
-    // $scope.addProduct = function () {
-    //     $http.post(apiUrlProduct, $scope.formProduct)
-    //         .then(function (response) {
-    //             $scope.products.push(response.data);
-    //             $scope.formProduct = {};
-    //             $scope.resetProducts();
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // };
+    $scope.uploadFile = function (files) {
+        $scope.files = files;
+        console.log($scope.files);
+    }
     $scope.addProduct = function () {
         // Lấy tên tệp tin từ đường dẫn
         var formData = new FormData();
+        angular.forEach($scope.files, function (file) {
+            formData.append('files', file);
+        });
         formData.append('name', $scope.formProduct.name);
         formData.append('size', $scope.formProduct.size);
         formData.append('price', $scope.formProduct.price);
@@ -88,8 +85,8 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         var req = {
             method: 'POST',
             url: '/api/product/saveProduct',
-            data: formData,
-            headers: { 'Content-Type': undefined }
+            headers: {'Content-Type': undefined},
+            data: formData
         }
         let timerInterval
         Swal.fire({
@@ -116,6 +113,84 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }).catch(error => {
             $scope.error('thêm mới thất bại');
         });
+    };
+    $scope.edit = function(productId) {
+        // Chuyển hướng đến trang UpdateProduct.html với tham số id
+        if (!$scope.isRedirected) {
+            // Chuyển hướng đến trang UpdateProduct.html với tham số id
+            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
+            $location.path('/Pageupdateproduct/').search({id: productId});
+        }
+    };
+    $scope.getProductDataUpdate = function() {
+        var productId = $routeParams.id;
+        // Sử dụng $http hoặc $resource để lấy thông tin sản phẩm theo ID từ backend
+        $http.get('/api/product/' + productId)
+            .then(function(response) {
+                var product = response.data; // Đối tượng chứa thông tin sản phẩm
+                $scope.productData.category = product.category; // Gán giá trị thể loại
+                $scope.productData.name = product.name; // Gán giá trị tên sản phẩm
+                $scope.productData.status = product.status; // Gán giá trị trạng thái
+                $scope.productData.material = product.material; // Gán giá trị trạng thái
+                $scope.productData.size = product.size; // Gán giá trị trạng thái
+                $scope.productData.design = product.design; // Gán giá trị trạng thái
+                $scope.productData.price = product.price; // Gán giá trị trạng thái
+            })
+            .catch(function(error) {
+                // Xử lý khi có lỗi trong việc lấy thông tin sản phẩm
+                console.error('Lỗi khi lấy thông tin sản phẩm:', error);
+            });
+    };
+
+    $scope.onUpdate = function() {
+        var productId = $routeParams.id;
+        var formData = new FormData();
+        formData.append('name', $scope.productData.name);
+        formData.append('size', $scope.productData.size);
+        formData.append('price', $scope.productData.price);
+        formData.append('status', $scope.productData.status = 1);
+        formData.append('category', $scope.productData.category);
+        formData.append('material', $scope.productData.material);
+        formData.append('design', $scope.productData.design);
+        formData.append('color', $scope.productData.color);
+
+        let req = {
+            method: 'POST',
+            url: '/api/product/updateProduct/' +productId,
+            data: formData,
+            headers: {
+                'Content-Type': undefined // Đặt header 'Content-Type' thành undefined để FormData tự định dạng
+            }
+        };
+
+        let timerInterval;
+        Swal.fire({
+            title: 'Đang cập nhật, vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector('b');
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft();
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        });
+
+        $http(req)
+            .then(response => {
+                console.log("ddd " + response.data);
+                $scope.message("Cập nhật sản phẩm thành công");
+                $scope.refresh();
+                $scope.getProducts();
+            })
+            .catch(error => {
+                $scope.error('Cập nhật thất bại');
+            });
     };
     $scope.doSubmit = function () {
         if ($scope.formProduct.idProduct) {
@@ -168,23 +243,8 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             })
         }
     };
-    $scope.editProduct = function (product) {
-        $scope.formProduct = angular.copy(product);
-    }
     // Cập nhật thông tin sản phẩm
-    $scope.updateProduct = function (product) {
-        $http.put(apiUrlProduct + '/' + product.id, product)
-            .then(function (response) {
-                // Cập nhật thông tin sản phẩm trong danh sách
-                var index = $scope.products.findIndex(p => p.id === product.id);
-                if (index !== -1) {
-                    $scope.products[index] = response.data;
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
+
     // Xóa sản phẩm
     $scope.deleteProduct = function (formProduct) {
         Swal.fire({
@@ -234,9 +294,6 @@ app.controller('productController', function ($rootScope,$scope, $http) {
             status: 1
         }
     }
-
-
-
 
 
     $scope.previewImage = function () {
@@ -556,24 +613,65 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         }
 
     }
-    $scope.searchProduct=function(){
-        if ($scope.searchPriceMin===""){
-            $scope.searchPriceMin="Min"
+    $scope.generationNameForUpdate = function () {
+        if ($scope.productData.name != undefined || $scope.productData.name != null || $scope.productData.name != '') {
+            $scope.productData.name = '';
+        }
+        if ($scope.productData.category != undefined || $scope.productData.category != null || $scope.productData.category != '') {
+            for (let i = 0; i < $scope.categories.length; i++) {
+                if ($scope.productData.category == $scope.categories[i].idCategory) {
+                    $scope.productData.name = $scope.categories[i].name;
+                }
+            }
+        }
+        if ($scope.productData.color != undefined || $scope.productData.color != null || $scope.productData.color != '') {
+            for (let i = 0; i < $scope.colors.length; i++) {
+                if ($scope.productData.color == $scope.colors[i].id) {
+                    $scope.productData.name += ' Màu ' + $scope.colors[i].name;
+                }
+            }
+        }
+        if ($scope.productData.design != undefined || $scope.productData.design != null || $scope.productData.design != '') {
+            for (let i = 0; i < $scope.designs.length; i++) {
+                if ($scope.productData.design == $scope.designs[i].id) {
+                    $scope.productData.name += ' Thiết kế ' + $scope.designs[i].name;
+                }
+            }
+        }
+        if ($scope.productData.material != undefined || $scope.productData.material != null || $scope.productData.material != '') {
+            for (let i = 0; i < $scope.colors.length; i++) {
+                if ($scope.formProduct.material == $scope.materials[i].id) {
+                    $scope.productData.name += ' Chất Liệu ' + $scope.materials[i].name;
+                }
+            }
+        }
+        if ($scope.productData.size != undefined || $scope.productData.size != null || $scope.productData.size != '') {
+            for (let i = 0; i < $scope.sizes.length; i++) {
+                if ($scope.productData.size == $scope.sizes[i].id) {
+                    $scope.productData.name += ' Size ' + $scope.sizes[i].name;
+                }
+            }
+        }
+
+    }
+    $scope.searchProduct = function () {
+        if ($scope.searchPriceMin === "") {
+            $scope.searchPriceMin = "Min"
 
         }
-        if ($scope.searchProducts === ""){
-            $scope.searchProducts=" "
+        if ($scope.searchProducts === "") {
+            $scope.searchProducts = " "
 
         }
-        if ($scope.searchPriceMax===""){
-            $scope.searchPriceMax="Max"
+        if ($scope.searchPriceMax === "") {
+            $scope.searchPriceMax = "Max"
         }
         if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
-            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === ""&& $scope.searchPriceMax === ""&& $scope.searchProducts === 'undefined'
+            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
-            $http.get(apiUrlProduct+'/search' + '/' +$scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign+'/'+$scope.searchPriceMin+'/'+$scope.searchPriceMax+'/'+ $scope.searchStatus )
+            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
@@ -583,17 +681,17 @@ app.controller('productController', function ($rootScope,$scope, $http) {
                 })
         }
     };
-    $scope.GetresetForm=function(){
-            $http.get(apiUrlProduct+'/search' + '/' +"undefined" + '/' +"undefined"+ '/' + "undefined" + '/' + "undefined" + '/' + "undefined"+'/'+"undefined"+'/'+"undefined"+'/'+"1")
-                .then(function (response) {
-                    $scope.products = response.data;
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
+    $scope.GetresetForm = function () {
+        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
+            .then(function (response) {
+                $scope.products = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     };
-    $scope.pagerProducts= {
+    $scope.pagerProducts = {
         page: 0,
         size: 5,
         get products() {
@@ -643,7 +741,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
         $scope.searchStatus = "1";
         $scope.searchPriceMin = "";
         $scope.searchPriceMax = "";
-        $scope.searchProducts =" ";
+        $scope.searchProducts = " ";
         $('#sizeSearch').prop('selectedIndex', 0);
         $scope.GetresetForm();
     }
@@ -654,5 +752,7 @@ app.controller('productController', function ($rootScope,$scope, $http) {
     $scope.getMaterials();
     $scope.getColors();
     $scope.getCategory();
+    $scope.getProductDataUpdate();
+    $scope.generationNameForUpdate();
 
 });

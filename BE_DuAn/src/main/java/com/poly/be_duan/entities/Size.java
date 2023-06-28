@@ -19,13 +19,10 @@ public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_size")
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "status")
-    private Integer status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "size")

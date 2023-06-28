@@ -3,8 +3,10 @@ package com.poly.be_duan.restcontrollers.admin;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.poly.be_duan.beans.SaveProductRequest;
+import com.poly.be_duan.dto.ProductDetailDTO;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -60,6 +62,7 @@ public class ProductRestController {
         }
 
     }
+
 
     @GetMapping("{color}/{design}/{material}/{size}/{product}")
     public ResponseEntity<List<Product>> getByColor(
@@ -164,6 +167,13 @@ public class ProductRestController {
         List<Category> listCategory = categoryService.findAll();
         System.out.println(listCategory);
 
+        if (prd.getCategory() != null) {
+            for (Category cate : listCategory) {
+                if (Objects.equals(prd.getCategory().getIdCategory(), cate.getIdCategory())) {
+                    name.append(cate.getName());
+                }
+            }
+        }
         if (prd.getMaterial() != null) {
             for (Material mate : listMate) {
                 if (Objects.equals(prd.getMaterial().getId(), mate.getId())) {
@@ -270,8 +280,38 @@ public class ProductRestController {
             System.err.println(e.getMessage());
         }
         return ResponseEntity.ok("Success");
+    }
+    @PostMapping("/updateProduct/{id}")
+    public void updateProduct(@PathVariable Integer id,@ModelAttribute SaveProductRequest saveProductRequest) {
+        Optional<Product> optionalProduct = productService.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setName(generationName(saveProductRequest));
+            product.setPrice(saveProductRequest.getPrice());
+            product.setCategory(saveProductRequest.getCategory());
+            product.setColor(saveProductRequest.getColor());
+            product.setDesign(saveProductRequest.getDesign());
+            product.setMaterial(saveProductRequest.getMaterial());
+            product.setStatus(saveProductRequest.getStatus());
+            product.setSize(saveProductRequest.getSize());
+            productService.save(product);
+        } else {
+            throw new RuntimeException("Bản ghi này không tồn tại");
+        }
+    }
 
-
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getById(@PathVariable Integer id) {
+        try {
+            Optional<Product> product = productService.findById(id);
+            if (product.isPresent()) {
+                return ResponseEntity.ok(product.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
     @GetMapping("search/{name}/{color}/{material}/{size}/{design}/{min}/{max}/{status}")
     public ResponseEntity<List<Product>> search(@PathVariable(value = "name")String name, @PathVariable(value = "color")String color
