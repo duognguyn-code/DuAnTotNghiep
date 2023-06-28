@@ -1,5 +1,6 @@
 package com.poly.be_duan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +53,7 @@ public class Bill_detail {
     @JoinColumn(name = "previous_bill_detail_id")
     private Bill_detail previousBillDetail;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "billDetail")
     private List<ProductChange> productChanges;
 
