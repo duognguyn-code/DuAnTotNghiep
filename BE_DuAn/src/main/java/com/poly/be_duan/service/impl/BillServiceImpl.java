@@ -33,13 +33,13 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public List<Bill> searchByPhoneAndDateAndStatus(String phone, Date date, Integer sts) {
-        return billRepository.searchByPhoneAndDateAndStatus(phone, date, sts);
+    public List<Bill> searchByPhoneAndDateAndStatus(String phone, Date date,Date date1, Integer sts) {
+        return billRepository.searchByPhoneAndDateAndStatus(phone,date,date1,sts);
     }
 
     @Override
-    public List<Bill> searchByPhoneAndDate(String phone, Date date) {
-        return billRepository.searchByPhoneAndDate(phone,date);
+    public List<Bill> searchByPhoneAndDate(String phone, Date date,Date date1) {
+        return billRepository.searchByPhoneAndDate(phone,date,date1);
     }
 
     @Override
@@ -47,10 +47,10 @@ public class BillServiceImpl implements BillService {
         return billRepository.searchByPhoneAndStatus(phone,sts);
     }
 
-    @Override
-    public List<Bill> searchByPhone(String phone) {
-        return billRepository.searchByPhone(phone);
-    }
+//    @Override
+//    public List<Bill> searchByPhone(String phone) {
+//        return billRepository.searchByPhone(phone);
+//    }
 //
 //    @Override
 //    public Bill updateStatus(Integer sts, Integer id) {
@@ -66,4 +66,9 @@ public class BillServiceImpl implements BillService {
     public Optional<Bill> findBillByID(Integer id) {
         return billRepository.findBillById(id);
     }
+
+//    @Override
+//    public List<Bill> /searchByDate(Date date, Date date1) {
+//        return billRepository.searchByDate(date,date1);
+//    }
 }

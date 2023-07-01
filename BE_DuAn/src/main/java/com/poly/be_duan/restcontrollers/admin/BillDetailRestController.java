@@ -26,11 +26,10 @@ public class BillDetailRestController {
     @Autowired
     BillService billService;
 
-    @GetMapping("")
-    public ResponseEntity<List<Bill_detail>> getBill_detail() {
-        int a = Integer.parseInt(cookieService.getValue("idBill",""));
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Bill_detail>> getBill_detail(@PathVariable Integer id) {
         try {
-            return ResponseEntity.ok(billDetailService.getBill_detail(a));
+            return ResponseEntity.ok(billDetailService.getBill_detail(id));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

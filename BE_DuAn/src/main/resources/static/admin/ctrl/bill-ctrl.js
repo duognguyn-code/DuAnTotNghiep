@@ -1,9 +1,11 @@
-app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter) {
+app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$location,$routeParams) {
     const apiUrlBill = "http://localhost:8080/api/bill";
     const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
 
     $scope.bills = [];
     $scope.formBill = {};
+    $scope.bills1 = [];
+    $scope.formBill1 = {};
     $scope.billDetails = [];
     $scope.formBillDetail = {};
     $scope.form = {};
@@ -40,16 +42,30 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter) {
     //
     //
     // };
-    // $scope.getBillDetails2 = function () {
-    //     $http.get(apiUrlBillDetails)
-    //         .then(function (response) {
-    //             $scope.billDetails = response.data;
-    //             console.log(response);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
+    $scope.getBillDetail = function () {
+        var billId = $routeParams.id;
+        $http.get(apiUrlBillDetails+'/'+billId)
+            .then(function (response) {
+                $scope.billDetails = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    $scope.getBillByID = function () {
+        var billId = $routeParams.id;
+        $http.get(apiUrlBill+'/'+billId)
+            .then(function (response) {
+                $scope.bills1 = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    $scope.getBillByID();
+    $scope.getBillDetail();
     $scope.getBill();
     $scope.resetSearch = function () {
         $scope.searchPhone = " ";
@@ -64,11 +80,14 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter) {
             $scope.searchPhone = " "
         }
         let date1 = $filter('date')($scope.date1, "yyyy/MM/dd");
-        alert(date1 + "date 2" + $scope.searchStatus)
+        let date2 = $filter('date')($scope.date2, "yyyy/MM/dd");
         if (date1 == null) {
             date1 = null
         }
-        $http.get(apiUrlBill + '/' + $scope.searchPhone + '/' + $scope.searchStatus + `/date?date1=` + date1)
+        if (date2 == null) {
+            date2 = null
+        }
+        $http.get(apiUrlBill + '/' + $scope.searchPhone + '/' + $scope.searchStatus + `/date?date1=` + date1+'&&date2='+date2)
             .then(function (response) {
                 $scope.bills = response.data;
                 console.log(response);
@@ -162,5 +181,50 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter) {
         })
     }
 
+
+    $scope.edit = function(billId) {
+        if (!$scope.isRedirected) {
+            $scope.isRedirected = true;
+            $location.path('/billDetail/').search({id: billId});
+        }
+    };
+    $scope.pagerBill = {
+        page: 0,
+        size: 5,
+        get bills() {
+            var start = this.page * this.size;
+            return $scope.bills.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.bills.length / this.size);
+            return $scope.bills.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.bills.length / this.size);
+
+        },
+        first() {
+            this.page = 0;
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.first();
+                alert("Bạn đang ở trang đầu")
+            }
+        },
+        next() {
+            this.page++;
+            if (this.page >= this.count) {
+                this.last();
+                alert("Bạn đang ở trang cuối")
+            }
+        },
+        last() {
+            this.page = this.count - 1;
+        }
+    }
 
 });
