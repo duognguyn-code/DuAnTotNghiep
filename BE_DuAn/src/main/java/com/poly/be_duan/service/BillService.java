@@ -16,13 +16,15 @@ public interface BillService {
 
     public Bill update(Bill bill);
 
-    public List<Bill> searchByPhoneAndDateAndStatus(String phone, Date date, Integer sts);
-    public List<Bill> searchByPhoneAndDate(String phone, Date date);
+    public List<Bill> searchByPhoneAndDateAndStatus(String phone, Date date,Date date1, Integer sts);
+    public List<Bill> searchByPhoneAndDate(String phone, Date date,Date date1);
     public List<Bill> searchByPhoneAndStatus(String phone,Integer sts);
-    public List<Bill> searchByPhone(String phone);
+//    public List<Bill> searchByPhone(String phone);
 
 //    public Bill updateStatus(Integer sts,Integer id);
 
     public Bill updateStatus(Bill bill);
     public Optional<Bill> findBillByID(Integer id);
+
+//    public List<Bill> searchByDate(Date date, Date date1);
 }
