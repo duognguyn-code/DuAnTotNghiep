@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,69 +46,48 @@ public class BillRestController {
     }
 
     @GetMapping("/{id}")
-    public List<Bill> getByID(@PathVariable(value = "id") String id) {
-        cookieService.remove("idBill");
-        cookieService.add("idBill", id, 1);
-        int a = Integer.parseInt(id);
-        return billService.getBill(a);
+    public List<Bill> getByID(@PathVariable(value = "id") Integer id) {
+//        cookieService.remove("idBill");
+//        cookieService.add("idBill", id, 1);
+//        int a = Integer.parseInt(id);
+        return billService.getBill(id);
 
     }
 
     @GetMapping("/{phone}/{sts}/date")
-    public ResponseEntity<List<Bill>> searchBill(@RequestParam("date1") String date1, @PathVariable(value = "phone") String phone, @PathVariable(value = "sts") String sts) throws ParseException {
-        System.out.println("phone " +phone +"--"+"date " +date1+"---"+" sts "+sts);
-        if (phone.equals(" ")){
+    public ResponseEntity<List<Bill>> searchBill(@RequestParam("date1") String date1, @RequestParam("date2") String date2, @PathVariable(value = "phone") String phone, @PathVariable(value = "sts") String sts) throws ParseException {
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        if (date1.equals("null")) {
+            date1 = "2023/05/03";
+        }
+        if (date2.equals("null")) {
+            date2 = today.format(dateTimeFormatter);
+        }
+
+        if (phone.equals(" ")) {
             phone = "0";
         }
-        if (date1.equals("null")){
-            System.out.println("nguvcl");
-        }
-        if (date1.equals("undefined")| date1.equals("null")){
-            System.out.println("ngokl");
-            if (sts==null| sts.equals("6")){
-                return ResponseEntity.ok(billService.searchByPhone(phone));
-            }else{
-                int st = Integer.parseInt(sts);
-                return ResponseEntity.ok(billService.searchByPhoneAndStatus(phone,st));
-            }
-        }else if (sts==null| sts.equals("6")){
-            Date dates1 = new Date(date1);
-            return ResponseEntity.ok(billService.searchByPhoneAndDate(phone,dates1));
-        }else{
+        Date dates1 = new Date(date1);
+        Date dates2 = new Date(date2);
+        if (sts == null | sts.equals("6")) {
+            return ResponseEntity.ok(billService.searchByPhoneAndDate(phone, dates1, dates2));
+        } else {
             int st = Integer.parseInt(sts);
-            Date dates1 = new Date(date1);
-            return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone,dates1,st));
+            return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone, dates1, dates2, st));
         }
-//        int st = Integer.parseInt(sts);
-////        System.out.println(stsBuy + sts);
-//        Date a = new Date();
-//        System.out.println(date1 + " ngay thang");
-//
-//        if (date1.equals("undefined")){
-//            System.out.println("ngu");
-//        }
-//        Date dates1 = new Date(date1);
-//
-//
-//        System.out.println(billService.searchBill(phone, dates1, st));
-//        try {
-//            return ResponseEntity.ok(billService.searchBill(phone, dates1, st));
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//        }
 
     }
 
     @PutMapping("/updateStatus")
     public Bill updateStatus(@RequestBody Bill bill) {
-//        System.out.println(sts +"---"+id);
         Bill billOld = billService.findBillByID(bill.getId()).get();
 
-        System.out.println(billOld.getId()+"ssss");
+        System.out.println(billOld.getId() + "ssss");
         System.out.println(billService.updateStatus(billOld));
-        if (bill.getStatus()<billOld.getStatus()){
+        if (bill.getStatus() < billOld.getStatus()) {
             return null;
-        }else {
+        } else {
             billOld.setStatus(bill.getStatus());
             return billService.updateStatus(billOld);
         }
