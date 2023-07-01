@@ -25,9 +25,6 @@ public class Role {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @Column(name = "status")
-    private Integer status;
-
     @JsonIgnore
     @OneToMany(mappedBy = "role")
     private List<Account> accounts;
