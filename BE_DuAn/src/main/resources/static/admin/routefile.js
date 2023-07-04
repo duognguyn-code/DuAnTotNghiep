@@ -53,4 +53,8 @@ app.config(function($routeProvider){
             templateUrl:"/admin/Bill/List_BillDetail.html",
             controller:"bill-ctrl"
         })
+        .when("/payment",{
+            templateUrl:"/admin/Payment/Payment.html",
+            controller:"productController"
+        })
 })
