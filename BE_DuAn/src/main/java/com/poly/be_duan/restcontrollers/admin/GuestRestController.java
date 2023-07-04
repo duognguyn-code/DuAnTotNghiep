@@ -3,6 +3,7 @@ package com.poly.be_duan.restcontrollers.admin;
 import com.poly.be_duan.dto.ProductDetailDTO;
 import com.poly.be_duan.dto.ProductResponDTO;
 import com.poly.be_duan.entities.Category;
+import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.service.CategoryService;
 import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,14 @@ public class GuestRestController {
     @RequestMapping("/product/product_detail/{idcate}")
     public ProductDetailDTO getDetailProduct(@PathVariable("idcate") Integer id){
         return productService.getDetailProduct(id);
+    }
+    @RequestMapping("/product/get_detail_product/{idDesign}/{idSize}/{idColor}/{idMaterial}")
+    public Product getdetailProduct(
+            @PathVariable("idDesign")Integer idDesign,
+            @PathVariable("idSize")Integer idSize,
+            @PathVariable("idColor")Integer idColor,
+            @PathVariable("idMaterial")Integer idMaterial
+    ){
+        return productService.getdeTailPrd(idDesign,idSize,idColor,idMaterial);
     }
 }

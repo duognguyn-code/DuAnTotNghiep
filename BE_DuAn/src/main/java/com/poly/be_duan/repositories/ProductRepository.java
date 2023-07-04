@@ -41,8 +41,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     List<Integer> getlistDetailProductDesign(Integer id);
     @Query(value = "select distinct id_material from products where id_category =?1 and status=1",nativeQuery = true)
     List<Integer> getlistDetailProductMaterial(Integer id);
-    @Query(value = "select * from products where id_color =?1 and id_size  =?2 and id_design=?3 and id_material =?4 and status=1 limit 1",nativeQuery = true)
-    Product getDetailPrd(Integer idCapa, Integer idRam, Integer idColor);
+    @Query(value = "select * from products where id_design =?1 and id_size  =?2 and id_color =?3 and id_material =?4 and status=1 limit 1",nativeQuery = true)
+    Product getDetailPrd(Integer idDesign, Integer idSize, Integer idColor, Integer idMaterial);
     @Query(value = "SELECT products.id_products  FROM products where id_category = ?1 and status = 1", nativeQuery = true)
     List<Integer> getIdimage(Integer id);
     @Query(value = "select url_image from images where id_products =?1 limit 1",nativeQuery = true)

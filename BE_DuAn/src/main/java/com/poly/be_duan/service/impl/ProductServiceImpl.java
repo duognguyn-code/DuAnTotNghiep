@@ -187,4 +187,14 @@ public class ProductServiceImpl implements ProductService {
         }
         return listgetAllProduct;
     }
+    @Override
+    public Product getdeTailPrd(Integer idDesign, Integer idSize, Integer idColor, Integer idMaterial){
+        Product prd = new Product();
+        if (productRepository.getDetailPrd(idDesign,idSize,idColor,idMaterial)!=null){
+                prd = productRepository.getDetailPrd(idDesign,idSize,idColor,idMaterial);
+        }else{
+            prd = null;
+        }
+        return prd;
+    }
 }

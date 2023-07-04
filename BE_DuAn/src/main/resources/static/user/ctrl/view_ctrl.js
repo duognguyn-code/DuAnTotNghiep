@@ -438,13 +438,36 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
             $window.location.href = '#!product_detail';
         }
     }
+    $scope.checkDesign = 0;
+    $scope.checkMaterial = 0;
+    $scope.checkSize = 0;
+    $scope.checkColor = 0;
+    $scope.PrD={};
+    $scope.checkProduct = function (id, check){
 
-//$scope.edit = function(productId) {
-//        // Chuyển hướng đến trang UpdateProduct.html với tham số id
-//        if (!$scope.isRedirected) {
-//            // Chuyển hướng đến trang UpdateProduct.html với tham số id
-//            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
-//            $location.path('/product_detail/').search({id: productId});
-//        }
-//    };
+        if(check==0){
+        $scope.checkDesign=id;
+        }else if(check==1){
+        $scope.checkSize=id;
+        }else if(check==2){
+        $scope.checkColor=id;
+        }else if(check==3){
+        $scope.checkMaterial=id;
+        }
+        if($scope.checkDesign!=0 && $scope.checkSize!=0 && $scope.checkColor!=0 && $scope.checkMaterial!=0){
+//            let url = 'rest/guest/product/get_detail_product' +'/' +$scope.checkDesign +'/' +$scope.checkSize +'/'+$scope.checkColor +'/'+$scope/checkMaterial
+            $http.get(`rest/guest/product/get_detail_product/` +$scope.checkDesign +`/` +$scope.checkSize +`/`+$scope.checkColor +`/`+$scope.checkMaterial).then(function(response){
+            $scope.PrD = response.data;
+            if($scope.PrD!=''){
+                $scope.checkQuantity = false;
+            }else if($scope.PrD==''){
+                $scope.checkQuantity = true;
+            }
+            alert($scope.checkQuantity);
+            }).catch(error => {
+                console.log(error,'lỗi check product')
+            })
+        }
+    }
+
 });
