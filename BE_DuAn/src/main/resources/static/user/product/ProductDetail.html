@@ -41,8 +41,10 @@
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kiểu dáng:</p>
                     <form>
-                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="design in detailProduct.designs">
-                            <input type="radio" class="custom-control-input" id="design-{{design.name}}" name="design" ng-checked="checkDesign!=0 ? true : false" ng-click="checkProduct(design.id, 0)">
+                        <div class="custom-control custom-radio custom-control-inline"
+                             ng-repeat="design in detailProduct.designs">
+                            <input type="radio" class="custom-control-input" id="design-{{design.name}}" name="design"
+                                   ng-checked="checkDesign!=0 ? true : false" ng-click="checkProduct(design.id, 0)">
                             <label class="custom-control-label" for="design-{{design.name}}">{{design.name}}</label>
                         </div>
                     </form>
@@ -50,8 +52,10 @@
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kích cỡ:</p>
                     <form>
-                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="s in detailProduct.sizes">
-                            <input type="radio" class="custom-control-input" id="{{s.name}}" name="size" ng-checked="checkSize!=0 ? true : false" ng-click="checkProduct(s.id, 1)">
+                        <div class="custom-control custom-radio custom-control-inline"
+                             ng-repeat="s in detailProduct.sizes">
+                            <input type="radio" class="custom-control-input" id="{{s.name}}" name="size"
+                                   ng-checked="checkSize!=0 ? true : false" ng-click="checkProduct(s.id, 1)">
                             <label class="custom-control-label" for="{{s.name}}">{{s.name}}</label>
                         </div>
                     </form>
@@ -59,8 +63,10 @@
                 <div class="d-flex mb-4">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
                     <form>
-                        <div class="custom-control custom-radio custom-control-inline" ng-repeat="cor in detailProduct.colors">
-                            <input type="radio" class="custom-control-input" id="{{cor.name}}" name="color" ng-checked="checkColor!=0 ? true : false" ng-click="checkProduct(cor.id, 2)">
+                        <div class="custom-control custom-radio custom-control-inline"
+                             ng-repeat="cor in detailProduct.colors">
+                            <input type="radio" class="custom-control-input" id="{{cor.name}}" name="color"
+                                   ng-checked="checkColor!=0 ? true : false" ng-click="checkProduct(cor.id, 2)">
                             <label class="custom-control-label" for="{{cor.name}}">{{cor.name}}</label>
                         </div>
                     </form>
@@ -70,7 +76,8 @@
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
                              ng-repeat="mat in detailProduct.materials">
-                            <input type="radio" class="custom-control-input" id="{{mat.name}}" name="material" ng-checked="checkMaterial!=0 ? true : false" ng-click="checkProduct(mat.id, 3)">
+                            <input type="radio" class="custom-control-input" id="{{mat.name}}" name="material"
+                                   ng-checked="checkMaterial!=0 ? true : false" ng-click="checkProduct(mat.id, 3)">
                             <label class="custom-control-label" for="{{mat.name}}">{{mat.name}}</label>
                         </div>
                     </form>
@@ -89,7 +96,10 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                    <button class="btn btn-primary px-3" ng-click="addCart(PrD)"
+                            ng-disabled="PrD.idProduct==undefined ? true : false"><i
+                            class="fa fa-shopping-cart mr-1"></i> Add To Cart
+                    </button>
                     <p ng-if="checkQuantity == true "
                        style="height: 70px; width: 100%; color: red; text-align: center ">Sản phẩm đã hết hàng
                     </p>

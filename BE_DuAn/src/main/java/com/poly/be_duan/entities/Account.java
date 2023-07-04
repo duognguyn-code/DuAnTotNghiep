@@ -1,5 +1,6 @@
 package com.poly.be_duan.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,8 +44,14 @@ public class Account {
     @Column(nullable = false)
     private Integer sex;
 
-    @Column(name = "address_id", nullable = false)
-    private String addressId;
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private List<Address> addresses;
+
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "address_id", referencedColumnName = "id_address")
+    private Address address_id;
 
     @Column(nullable = false)
     private String email;
