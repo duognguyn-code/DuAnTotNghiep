@@ -15,6 +15,8 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     $scope.categories = [];
     $scope.formCategory = {};
     $scope.index = 0;
+    $scope.checkButton = true;
+    $scope.checkSubmit = false;
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
@@ -86,7 +88,12 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
             method: 'POST',
             url: '/api/product/saveProduct',
             headers: {'Content-Type': undefined},
-            data: formData
+            data: formData,
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
         }
         let timerInterval
         Swal.fire({
@@ -112,6 +119,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
             $scope.getProducts();
         }).catch(error => {
             $scope.error('thêm mới thất bại');
+            alert(angular.toJson(error));
         });
     };
     $scope.edit = function(productId) {
