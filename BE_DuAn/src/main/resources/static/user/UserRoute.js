@@ -16,4 +16,8 @@ app.config(function($routeProvider){
             templateUrl:"/user/product/ProductDetail.html",
             controller:"UserController"
         })
+        .when("/address", {
+            templateUrl:"/user/address/addressTable.html",
+            controller:"address-form-ctrl"
+        })
 })
