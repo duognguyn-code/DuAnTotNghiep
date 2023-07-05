@@ -6,7 +6,7 @@ import com.poly.be_duan.entities.Address;
 import com.poly.be_duan.repositories.AccountRepository;
 import com.poly.be_duan.repositories.AddressRepository;
 import com.poly.be_duan.service.AddressService;
-import com.poly.be_duan.utils.Username;
+//import com.poly.be_duan.utils.Username;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,10 +117,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> findByUsername() {
-        List<Address> addressList = repository.findByAccount_Username(Username.getUserName());
-        List<AddressDTO> addressDTOList = addressList.stream().map(address ->
-                modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
-        return addressDTOList;
+//        List<Address> addressList = repository.findByAccount_Username(Username.getUserName());
+//        List<AddressDTO> addressDTOList = addressList.stream().map(address ->
+//                modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
+        return null;
     }
 
     @Override
