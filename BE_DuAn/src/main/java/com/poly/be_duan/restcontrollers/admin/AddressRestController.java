@@ -2,7 +2,7 @@ package com.poly.be_duan.restcontrollers.admin;
 
 import com.poly.be_duan.dto.AddressDTO;
 import com.poly.be_duan.service.AddressService;
-import com.poly.be_duan.utils.Username;
+//import com.poly.be_duan.utils.Username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +34,7 @@ public class AddressRestController {
 
     @PostMapping("/create")
     public AddressDTO create(@RequestBody AddressDTO addressDTO){
-        System.out.println("username : "+ Username.getUserName());
+//        System.out.println("username : "+ Username.getUserName());
         return addressService.save(addressDTO);
     }
 
