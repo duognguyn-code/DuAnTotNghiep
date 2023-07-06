@@ -75,9 +75,8 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO save(AddressDTO addressDTO) {
         Address address = modelMapper.map(addressDTO, Address.class);
-//        Account username = accountRepository.findByName(Username.getUserName());
-//        System.out.println(Username.getUserName());
-//        address.setAccount(username);
+        Account username = accountRepository.findByName("Duong");
+        address.setAccount(username);
         Address addressSave = repository.save(address);
         AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
         return addressDTOSave;
@@ -117,10 +116,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> findByUsername() {
-//        List<Address> addressList = repository.findByAccount_Username(Username.getUserName());
-//        List<AddressDTO> addressDTOList = addressList.stream().map(address ->
-//                modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
-        return null;
+        List<Address> addressList = repository.findByAccount_Username("Duong");
+        List<AddressDTO> addressDTOList = addressList.stream().map(address ->
+                modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
+        return addressDTOList;
     }
 
     @Override

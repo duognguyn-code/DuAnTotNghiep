@@ -84,7 +84,9 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
             $scope.resetCategory();
             $scope.getCategory();
         }).catch(error => {
+            console.log(error)
             $scope.error('thêm mới thất bại');
+
         });
     };
     $scope.editCategory = function (category) {

@@ -29,9 +29,11 @@ public class Bill_detail {
     @Column(name = "price")
     private BigDecimal price;
 
+//null
     @Column(name = "date_return")
     private LocalDateTime dateReturn;
 
+//null
     @Column(name = "money_refund")
     private BigDecimal moneyRefund;
 
