@@ -68,7 +68,34 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     $scope.uploadFile = function (files) {
         $scope.files = files;
         console.log($scope.files);
-    }
+        var previewImagesContainer = document.getElementById('previewImagesContainer');
+        previewImagesContainer.innerHTML = ''; // Xóa bỏ các ảnh hiện có
+        var imageCount = 0;
+
+         // Biến đếm số lượng ảnh đã hiển thị
+
+        for (var i = 0; i < files.length; i++) {
+            if (imageCount >= 3) {
+                break; // Đã đạt số lượng ảnh tối đa, thoát khỏi vòng lặp
+            }
+
+            var file = files[i];
+            var reader = new FileReader();
+
+            reader.onload = (function (file) {
+                return function (e) {
+                    var previewImage = document.createElement('img');
+                    previewImage.src = e.target.result;
+                    previewImage.className = 'previewImage';
+                    previewImage.width = '100'; // Chỉnh kích thước ảnh
+                    previewImagesContainer.appendChild(previewImage);
+                    imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
+                };
+            })(file);
+
+            reader.readAsDataURL(file);
+        }
+    };
     $scope.addProduct = function () {
         // Lấy tên tệp tin từ đường dẫn
         var formData = new FormData();
