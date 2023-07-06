@@ -271,7 +271,7 @@
                         <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                             <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
-                                <select ng-model="formProduct.material" id="material" name="material"
+                                <select ng-model="formProduct.material" id="material" name="material" required ng-change="generationName()"
                                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     <option ng-repeat="material in materials" ng-value="material.id">{{material.name}}
                                     </option>

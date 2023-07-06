@@ -60,7 +60,6 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
                     toast.addEventListener('mouseleave', Swal.resumeTimer)
                 }
             })
-
             Toast.fire({
                 icon: 'error',
                 title: 'Thêm mới thất bại!',
