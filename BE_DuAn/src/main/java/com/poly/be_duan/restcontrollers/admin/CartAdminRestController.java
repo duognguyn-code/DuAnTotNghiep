@@ -1,6 +1,5 @@
 package com.poly.be_duan.restcontrollers.admin;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.sarxos.webcam.Webcam;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
@@ -11,14 +10,10 @@ import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.multi.qrcode.detector.MultiDetector;
 import com.google.zxing.qrcode.decoder.Decoder;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.poly.be_duan.entities.Bill;
-import com.poly.be_duan.service.BillDetailService;
+import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.service.BillService;
-import com.poly.be_duan.service.CookieService;
 import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -26,68 +21,28 @@ import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/bill")
-public class BillRestController {
+@RequestMapping("/api/cart")
+public class CartAdminRestController {
+
     @Autowired
     BillService billService;
-
-    @Autowired
-    BillDetailService billDetailService;
-
-    @Autowired
-    CookieService cookieService;
 
     @Autowired
     ProductService productService;
 
     @GetMapping("")
-    public ResponseEntity<List<Bill>> getAll() {
-        System.out.println(billService.getAll());
-        try {
-            return ResponseEntity.ok(billService.getAll());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
-
-    }
-
-    @GetMapping("/{id}")
-    public List<Bill> getByID(@PathVariable(value = "id") Integer id) {
-//        cookieService.remove("idBill");
-//        cookieService.add("idBill", id, 1);
-//        int a = Integer.parseInt(id);
-        return billService.getBill(id);
-
-    }
-
-    @GetMapping("/{phone}/{sts}/date")
-    public ResponseEntity<List<Bill>> searchBill(@RequestParam("date1") String date1, @RequestParam("date2") String date2, @PathVariable(value = "phone") String phone, @PathVariable(value = "sts") String sts) throws ParseException,Exception {
-
+    public Optional<Product> SearchByQRCode() throws ParseException,Exception {
         Webcam webcam = Webcam.getDefault();
         webcam.close();
         webcam.setViewSize(new Dimension(640, 480));
         webcam.open();
-//-------------
-//        String data = "03";
-//        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\codeqr3.jpg";
-//        try {
-//            BitMatrix matrix = new MultiFormatWriter()
-//                    .encode(data, BarcodeFormat.QR_CODE, 500, 500);
-//            MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//-----------
+        int id = 0;
         try {
             ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Windows\\Desktop\\QRCODE.png"));
             String filePath = "C:\\Users\\Windows\\Desktop\\QRCODE.png";
@@ -107,13 +62,16 @@ public class BillRestController {
             MultiDetector detector = new MultiDetector(bm);
             DetectorResult dResult = detector.detect();
             BitMatrix QRImageData = null;
+
             if (dResult != null) {
                 QRImageData = dResult.getBits();
                 hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
 //                System.out.println("Data read from QR Code: " + readQRCode(filePath, charset, hintMap, QRImageData));
 //                System.out.println("Data read from QR Code: " + readQRCode(filePath, charset, hintMap, QRImageData));
-                String a = readQRCode(filePath, charset, hintMap, QRImageData);
-                System.out.println(a + "sssss");
+                 String a = readQRCode(filePath, charset, hintMap, QRImageData);
+                System.out.println(a+"---abc");
+                id = Integer.parseInt(a);
+
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -126,27 +84,13 @@ public class BillRestController {
             // TODO Auto-generated catch block
             System.out.println("Unable to read Qr code: Please dont shake your mobile!");
         }
-        LocalDate today = LocalDate.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        if (date1.equals("null")) {
-            date1 = "2023/05/03";
+        System.out.println( productService.findById(id));
+        if (id==0){
+            return null;
+        }else {
+            return productService.findById(id);
         }
-        if (date2.equals("null")) {
-            date2 = today.format(dateTimeFormatter);
-        }
-            if (phone.equals(" ")) {
-                phone = "0";
-            }
-            Date dates1 = new Date(date1);
-            Date dates2 = new Date(date2);
-            if (sts == null | sts.equals("6")) {
-                return ResponseEntity.ok(billService.searchByPhoneAndDate(phone, dates1, dates2));
-            } else {
-                int st = Integer.parseInt(sts);
-                return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone, dates1, dates2, st));
-            }
-
-        }
+    }
 
     public static String readQRCode(String filePath, String charset, Map hintMap, BitMatrix qRImageData)
             throws FileNotFoundException, IOException, NotFoundException, FormatException {
@@ -162,21 +106,9 @@ public class BillRestController {
         }
         return qrCodeResult.getText();
     }
-    @PutMapping("/updateStatus")
-    public Bill updateStatus(@RequestBody Bill bill) {
-        Bill billOld = billService.findBillByID(bill.getId()).get();
 
-        System.out.println(billOld.getId() + "ssss");
-        System.out.println(billService.updateStatus(billOld));
-        if (bill.getStatus() < billOld.getStatus()) {
-            return null;
-        } else {
-            billOld.setStatus(bill.getStatus());
-            return billService.updateStatus(billOld);
-        }
-    }
-    @PostMapping()
-    public Bill create(@RequestBody JsonNode billData) {
-        return billService.create(billData);
+    @GetMapping("/{id}")
+    public Optional<Product> SearchByID(@PathVariable("id")Integer id){
+        return productService.findById(id);
     }
 }
