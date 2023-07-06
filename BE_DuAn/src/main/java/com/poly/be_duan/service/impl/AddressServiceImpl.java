@@ -117,9 +117,6 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> findByUsername() {
-//        List<Address> addressList = repository.findByAccount_Username(Username.getUserName());
-//        List<AddressDTO> addressDTOList = addressList.stream().map(address ->
-//                modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
         return null;
     }
 
