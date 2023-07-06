@@ -1,9 +1,8 @@
 package com.poly.be_duan.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Bill;
 
-
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,4 +26,5 @@ public interface BillService {
     public Optional<Bill> findBillByID(Integer id);
 
 //    public List<Bill> searchByDate(Date date, Date date1);
+    Bill create(JsonNode billData);
 }

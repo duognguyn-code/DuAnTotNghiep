@@ -1,7 +1,12 @@
 package com.poly.be_duan.service.impl;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.poly.be_duan.entities.Bill;
+import com.poly.be_duan.entities.Bill_detail;
+import com.poly.be_duan.repositories.BillDetailRepository;
 import com.poly.be_duan.repositories.BillRepository;
 import com.poly.be_duan.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -17,6 +23,8 @@ public class BillServiceImpl implements BillService {
     @Autowired
     BillRepository billRepository;
 
+    @Autowired
+    BillDetailRepository billDetailRepository;
     @Override
     public List<Bill> getAll() {
         return billRepository.findAll();
@@ -47,16 +55,6 @@ public class BillServiceImpl implements BillService {
         return billRepository.searchByPhoneAndStatus(phone,sts);
     }
 
-//    @Override
-//    public List<Bill> searchByPhone(String phone) {
-//        return billRepository.searchByPhone(phone);
-//    }
-//
-//    @Override
-//    public Bill updateStatus(Integer sts, Integer id) {
-//        return billRepository.UpdateStatus(sts,id);
-//    }
-
     @Override
     public Bill updateStatus(Bill bill) {
         return billRepository.save(bill);
@@ -67,8 +65,15 @@ public class BillServiceImpl implements BillService {
         return billRepository.findBillById(id);
     }
 
-//    @Override
-//    public List<Bill> /searchByDate(Date date, Date date1) {
-//        return billRepository.searchByDate(date,date1);
-//    }
+    @Override
+    public Bill create(JsonNode billData) {
+        ObjectMapper mapper = new ObjectMapper();
+        Bill bill  = mapper.convertValue(billData,Bill.class);
+        billRepository.save(bill);
+        TypeReference<List<Bill_detail>> type =new  TypeReference<List<Bill_detail>>() {};
+        List<Bill_detail> details = mapper.convertValue(billData.get("billDetails"),type).
+                stream().peek(d -> d.setBill(bill)).collect(Collectors.toList());
+        billDetailRepository.saveAll(details);
+        return bill;
+    }
 }
