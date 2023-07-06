@@ -1,350 +1,382 @@
 <div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
-  <main class="h-full pb-16 overflow-y-auto">
-  <div class="container pb-16 overflow-y-auto">
-    <h2 class="my-6 text-2xl text-center font-semibold text-gray-700 dark:text-gray-200"> Thanh toán tại quầy</h2>
-    <div class="row px-xl-5 pb-3">
-      <div class="row col-lg-7">
-        <div class="container" style=" margin-top:20px;">
-          <div class="row">
-          <div class="col-lg-9">
-            <input type="text" class="form-control" placeholder="   tìm kiếm sản phẩm" style="width:80%; height:50px;border: 1px solid #8AEC6F; border-radius:10px;">
-          </div>
-            <div class="col-lg-3">
-              <button ng-click="getProductByQRCode()" class="btn" style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;">Quét QR</button>
-              <button ng-click="cart.add()" class="btn" style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;">Quét QR2</button>
-            </div>
-          </div>
-          </div>
-      </div>
-    </div>
-    <div class="row px-xl-5 pb-3">
-      <div class="row col-lg-7 mb-4">
-<!--        Search form-->
-        <!--        Search form-->
-        <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4">
-        <div class="card product-item border-0 mb-4" >
-          <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal">
-          <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-            <img class="img-fluid w-100" src="../images/shoe1.png" alt="" style="transition:.5s;">
-          </div>
-          <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-            <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">sản phẩm 1</h6>
-            <div class="d-flex justify-content-center">
-              <h6 style="font-weight:500; font-size:18px;">1220000₫</h6>
-            </div>
-          </div>
-          </button>
-        </div>
-
-          <div class="modal fade" id="exampleModalproduct" tabindex="-1" data-bs-backdrop="static"
-               aria-labelledby="exampleModalLabelMaterial" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelMaterial"></h5>
-                  <p>Chi tiết sản phẩm</p>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                          aria-label="Close"></button>
-                </div>
-                <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                  <div class="row g-0" style="">
-                    <div class="col-md-4">
-                      <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-8">
-                      <h5 class="card-title" style="font-size:28px;font-weight:700;">Sản phẩm 1</h5>
-                      <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">350,000đ</p>
-                      <div class="d-flex mb-3" style="margin-top:10px;">
-                        <p class="text-dark font-weight-medium mb-0 mr-3"style="font-size:18px; font-weight:500;">Kiểu dáng:</p>
-                        <form>
-                          <div class="form-check form-check-inline" ng-repeat="design in designs">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="{{design.id}}">
-                            <label class="form-check-label" for="{{design.id}}">{{design.name}}</label>
-                          </div>
-                        </form>
-                      </div>
-<!--                      Size-->
-                      <div class="d-flex mb-3" style="margin-top:10px;">
-                        <p class="text-dark font-weight-medium mb-0 mr-3"style="font-size:18px; font-weight:500;">Size:</p>
-                        <form>
-                          <div class="form-check form-check-inline" ng-repeat="size in sizes">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="{{size.id}}" >
-                            <label class="form-check-label" for="{{size.id}}">{{size.name}}</label>
-                          </div>
-                        </form>
-                      </div>
-<!--                      Color-->
-                      <div class="d-flex mb-3" style="margin-top:10px;">
-                        <p class="text-dark font-weight-medium mb-0 mr-3"style="font-size:18px; font-weight:500;">Màu sắc:</p>
-                        <form>
-                          <div class="form-check form-check-inline" ng-repeat="color in colors">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="{{color.id}}" >
-                            <label class="form-check-label" for="{{color.id}}">{{color.name}}</label>
-                          </div>
-                        </form>
-                      </div>
-<!--                      Material-->
-                      <div class="d-flex mb-3" style="margin-top:10px;">
-                        <p class="text-dark font-weight-medium mb-0 mr-3"style="font-size:18px; font-weight:500;">Chất liệu:</p>
-                        <form>
-                          <div class="form-check form-check-inline" ng-repeat="material in materials">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="{{material.id}}" >
-                            <label class="form-check-label" for="{{material.id}}">{{material.name}}</label>
-                          </div>
-                        </form>
-                      </div>
-                      <p class="card-text" style="margin-top:10px;">
-                      <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                          <button class="btn btn-minus" style="background-color:#C0C0C0; border:none;">
-                            <i class="fa fa-minus"></i>
-                          </button>
+    <main class="h-full pb-16 overflow-y-auto">
+        <div class="container pb-16 overflow-y-auto">
+            <h2 class="my-6 text-2xl text-center font-semibold text-gray-700 dark:text-gray-200"> Thanh toán tại
+                quầy</h2>
+            <div class="row px-xl-5 pb-3">
+                <div class="row col-lg-7">
+                    <div class="container" style=" margin-top:20px;">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" placeholder="   tìm kiếm sản phẩm"
+                                       style="width:80%; height:50px;border: 1px solid #8AEC6F; border-radius:10px;">
+                            </div>
+                            <div class="col-lg-3">
+                                <button ng-click="getProductByQRCode()" class="btn"
+                                        style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;">
+                                    Quét QR
+                                </button>
+                                <button ng-click="cart.add()" class="btn"
+                                        style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;">
+                                    Quét QR2
+                                </button>
+                            </div>
                         </div>
-                        <input type="text" class="form-control text-center" value="1" style="border:none;">
-                        <div class="input-group-btn">
-                          <button class="btn btn-plus" style="background-color:#C0C0C0; border:none;">
-                            <i class="fa fa-plus"></i>
-                          </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row px-xl-5 pb-3">
+                <div class="row col-lg-7 mb-4">
+                    <!--        Search form-->
+                    <!--        Search form-->
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4">
+                        <div class="card product-item border-0 mb-4" ng-repeat="product in products">
+                            <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal" ng-click="getDetailProduct(product.category.idCategory)">
+                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                    <img class="img-fluid w-100" src="{{product.images.length>0?product.images[0].urlimage:''}}" alt=""
+                                         style="transition:.5s;">
+                                </div>
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">{{product.name}}</h6>
+                                    <div class="d-flex justify-content-center">
+                                        <h6 style="font-weight:500; font-size:18px;">{{product.price}}</h6>
+                                    </div>
+                                </div>
+                            </button>
                         </div>
-                      </div>
-                      </p>
+
+                        <div class="modal fade" id="exampleModalproduct" tabindex="-1" data-bs-backdrop="static"
+                             aria-labelledby="exampleModalLabelMaterial" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabelMaterial"></h5>
+                                        <p>Chi tiết sản phẩm</p>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800" ng-init="getDetailProduct(0)">
+                                        <div class="row g-0" style="">
+                                            <div class="col-md-4">
+                                                <img src="../images/shoe2.png" class="img-fluid rounded-start"
+                                                     alt="...">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <h5 class="card-title" style="font-size:28px;font-weight:700;">{{detailProduct.name}}</h5>
+                                                <p class="card-text"
+                                                   style="font-size:18px;font-weight:500;margin-top:10px;">{{detailProduct.price}}</p>
+                                                <div class="d-flex mb-3" style="margin-top:10px;">
+                                                    <p class="text-dark font-weight-medium mb-0 mr-3"
+                                                       style="font-size:18px; font-weight:500;">Kiểu dáng:</p>
+                                                    <form>
+                                                        <div class="form-check form-check-inline"
+                                                             ng-repeat="design in designs">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="inlineRadioOptions" id="{{design.id}}">
+                                                            <label class="form-check-label"
+                                                                   for="{{design.id}}">{{design.name}}</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--                      Size-->
+                                                <div class="d-flex mb-3" style="margin-top:10px;">
+                                                    <p class="text-dark font-weight-medium mb-0 mr-3"
+                                                       style="font-size:18px; font-weight:500;">Size:</p>
+                                                    <form>
+                                                        <div class="form-check form-check-inline"
+                                                             ng-repeat="size in sizes">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="inlineRadioOptions" id="{{size.id}}">
+                                                            <label class="form-check-label"
+                                                                   for="{{size.id}}">{{size.name}}</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--                      Color-->
+                                                <div class="d-flex mb-3" style="margin-top:10px;">
+                                                    <p class="text-dark font-weight-medium mb-0 mr-3"
+                                                       style="font-size:18px; font-weight:500;">Màu sắc:</p>
+                                                    <form>
+                                                        <div class="form-check form-check-inline"
+                                                             ng-repeat="color in colors">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="inlineRadioOptions" id="{{color.id}}">
+                                                            <label class="form-check-label"
+                                                                   for="{{color.id}}">{{color.name}}</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <!--                      Material-->
+                                                <div class="d-flex mb-3" style="margin-top:10px;">
+                                                    <p class="text-dark font-weight-medium mb-0 mr-3"
+                                                       style="font-size:18px; font-weight:500;">Chất liệu:</p>
+                                                    <form>
+                                                        <div class="form-check form-check-inline"
+                                                             ng-repeat="material in materials">
+                                                            <input class="form-check-input" type="radio"
+                                                                   name="inlineRadioOptions" id="{{material.id}}">
+                                                            <label class="form-check-label"
+                                                                   for="{{material.id}}">{{material.name}}</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <p class="card-text" style="margin-top:10px;">
+                                                <div class="input-group quantity mr-3" style="width: 130px;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-minus"
+                                                                style="background-color:#C0C0C0; border:none;">
+                                                            <i class="fa fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <input type="text" class="form-control text-center" value="1"
+                                                           style="border:none;">
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-plus"
+                                                                style="background-color:#C0C0C0; border:none;">
+                                                            <i class="fa fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-9"></div>
+                                            <div class="col-lg-3 mt-4 text-sm">
+                                                <button style="margin-top: 30px;"
+                                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple float-right">
+                                                    Thêm vào hóa đơn
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-9"></div>
-                    <div class="col-lg-3 mt-4 text-sm">
-                      <button style="margin-top: 30px;"
-                              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple float-right">
-                        Thêm vào hóa đơn
-                      </button>
-                    </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-      </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4">
-
-          <div class="card product-item border-0 mb-4">
-            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="../images/shoe1.png" alt="" style="transition:.5s;">
-            </div>
-            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-              <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">sản phẩm 3</h6>
-              <div class="d-flex justify-content-center">
-                <h6 style="font-weight:500; font-size:18px;">1220000₫</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4">
-
-          <div class="card product-item border-0 mb-4">
-            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-              <img class="img-fluid w-100" src="../images/shoe1.png" alt="" style="transition:.5s;">
-            </div>
-            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-              <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">sản phẩm 3</h6>
-              <div class="d-flex justify-content-center">
-                <h6 style="font-weight:500; font-size:18px;">1220000₫</h6>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row col-lg-5 ml-4">
-        <div class="container">
-          <div ng-repeat="item in cart.items" class="row g-0" style="height:130px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
-            <div class="col-md-4">
-              <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
-            </div>
-            <div class="col-md-6">
-                <h5 class="card-title" style="font-size:20px;font-weight:500;">{{item.name}}</h5>
-                <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">{{item.price}}</p>
-                <p class="card-text" style="margin-top:10px;">
-                <div class="input-group quantity mr-3" style="width: 130px;">
-                  <div class="input-group-btn">
-                    <button ng-click="cart.tru(item.id)"class="btn btn-minus" style="background-color:#C0C0C0; border:none;">
-                      <i class="fa fa-minus"></i>
-                    </button>
-                  </div>
-                  <input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="text" class="form-control text-center"style="border:none;">
-                  <div class="input-group-btn">
-                    <button ng-click="cart.cong(item.id)" class="btn btn-plus" style="background-color:#C0C0C0; border:none;">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-                </p>
-            </div>
-            <div class="col-md-2">
-                <p class="card-text text-right" style="font-size:18px;font-weight:500;">${{item.qty*item.price | number:2}}</p>
-              <button ng-click="cart.remove(item.id)"
-                      class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                      aria-label="Delete"
-                      style="float:right; margin-top:50px;"
-              >
-                <svg
-                        class="w-5 h-5"
-                        aria-hidden="true"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                >
-                  <path
-                          fill-rule="evenodd"
-                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                          clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-
-        <div class="container" style="margin-top:15px;">
-          <div class="row" style="border-top: 0.5px solid #C0C0C0;">
-            <div class="col-md-10" >
-            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
-            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
-            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
-            </div>
-
-            <div class="col-md-2" >
-              <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">${{cart.amount | number:2}}</p>
-              <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">20,000đ</p>
-              <p class="" style="font-size:18px; font-weight:500; margin-top:10px;"></p>
-            </div>
-        </div>
-          <div class="row" style="margin-top:20px;">
-            <button class="btn" style="width:100%;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;" data-bs-target="#exampleModalPayment" data-bs-toggle="modal">Thanh toán</button>
-          </div>
-          <div class="modal fade" id="exampleModalPayment" tabindex="-1" data-bs-backdrop="static"
-               aria-labelledby="exampleModalLabelPayment" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
-                  <p>Thanh toán</p>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                          aria-label="Close"></button>
-                </div>
-                <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="row col-lg-5 ml-4">
                     <div class="container">
-                      <table class="w-full whitespace-no-wrap">
-                        <thead>
-                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                          <th class="px-4 py-3" scope="col">Tên sản phẩm</th>
-                          <th class="px-4 py-3" scope="col">Giá</th>
-                          <th class="px-4 py-3" scope="col">Số lượng</th>
-                          <th class="px-4 py-3" scope="col">Thành tiền</th>
-                        </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        <tr ng-repeat="item in cart.items" class="text-gray-700 dark:text-gray-400">
-                          <td class="px-4 py-3 text-sm">{{item.name}}</td>
-                          <td class="px-4 py-3 text-sm">{{item.price}}</td>
-                          <td class="px-4 py-3 text-sm">{{item.qty}}</td>
-                          <td class="px-4 py-3 text-sm">${{item.qty*item.price | number:2}}</td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-<!--                  =====-->
-                  <div class="row" style="margin-top:20px;">
-                    <div class="col-lg-8"></div>
-                    <div class="col-lg-4">
-                      <div class="row">
-                        <div class="col-md-6" >
-                          <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
-                          <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
+                        <div ng-repeat="item in cart.items" class="row g-0"
+                             style="height:130px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
+                            <div class="col-md-4">
+                                <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="card-title" style="font-size:20px;font-weight:500;">{{item.name}}</h5>
+                                <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
+                                    {{item.price}}</p>
+                                <p class="card-text" style="margin-top:10px;">
+                                <div class="input-group quantity mr-3" style="width: 130px;">
+                                    <div class="input-group-btn">
+                                        <button ng-click="cart.tru(item.id)" class="btn btn-minus"
+                                                style="background-color:#C0C0C0; border:none;">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="text"
+                                           class="form-control text-center" style="border:none;">
+                                    <div class="input-group-btn">
+                                        <button ng-click="cart.cong(item.id)" class="btn btn-plus"
+                                                style="background-color:#C0C0C0; border:none;">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="card-text text-right" style="font-size:18px;font-weight:500;">
+                                    ${{item.qty * item.price | number:2}}</p>
+                                <button ng-click="cart.remove(item.id)"
+                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                        aria-label="Delete"
+                                        style="float:right; margin-top:50px;"
+                                >
+                                    <svg
+                                            class="w-5 h-5"
+                                            aria-hidden="true"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                                fill-rule="evenodd"
+                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                clip-rule="evenodd"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-2" >
-                          <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">${{cart.amount | number:2}}đ</p>
-                          <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">20,000đ</p>
+
+                        <div class="container" style="margin-top:15px;">
+                            <div class="row" style="border-top: 0.5px solid #C0C0C0;">
+                                <div class="col-md-10">
+                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
+                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
+                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
+                                        ${{cart.amount | number:2}}</p>
+                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">20,000đ</p>
+                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;"></p>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <button class="btn"
+                                        style="width:100%;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;"
+                                        data-bs-target="#exampleModalPayment" data-bs-toggle="modal">Thanh toán
+                                </button>
+                            </div>
+                            <div class="modal fade" id="exampleModalPayment" tabindex="-1" data-bs-backdrop="static"
+                                 aria-labelledby="exampleModalLabelPayment" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
+                                            <p>Thanh toán</p>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                                            <div class="container">
+                                                <table class="w-full whitespace-no-wrap">
+                                                    <thead>
+                                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                        <th class="px-4 py-3" scope="col">Tên sản phẩm</th>
+                                                        <th class="px-4 py-3" scope="col">Giá</th>
+                                                        <th class="px-4 py-3" scope="col">Số lượng</th>
+                                                        <th class="px-4 py-3" scope="col">Thành tiền</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                                    <tr ng-repeat="item in cart.items"
+                                                        class="text-gray-700 dark:text-gray-400">
+                                                        <td class="px-4 py-3 text-sm">{{item.name}}</td>
+                                                        <td class="px-4 py-3 text-sm">{{item.price}}</td>
+                                                        <td class="px-4 py-3 text-sm">{{item.qty}}</td>
+                                                        <td class="px-4 py-3 text-sm">
+                                                            ${{item.qty * item.price | number:2}}
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--                  =====-->
+                                            <div class="row" style="margin-top:20px;">
+                                                <div class="col-lg-8"></div>
+                                                <div class="col-lg-4">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <p class=""
+                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                                Tiền hàng</p>
+                                                            <p class=""
+                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                                Khuyến mãi</p>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <p class=""
+                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                                ${{cart.amount | number:2}}đ</p>
+                                                            <p class=""
+                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                                20,000đ</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row"
+                                                         style="margin-top:15px; border-top: 1px solid black;">
+                                                        <div class="col-md-6">
+                                                            <p class=""
+                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                                Tổng</p>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <p class=""
+                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                                930,000đ</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top:20px;">
+                                                <div class="col-md-6">
+                                                    <label class="block text-sm">
+                                                        <span class="text-gray-700 dark:text-gray-400"
+                                                              style="font-size:16px;font-weight:700;">Họ Tên</span>
+                                                        <input ng-model="bill.personTake"
+                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                               style="border: 0.5px solid #7e3af2;"
+                                                        />
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="block text-sm">
+                                                        <span class="text-gray-700 dark:text-gray-400"
+                                                              style="font-size:16px;font-weight:700;">Số Điện Thoại</span>
+                                                        <input ng-model="bill.phoneTake"
+                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                               style="border: 0.5px solid #7e3af2;"
+                                                        />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <!--                  ======-->
+                                            <div class="row" style="margin-top:20px;">
+                                                <div class="col-md-6">
+                                                    <label class="block text-sm">
+                                                        <span class="text-gray-700 dark:text-gray-400"
+                                                              style="font-size:16px;font-weight:700;">Địa Chỉ</span>
+                                                        <input ng-model="bill.address"
+                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                               style="border: 0.5px solid #7e3af2;"
+                                                        />
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="row">
+                                                <div class="">
+                                                    <button ng-click="bill.purchase()"
+                                                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                        In hóa đơn
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="row" style="margin-top:15px; border-top: 1px solid black;">
-                        <div class="col-md-6">
-                          <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
-                        </div>
-                        <div class="col-md-6">
-                          <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">930,000đ</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row" style="margin-top:20px;">
-                    <div class="col-md-6">
-                      <label class="block text-sm">
-                        <span  class="text-gray-700 dark:text-gray-400" style="font-size:16px;font-weight:700;">Họ Tên</span>
-                        <input ng-model="bill.personTake"
-                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" style="border: 0.5px solid #7e3af2;"
-                        />
-                      </label>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="block text-sm">
-                        <span  class="text-gray-700 dark:text-gray-400" style="font-size:16px;font-weight:700;">Số Điện Thoại</span>
-                        <input ng-model="bill.phoneTake"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" style="border: 0.5px solid #7e3af2;"
-                        />
-                      </label>
-                    </div>
-                  </div>
-<!--                  ======-->
-                  <div class="row" style="margin-top:20px;">
-                    <div class="col-md-6">
-                      <label class="block text-sm">
-                        <span  class="text-gray-700 dark:text-gray-400" style="font-size:16px;font-weight:700;">Địa Chỉ</span>
-                        <input ng-model="bill.address"
-                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" style="border: 0.5px solid #7e3af2;"
-                        />
-                      </label>
                     </div>
 
-                  </div>
                 </div>
-                <div class="modal-footer">
-                  <div class="row">
-                    <div class="">
-                      <button ng-click="bill.purchase()"
-                              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                        In hóa đơn
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-      </div>
-      </div>
+            <!--    <script>-->
+            <!--    function myPayment() {-->
+            <!--  // Get the checkbox-->
+            <!--  var checkBox = document.getElementById("shipped");-->
+            <!--  // Get the output text-->
+            <!--  var ship_box1 = document.getElementById("ship1");-->
+            <!--  var ship_box2 = document.getElementById("ship2");-->
+            <!--  var ship_box3 = document.getElementById("ship3");-->
 
-    </div>
-  </div>
-<!--    <script>-->
-<!--    function myPayment() {-->
-<!--  // Get the checkbox-->
-<!--  var checkBox = document.getElementById("shipped");-->
-<!--  // Get the output text-->
-<!--  var ship_box1 = document.getElementById("ship1");-->
-<!--  var ship_box2 = document.getElementById("ship2");-->
-<!--  var ship_box3 = document.getElementById("ship3");-->
-
-<!--  // If the checkbox is checked, display the output text-->
-<!--  if (checkBox.checked == true){-->
-<!--    ship_box1.style.display = "block";-->
-<!--    ship_box2.style.display = "block";-->
-<!--    ship_box3.style.display = "block";-->
-<!--  } else {-->
-<!--    ship_box1.style.display = "none";-->
-<!--    ship_box2.style.display = "none";-->
-<!--    ship_box3.style.display = "none";-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-  </main>
+            <!--  // If the checkbox is checked, display the output text-->
+            <!--  if (checkBox.checked == true){-->
+            <!--    ship_box1.style.display = "block";-->
+            <!--    ship_box2.style.display = "block";-->
+            <!--    ship_box3.style.display = "block";-->
+            <!--  } else {-->
+            <!--    ship_box1.style.display = "none";-->
+            <!--    ship_box2.style.display = "none";-->
+            <!--    ship_box3.style.display = "none";-->
+            <!--  }-->
+            <!--}-->
+            <!--</script>-->
+    </main>
 </div>
