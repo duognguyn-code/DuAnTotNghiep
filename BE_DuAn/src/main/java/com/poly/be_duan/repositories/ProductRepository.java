@@ -2,6 +2,7 @@ package com.poly.be_duan.repositories;
 
 import com.poly.be_duan.entities.Category;
 import com.poly.be_duan.entities.Product;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -56,4 +57,6 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     BigDecimal getMaxPrice(Integer id);
     @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
     List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
+
+
 }
