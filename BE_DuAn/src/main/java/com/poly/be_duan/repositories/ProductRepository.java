@@ -2,6 +2,8 @@ package com.poly.be_duan.repositories;
 
 import com.poly.be_duan.entities.Category;
 import com.poly.be_duan.entities.Product;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -62,4 +64,5 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query(" SELECT p FROM Product p WHERE p.barcode = ?1 ")
     Optional<Product> getProductByBarCode(Integer barcode);
+
 }

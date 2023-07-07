@@ -77,6 +77,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
                 $scope.detailProduct = response.data;
+                alert($scope.detailProduct.id)
             }).catch(error => {
                 console.log(error, "lỗi")
             })

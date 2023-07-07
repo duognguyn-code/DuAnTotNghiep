@@ -17,6 +17,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     $scope.index = 0;
     $scope.checkButton = true;
     $scope.checkSubmit = false;
+    $scope.sortByNameAscending = true;
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
@@ -64,6 +65,19 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
             .catch(function (error) {
                 console.log(error);
             });
+    };
+    $scope.sortByProductName = function () {
+        $scope.products.sort(function (a, b) {
+            var nameA = a.name.toUpperCase();
+            var nameB = b.name.toUpperCase();
+            if (nameA < nameB) {
+                return 1; // Sort descending
+            }
+            if (nameA > nameB) {
+                return -1; // Sort descending
+            }
+            return 0;
+        });
     };
     $scope.uploadFile = function (files) {
         $scope.files = files;
