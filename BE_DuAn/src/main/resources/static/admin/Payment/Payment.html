@@ -29,8 +29,8 @@
                 <div class="row col-lg-7 mb-4">
                     <!--        Search form-->
                     <!--        Search form-->
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4">
-                        <div class="card product-item border-0 mb-4" ng-repeat="product in products">
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4" ng-repeat="product in products">
+                        <div class="card product-item border-0 mb-4" >
                             <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal" ng-click="getDetailProduct(product.category.idCategory)">
                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                                     <img class="img-fluid w-100" src="{{product.images.length>0?product.images[0].urlimage:''}}" alt=""
