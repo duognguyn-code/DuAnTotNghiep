@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -179,6 +180,28 @@ public class ProductServiceImpl implements ProductService {
         }
         return productResponDTOList;
     }
+
+    @Override
+    public List<Product> findAllwithSort(String field, String direction) {
+        Sort sort = Sort.by(Sort.Direction.ASC.name());
+        if (direction.equalsIgnoreCase(Sort.Direction.ASC.name())) {
+            Sort.by(field).ascending();
+        } else {
+            Sort.by(field).descending();
+        }
+        return (List<Product>) productRepository.findAll(sort);
+    }
+    @Override
+    public Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize) {
+        return  productRepository.getProductBill(idCategory,idDesign,idMaterial,idColor,idSize);
+    }
+
+    @Override
+    public Optional<Product> getProductByBarCode(Integer barcode) {
+        return productRepository.getProductByBarCode(barcode);
+
+    }
+
     private List<ProductDetailDTO> getallProduct(){
         List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();
         for (int x: productRepository.getlistDetailProductCategory()

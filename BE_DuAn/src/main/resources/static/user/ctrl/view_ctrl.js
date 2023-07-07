@@ -1,6 +1,7 @@
 app.controller('UserController', function ($rootScope, $scope, $http, $window) {
     const apiUrlProduct = "http://localhost:8080/api/product";
 
+    const apiUrlAccout = "http://localhost:8080/rest/user";
 
     $scope.products = [];
     $scope.formProduct = {};
@@ -13,9 +14,128 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
     $scope.designs = [];
     $scope.formDesign = {};
     $scope.categories = [];
+    $scope.accountActive= {};
+    $scope.item= {};
+    $rootScope.carts=[];
+    $rootScope.qtyCart=0;
     $scope.index = 0;
 
 
+    $scope.getAcountActive = function () {
+        $http.get(apiUrlAccout+`/getAccountActive`).then(function (respon){
+            $scope.accountActive = respon.data;
+            $rootScope.name = $scope.accountActive.username;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+            $scope.accountActive = null;
+            $rootScope.account = null;
+        })
+
+    };
+    $scope.addCart = function(product) {
+        alert("vào ")
+        // Get the selected options (design, size, color, material)
+        var selectedDesign = $scope.checkDesign.name;
+        var selectedSize = $scope.checkSize.name;
+        var selectedColor = $scope.checkColor.name;
+        var selectedMaterial = $scope.checkMaterial.name;
+
+        // Create a cart item object
+        var cartItem = {
+            product: product,
+            design: selectedDesign,
+            size: selectedSize,
+            color: selectedColor,
+            material: selectedMaterial,
+            quantity: 1
+        };
+
+        // Retrieve existing cart items from local storage
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Check if the same product with the same options already exists in the cart
+        var existingItem = cartItems.find(function(item) {
+            return (
+                item.product.id === cartItem.product.id &&
+                item.design === cartItem.design &&
+                item.size === cartItem.size &&
+                item.color === cartItem.color &&
+                item.material === cartItem.material
+            );
+        });
+
+        if (existingItem) {
+            // If the same item exists, increase its quantity
+            existingItem.quantity++;
+        } else {
+            // Otherwise, add the new item to the cart
+            cartItems.push(cartItem);
+        }
+
+        // Update the cart items in local storage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
+    };
+    $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    $scope.calculateSubtotal = function() {
+        var subtotal = 0;
+        for (var i = 0; i < $scope.cartItems.length; i++) {
+            var item = $scope.cartItems[i];
+            subtotal += item.product.price * item.quantity;
+        }
+        return subtotal;
+    };
+    $scope.calculateTotalAmount = function() {
+        var subtotal = $scope.calculateSubtotal();
+        var shippingFee = 10;
+        return subtotal + shippingFee;
+    };
+    // Hàm để xóa một mục khỏi giỏ hàng
+    $scope.removeItem = function(index) {
+        Swal.fire({
+            title: 'Bạn có chắc muốn xóa Sản phẩm này khỏi giỏ hàng?',
+            text: "Xóa không thể khôi phục lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval;
+                Swal.fire({
+                    title: 'Đang xóa!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        const b = Swal.getHtmlContainer().querySelector('b');
+                    },
+                    willClose: () => {
+                        $scope.cartItems.splice(index, 1);
+                        localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
+                        $scope.message('Đã xóa sản phẩm thành công');
+                        location.reload();
+                    }
+                });
+            }
+        });
+    };
+    $scope.calculateTotal = function(item) {
+        return item.product.price * item.quantity;
+    };
+    $scope.increaseQuantity = function(item) {
+        item.quantity++;
+    };
+
+    // Hàm giảm số lượng
+    $scope.decreaseQuantity = function(item) {
+        if (item.quantity > 1) {
+            item.quantity--;
+        }
+    };
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
         $http.get(apiUrlProduct)
@@ -28,17 +148,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
                 console.log(error);
             });
     };
-    // $scope.addProduct = function () {
-    //     $http.post(apiUrlProduct, $scope.formProduct)
-    //         .then(function (response) {
-    //             $scope.products.push(response.data);
-    //             $scope.formProduct = {};
-    //             $scope.resetProducts();
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // };
+
     $scope.addProduct = function () {
         // Lấy tên tệp tin từ đường dẫn
         var formData = new FormData();
@@ -429,6 +539,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
                 $scope.detailProduct = response.data;
+                alert($scope.detailProduct.images[0])
             }).catch(error => {
                 console.log(error, "lỗi")
             })
@@ -444,7 +555,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
     $scope.checkColor = 0;
     $scope.PrD={};
     $scope.checkProduct = function (id, check){
-
         if(check==0){
         $scope.checkDesign=id;
         }else if(check==1){
@@ -456,16 +566,16 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
         }
         if($scope.checkDesign!=0 && $scope.checkSize!=0 && $scope.checkColor!=0 && $scope.checkMaterial!=0){
 //            let url = 'rest/guest/product/get_detail_product' +'/' +$scope.checkDesign +'/' +$scope.checkSize +'/'+$scope.checkColor +'/'+$scope/checkMaterial
-            $http.get(`rest/guest/product/get_detail_product/` +$scope.checkDesign +`/` +$scope.checkSize +`/`+$scope.checkColor +`/`+$scope.checkMaterial).then(function(response){
+            $http.get(`/rest/guest/product/get_detail_product/` +$scope.checkDesign +`/` +$scope.checkSize +`/`+$scope.checkColor +`/`+$scope.checkMaterial).then(function(response){
             $scope.PrD = response.data;
             if($scope.PrD!=''){
                 $scope.checkQuantity = false;
             }else if($scope.PrD==''){
                 $scope.checkQuantity = true;
             }
-            alert($scope.checkQuantity);
             }).catch(error => {
                 console.log(error,'lỗi check product')
+                alert(error);
             })
         }
     }

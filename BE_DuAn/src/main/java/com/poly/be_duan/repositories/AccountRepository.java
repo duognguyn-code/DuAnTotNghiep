@@ -31,6 +31,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     Page<Account> findByRole_IdRoleAndStatus(Integer idRole, Integer status, Pageable pageable);
 
+
     Account findByUsername(String username);
     Account findByEmail(String email);
 }

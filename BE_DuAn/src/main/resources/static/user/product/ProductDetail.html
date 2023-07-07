@@ -17,34 +17,20 @@
     <div class="container-fluid py-5">
         <div class="row px-xl-5">
             <div class="col-lg-5 pb-5">
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner border">
-                        <div class="carousel-item active">
-                            <img class="w-100 h-100" src="../../images/shoe1.png" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="../../images/shoe2.png" alt="Image">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
-                </div>
+                <img class="w-100 h-100" src="{{detailProduct.images[0]}}" alt="Image">
             </div>
 
             <div class="col-lg-7 pb-5">
                 <h3 class="font-weight-semi-bold">{{detailProduct.name}}</h3>
-                <h3 class="font-weight-semi-bold mb-4">{{detailProduct.price}}</h3>
+                <h3 class="font-weight-semi-bold mb-4" ng-if="PrD.price == undefined && detailProduct.priceMin != detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
+                <h3 class="font-weight-semi-bold mb-4" ng-if="PrD.price == undefined && detailProduct.priceMin == detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ </h3>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kiểu dáng:</p>
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
                              ng-repeat="design in detailProduct.designs">
-                            <input type="radio" class="custom-control-input" id="design-{{design.name}}" name="design"
-                                   ng-checked="checkDesign!=0 ? true : false" ng-click="checkProduct(design.id, 0)">
+                            <input type="radio" class="custom-control-input" id="design-{{design.name}}"   name="design"
+                                   ng-model="selectedDesign" ng-checked="checkDesign!=0 ? true : false" ng-click="checkProduct(design.id, 0)">
                             <label class="custom-control-label" for="design-{{design.name}}">{{design.name}}</label>
                         </div>
                     </form>
@@ -54,9 +40,9 @@
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
                              ng-repeat="s in detailProduct.sizes">
-                            <input type="radio" class="custom-control-input" id="{{s.name}}" name="size"
-                                   ng-checked="checkSize!=0 ? true : false" ng-click="checkProduct(s.id, 1)">
-                            <label class="custom-control-label" for="{{s.name}}">{{s.name}}</label>
+                            <input type="radio" class="custom-control-input" id="design-{{s.name}}" name="size"
+                                   ng-model="selectedSize" ng-checked="checkSize!=0 ? true : false" ng-click="checkProduct(s.id, 1)">
+                            <label class="custom-control-label" for="design-{{s.name}}">{{s.name}}</label>
                         </div>
                     </form>
                 </div>
@@ -65,9 +51,9 @@
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
                              ng-repeat="cor in detailProduct.colors">
-                            <input type="radio" class="custom-control-input" id="{{cor.name}}" name="color"
+                            <input type="radio" ng-model="selectedColor" class="custom-control-input" id="{{cor.name}}" name="color"
                                    ng-checked="checkColor!=0 ? true : false" ng-click="checkProduct(cor.id, 2)">
-                            <label class="custom-control-label" for="{{cor.name}}">{{cor.name}}</label>
+                            <label  class="custom-control-label" for="{{cor.name}}">{{cor.name}}</label>
                         </div>
                     </form>
                 </div>
@@ -76,30 +62,18 @@
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
                              ng-repeat="mat in detailProduct.materials">
-                            <input type="radio" class="custom-control-input" id="{{mat.name}}" name="material"
-                                   ng-checked="checkMaterial!=0 ? true : false" ng-click="checkProduct(mat.id, 3)">
-                            <label class="custom-control-label" for="{{mat.name}}">{{mat.name}}</label>
+                            <input type="radio" class="custom-control-input"  id="{{mat.name}}" name="material"
+                                   ng-model="selectedMaterial" ng-checked="checkMaterial!=0 ? true : false" ng-click="checkProduct(mat.id, 3)">
+                            <label  class="custom-control-label" for="{{mat.name}}">{{mat.name}}</label>
                         </div>
                     </form>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                        <input type="text" class="form-control bg-secondary text-center" value="1">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary px-3" ng-click="addCart(PrD)"
-                            ng-disabled="PrD.idProduct==undefined ? true : false"><i
+                    <button class="btn btn-primary px-3" ng-click="addCart(PrD)"><i
                             class="fa fa-shopping-cart mr-1"></i> Add To Cart
                     </button>
+                </div>
+                <div class="d-flex align-items-center mb-4 pt-2">
                     <p ng-if="checkQuantity == true "
                        style="height: 70px; width: 100%; color: red; text-align: center ">Sản phẩm đã hết hàng
                     </p>

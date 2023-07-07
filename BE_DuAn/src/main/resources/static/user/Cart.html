@@ -23,135 +23,44 @@
               <th>Màu sắc</th>
               <th>Kích cỡ</th>
               <th>Chất liệu</th>
-              <th>Giá tiền</th>
+              <th>Kiểu Dáng</th>
               <th>Số lượng</th>
+              <th>Giá tiền</th>
               <th>Tổng</th>
               <th>Xóa</th>
             </tr>
             </thead>
             <tbody class="align-middle">
-            <tr>
-              <td class="align-middle"><img src="images/shoe1.png" alt="" style="width: 50px;"></td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle">Đỏ</td>
-              <td class="align-middle">38</td>
-              <td class="align-middle">PU</td>
+            <tr ng-repeat="item in cartItems">
+              <td class="align-middle"><img src="{{item.product.images[0].urlimage}}" alt="" style="width: 50px;">{{item.product.category.name}}</td>
+              <td class="align-middle">{{item.product.color.name}}</td>
+              <td class="align-middle">{{item.product.size.name}}</td>
+              <td class="align-middle">{{item.product.material.name}}</td>
+              <td class="align-middle">{{item.product.design.name}}</td>
               <td class="align-middle">
                 <div class="input-group quantity mx-auto" style="width: 100px;">
                   <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-minus" >
+                    <button class="btn btn-sm btn-primary btn-minus" ng-click="decreaseQuantity(item)">
                       <i class="fa fa-minus"></i>
                     </button>
                   </div>
-                  <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
+                  <input type="text" class="form-control form-control-sm bg-secondary text-center"  ng-model="item.quantity">
                   <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-plus">
+                    <button class="btn btn-sm btn-primary btn-plus" ng-click="increaseQuantity(item)">
                       <i class="fa fa-plus"></i>
                     </button>
                   </div>
                 </div>
               </td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-            </tr>
-            <tr>
-              <td class="align-middle"><img src="images/shoe1.png" alt="" style="width: 50px;"> Giày Loafers nam da bò GNLA1268-NDO</td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle">Đỏ</td>
-              <td class="align-middle">39</td>
-              <td class="align-middle">Da tổng hợp</td>
-              <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-minus" >
-                      <i class="fa fa-minus"></i>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-plus">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-            </tr>
-            <tr>
-              <td class="align-middle"><img src="images/shoe1.png" alt="" style="width: 50px;"> Giày Loafers nam da bò GNLA1268-NDO</td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle">Đỏ</td>
-              <td class="align-middle">40</td>
-              <td class="align-middle">Da tổng hợp</td>
-              <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-minus" >
-                      <i class="fa fa-minus"></i>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-plus">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-            </tr>
-            <tr>
-              <td class="align-middle"><img src="images/shoe1.png" alt="" style="width: 50px;"> Giày tây nam Oxford Brogues GNLA08-8-D</td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle">Đỏ</td>
-              <td class="align-middle">41</td>
-              <td class="align-middle">Da tổng hợp</td>
-              <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-minus" >
-                      <i class="fa fa-minus"></i>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-plus">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-            </tr>
-            <tr>
-              <td class="align-middle"><img src="images/shoe1.png" alt="" style="width: 50px;"> Giày tây nam Oxford Brogues GNLA08-8-D</td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle">Đỏ</td>
-              <td class="align-middle">42</td>
-              <td class="align-middle">Da tổng hợp</td>
-              <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-minus" >
-                      <i class="fa fa-minus"></i>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control form-control-sm bg-secondary text-center" value="1">
-                  <div class="input-group-btn" style="">
-                    <button class="btn btn-sm btn-primary btn-plus">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">$150</td>
-              <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
+              <td class="align-middle"> {{item.product.price}}</td>
+              <td class="align-middle">Tổng: {{calculateTotal(item)}}</td>
+              <td class="align-middle"><button class="btn btn-sm btn-primary"ng-click="removeItem($index)"><i class="fa fa-times"></i></button></td>
             </tr>
             </tbody>
           </table>
+          <div>
+            <a href="http://localhost:8080/user/index.html#!/"><i class="fa fa-arrow-left" aria-hidden="true"><strong> Shopping now</strong></i></a>
+          </div>
         </div>
         <div class="col-lg-4">
           <div class="card border-secondary mb-5">
@@ -161,7 +70,7 @@
             <div class="card-body">
               <div class="d-flex justify-content-between mb-3 pt-1">
                 <h6 class="font-weight-medium">Tiền sản phẩm</h6>
-                <h6 class="font-weight-medium">$150</h6>
+                <h6 class="font-weight-medium">{{calculateSubtotal()}} VND</h6>
               </div>
               <div class="d-flex justify-content-between">
                 <h6 class="font-weight-medium">Tiền ship</h6>
@@ -171,9 +80,10 @@
             <div class="card-footer border-secondary bg-transparent">
               <div class="d-flex justify-content-between mt-2">
                 <h5 class="font-weight-bold">Total</h5>
-                <h5 class="font-weight-bold">$160</h5>
+                <h5 class="font-weight-bold">{{calculateTotalAmount()}} VND</h5>
               </div>
-              <button class="btn btn-block btn-primary my-3 py-3">Thanh toán</button>
+              <a class="btn btn-outline-primary" href="#!address" >Chọn địa chỉ</a>
+              <button class="btn btn-block btn-primary my-3 py-3">Đặt Hàng</button>
             </div>
           </div>
         </div>
