@@ -77,7 +77,6 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
                 $scope.detailProduct = response.data;
-                alert($scope.detailProduct.id)
             }).catch(error => {
                 console.log(error, "lỗi")
             })
@@ -224,7 +223,6 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
         },
         addP() {
             var item = this.items.find(item => item.id == $scope.billProduct.id);
-            alert($scope.billProduct.id)
             if (item) {
                 item.qty++;
                 this.saveToLocalStorage();
@@ -286,7 +284,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
     $scope.bill = {
         createDate: new Date(),
         address: "",
-        account: {username: "user1"},
+        account: {username: "user"},
         phoneTake: "",
         personTake: "",
         timeReceive: new Date(),
@@ -310,7 +308,6 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
                 }
             })
         },purchase(){
-            // alert($scope.cart.amount+"abcd")
             var bill = angular.copy(this);
             $http.post(apiUrlBill,bill).then(resp =>{
                 alert("Dat hang thanh cong");
@@ -321,9 +318,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             })
         }
     }
-    $scope.test = function () {
-        alert($scope.order.account.username+"diachi")
-    }
+
     $scope.getSize()
     $scope.getDesign();
     $scope.getMaterials();
