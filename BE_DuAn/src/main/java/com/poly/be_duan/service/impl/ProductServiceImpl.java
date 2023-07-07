@@ -179,6 +179,17 @@ public class ProductServiceImpl implements ProductService {
         }
         return productResponDTOList;
     }
+
+    @Override
+    public Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize) {
+        return  productRepository.getProductBill(idCategory,idDesign,idMaterial,idColor,idSize);
+    }
+
+    @Override
+    public Optional<Product> getProductByBarCode(Integer barcode) {
+        return productRepository.getProductByBarCode(barcode);
+    }
+
     private List<ProductDetailDTO> getallProduct(){
         List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();
         for (int x: productRepository.getlistDetailProductCategory()

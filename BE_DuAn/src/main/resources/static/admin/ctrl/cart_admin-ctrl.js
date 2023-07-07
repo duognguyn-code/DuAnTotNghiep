@@ -10,6 +10,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
     $scope.sizes = [];
     $scope.formSize = {};
     $scope.colors = [];
+    $scope.billProduct = [];
     $scope.formColor = {};
     $scope.materials = [];
     $scope.formMaterial = {};
@@ -117,11 +118,25 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
         }
     };
 
-    // Cập nhật thông tin sản phẩm
 
-    // Xóa sản phẩm
+    $scope.getP ={
+        idP:null,
+        getID(id){
+            this.idP = id
+        },getD(){
+            $http.get(apiUrlProduct+'/searchBill' +'/'+ this.idP +'/' +$scope.searchDesign +'/' +$scope.searchMaterial +'/' +$scope.searchColor +'/'+$scope.searchSize)
+                .then(function (response) {
+                    $scope.billProduct = response.data;
+                    console.log(response);
+                    $scope.cart.addP();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
 
-    // Thêm sản phẩm mới
+    }
+
 
 
     $scope.getColors = function () {
@@ -183,6 +198,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             .then(function (response) {
                 $scope.formCart = response.data;
                 console.log(response);
+                $scope.cart.add();
             })
             .catch(function (error) {
                 console.log(error);
@@ -205,6 +221,21 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             }
 
         },
+        addP() {
+            var item = this.items.find(item => item.id == $scope.billProduct.id);
+            alert($scope.billProduct.id)
+            if (item) {
+                item.qty++;
+                this.saveToLocalStorage();
+            } else {
+                $http.get(apiUrlCart + '/' + $scope.billProduct.id).then(resp => {
+                    resp.data.qty = 1;
+                    this.items.push(resp.data);
+                    this.saveToLocalStorage();
+                })
+            }
+
+        },
         saveToLocalStorage() {
             var json = JSON.stringify(angular.copy(this.items));
             localStorage.setItem("cart", json);
@@ -215,6 +246,14 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
         }, get amount() {
             return this.items.map(item => item.qty * item.price)
                 .reduce((total, qty) => total += qty, 0);
+        }, get amc() {
+           return this.amount + 0;
+        },clear(){
+            $scope.cart.items=[];
+            $scope.bill.address="";
+            $scope.bill.personTake="";
+            $scope.bill.phoneTake="";
+            this.saveToLocalStorage();
         }
         ,tru(id) {
             var item = this.items.find(item => item.id == id);
@@ -274,8 +313,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             var bill = angular.copy(this);
             $http.post(apiUrlBill,bill).then(resp =>{
                 alert("Dat hang thanh cong");
-                // $scope.cart.clear();
-                // location.href="/order/detail/" + resp.data.id;
+                $scope.cart.clear();
             }).catch(error =>{
                 alert("Loi~")
                 console.log(error)

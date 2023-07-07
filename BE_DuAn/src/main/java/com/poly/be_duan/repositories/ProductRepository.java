@@ -2,13 +2,13 @@ package com.poly.be_duan.repositories;
 
 import com.poly.be_duan.entities.Category;
 import com.poly.be_duan.entities.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends PagingAndSortingRepository<Product, Integer> {
@@ -56,4 +56,10 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     BigDecimal getMaxPrice(Integer id);
     @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
     List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
+
+    @Query(" SELECT p FROM Product p WHERE p.category.idCategory = ?1 and p.design.id =?2 and p.material.id=?3 and p.color.id=?4 and p.size.id=?5")
+    Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize);
+
+    @Query(" SELECT p FROM Product p WHERE p.barcode = ?1 ")
+    Optional<Product> getProductByBarCode(Integer barcode);
 }
