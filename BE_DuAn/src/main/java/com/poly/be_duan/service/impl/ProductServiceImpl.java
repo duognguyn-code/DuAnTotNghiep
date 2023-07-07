@@ -184,12 +184,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findAllwithSort(String field, String direction) {
         Sort sort = Sort.by(Sort.Direction.ASC.name());
-        if(direction.equalsIgnoreCase(Sort.Direction.ASC.name())){
+        if (direction.equalsIgnoreCase(Sort.Direction.ASC.name())) {
             Sort.by(field).ascending();
-        }else{
+        } else {
             Sort.by(field).descending();
         }
         return (List<Product>) productRepository.findAll(sort);
+    }
+    @Override
+    public Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize) {
+        return  productRepository.getProductBill(idCategory,idDesign,idMaterial,idColor,idSize);
+    }
+
+    @Override
+    public Optional<Product> getProductByBarCode(Integer barcode) {
+        return productRepository.getProductByBarCode(barcode);
+
     }
 
     private List<ProductDetailDTO> getallProduct(){

@@ -46,7 +46,7 @@ public class CartAdminRestController {
         try {
             ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Windows\\Desktop\\QRCODE.png"));
             String filePath = "C:\\Users\\Windows\\Desktop\\QRCODE.png";
-            String charset = "UTF-8"; // or "ISO-8859-1"
+            String charset = "UTF-8";
             Map hintMap = new HashMap();
 
             BufferedImage image = webcam.getImage();
@@ -66,8 +66,6 @@ public class CartAdminRestController {
             if (dResult != null) {
                 QRImageData = dResult.getBits();
                 hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-//                System.out.println("Data read from QR Code: " + readQRCode(filePath, charset, hintMap, QRImageData));
-//                System.out.println("Data read from QR Code: " + readQRCode(filePath, charset, hintMap, QRImageData));
                  String a = readQRCode(filePath, charset, hintMap, QRImageData);
                 System.out.println(a+"---abc");
                 id = Integer.parseInt(a);
@@ -84,11 +82,11 @@ public class CartAdminRestController {
             // TODO Auto-generated catch block
             System.out.println("Unable to read Qr code: Please dont shake your mobile!");
         }
-        System.out.println( productService.findById(id));
+//        System.out.println( productService.getProductByBarCode(id));
         if (id==0){
             return null;
         }else {
-            return productService.findById(id);
+            return productService.getProductByBarCode(id);
         }
     }
 
