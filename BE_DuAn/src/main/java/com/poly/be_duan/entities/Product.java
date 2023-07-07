@@ -13,7 +13,6 @@ import org.springframework.stereotype.Indexed;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -49,6 +48,9 @@ public class Product  {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
+
+    @Column(name = "barcode", nullable = false)
+    private int barcode;
 
     @JsonIgnore
     @OneToMany(mappedBy = "product")

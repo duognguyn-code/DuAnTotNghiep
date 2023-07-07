@@ -190,6 +190,16 @@ public class ProductServiceImpl implements ProductService {
             Sort.by(field).descending();
         }
         return (List<Product>) productRepository.findAll(sort);
+      
+    @Override
+    public Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize) {
+        return  productRepository.getProductBill(idCategory,idDesign,idMaterial,idColor,idSize);
+    }
+
+    @Override
+    public Optional<Product> getProductByBarCode(Integer barcode) {
+        return productRepository.getProductByBarCode(barcode);
+
     }
 
     private List<ProductDetailDTO> getallProduct(){

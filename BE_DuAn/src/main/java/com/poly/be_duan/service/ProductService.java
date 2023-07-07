@@ -25,4 +25,10 @@ public interface ProductService extends GenericService<Product, Integer> {
     List<ProductResponDTO> findByCategoryAndStatus(Integer id);
 
     public List<Product> findAllwithSort(String field, String direction);
+
+    public Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize);
+  
+    public Optional<Product> getProductByBarCode(Integer barcode);
+
+
 }
