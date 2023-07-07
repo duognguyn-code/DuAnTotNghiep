@@ -11,6 +11,7 @@ app.config(function($routeProvider){
         })
         .when("/cart",{
             templateUrl:"/user/Cart.html",
+            controller:"UserController"
         })
         .when("/product_detail",{
             templateUrl:"/user/product/ProductDetail.html",

@@ -2,6 +2,11 @@ package com.poly.be_duan.restcontrollers.admin;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.poly.be_duan.beans.SaveProductRequest;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
@@ -15,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -248,6 +255,8 @@ public class ProductRestController {
 
     @RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<String> save(@ModelAttribute SaveProductRequest saveProductRequest) {
+        Random a = new Random();
+        int number1 = a.nextInt(999999999);
         Product pd = new Product();
         pd.setName(generationName(saveProductRequest));
         pd.setColor(saveProductRequest.getColor());
@@ -257,7 +266,17 @@ public class ProductRestController {
         pd.setCategory(saveProductRequest.getCategory());
         pd.setStatus(saveProductRequest.getStatus());
         pd.setPrice(saveProductRequest.getPrice());
+        pd.setBarcode(number1);
         productService.save(pd);
+        String data = String.valueOf(number1);
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\"+data+".jpg";
+        try {
+            BitMatrix matrix = new MultiFormatWriter()
+                    .encode(data, BarcodeFormat.QR_CODE, 500, 500);
+            MatrixToImageWriter.writeToPath(matrix, "jpg", Paths.get(path));
+        } catch (IOException | WriterException e) {
+            throw new RuntimeException(e);
+        }
         try {
             System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
             for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
@@ -359,5 +378,18 @@ public class ProductRestController {
     @GetMapping("/max")
     public BigDecimal getMax(){
         return productService.searchPriceMAX();
+    }
+
+    @GetMapping("/searchBill/{idCate}/{idDe}/{idMate}/{idCo}/{idSz}")
+    public Optional<Product> getProductBill(@PathVariable("idCate")String idCate,@PathVariable("idDe")String idDe,
+                                            @PathVariable("idMate")String idMate,@PathVariable("idCo")String idCo,@PathVariable("idSz")String idSz){
+
+
+        int idCT = Integer.parseInt(String.valueOf(idCate));
+        int idD = Integer.parseInt(String.valueOf(idDe));
+        int idM = Integer.parseInt(String.valueOf(idMate));
+        int idC = Integer.parseInt(String.valueOf(idCo));
+        int idS = Integer.parseInt(String.valueOf(idSz));
+        return productService.getProductBill(idCT,idD,idM,idC,idS);
     }
 }
