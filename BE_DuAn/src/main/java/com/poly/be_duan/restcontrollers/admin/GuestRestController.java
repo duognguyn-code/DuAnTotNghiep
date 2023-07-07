@@ -20,7 +20,7 @@ public class GuestRestController {
     private CategoryService categoryService;
     @Autowired
     private ProductService productService;
-    @GetMapping("/product/cate-product/{id}")
+    @GetMapping("/product/detailproduct/{id}")
     public List<ProductResponDTO> findByCateProductId(@PathVariable("id") Integer id) throws Exception{
         Optional<Category> cate = categoryService.findById(id);
         if(cate.isEmpty()){

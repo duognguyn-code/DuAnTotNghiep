@@ -23,4 +23,6 @@ public interface ProductService extends GenericService<Product, Integer> {
     ProductDetailDTO getDetailProduct(Integer id);
     Product getdeTailPrd(Integer idDesign, Integer idSize, Integer idColor, Integer idMaterial);
     List<ProductResponDTO> findByCategoryAndStatus(Integer id);
+
+    public List<Product> findAllwithSort(String field, String direction);
 }

@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.poly.be_duan.dto.*;
 import com.poly.be_duan.entities.Account;
+import com.poly.be_duan.entities.Address;
 import com.poly.be_duan.entities.Role;
 import com.poly.be_duan.repositories.AccountRepository;
 import com.poly.be_duan.repositories.AddressRepository;
@@ -43,49 +44,6 @@ public class AccountServiceImpl implements AccountService {
         this.addressRepository = addressRepository;
         this.modelMapper = modelMapper;
     }
-//    @Override
-//    public AccountResponDTO save(AccountRequestDTO entity) {
-//        try {
-//            Account accountCheck = findByUsername(entity.getUsername());
-//            if (accountCheck != null && accountCheck.getUsername().equals(entity.getUsername())) {
-//                return null;
-//            } else {
-//                Role role = roleRepository.findById(entity.getRole()).orElse(null);
-//                Date date = new Date();
-//                Account account = new Account();
-//                account.setUsername(entity.getUsername());
-//                account.setFullName(entity.getFullName());
-//                account.setPassword(HashUtil.hash(entity.getPassword()));
-//                account.setEmail(entity.getEmail());
-//                account.setSex(entity.getGender());
-//                account.setPhone(entity.getPhone());
-//                account.setStatus(entity.getStatus());
-//                account.setRole(role);
-//                account.setCreateDate(date);
-//                if (accountRequestDTO.getImage() == null){
-//                    account.setImage("https://res.cloudinary.com/dcll6yp9s/image/upload/v1669087979/kbasp5qdf76f3j02mebr.png");
-//                }else {
-//                    Map r = this.cloud.uploader().upload(accountRequestDTO.getImage().getBytes(),
-//                            ObjectUtils.asMap(
-//                                    "cloud_name", "dcll6yp9s",
-//                                    "api_key", "916219768485447",
-//                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-//                                    "secure", true,
-//                                    "folders", "c202a2cae1893315d8bccb24fd1e34b816"
-//                            ));
-//                    account.setImage(r.get("secure_url").toString());
-//                }
-//
-//                Account accountSave = repository.save(account);
-//                AccountResponDTO accountResponDTO = modelMapper.map(accountSave, AccountResponDTO.class);
-//                accountResponDTO.setRole(accountSave.getRole().getIdRole());
-//                return accountResponDTO;
-//            }
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//            return null;
-//        }
-//    }
 
     @Override
     public AccountResponDTO save(AccountRequestDTO entity) {
@@ -129,22 +87,29 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account findByName(String username) {
-        return null;
+        return repository.findByName(username);
     }
 
     @Override
     public Account findByUsername(String name) {
-        return null;
+        return repository.findByName(name);
     }
 
     @Override
     public String setAddressDefault(Integer id) {
-        return null;
+        Address address = addressRepository.findById(id).orElse(null);
+        Account account = repository.findByName("Duong");
+        account.setAddress_id(address);
+        repository.save(account);
+        return "OK";
     }
 
     @Override
     public AddressDTO getAddress() {
-        return null;
+        Account account = repository.findByName("Duong");
+        Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
+        AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
+        return addressDTO;
     }
 
     @Override
