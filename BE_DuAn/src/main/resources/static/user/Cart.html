@@ -1,94 +1,202 @@
-<div xmlns:th="http://wwww.thymeleaf.org"th:replace="~{/user/index :: dynamic(~{::main})}">
-  <main class="row ">
-    <!-- Page Header Start -->
-    <div class="container-fluid bg-secondary mb-5">
-      <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-        <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ hàng </h1>
-        <div class="d-inline-flex">
-          <p class="m-0"><a href="">Trang chủ</a></p>
-          <p class="m-0 px-2">-</p>
-          <p class="m-0">Giỏ hàng</p>
-        </div>
-      </div>
-    </div>
-    <!-- Page Header End -->
-    <!-- Cart Start -->
-    <div class="container-fluid pt-5">
-      <div class="row px-xl-5">
-        <div class="col-lg-8 table-responsive mb-5">
-          <table class="table table-bordered text-center mb-0">
-            <thead class="bg-secondary text-dark">
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Màu sắc</th>
-              <th>Kích cỡ</th>
-              <th>Chất liệu</th>
-              <th>Kiểu Dáng</th>
-              <th>Số lượng</th>
-              <th>Giá tiền</th>
-              <th>Tổng</th>
-              <th>Xóa</th>
-            </tr>
-            </thead>
-            <tbody class="align-middle">
-            <tr ng-repeat="item in cartItems">
-              <td class="align-middle"><img src="{{item.product.images[0].urlimage}}" alt="" style="width: 50px;">{{item.product.category.name}}</td>
-              <td class="align-middle">{{item.product.color.name}}</td>
-              <td class="align-middle">{{item.product.size.name}}</td>
-              <td class="align-middle">{{item.product.material.name}}</td>
-              <td class="align-middle">{{item.product.design.name}}</td>
-              <td class="align-middle">
-                <div class="input-group quantity mx-auto" style="width: 100px;">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-minus" ng-click="decreaseQuantity(item)">
-                      <i class="fa fa-minus"></i>
-                    </button>
-                  </div>
-                  <input type="text" class="form-control form-control-sm bg-secondary text-center"  ng-model="item.quantity">
-                  <div class="input-group-btn">
-                    <button class="btn btn-sm btn-primary btn-plus" ng-click="increaseQuantity(item)">
-                      <i class="fa fa-plus"></i>
-                    </button>
-                  </div>
+<div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/user/index :: dynamic(~{::main})}">
+    <main class="row ">
+        <!-- Page Header Start -->
+        <div class="container-fluid bg-secondary mb-5">
+            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+                <h1 class="font-weight-semi-bold text-uppercase mb-3">Giỏ hàng </h1>
+                <div class="d-inline-flex">
+                    <p class="m-0"><a href="">Trang chủ</a></p>
+                    <p class="m-0 px-2">-</p>
+                    <p class="m-0">Giỏ hàng</p>
                 </div>
-              </td>
-              <td class="align-middle"> {{item.product.price}}</td>
-              <td class="align-middle">Tổng: {{calculateTotal(item)}}</td>
-              <td class="align-middle"><button class="btn btn-sm btn-primary"ng-click="removeItem($index)"><i class="fa fa-times"></i></button></td>
-            </tr>
-            </tbody>
-          </table>
-          <div>
-            <a href="http://localhost:8080/user/index.html#!/"><i class="fa fa-arrow-left" aria-hidden="true"><strong> Shopping now</strong></i></a>
-          </div>
+            </div>
         </div>
-        <div class="col-lg-4">
-          <div class="card border-secondary mb-5">
-            <div class="card-header bg-secondary border-0">
-              <h4 class="font-weight-semi-bold m-0">Tổng tiền</h4>
+        <!-- Page Header End -->
+        <!-- Cart Start -->
+        <div class="container-fluid pt-5">
+            <div class="row px-xl-5">
+                <div class="col-lg-8 table-responsive mb-5">
+                    <table class="table table-bordered text-center mb-0">
+                        <thead class="bg-secondary text-dark">
+                        <tr>
+                            <th>Sản phẩm</th>
+                            <th>Màu sắc</th>
+                            <th>Kích cỡ</th>
+                            <th>Chất liệu</th>
+                            <th>Kiểu Dáng</th>
+                            <th>Số lượng</th>
+                            <th>Giá tiền</th>
+                            <th>Tổng</th>
+                            <th>Xóa</th>
+                        </tr>
+                        </thead>
+                        <tbody class="align-middle">
+                        <tr ng-repeat="item in cartItems">
+                            <td class="align-middle"><img src="{{item.product.images[0].urlimage}}" alt=""
+                                                          style="width: 50px;">{{item.product.category.name}}
+                            </td>
+                            <td class="align-middle">{{item.product.color.name}}</td>
+                            <td class="align-middle">{{item.product.size.name}}</td>
+                            <td class="align-middle">{{item.product.material.name}}</td>
+                            <td class="align-middle">{{item.product.design.name}}</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-minus"
+                                                ng-click="decreaseQuantity(item)">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm bg-secondary text-center"
+                                           ng-model="item.quantity">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-plus"
+                                                ng-click="increaseQuantity(item)">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="align-middle"> {{item.product.price}}</td>
+                            <td class="align-middle">Tổng: {{calculateTotal(item)}}</td>
+                            <td class="align-middle">
+                                <button class="btn btn-sm btn-primary" ng-click="removeItem(item.id)"><i
+                                        class="fa fa-times"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <a href="http://localhost:8080/user/index.html#!/"><i class="fa fa-arrow-left"
+                                                                              aria-hidden="true"><strong> Shopping
+                            now</strong></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card border-secondary mb-5">
+                        <div class="card-header bg-secondary border-0">
+                            <h4 class="font-weight-semi-bold m-0">Tổng tiền</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Tiền sản phẩm</h6>
+                                <h6 class="font-weight-medium">{{calculateSubtotal()}} VND</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Tiền ship</h6>
+                                <h6 class="font-weight-medium">$10</h6>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Họ Tên</h6>
+                                <input ng-model="bill.phoneTake"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       style="border: 0.5px solid #7e3af2;"
+                                />
+                            </div>
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Số điện thoại</h6>
+                                <input ng-model="bill.phoneTake"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       style="border: 0.5px solid #7e3af2;"
+                                />
+                            </div>
+                            <div class="d-flex justify-content-between mb-3 pt-1">
+                                <h6 class="font-weight-medium">Địa chỉ</h6>
+                                <input ng-model="bill.phoneTake"
+                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       style="border: 0.5px solid #7e3af2;"
+                                />
+                            </div>
+                        </div>
+                        <div class="card-footer border-secondary bg-transparent">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5 class="font-weight-bold">Total</h5>
+                                <h5 class="font-weight-bold">{{calculateTotalAmount()}} VND</h5>
+                            </div>
+                            <a class="btn btn-outline-primary" href="#!address">Chọn địa chỉ</a>
+                            <button class="btn btn-block btn-primary my-3 py-3"  data-bs-target="#exampleModalPayment" data-bs-toggle="modal"
+                                    data-bs-toggle="modal">Đặt Hàng
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="card-body">
-              <div class="d-flex justify-content-between mb-3 pt-1">
-                <h6 class="font-weight-medium">Tiền sản phẩm</h6>
-                <h6 class="font-weight-medium">{{calculateSubtotal()}} VND</h6>
-              </div>
-              <div class="d-flex justify-content-between">
-                <h6 class="font-weight-medium">Tiền ship</h6>
-                <h6 class="font-weight-medium">$10</h6>
-              </div>
-            </div>
-            <div class="card-footer border-secondary bg-transparent">
-              <div class="d-flex justify-content-between mt-2">
-                <h5 class="font-weight-bold">Total</h5>
-                <h5 class="font-weight-bold">{{calculateTotalAmount()}} VND</h5>
-              </div>
-              <a class="btn btn-outline-primary" href="#!address" >Chọn địa chỉ</a>
-              <button class="btn btn-block btn-primary my-3 py-3">Đặt Hàng</button>
-            </div>
-          </div>
         </div>
-      </div>
+        <!-- Cart End -->
+    </main>
+    <div class="modal fade" id="exampleModalPayment" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabelPayment" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelPayment">Thanh toán</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                    <div class="container">
+                        <table class="w-full whitespace-no-wrap">
+                            <thead>
+                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3" scope="col">Tên sản phẩm</th>
+                                <th class="px-4 py-3" scope="col">Giá</th>
+                                <th class="px-4 py-3" scope="col">Số lượng</th>
+                                <th class="px-4 py-3" scope="col">Thành tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <tr ng-repeat="item in cart.items" class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3 text-sm">{{item.name}}</td>
+                                <td class="px-4 py-3 text-sm">{{item.price}}</td>
+                                <td class="px-4 py-3 text-sm">{{item.qty}}</td>
+                                <td class="px-4 py-3 text-sm">${{item.qty * item.price | number:2}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-6">
+                            <p class="font-semibold" style="font-size: 18px;">Tiền hàng:</p>
+                            <p class="font-semibold" style="font-size: 18px;">Khuyến mãi:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="font-semibold" style="font-size: 18px;">${{cart.amount | number:2}}đ</p>
+                            <p class="font-semibold" style="font-size: 18px;">0đ</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; border-top: 1px solid black;">
+                        <div class="col-md-6">
+                            <p class="font-semibold" style="font-size: 18px;">Tổng:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="font-semibold" style="font-size: 18px;">${{cart.amc | number:2}}</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px;">
+                        <div class="col-md-6">
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400" style="font-size: 16px; font-weight: 700;">Họ Tên</span>
+                                <input ng-model="bill.personTake" class="block w-full mt-1 text-sm form-input" style="border: 0.5px solid #7e3af2;">
+                            </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400" style="font-size: 16px; font-weight: 700;">Số Điện Thoại</span>
+                                <input ng-model="bill.phoneTake" class="block w-full mt-1 text-sm form-input" style="border: 0.5px solid #7e3af2;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <button ng-click="bill.purchase()" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                In hóa đơn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Cart End -->
-  </main>
 </div>

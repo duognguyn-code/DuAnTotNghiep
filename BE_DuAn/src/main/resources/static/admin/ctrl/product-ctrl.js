@@ -17,7 +17,8 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     $scope.index = 0;
     $scope.checkButton = true;
     $scope.checkSubmit = false;
-    $scope.sortByNameAscending = true;
+    $scope.sortByNameAsc = true;
+    $scope.sortByPriceAsc = true;
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
@@ -66,18 +67,49 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
                 console.log(error);
             });
     };
-    $scope.sortByProductName = function () {
-        $scope.products.sort(function (a, b) {
-            var nameA = a.name.toUpperCase();
-            var nameB = b.name.toUpperCase();
-            if (nameA < nameB) {
-                return 1; // Sort descending
-            }
-            if (nameA > nameB) {
-                return -1; // Sort descending
-            }
-            return 0;
-        });
+    $scope.sortByProductName = function() {
+        if ($scope.sortByNameAsc) {
+            $scope.products.sort(function(a, b) {
+                var nameA = a.name.toUpperCase();
+                var nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return -1; // Sort ascending
+                }
+                if (nameA > nameB) {
+                    return 1; // Sort ascending
+                }
+                return 0;
+            });
+        } else {
+            $scope.products.sort(function(a, b) {
+                var nameA = a.name.toUpperCase();
+                var nameB = b.name.toUpperCase();
+                if (nameA < nameB) {
+                    return 1; // Sort descending
+                }
+                if (nameA > nameB) {
+                    return -1; // Sort descending
+                }
+                return 0;
+            });
+        }
+
+        // Thay đổi trạng thái sắp xếp
+        $scope.sortByNameAsc = !$scope.sortByNameAsc;
+    };
+    $scope.sortByPrice = function() {
+        if ($scope.sortByPriceAsc) {
+            $scope.products.sort(function(a, b) {
+                return a.price - b.price; // Sort ascending
+            });
+        } else {
+            $scope.products.sort(function(a, b) {
+                return b.price - a.price; // Sort descending
+            });
+        }
+
+        // Thay đổi trạng thái sắp xếp
+        $scope.sortByPriceAsc = !$scope.sortByPriceAsc;
     };
     $scope.uploadFile = function (files) {
         $scope.files = files;
@@ -635,28 +667,28 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         if ($scope.formProduct.color != undefined || $scope.formProduct.color != null || $scope.formProduct.color != '') {
             for (let i = 0; i < $scope.colors.length; i++) {
                 if ($scope.formProduct.color == $scope.colors[i].id) {
-                    $scope.formProduct.name += ' Màu ' + $scope.colors[i].name;
+                    $scope.formProduct.name += 'C' + $scope.colors[i].name;
                 }
             }
         }
         if ($scope.formProduct.design != undefined || $scope.formProduct.design != null || $scope.formProduct.design != '') {
             for (let i = 0; i < $scope.designs.length; i++) {
                 if ($scope.formProduct.design == $scope.designs[i].id) {
-                    $scope.formProduct.name += ' Thiết kế ' + $scope.designs[i].name;
+                    $scope.formProduct.name += 'D' + $scope.designs[i].name;
                 }
             }
         }
         if ($scope.formProduct.material != undefined || $scope.formProduct.material != null || $scope.formProduct.material != '') {
             for (let i = 0; i < $scope.colors.length; i++) {
                 if ($scope.formProduct.material == $scope.materials[i].id) {
-                    $scope.formProduct.name += ' Chất Liệu ' + $scope.materials[i].name;
+                    $scope.formProduct.name += 'M' + $scope.materials[i].name;
                 }
             }
         }
         if ($scope.formProduct.size != undefined || $scope.formProduct.size != null || $scope.formProduct.size != '') {
             for (let i = 0; i < $scope.sizes.length; i++) {
                 if ($scope.formProduct.size == $scope.sizes[i].id) {
-                    $scope.formProduct.name += ' Size ' + $scope.sizes[i].name;
+                    $scope.formProduct.name += 'S' + $scope.sizes[i].name;
                 }
             }
         }
