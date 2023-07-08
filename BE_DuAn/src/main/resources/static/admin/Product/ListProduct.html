@@ -93,14 +93,18 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3" scope="col">ID</th>
-                            <th class="px-4 py-3" scope="col" ng-click="sortByProductName()"><i class="fa fa-sort" aria-hidden="true"></i>
-                                Tên sản phẩm</th>
+                            <th class="px-4 py-3" scope="col" ng-click="sortByProductName()">
+                                <i class="fa fa-sort" ng-class="{'fa-sort-asc': sortByNameAsc, 'fa-sort-desc': !sortByNameAsc}" aria-hidden="true"></i> Tên sản phẩm
+                            </th>
+
+                            <th class="px-4 py-3" scope="col">BarCode</th>
                             <th class="px-4 py-3" scope="col">Màu Sắc</th>
                             <th class="px-4 py-3" scope="col">Kiểu Dáng</th>
                             <th class="px-4 py-3" scope="col">Chất Liệu</th>
                             <th class="px-4 py-3" scope="col">Kích Cỡ</th>
-                            <th class="px-4 py-3" scope="col"><i class="fa fa-sort" aria-hidden="true"></i>
-                                Giá</th>
+                            <th class="px-4 py-3" scope="col" ng-click="sortByPrice()">
+                                <i class="fa fa-sort" ng-class="{'fa-sort-asc': sortByPriceAsc, 'fa-sort-desc': !sortByPriceAsc}" aria-hidden="true"></i> Giá
+                            </th>
                             <th class="px-4 py-3" scope="col">Ảnh</th>
                             <th class="px-4 py-3" scope="col">Trạng Thái</th>
                             <th class="px-4 py-3" scope="col">Chức Năng</th>
@@ -115,6 +119,9 @@
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{product.name}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{product.barcode}}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{product.color.name}}
