@@ -44,8 +44,8 @@ public class CartAdminRestController {
         webcam.open();
         int id = 0;
         try {
-            ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Windows\\Desktop\\QRCODE.png"));
-            String filePath = "C:\\Users\\Windows\\Desktop\\QRCODE.png";
+            ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Lenovo\\Desktop\\QRCODE.png"));
+            String filePath = "C:\\Users\\Lenovo\\Desktop\\QRCODE.png";
             String charset = "UTF-8";
             Map hintMap = new HashMap();
 
