@@ -21,6 +21,8 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
     $scope.index = 0;
     $scope.checkButton = true;
     $scope.checkSubmit = false;
+    $scope.tabs = [];
+    $scope.showTab = false;
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
@@ -57,6 +59,32 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             title: err,
         })
     }
+
+    $scope.addTab = function() {
+        var newTab = {
+            id: $scope.tabs.length + 1,
+            title: 'Tab ' + ($scope.tabs.length + 1),
+            active: false
+        };
+
+        // Thêm tab vào danh sách
+        $scope.tabs.push(newTab);
+
+        // Hiển thị tab
+        $scope.showTab = true;
+
+        // Đặt tab mới được thêm là active
+        $scope.activateTab(newTab);
+    };
+    $scope.activateTab = function(tab) {
+        // Vô hiệu hóa tất cả các tab
+        $scope.tabs.forEach(function(t) {
+            t.active = false;
+        });
+
+        // Kích hoạt tab được chọn
+        tab.active = true;
+    };
 
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
@@ -284,7 +312,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
     $scope.bill = {
         createDate: new Date(),
         address: "",
-        account: {username: "user"},
+        account: {username: "Duong"},
         phoneTake: "",
         personTake: "",
         timeReceive: new Date(),

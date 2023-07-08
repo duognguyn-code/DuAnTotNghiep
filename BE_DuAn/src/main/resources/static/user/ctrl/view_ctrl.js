@@ -116,13 +116,19 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window) {
                     willClose: () => {
                         $scope.cartItems.splice(index, 1);
                         localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
+                        location.reload("http://localhost:8080/user/index.html#!/cart");
                         $scope.message('Đã xóa sản phẩm thành công');
-                        location.reload();
+
                     }
                 });
             }
         });
     };
+
+    $scope.loadFromLocalStorage = function () {
+        var json = localStorage.getItem("cartItems");
+        this.cartItems = json ? JSON.parse(json) : [];
+    }
     $scope.calculateTotal = function(item) {
         return item.product.price * item.quantity;
     };
