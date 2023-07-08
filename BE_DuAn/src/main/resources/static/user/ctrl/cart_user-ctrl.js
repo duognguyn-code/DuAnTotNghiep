@@ -70,10 +70,14 @@ app.controller('cart_user-ctrl', function ($rootScope,$scope, $http) {
 
     // Hàm để xóa một mục khỏi giỏ hàng
     $scope.removeItem = function(index) {
-        $scope.cartItems.splice(index, 1);
-        // Cập nhật các mục giỏ hàng trong local storage
-        localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
+            var json = localStorage.getItem("cartItems");
+            this.cartItems = json ? JSON.parse(json) : [];
+            this.saveToLocalStorage();
     };
+    $scope.saveToLocalStorage = function () {
+        var json = JSON.stringify(angular.copy(this.cartItems));
+        localStorage.setItem("cartItems", json);
+    }
 
     $scope.checkProduct = function (id, check){
 
