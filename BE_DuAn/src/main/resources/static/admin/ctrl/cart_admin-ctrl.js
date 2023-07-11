@@ -59,14 +59,19 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             title: err,
         })
     }
-
+    $scope.tabid =1;
     $scope.addTab = function() {
         var newTab = {
-            id: $scope.tabs.length + 1,
-            title: 'Tab ' + ($scope.tabs.length + 1),
+            id: $scope.tabid ,
+            title: 'Tab ' + ($scope.tabid),
             active: false
         };
 
+        // Kiểm tra trùng id
+        while ($scope.tabExists(newTab.id)) {
+            newTab.id++; // Tăng id lên 1
+        }
+        $scope.tabid++;
         // Thêm tab vào danh sách
         $scope.tabs.push(newTab);
 
@@ -76,14 +81,30 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
         // Đặt tab mới được thêm là active
         $scope.activateTab(newTab);
     };
+
+    // Hàm kiểm tra xem tab có tồn tại trong danh sách hay không
+    $scope.tabExists = function(id) {
+        for (var i = 0; i < $scope.tabs.length; i++) {
+            if ($scope.tabs[i].id === id) {
+                return true;
+            }
+        }
+        return false;
+    };
     $scope.activateTab = function(tab) {
         // Vô hiệu hóa tất cả các tab
+        alert(tab.id)
         $scope.tabs.forEach(function(t) {
             t.active = false;
         });
 
         // Kích hoạt tab được chọn
         tab.active = true;
+    };
+    $scope.removeTab = function(tab){
+       var index = $scope.tabs.indexOf(tab);
+        $scope.tabs.splice(index,1);
+//        $scope.tabs.length + 1;
     };
 
     // Lấy danh sách sản phẩm

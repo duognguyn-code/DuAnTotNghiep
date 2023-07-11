@@ -20,6 +20,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="row col-lg-5">
+                    <button ng-click="addTab()" style="width:200px;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;border-radius:10px;margin-top:20px;margin-left:30px;">Tạo hóa đơn</button>
+                </div>
             </div>
             <div class="row px-xl-5 pb-3">
                 <div class="row col-lg-7 mb-4">
@@ -136,8 +139,25 @@
                 </div>
                 <div class="row col-lg-5 ml-4">
                     <div class="container">
+                        <div class="container-fluid">
+                            <div class="tab-container">
+                                <div class="tabs" style="flex-grow: 1; margin-right: 10px;overflow: hidden;">
+                                    <ul class="nav nav-pills" id="menu1">
+                                        <li class="tab Selected" id="check-tab" ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }">
+                                            <a href="">Đơn hàng {{tab.id}}</a>
+                                            <a class="closeTab" ng-click="removeTab(tab)" ng-disabled="tabs.length <=0">✕</a>
+<!--                                            <input id=""type="radio" name="radio-set">-->
+<!--                                            <label for="" class="tab-label-{{tab.id}}" ng-click="activateTab(tab)">-->
+<!--                                                <a>{{tab.title}}></a>-->
+<!--                                                <a class="" ng-click="removeTab(tab)" ng-disabled="tabs.length <= 0">x</a>-->
+<!--                                            </label>-->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                         <div ng-repeat="item in cart.items" class="row g-0"
-                             style="height:130px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
+                             style="height:180px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
                             <div class="col-md-4">
                                 <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
                             </div>
@@ -146,7 +166,7 @@
                                 <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
                                     {{item.price}}</p>
                                 <p class="card-text" style="margin-top:10px;">
-                                <div class="input-group quantity mr-3" style="width: 130px;">
+                                <div class="input-group quantity mr-3" style="width: 130px;margin-top:40px;">
                                     <div class="input-group-btn">
                                         <button ng-click="cart.tru(item.id)" class="btn btn-minus"
                                                 style="background-color:#C0C0C0; border:none;">
@@ -170,7 +190,7 @@
                                 <button ng-click="cart.remove(item.id)"
                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                         aria-label="Delete"
-                                        style="float:right; margin-top:50px;"
+                                        style="float:right; margin-top:100px;"
                                 >
                                     <svg
                                             class="w-5 h-5"
@@ -187,20 +207,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <div class="container" style="margin-top:15px;">
-                            <div class="tab-container" style="border: 1px solid #C0C0C0; padding: 10px; background-color: #F0F0F0; display: flex; align-items: center;">
-                                <div class="tab-box" style="flex-grow: 1; margin-right: 10px;overflow: hidden;">
-                                    <ul style="display: flex; list-style: none; margin: 0; padding: 0;">
-                                        <li ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }">
-                                            <a href="#" ng-click="activateTab(tab)">{{ tab.title }}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button ng-click="addTab()"><i class="fa fa-cart-plus" aria-hidden="true"></i></button>
-                            </div>
-
-
 
                             <div class="row" style="border-top: 0.5px solid #C0C0C0;">
                                 <div class="col-md-10">
@@ -330,10 +336,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
     </main>
+    <script type="text/javascript">
+        $(document).on('click','.tabs ul li', function(){
+            $(this).addClass('tabSelected').siblings().removeClass('tabSelected')
+        })
+    </script>
 </div>
