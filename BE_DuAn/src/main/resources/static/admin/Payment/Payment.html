@@ -136,7 +136,7 @@
                 </div>
                 <div class="row col-lg-5 ml-4">
                     <div class="container">
-                        <div ng-repeat="item in cart.items" class="row g-0"
+                        <div ng-repeat="item in cart.av" class="row g-0"
                              style="height:130px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
                             <div class="col-md-4">
                                 <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
@@ -193,7 +193,7 @@
                                 <div class="tab-box" style="flex-grow: 1; margin-right: 10px;overflow: hidden;">
                                     <ul style="display: flex; list-style: none; margin: 0; padding: 0;">
                                         <li ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }">
-                                            <a href="#" ng-click="activateTab(tab)">{{ tab.title }}</a>
+                                            <a  ng-click="activateTab(tab)">{{ tab.title }}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -245,7 +245,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                                    <tr ng-repeat="item in cart.items"
+                                                    <tr ng-repeat="item in cart.av"
                                                         class="text-gray-700 dark:text-gray-400">
                                                         <td class="px-4 py-3 text-sm">{{item.name}}</td>
                                                         <td class="px-4 py-3 text-sm">{{item.price}}</td>

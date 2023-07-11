@@ -1,4 +1,4 @@
-app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
+app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     const apiUrlCart = "http://localhost:8080/api/cart";
     const apiUrlBill = "http://localhost:8080/api/bill";
     const apiUrlProduct = "http://localhost:8080/api/product";
@@ -23,6 +23,8 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
     $scope.checkSubmit = false;
     $scope.tabs = [];
     $scope.showTab = false;
+    $scope.tabid=0;
+    $scope.yourJsonData=[];
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
@@ -78,6 +80,9 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
     };
     $scope.activateTab = function(tab) {
         // Vô hiệu hóa tất cả các tab
+        $scope.tabid = tab.id
+        alert($scope.tabid)
+        $scope.cart.saveToLocalStorage();
         $scope.tabs.forEach(function(t) {
             t.active = false;
         });
@@ -157,6 +162,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
                     $scope.billProduct = response.data;
                     console.log(response);
                     $scope.cart.addP();
+
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -233,16 +239,21 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             });
 
     }
+    // $scope.av =[];
     $scope.cart= {
         items: [],
+        av: [],
         add() {
-            var item = this.items.find(item => item.id == $scope.formCart.id);
+            var item = null;
+            var item = this.items.find(item => item.id == $scope.formCart.id && item.idTab == $scope.tabid);
+            alert(item+'ss')
             if (item) {
                 item.qty++;
                 this.saveToLocalStorage();
             } else {
                 $http.get(apiUrlCart + '/' + $scope.formCart.id).then(resp => {
                     resp.data.qty = 1;
+                    resp.data.idTab = $scope.tabid;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
                 })
@@ -250,13 +261,26 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
 
         },
         addP() {
-            var item = this.items.find(item => item.id == $scope.billProduct.id);
+            var item = null;
+            var item = this.items.find(item => item.id == $scope.billProduct.id && item.idTab == $scope.tabid)
+              //   &&
+              // this.items.find(item => item.idTab == $scope.tabid);
+            alert(item + "ssss")
+            alert($scope.billProduct.id+" idp--------" + $scope.tabid)
+            // var idT = this.av.find(item => item.idTab == $scope.tabid);
+            // var IT = this.av.find(item => item.id == $scope.billProduct.id);
+            // if (idT){
+            //     alert("ngok")
+            // }
             if (item) {
+                // if (idT){
                 item.qty++;
                 this.saveToLocalStorage();
+                // }
             } else {
                 $http.get(apiUrlCart + '/' + $scope.billProduct.id).then(resp => {
                     resp.data.qty = 1;
+                    resp.data.idTab = $scope.tabid;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
                 })
@@ -264,26 +288,53 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
 
         },
         saveToLocalStorage() {
-            var json = JSON.stringify(angular.copy(this.items));
-            localStorage.setItem("cart", json);
+            // var av =[];
+           $scope.cart.av=[]
+            function getObjectById(jsons) {
+                for (var i = 0; i < jsons.length; i++) {
+                    if (jsons[i].idTab === $scope.tabid ) {
+                        $scope.cart.av.push(jsons[i])
+                    }
+                }
+                return null;
+            }
+            var object = getObjectById($scope.cart.items);
+            var df = JSON.stringify(angular.copy($scope.cart.av));
+            alert(df+"2")
+            // av.push(df)
+            // alert(av + "av")
+            //
+            //   var jsons={"id":122,"name":"Category 2Material 2Design 2 Màu Color 2 Size Size 2","status":1,"images":[],"price":2,"barcode":407336622,"category":{"idCategory":2,"name":"Category 2","type":1,"status":1},"size":{"id":2,"name":"Size 2"},"color":{"id":2,"name":"Color 2"},"design":{"id":2,"name":"Design 2"},"material":{"id":2,"name":"Material 2"},"files":null,"qty":4,"idTab":0}
+            // var aa = JSON.stringify(angular.copy(jsons));
+            // av = JSON.stringify(angular.copy(jsons));
+            // alert(av+'23212a')
+            //
+            // this.items.push(av)
+            // alert($scope.tabid+"id2")
+            // var json = JSON.stringify(angular.copy(this.items));
+            localStorage.setItem("cart", df);
+
         },
         get count() {
-            return this.items.map(item => item.qty)
+            return this.av.map(item => item.qty)
                 .reduce((total, qty) => total += qty, 0);
         }, get amount() {
-            return this.items.map(item => item.qty * item.price)
+            return this.av.map(item => item.qty * item.price)
                 .reduce((total, qty) => total += qty, 0);
         }, get amc() {
            return this.amount + 0;
         },clear(){
-            $scope.cart.items=[];
+            // $scope.cart.av= [];
+            var index =$scope.cart.items.findIndex(item => item.idTab == $scope.tabid);
+            alert(index)
+            $scope.cart.items.splice(index,2);
             $scope.bill.address="";
             $scope.bill.personTake="";
             $scope.bill.phoneTake="";
             this.saveToLocalStorage();
         }
         ,tru(id) {
-            var item = this.items.find(item => item.id == id);
+            var item = this.items.find(item => item.id == id && item.idTab == $scope.tabid);
             if (item.qty==1){
                 alert("khong the")
             }else {
@@ -292,20 +343,20 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             }
         }
         ,cong(id) {
-            var item = this.items.find(item => item.id == id);
+            var item = this.items.find(item => item.id == id && item.idTab == $scope.tabid);
 
                 item.qty++;
                 this.saveToLocalStorage();
 
         },
         remove(id){
-            var index =this.items.findIndex(item => item.id == id);
+            var index =this.items.findIndex(item => item.id == id && item.idTab == $scope.tabid);
             this.items.splice(index,1);
             this.saveToLocalStorage();
         }
         , loadFromLocalStorage() {
             var json = localStorage.getItem("cart");
-            this.items = json ? JSON.parse(json) : [];
+            this.av = json ? JSON.parse(json) : [];
         }
     }
         ,$scope.cart.loadFromLocalStorage();
@@ -323,7 +374,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
         statusBuy: "1",
         status: "1",
         get billDetails() {
-            return $scope.cart.items.map(item => {
+            return $scope.cart.av.map(item => {
                 return {
                     product: {id: item.id},
                     price: item.price,
