@@ -10,7 +10,7 @@ app.config(function($routeProvider){
             controller:"UserController"
         })
         .when("/cart",{
-            templateUrl:"/user/Cart.html",
+            templateUrl:"/user/cart/Cart.html",
             controller:"UserController"
         })
         .when("/product_detail",{

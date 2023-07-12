@@ -9,4 +9,6 @@ public interface BillDetailService {
     List<Bill_detail> getAll();
 
     List<Bill_detail> getBill_detail(int id);
+
+    Bill_detail save(Bill_detail entity);
 }

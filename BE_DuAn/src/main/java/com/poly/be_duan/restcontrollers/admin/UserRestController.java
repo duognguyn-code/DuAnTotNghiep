@@ -34,7 +34,7 @@ public class UserRestController {
 
     @GetMapping("/getAccountActive")
     public AccountDTO getAccountActive() {
-        Account account = accountService.findByUsername("Duong");
+        Account account = accountService.findByUsername("Dương");
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return accountDTO;
     }

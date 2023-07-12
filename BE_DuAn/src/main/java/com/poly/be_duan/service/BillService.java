@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface BillService {
 
+    Bill save(Bill entity);
     List<Bill> getAll();
 
     public List<Bill> getBill(Integer id);
