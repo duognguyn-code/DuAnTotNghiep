@@ -367,7 +367,180 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http) {
             })
         }
     }
+    $scope.generationName = function () {
+            if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
+                $scope.formProduct.name = '';
+            }
+            if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
+                for (let i = 0; i < $scope.categories.length; i++) {
+                    if ($scope.formProduct.category == $scope.categories[i].idCategory) {
+                        $scope.formProduct.name = $scope.categories[i].name;
+                    }
+                }
+            }
+            if ($scope.formProduct.color != undefined || $scope.formProduct.color != null || $scope.formProduct.color != '') {
+                for (let i = 0; i < $scope.colors.length; i++) {
+                    if ($scope.formProduct.color == $scope.colors[i].id) {
+                        $scope.formProduct.name += 'C' + $scope.colors[i].name;
+                    }
+                }
+            }
+            if ($scope.formProduct.design != undefined || $scope.formProduct.design != null || $scope.formProduct.design != '') {
+                for (let i = 0; i < $scope.designs.length; i++) {
+                    if ($scope.formProduct.design == $scope.designs[i].id) {
+                        $scope.formProduct.name += 'D' + $scope.designs[i].name;
+                    }
+                }
+            }
+            if ($scope.formProduct.material != undefined || $scope.formProduct.material != null || $scope.formProduct.material != '') {
+                for (let i = 0; i < $scope.colors.length; i++) {
+                    if ($scope.formProduct.material == $scope.materials[i].id) {
+                        $scope.formProduct.name += 'M' + $scope.materials[i].name;
+                    }
+                }
+            }
+            if ($scope.formProduct.size != undefined || $scope.formProduct.size != null || $scope.formProduct.size != '') {
+                for (let i = 0; i < $scope.sizes.length; i++) {
+                    if ($scope.formProduct.size == $scope.sizes[i].id) {
+                        $scope.formProduct.name += 'S' + $scope.sizes[i].name;
+                    }
+                }
+            }
 
+        }
+        $scope.generationNameForUpdate = function () {
+            if ($scope.productData.name != undefined || $scope.productData.name != null || $scope.productData.name != '') {
+                $scope.productData.name = '';
+            }
+            if ($scope.productData.category != undefined || $scope.productData.category != null || $scope.productData.category != '') {
+                for (let i = 0; i < $scope.categories.length; i++) {
+                    if ($scope.productData.category == $scope.categories[i].idCategory) {
+                        $scope.productData.name = $scope.categories[i].name;
+                    }
+                }
+            }
+            if ($scope.productData.color != undefined || $scope.productData.color != null || $scope.productData.color != '') {
+                for (let i = 0; i < $scope.colors.length; i++) {
+                    if ($scope.productData.color == $scope.colors[i].id) {
+                        $scope.productData.name += ' Màu ' + $scope.colors[i].name;
+                    }
+                }
+            }
+            if ($scope.productData.design != undefined || $scope.productData.design != null || $scope.productData.design != '') {
+                for (let i = 0; i < $scope.designs.length; i++) {
+                    if ($scope.productData.design == $scope.designs[i].id) {
+                        $scope.productData.name += ' Thiết kế ' + $scope.designs[i].name;
+                    }
+                }
+            }
+            if ($scope.productData.material != undefined || $scope.productData.material != null || $scope.productData.material != '') {
+                for (let i = 0; i < $scope.colors.length; i++) {
+                    if ($scope.formProduct.material == $scope.materials[i].id) {
+                        $scope.productData.name += ' Chất Liệu ' + $scope.materials[i].name;
+                    }
+                }
+            }
+            if ($scope.productData.size != undefined || $scope.productData.size != null || $scope.productData.size != '') {
+                for (let i = 0; i < $scope.sizes.length; i++) {
+                    if ($scope.productData.size == $scope.sizes[i].id) {
+                        $scope.productData.name += ' Size ' + $scope.sizes[i].name;
+                    }
+                }
+            }
+
+        }
+        $scope.searchProduct = function () {
+            if ($scope.searchPriceMin === "") {
+                $scope.searchPriceMin = "Min"
+
+            }
+            if ($scope.searchProducts === "") {
+                $scope.searchProducts = " "
+
+            }
+            if ($scope.searchPriceMax === "") {
+                $scope.searchPriceMax = "Max"
+            }
+            if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
+                && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
+            ) {
+                $scope.getProducts();
+            } else {
+                $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
+                    .then(function (response) {
+                        $scope.products = response.data;
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            }
+        };
+        $scope.GetresetForm = function () {
+            $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
+                .then(function (response) {
+                    $scope.products = response.data;
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        };
+        $scope.pagerProducts = {
+            page: 0,
+            size: 5,
+            get products() {
+                var start = this.page * this.size;
+                return $scope.products.slice(start, start + this.size);
+
+            },
+            get count() {
+                return Math.ceil(1.0 * $scope.products.length / this.size);
+                return $scope.products.slice(start, start + this.size);
+
+            },
+            get count() {
+                return Math.ceil(1.0 * $scope.products.length / this.size);
+
+            },
+            first() {
+                this.page = 0;
+            },
+            prev() {
+                this.page--;
+                if (this.page < 0) {
+                    this.first();
+                    alert("Bạn đang ở trang đầu")
+                }
+            },
+            next() {
+                this.page++;
+                if (this.page >= this.count) {
+                    this.last();
+                    alert("Bạn đang ở trang cuối")
+                }
+            },
+            last() {
+                this.page = this.count - 1;
+            }
+        }
+        $scope.resetSearch = function () {
+            $('#matesearch').prop('selectedIndex', 0);
+            $('#colorSearch').prop('selectedIndex', 0);
+            $('#designSearch').prop('selectedIndex', 0);
+            $('#statusSearch').prop('selectedIndex', 0);
+            $scope.searchColor = "undefined";
+            $scope.searchDesign = "undefined";
+            $scope.searchMaterial = "undefined";
+            $scope.searchSize = "undefined";
+            $scope.searchStatus = "1";
+            $scope.searchPriceMin = "";
+            $scope.searchPriceMax = "";
+            $scope.searchProducts = " ";
+            $('#sizeSearch').prop('selectedIndex', 0);
+            $scope.GetresetForm();
+        }
+    $scope.resetSearch();
     $scope.getSize()
     $scope.getDesign();
     $scope.getMaterials();

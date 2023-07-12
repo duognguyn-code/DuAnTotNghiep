@@ -1,21 +1,64 @@
 <div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
     <main class="h-full pb-16 overflow-y-auto">
-        <div class="container pb-16 overflow-y-auto">
+        <div class="container pb-2 overflow-y-auto">
             <h2 class="my-6 text-2xl text-center font-semibold text-gray-700 dark:text-gray-200"> Thanh toán tại
                 quầy</h2>
             <div class="row px-xl-5 pb-3">
                 <div class="row col-lg-7">
                     <div class="container" style=" margin-top:20px;">
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-6">
                                 <input type="text" class="form-control" placeholder="   tìm kiếm sản phẩm"
                                        style="width:80%; height:50px;border: 1px solid #8AEC6F; border-radius:10px;">
+                            </div>
+                            <div class="col-lg-3">
+                                <button ng-click="resetSearch()"style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;"class="btn">
+                                    Reset
+                                </button>
                             </div>
                             <div class="col-lg-3">
                                 <button ng-click="getProductByQRCode()" class="btn"
                                         style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;">
                                     Quét QR
                                 </button>
+                            </div>
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-lg-3">
+                                <label class="block text-sm">
+                                    <span  class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
+                                    <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
+                                        <option value="undefined">--Chọn Mục--</option>
+                                        <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="block text-sm">
+                                    <span  class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
+                                    <select id="designSearch"  ng-model="searchDesign" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
+                                        <option  value="undefined" >--Chọn Mục--</option>
+                                        <option ng-repeat="design in designs" value="{{design.name}}">{{design.name}}</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="block text-sm">
+                                    <span  class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
+                                    <select id="matesearch" ng-model="searchMaterial" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
+                                        <option value="undefined" >--Chọn Mục--</option>
+                                        <option ng-repeat="material in materials" value="{{material.name}}">{{material.name}}</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="col-lg-3">
+                                <label class="block text-sm">
+                                    <span  class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
+                                    <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
+                                        <option value="undefined" >--Chọn Mục--</option>
+                                        <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
+                                    </select>
+                                </label>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -24,11 +67,12 @@
                     <button ng-click="addTab()" style="width:200px;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;border-radius:10px;margin-top:20px;margin-left:30px;">Tạo hóa đơn</button>
                 </div>
             </div>
+            </div>
             <div class="row px-xl-5 pb-3">
                 <div class="row col-lg-7 mb-4">
                     <!--        Search form-->
                     <!--        Search form-->
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4" ng-repeat="product in products">
+                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4" ng-repeat="product in products | limitTo : 9">
                         <div class="card product-item border-0 mb-4">
                             <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal"
                                     ng-click="getP.getID(product.category.idCategory)">
@@ -79,7 +123,7 @@
                                                         class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                                     <option value="undefined">--Chọn Mục--</option>
                                                     <option ng-repeat="design in designs" value="{{design.id}}">
-                                                        {{design.id}}
+                                                        {{design.name}}
                                                     </option>
                                                 </select>
                                             </div>
