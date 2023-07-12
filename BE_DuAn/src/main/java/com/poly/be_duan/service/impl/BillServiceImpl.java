@@ -25,6 +25,12 @@ public class BillServiceImpl implements BillService {
 
     @Autowired
     BillDetailRepository billDetailRepository;
+
+    @Override
+    public Bill save(Bill entity) {
+        return billRepository.save(entity);
+    }
+
     @Override
     public List<Bill> getAll() {
         return billRepository.findAll();

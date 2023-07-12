@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query("SELECT a FROM Account a WHERE a.username LIKE :username AND a.status = 1")
-    public Account findByName(@Param("username") String username);
+    public Account findByName(String username);
 
     @Query(value = "select * from accounts where status = 1 and (full_name like %?1% or username like %?1%)",nativeQuery = true)
     Page<Account> findShowSale(String share, Pageable pageable);

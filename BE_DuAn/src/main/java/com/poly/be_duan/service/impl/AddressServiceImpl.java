@@ -75,7 +75,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO save(AddressDTO addressDTO) {
         Address address = modelMapper.map(addressDTO, Address.class);
-        Account username = accountRepository.findByName("Duong");
+        Account username = accountRepository.findByName("Dương");
         address.setAccount(username);
         Address addressSave = repository.save(address);
         AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
@@ -116,7 +116,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> findByUsername() {
-        List<Address> addressList = repository.findByAccount_Username("user1");
+        List<Address> addressList = repository.findByAccount_Username("Duong");
         List<AddressDTO> addressDTOList = addressList.stream().map(address ->
                 modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
         return addressDTOList;
@@ -141,7 +141,9 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResponseEntity<?> getShippingOrder(String from_district_id, String service_id, String to_district_id, String to_ward_code, String weight, String insurance_value) {
+    public ResponseEntity<?> getShippingOrder(String from_district_id, String service_id
+            , String to_district_id, String to_ward_code
+            , String weight, String insurance_value) {
         return restTemplate.exchange("https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee?from_district_id="
                         +from_district_id+"&service_id="+service_id+"&to_district_id="+to_district_id+"&to_ward_code="
                         +to_ward_code+"&weight="+weight+"&insurance_value="+insurance_value,
