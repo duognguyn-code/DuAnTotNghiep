@@ -251,27 +251,16 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         var json = localStorage.getItem("cartItems");
         this.cartItems = json ? JSON.parse(json) : [];
     }
-    $scope.calculateTotal = function () {
-        for (var i = 0; i < $scope.cartItems.length; i++) {
-            var item = $scope.cartItems[i];
-            return item.product.price * item.quantity;
-        }
-
+    $scope.calculateTotal = function(item) {
+        return item.product.price * item.quantity;
     };
-    $scope.increaseQuantity = function () {
-        for (var i = 0; i < $scope.cartItems.length; i++) {
-            var item = $scope.cartItems[i];
-            item.quantity++;
-        }
+    $scope.increaseQuantity = function(item) {
+        item.quantity++;
     };
 
-    // Hàm giảm số lượng
-    $scope.decreaseQuantity = function (item) {
-        for (var i = 0; i < $scope.cartItems.length; i++) {
-            var item = $scope.cartItems[i];
-            if (item.quantity > 1) {
-                item.quantity--;
-            }
+    $scope.decreaseQuantity = function(item) {
+        if (item.quantity > 1) {
+            item.quantity--;
         }
     };
     // Lấy danh sách sản phẩm
