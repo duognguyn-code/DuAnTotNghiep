@@ -76,10 +76,6 @@ public class Product  {
     @JoinColumn(name = "id_material", referencedColumnName = "id_materials")
     private Material material;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "productDetail")
-    private List<Cart_detail> cartDetails;
-
     @Transient
     private List<MultipartFile> files;
 

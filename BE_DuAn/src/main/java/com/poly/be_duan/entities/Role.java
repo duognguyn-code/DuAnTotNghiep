@@ -1,6 +1,8 @@
 package com.poly.be_duan.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.poly.be_duan.config.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,18 +17,16 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Role {
 
     @Id
     @Column(name = "id_role")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idRole;
+    private Integer idRole;
 
-    @Column(name = "name",nullable = false)
-    private String name;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "role")
-    private List<Account> accounts;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "name")
+    private ERole name;
 
 }

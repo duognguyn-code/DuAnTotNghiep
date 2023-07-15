@@ -17,19 +17,17 @@ public interface AccountRepository extends JpaRepository<Account, String> {
     @Query(value = "select * from accounts where status = 1 and (full_name like %?1% or username like %?1%)",nativeQuery = true)
     Page<Account> findShowSale(String share, Pageable pageable);
 
+    Boolean existsAccountByEmail(String email);
+    Boolean existsAccountByUsername(String username);
     Page<Account> findAllByStatus(Integer status, Pageable pageable);
 
-    Page<Account> findByRole_IdRole(Integer role, Pageable pageable);
 
     Page<Account> findByUsernameContaining(String username, Pageable pageable);
 
     Page<Account> findByUsernameContainingAndStatus(String username, Integer status, Pageable pageable);
 
-    Page<Account> findByUsernameContainingAndRole_IdRole(String username, Integer idRole, Pageable pageable);
 
-    Page<Account> findByUsernameContainingAndRole_IdRoleAndStatus(String username, Integer idRole, Integer status, Pageable pageable);
 
-    Page<Account> findByRole_IdRoleAndStatus(Integer idRole, Integer status, Pageable pageable);
 
 
     Account findByUsername(String username);

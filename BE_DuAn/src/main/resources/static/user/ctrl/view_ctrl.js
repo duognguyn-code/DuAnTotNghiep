@@ -31,6 +31,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.bills = {};
 
 
+
     $scope.getAcountActive = function () {
         $http.get(apiUrlAccout + `/getAccountActive`).then(function (respon) {
             $scope.accountActive = respon.data;
@@ -193,14 +194,24 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         } else {
             // Otherwise, add the new item to the cart
             cartItems.push(cartItem);
+            $rootScope.qtyCart++;
+            $rootScope.loadQtyCart();
+            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
         }
 
         // Update the cart items in local storage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
+        // $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
     };
     $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
+    $rootScope.loadQtyCart=function(){
+        $rootScope.qtyCart=0;
+        if($rootScope.cartItems){
+            $rootScope.cartItems.forEach(item=>{
+                $rootScope.qtyCart+=item.qty;
+            });
+        }
+    }
     $scope.calculateSubtotal = function () {
         var subtotal = 0;
         for (var i = 0; i < $scope.cartItems.length; i++) {
