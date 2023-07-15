@@ -53,7 +53,7 @@ public class Bill {
     private BigDecimal moneyShip;
 
     @Column(name = "type_payment")
-    private Integer typePayment;
+    private Boolean typePayment;
 
     @Column(name = "description")
     private String description;

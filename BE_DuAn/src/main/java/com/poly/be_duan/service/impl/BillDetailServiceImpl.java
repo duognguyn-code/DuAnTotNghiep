@@ -24,4 +24,9 @@ public class BillDetailServiceImpl implements BillDetailService {
     public List<Bill_detail> getBill_detail(int id) {
         return billDetailRepository.getBill_detail(id);
     }
+
+    @Override
+    public Bill_detail save(Bill_detail entity) {
+        return billDetailRepository.save(entity);
+    }
 }
