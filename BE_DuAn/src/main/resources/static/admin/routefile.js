@@ -57,4 +57,7 @@ app.config(function($routeProvider){
             templateUrl:"/admin/Payment/Payment.html",
             controller:"cart_admin-ctrl"
         })
+        .when("/statistical",{
+            templateUrl:"/admin/Statistical/statistical.html",
+        })
 })
