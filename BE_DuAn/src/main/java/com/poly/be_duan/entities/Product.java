@@ -46,7 +46,7 @@ public class Product  {
     }
 
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price")
     private BigDecimal price;
 
     @Column(name = "barcode", nullable = false)
@@ -75,10 +75,6 @@ public class Product  {
     @ManyToOne
     @JoinColumn(name = "id_material", referencedColumnName = "id_materials")
     private Material material;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "productDetail")
-    private List<Cart_detail> cartDetails;
 
     @Transient
     private List<MultipartFile> files;

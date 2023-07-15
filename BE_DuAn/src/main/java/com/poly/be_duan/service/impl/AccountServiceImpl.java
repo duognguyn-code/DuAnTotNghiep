@@ -98,7 +98,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String setAddressDefault(Integer id) {
         Address address = addressRepository.findById(id).orElse(null);
-        Account account = repository.findByName("Duong");
+        Account account = repository.findByName("Dương");
         account.setAddress_id(address);
         repository.save(account);
         return "OK";
@@ -106,7 +106,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AddressDTO getAddress() {
-        Account account = repository.findByName("Duong");
+        Account account = repository.findByName("Dương");
         Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
         AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
         return addressDTO;

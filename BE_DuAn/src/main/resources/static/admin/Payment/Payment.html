@@ -12,7 +12,9 @@
                                        style="width:80%; height:50px;border: 1px solid #8AEC6F; border-radius:10px;">
                             </div>
                             <div class="col-lg-3">
-                                <button ng-click="resetSearch()"style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;"class="btn">
+                                <button ng-click="resetSearch()"
+                                        style="width:70%; height:50px; border-radius:10px; background-color:#7e3af2; color:white;"
+                                        class="btn">
                                     Reset
                                 </button>
                             </div>
@@ -22,165 +24,182 @@
                                     Quét QR
                                 </button>
                             </div>
-                        <div class="row" style="margin-top:20px;">
-                            <div class="col-lg-3">
-                                <label class="block text-sm">
-                                    <span  class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
-                                    <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
-                                        <option value="undefined">--Chọn Mục--</option>
-                                        <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="block text-sm">
-                                    <span  class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
-                                    <select id="designSearch"  ng-model="searchDesign" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
-                                        <option  value="undefined" >--Chọn Mục--</option>
-                                        <option ng-repeat="design in designs" value="{{design.name}}">{{design.name}}</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="block text-sm">
-                                    <span  class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
-                                    <select id="matesearch" ng-model="searchMaterial" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
-                                        <option value="undefined" >--Chọn Mục--</option>
-                                        <option ng-repeat="material in materials" value="{{material.name}}">{{material.name}}</option>
-                                    </select>
-                                </label>
-                            </div>
-                            <div class="col-lg-3">
-                                <label class="block text-sm">
-                                    <span  class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
-                                    <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" ng-click="searchProduct()">
-                                        <option value="undefined" >--Chọn Mục--</option>
-                                        <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
-                                    </select>
-                                </label>
-                            </div>
+                            <div class="row" style="margin-top:20px;">
+                                <div class="col-lg-3">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
+                                        <select id="colorSearch1" ng-model="searchColor"
+                                                class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                                ng-click="searchProduct()">
+                                            <option value="undefined">--Chọn Mục--</option>
+                                            <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
+                                        <select id="designSearch1" ng-model="searchDesign"
+                                                class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                                ng-click="searchProduct()">
+                                            <option value="undefined">--Chọn Mục--</option>
+                                            <option ng-repeat="design in designs" value="{{design.name}}">
+                                                {{design.name}}
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
+                                        <select id="matesearch1" ng-model="searchMaterial"
+                                                class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                                ng-click="searchProduct()">
+                                            <option value="undefined">--Chọn Mục--</option>
+                                            <option ng-repeat="material in materials" value="{{material.name}}">
+                                                {{material.name}}
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="block text-sm">
+                                        <span class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
+                                        <select id="sizeSearch1" ng-model="searchSize"
+                                                class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                                ng-click="searchProduct()">
+                                            <option value="undefined">--Chọn Mục--</option>
+                                            <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}
+                                            </option>
+                                        </select>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row col-lg-5">
-                    <button ng-click="addTab()" style="width:200px;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;border-radius:10px;margin-top:20px;margin-left:30px;">Tạo hóa đơn</button>
+                    <button ng-click="addTab()"
+                            style="width:200px;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;border-radius:10px;margin-top:20px;margin-left:30px;">
+                        Tạo hóa đơn
+                    </button>
                 </div>
             </div>
-            </div>
-            <div class="row px-xl-5 pb-3">
-                <div class="row col-lg-7 mb-4">
-                    <!--        Search form-->
-                    <!--        Search form-->
-                    <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4" ng-repeat="product in products | limitTo : 9">
-                        <div class="card product-item border-0 mb-4">
-                            <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal"
-                                    ng-click="getP.getID(product.category.idCategory)">
-                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                    <img class="img-fluid w-100"
-                                         src="{{product.images.length>0?product.images[0].urlimage:''}}" alt=""
-                                         style="transition:.5s;">
+        </div>
+        <div class="row px-xl-5 pb-3">
+            <div class="row col-lg-7 mb-4">
+                <!--        Search form-->
+                <!--        Search form-->
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1 mt-4" ng-repeat="product in products | limitTo : 9">
+                    <div class="card product-item border-0 mb-4">
+                        <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal"
+                                ng-click="getP.getID(product.category.idCategory)">
+                            <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                <img class="img-fluid w-100"
+                                     src="{{product.images.length>0?product.images[0].urlimage:''}}" alt=""
+                                     style="transition:.5s;">
+                            </div>
+                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">
+                                    {{product.name}}</h6>
+                                <div class="d-flex justify-content-center">
+                                    <h6 style="font-weight:500; font-size:18px;">{{product.price}}</h6>
                                 </div>
-                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                    <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">
-                                        {{product.name}}</h6>
-                                    <div class="d-flex justify-content-center">
-                                        <h6 style="font-weight:500; font-size:18px;">{{product.price}}</h6>
-                                    </div>
-                                </div>
-                            </button>
-                        </div>
-
-
+                            </div>
+                        </button>
                     </div>
-                    <div class="modal fade" id="exampleModalproduct" tabindex="-1" data-bs-backdrop="static"
-                         aria-labelledby="exampleModalLabelMaterial" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabelMaterial"></h5>
-                                    <p>Chi tiết sản phẩm</p>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-                                     ng-init="getDetailProduct(0)">
-                                    <div class="row g-0" style="">
-                                        <div class="col-md-4">
-                                            <img src="../images/shoe2.png" class="img-fluid rounded-start"
-                                                 alt="...">
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h5 class="card-title" style="font-size:28px;font-weight:700;">
-                                                {{detailProduct.name}}</h5>
-                                            <p class="card-text"
-                                               style="font-size:18px;font-weight:500;margin-top:10px;">
-                                                {{detailProduct.price}}</p>
-                                            <div class="d-flex mb-3" style="margin-top:10px;">
-                                                <p class="text-dark font-weight-medium mb-0 mr-3"
-                                                   style="font-size:18px; font-weight:500;">Kiểu dáng:</p>
-                                                <select id="designSearch" ng-model="searchDesign"
-                                                        class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                                    <option value="undefined">--Chọn Mục--</option>
-                                                    <option ng-repeat="design in designs" value="{{design.id}}">
-                                                        {{design.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <!--                      Size-->
-                                            <div class="d-flex mb-3" style="margin-top:10px;">
-                                                <p class="text-dark font-weight-medium mb-0 mr-3"
-                                                   style="font-size:18px; font-weight:500;">Size:</p>
-                                                <select id="sizeSearch" ng-model="searchSize"
-                                                        class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                                    <option value="undefined">--Chọn Mục--</option>
-                                                    <option ng-repeat="size in sizes" value="{{size.id}}">
-                                                        {{size.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <!--                      Color-->
-                                            <div class="d-flex mb-3" style="margin-top:10px;">
-                                                <p class="text-dark font-weight-medium mb-0 mr-3"
-                                                   style="font-size:18px; font-weight:500;">Màu sắc:</p>
-                                                <select id="colorSearch" ng-model="searchColor"
-                                                        class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                                    <option value="undefined">--Chọn Mục--</option>
-                                                    <option ng-repeat="color in colors" value="{{color.id}}">
-                                                        {{color.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <!--                      Material-->
-                                            <div class="d-flex mb-3" style="margin-top:10px;">
-                                                <p class="text-dark font-weight-medium mb-0 mr-3"
-                                                   style="font-size:18px; font-weight:500;">Chất liệu:</p>
-                                                <select id="matesearch" ng-model="searchMaterial"
-                                                        class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                                    <option value="undefined">--Chọn Mục--</option>
-                                                    <option ng-repeat="material in materials" value="{{material.id}}">
-                                                        {{material.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <p class="card-text" style="margin-top:10px;">
-                                            </p>
-                                        </div>
+
+
+                </div>
+                <div class="modal fade" id="exampleModalproduct" tabindex="-1" data-bs-backdrop="static"
+                     aria-labelledby="exampleModalLabelMaterial" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabelMaterial"></h5>
+                                <p>Chi tiết sản phẩm</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+                                 ng-init="getDetailProduct(0)">
+                                <div class="row g-0" style="">
+                                    <div class="col-md-4">
+                                        <img src="../images/shoe2.png" class="img-fluid rounded-start"
+                                             alt="...">
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-9"></div>
-                                        <div class="col-lg-3 mt-4 text-sm">
-                                            <button style="margin-top: 30px;" ng-click="getP.getD()"
-                                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple float-right">
-                                                Thêm vào hóa đơn
-                                            </button>
+                                    <div class="col-md-8">
+                                        <h5 class="card-title" style="font-size:28px;font-weight:700;">
+                                            {{detailProduct.name}}</h5>
+                                        <p class="card-text"
+                                           style="font-size:18px;font-weight:500;margin-top:10px;">
+                                            {{detailProduct.price}}</p>
+                                        <div class="d-flex mb-3" style="margin-top:10px;">
+                                            <p class="text-dark font-weight-medium mb-0 mr-3"
+                                               style="font-size:18px; font-weight:500;">Kiểu dáng:</p>
+                                            <select id="designSearch" ng-model="searchDesign"
+                                                    class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="undefined">--Chọn Mục--</option>
+                                                <option ng-repeat="design in designs" value="{{design.id}}">
+                                                    {{design.name}}
+                                                </option>
+                                            </select>
                                         </div>
+                                        <!--                      Size-->
+                                        <div class="d-flex mb-3" style="margin-top:10px;">
+                                            <p class="text-dark font-weight-medium mb-0 mr-3"
+                                               style="font-size:18px; font-weight:500;">Size:</p>
+                                            <select id="sizeSearch" ng-model="searchSize"
+                                                    class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="undefined">--Chọn Mục--</option>
+                                                <option ng-repeat="size in sizes" value="{{size.id}}">
+                                                    {{size.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!--                      Color-->
+                                        <div class="d-flex mb-3" style="margin-top:10px;">
+                                            <p class="text-dark font-weight-medium mb-0 mr-3"
+                                               style="font-size:18px; font-weight:500;">Màu sắc:</p>
+                                            <select id="colorSearch" ng-model="searchColor"
+                                                    class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="undefined">--Chọn Mục--</option>
+                                                <option ng-repeat="color in colors" value="{{color.id}}">
+                                                    {{color.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <!--                      Material-->
+                                        <div class="d-flex mb-3" style="margin-top:10px;">
+                                            <p class="text-dark font-weight-medium mb-0 mr-3"
+                                               style="font-size:18px; font-weight:500;">Chất liệu:</p>
+                                            <select id="matesearch" ng-model="searchMaterial"
+                                                    class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                                                <option value="undefined">--Chọn Mục--</option>
+                                                <option ng-repeat="material in materials" value="{{material.id}}">
+                                                    {{material.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <p class="card-text" style="margin-top:10px;">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-9"></div>
+                                    <div class="col-lg-3 mt-4 text-sm">
+                                        <button style="margin-top: 30px;" ng-click="getP.getD()"
+                                                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple float-right">
+                                            Thêm vào hóa đơn
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row col-lg-5 ml-4">
                     <div class="container">
                         <div class="container-fluid">
@@ -188,7 +207,7 @@
                                 <div class="tabs" style="flex-grow: 1; margin-right: 10px;overflow: hidden;">
                                     <ul class="nav nav-pills" id="menu1">
                                         <li class="tab Selected" id="check-tab" ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }">
-                                            <a href="">Đơn hàng {{tab.id}}</a>
+                                            <a ng-click="activateTab(tab)">Đơn hàng {{tab.id}}</a>
                                             <a class="closeTab" ng-click="removeTab(tab)" ng-disabled="tabs.length <=0">✕</a>
 <!--                                            <input id=""type="radio" name="radio-set">-->
 <!--                                            <label for="" class="tab-label-{{tab.id}}" ng-click="activateTab(tab)">-->
@@ -200,191 +219,195 @@
                                 </div>
                             </div>
                         </div>
-                        <div ng-repeat="item in cart.items" class="row g-0"
+                        <div ng-repeat="item in cart.av" class="row g-0"
                              style="height:180px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
 
-                            <div class="col-md-4">
-                                <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-6">
-                                <h5 class="card-title" style="font-size:20px;font-weight:500;">{{item.name}}</h5>
-                                <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
-                                    {{item.price}}</p>
-                                <p class="card-text" style="margin-top:10px;">
-                                <div class="input-group quantity mr-3" style="width: 130px;margin-top:40px;">
-                                    <div class="input-group-btn">
-                                        <button ng-click="cart.tru(item.id)" class="btn btn-minus"
-                                                style="background-color:#C0C0C0; border:none;">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="text"
-                                           class="form-control text-center" style="border:none;">
-                                    <div class="input-group-btn">
-                                        <button ng-click="cart.cong(item.id)" class="btn btn-plus"
-                                                style="background-color:#C0C0C0; border:none;">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                </p>
-                            </div>
-                            <div class="col-md-2">
-                                <p class="card-text text-right" style="font-size:18px;font-weight:500;">
-                                    ${{item.qty * item.price | number:2}}</p>
-                                <button ng-click="cart.remove(item.id)"
-                                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                        aria-label="Delete"
-                                        style="float:right; margin-top:100px;"
-                                >
-                                    <svg
-                                            class="w-5 h-5"
-                                            aria-hidden="true"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                    >
-                                        <path
-                                                fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"
-                                        ></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                            <div class="row" style="border-top: 0.5px solid #C0C0C0;">
-                                <div class="col-md-10">
-                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
-                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
-                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
-                                </div>
 
-                                <div class="col-md-2">
-                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
-                                        ${{cart.amount | number:2}}</p>
-                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">0đ</p>
-                                    <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
-                                        ${{cart.amc | number:2}}</p>
+                        <div class="col-md-4">
+                            <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title" style="font-size:20px;font-weight:500;">{{item.name}}</h5>
+                            <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
+                                {{item.price}}</p>
+                            <p class="card-text" style="margin-top:10px;">
+                            <div class="input-group quantity mr-3" style="width: 130px;margin-top:40px;">
+                                <div class="input-group-btn">
+                                    <button ng-click="cart.tru(item.id)" class="btn btn-minus"
+                                            style="background-color:#C0C0C0; border:none;">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="text"
+                                       class="form-control text-center" style="border:none;">
+                                <div class="input-group-btn">
+                                    <button ng-click="cart.cong(item.id)" class="btn btn-plus"
+                                            style="background-color:#C0C0C0; border:none;">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="row" style="margin-top:20px;">
-                                <button class="btn"
-                                        style="width:100%;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;"
-                                        data-bs-target="#exampleModalPayment" data-bs-toggle="modal">Thanh toán
-                                </button>
-                            </div>
-                            <div class="modal fade" id="exampleModalPayment" tabindex="-1" data-bs-backdrop="static"
-                                 aria-labelledby="exampleModalLabelPayment" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
-                                            <p>Thanh toán</p>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                                            <div class="container">
-                                                <table class="w-full whitespace-no-wrap">
-                                                    <thead>
-                                                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                                        <th class="px-4 py-3" scope="col">Tên sản phẩm</th>
-                                                        <th class="px-4 py-3" scope="col">Giá</th>
-                                                        <th class="px-4 py-3" scope="col">Số lượng</th>
-                                                        <th class="px-4 py-3" scope="col">Thành tiền</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                                    <tr ng-repeat="item in cart.av"
-                                                        class="text-gray-700 dark:text-gray-400">
-                                                        <td class="px-4 py-3 text-sm">{{item.name}}</td>
-                                                        <td class="px-4 py-3 text-sm">{{item.price}}</td>
-                                                        <td class="px-4 py-3 text-sm">{{item.qty}}</td>
-                                                        <td class="px-4 py-3 text-sm">
-                                                            ${{item.qty * item.price | number:2}}
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <!--                  =====-->
-                                            <div class="row" style="margin-top:20px;">
-                                                <div class="col-lg-8"></div>
-                                                <div class="col-lg-4">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <p class=""
-                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                                Tiền hàng</p>
-                                                            <p class=""
-                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                                Khuyến mãi</p>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <p class=""
-                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                                ${{cart.amount | number:2}}đ</p>
-                                                            <p class=""
-                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                                0đ</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row"
-                                                         style="margin-top:15px; border-top: 1px solid black;">
-                                                        <div class="col-md-6">
-                                                            <p class=""
-                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                                Tổng</p>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <p class=""
-                                                               style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                                ${{cart.amc | number:2}}</p>
-                                                        </div>
-                                                    </div>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p class="card-text text-right" style="font-size:18px;font-weight:500;">
+                                ${{item.qty * item.price | number:2}}</p>
+                            <button ng-click="cart.remove(item.id)"
+                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                    aria-label="Delete"
+                                    style="float:right; margin-top:100px;"
+                            >
+                                <svg
+                                        class="w-5 h-5"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                            clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="border-top: 0.5px solid #C0C0C0;">
+                        <div class="col-md-10">
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
+                        </div>
+
+                        <div class="col-md-2">
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
+                                ${{cart.amount | number:2}}</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">0đ</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
+                                ${{cart.amc | number:2}}</p>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:20px;">
+                        <button class="btn"
+                                style="width:100%;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;"
+                                data-bs-target="#exampleModalPayment" data-bs-toggle="modal">Thanh toán
+                        </button>
+                    </div>
+                    <div class="modal fade" id="exampleModalPayment" tabindex="-1" data-bs-backdrop="static"
+                         aria-labelledby="exampleModalLabelPayment" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
+                                    <p>Thanh toán</p>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                                    <div class="container">
+                                        <table class="w-full whitespace-no-wrap">
+                                            <thead>
+                                            <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                                <th class="px-4 py-3" scope="col">Tên sản phẩm</th>
+                                                <th class="px-4 py-3" scope="col">Giá</th>
+                                                <th class="px-4 py-3" scope="col">Số lượng</th>
+                                                <th class="px-4 py-3" scope="col">Thành tiền</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                            <tr ng-repeat="item in cart.av"
+                                                class="text-gray-700 dark:text-gray-400">
+                                                <td class="px-4 py-3 text-sm">{{item.name}}</td>
+                                                <td class="px-4 py-3 text-sm">{{item.price}}</td>
+                                                <td class="px-4 py-3 text-sm">{{item.qty}}</td>
+                                                <td class="px-4 py-3 text-sm">
+                                                    ${{item.qty * item.price | number:2}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--                  =====-->
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-lg-8"></div>
+                                        <div class="col-lg-4">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p class=""
+                                                       style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                        Tiền hàng</p>
+                                                    <p class=""
+                                                       style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                        Khuyến mãi</p>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p class=""
+                                                       style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                        ${{cart.amount | number:2}}đ</p>
+                                                    <p class=""
+                                                       style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                        0đ</p>
                                                 </div>
                                             </div>
-                                            <div class="row" style="margin-top:20px;">
+                                            <div class="row"
+                                                 style="margin-top:15px; border-top: 1px solid black;">
                                                 <div class="col-md-6">
-                                                    <label class="block text-sm">
+                                                    <p class=""
+                                                       style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                        Tổng</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class=""
+                                                       style="font-size:18px; font-weight:500; margin-top:10px;">
+                                                        ${{cart.amc | number:2}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-md-6">
+                                            <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
                                                               style="font-size:16px;font-weight:700;">Họ Tên</span>
-                                                        <input ng-model="bill.personTake"
-                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                               style="border: 0.5px solid #7e3af2;"
-                                                        />
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="block text-sm">
+                                                <input ng-model="bill.personTake"
+                                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                       style="border: 0.5px solid #7e3af2;"
+                                                />
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
                                                               style="font-size:16px;font-weight:700;">Số Điện Thoại</span>
-                                                        <input ng-model="bill.phoneTake"
-                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                               style="border: 0.5px solid #7e3af2;"
-                                                        />
-                                                    </label>
-                                                </div>
-                                            </div>
+                                                <input ng-model="bill.phoneTake"
+                                                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                       style="border: 0.5px solid #7e3af2;"
+                                                />
+                                            </label>
                                         </div>
-                                        <div class="modal-footer">
-                                            <div class="row">
-                                                <div class="">
-                                                    <button ng-click="bill.purchase()"
-                                                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        In hóa đơn
-                                                    </button>
-                                                </div>
-                                            </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="">
+                                            <button ng-click="bill.purchase()"
+                                                    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                In hóa đơn
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+        </div>
+
     </main>
     <script type="text/javascript">
-        $(document).on('click','.tabs ul li', function(){
+        $(document).on('click', '.tabs ul li', function () {
             $(this).addClass('tabSelected').siblings().removeClass('tabSelected')
         })
     </script>

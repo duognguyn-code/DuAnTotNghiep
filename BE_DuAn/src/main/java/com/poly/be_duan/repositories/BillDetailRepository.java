@@ -12,7 +12,6 @@ import java.util.List;
 public interface BillDetailRepository extends JpaRepository<Bill_detail,Integer> {
 
     @Query("SELECT p FROM Bill_detail p WHERE p.bill.id = ?1 ")
-
     public List<Bill_detail> getBill_detail(int id);
 
 }

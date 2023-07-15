@@ -91,7 +91,7 @@
                                         style="border: 1px solid #D19C97; font-size:20px; border-radius:5px; width:600px; height:40px;"
                                         ng-minlength="6" ng-maxlength="250"
                                         ng-model="form.personTake"
-                                        placeholder="Ví dụ: Nguyễn Văn A"
+                                        placeholder="Ví dụ: Nguyễn Văn A" name="personTake" required
                                 />
                                 <span ng-show="myForm.$submitted || myForm.personTake.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.personTake.$error.required"
@@ -173,8 +173,10 @@
                                         style="border: 1px solid #D19C97; font-size:20px; border-radius:5px; width:600px; height:40px;"
                                         ng-minlength="6" ng-maxlength="250"
                                         ng-model="form.addressDetail"
+                                        name="addressDetail"
                                         placeholder="Ví dụ : số 111 ngọa long"
                                         type="text"
+                                        required
                                 />
                                 <span ng-show="myForm.$submitted || myForm.addressDetail.$dirty" style="color: red">
                                         <span class="error" ng-show="myForm.addressDetail.$error.required"
