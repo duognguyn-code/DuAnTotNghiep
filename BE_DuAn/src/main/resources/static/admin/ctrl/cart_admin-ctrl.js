@@ -399,7 +399,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         timeReceive: new Date(),
         totalMoney: $scope.cart.amount,
         moneyShip: "1",
-        typePayment: "1",
+        typePayment: 1,
         description: "1",
         statusBuy: "1",
         status: "1",
