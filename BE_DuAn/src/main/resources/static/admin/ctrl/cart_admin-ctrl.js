@@ -61,11 +61,11 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             title: err,
         })
     }
-    $scope.tabid =1;
+    $scope.tabidm =1;
     $scope.addTab = function() {
         var newTab = {
-            id: $scope.tabid ,
-            title: 'Tab ' + ($scope.tabid),
+            id: $scope.tabidm ,
+            title: 'Tab ' + ($scope.tabidm),
             active: false
         };
 
@@ -73,7 +73,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         while ($scope.tabExists(newTab.id)) {
             newTab.id++; // Tăng id lên 1
         }
-        $scope.tabid++;
+        $scope.tabidm++;
         // Thêm tab vào danh sách
         $scope.tabs.push(newTab);
 
@@ -82,6 +82,10 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
 
         // Đặt tab mới được thêm là active
         $scope.activateTab(newTab);
+        var er = JSON.stringify(angular.copy($scope.tabs));
+        localStorage.setItem("rt", er);
+        var id = JSON.stringify(angular.copy($scope.tabidm));
+        localStorage.setItem("idT", id);
     };
 
     // Hàm kiểm tra xem tab có tồn tại trong danh sách hay không
@@ -93,14 +97,15 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         }
         return false;
     };
+    $scope.tabls ={};
     $scope.activateTab = function(tab) {
         // Vô hiệu hóa tất cả các tab
-
+        $scope.tabls = tab;
         $scope.tabid = tab.id
-        alert($scope.tabid)
+
         $scope.cart.saveToLocalStorage();
 
-        alert(tab.id)
+
 
         $scope.tabs.forEach(function(t) {
             t.active = false;
@@ -112,7 +117,10 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     $scope.removeTab = function(tab){
        var index = $scope.tabs.indexOf(tab);
         $scope.tabs.splice(index,1);
-//        $scope.tabs.length + 1;
+
+        $scope.cart.av=[];
+        var er = JSON.stringify(angular.copy($scope.tabs));
+        localStorage.setItem("rt", er);
     };
 
     // Lấy danh sách sản phẩm
@@ -181,6 +189,10 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         getID(id){
             this.idP = id
         },getD(){
+            if($scope.tabs.length===0){
+                alert("Bạn Phải Tạo Hóa Đơn")
+                return
+            }
             $http.get(apiUrlProduct+'/searchBill' +'/'+ this.idP +'/' +$scope.searchDesign +'/' +$scope.searchMaterial +'/' +$scope.searchColor +'/'+$scope.searchSize)
                 .then(function (response) {
                     $scope.billProduct = response.data;
@@ -252,6 +264,11 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             });
     };
     $scope.getProductByQRCode = function () {
+        if($scope.tabs.length===0){
+            // alert($scope.tabid)
+            alert("Bạn Phải Tạo Hóa Đơn")
+            return
+        }
         $http.get(apiUrlCart)
             .then(function (response) {
                 $scope.formCart = response.data;
@@ -263,14 +280,14 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             });
 
     }
-    // $scope.av =[];
+
     $scope.cart= {
         items: [],
         av: [],
         add() {
             var item = null;
             var item = this.items.find(item => item.id == $scope.formCart.id && item.idTab == $scope.tabid);
-            alert(item+'ss')
+
             if (item) {
                 item.qty++;
                 this.saveToLocalStorage();
@@ -287,15 +304,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         addP() {
             var item = null;
             var item = this.items.find(item => item.id == $scope.billProduct.id && item.idTab == $scope.tabid)
-              //   &&
-              // this.items.find(item => item.idTab == $scope.tabid);
-            alert(item + "ssss")
-            alert($scope.billProduct.id+" idp--------" + $scope.tabid)
-            // var idT = this.av.find(item => item.idTab == $scope.tabid);
-            // var IT = this.av.find(item => item.id == $scope.billProduct.id);
-            // if (idT){
-            //     alert("ngok")
-            // }
+
             if (item) {
                 // if (idT){
                 item.qty++;
@@ -324,19 +333,10 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             }
             var object = getObjectById($scope.cart.items);
             var df = JSON.stringify(angular.copy($scope.cart.av));
-            alert(df+"2")
-            // av.push(df)
-            // alert(av + "av")
-            //
-            //   var jsons={"id":122,"name":"Category 2Material 2Design 2 Màu Color 2 Size Size 2","status":1,"images":[],"price":2,"barcode":407336622,"category":{"idCategory":2,"name":"Category 2","type":1,"status":1},"size":{"id":2,"name":"Size 2"},"color":{"id":2,"name":"Color 2"},"design":{"id":2,"name":"Design 2"},"material":{"id":2,"name":"Material 2"},"files":null,"qty":4,"idTab":0}
-            // var aa = JSON.stringify(angular.copy(jsons));
-            // av = JSON.stringify(angular.copy(jsons));
-            // alert(av+'23212a')
-            //
-            // this.items.push(av)
-            // alert($scope.tabid+"id2")
-            // var json = JSON.stringify(angular.copy(this.items));
+
             localStorage.setItem("cart", df);
+            var item = JSON.stringify(angular.copy(this.items));
+            localStorage.setItem("item", item);
 
         },
         get count() {
@@ -350,7 +350,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         },clear(){
             // $scope.cart.av= [];
             var index =$scope.cart.items.findIndex(item => item.idTab == $scope.tabid);
-            alert(index)
+            // alert(index)
             $scope.cart.items.splice(index,2);
             $scope.bill.address="";
             $scope.bill.personTake="";
@@ -360,7 +360,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         ,tru(id) {
             var item = this.items.find(item => item.id == id && item.idTab == $scope.tabid);
             if (item.qty==1){
-                alert("khong the")
+                alert("Bạn Không Thể Trừ")
             }else {
                 item.qty--;
                 this.saveToLocalStorage();
@@ -380,7 +380,13 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         }
         , loadFromLocalStorage() {
             var json = localStorage.getItem("cart");
-            this.av = json ? JSON.parse(json) : [];
+            this.items = json ? JSON.parse(json) : [];
+            var jso = localStorage.getItem("rt");
+            $scope.tabs = jso ? JSON.parse(jso) : [];
+            var js = localStorage.getItem("idT");
+            $scope.tabidm = jso ? JSON.parse(js) : 1;
+            var item = localStorage.getItem("item");
+            this.items = item ? JSON.parse(item) : [];
         }
     }
         ,$scope.cart.loadFromLocalStorage();
@@ -411,10 +417,15 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 }
             })
         },purchase(){
+            if ($scope.cart.av.length===0){
+                alert("Giỏ hàng trống")
+                return
+            }
             var bill = angular.copy(this);
             $http.post(apiUrlBill,bill).then(resp =>{
                 alert("Dat hang thanh cong");
-                $scope.cart.clear();
+
+                $scope.removeTab($scope.tabls);
             }).catch(error =>{
                 alert("Loi~")
                 console.log(error)

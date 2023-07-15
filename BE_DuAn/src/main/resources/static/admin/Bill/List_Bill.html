@@ -106,8 +106,15 @@
                                 </span>
                                 <select ng-model="form.status" ng-change="updateStatus(bill.id)" class="form-select"
                                         ng-if="bill.status!=4&&bill.status!=5">
-                                    <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>
+<!--                                    <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>-->
+
+                                    <option value="0">Thay Đổi</option>
+                                    <option ng-if="bill.status!=2&&bill.status!=3&&bill.status!=4&&bill.status!=5" value="2">Xác Nhận</option>
+                                    <option ng-if="bill.status!=1&&bill.status!=3&&bill.status!=4&&bill.status!=5" value="3">Đang Giao Hàng</option>
+                                    <option ng-if="bill.status!=2&&bill.status!=1&&bill.status!=4&&bill.status!=5"value="4">Giao Dịch Hoàn Tất</option>
+                                    <option value="5">Hủy Đơn</option>
                                 </select>
+
                             </td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center space-x-4 text-sm">
