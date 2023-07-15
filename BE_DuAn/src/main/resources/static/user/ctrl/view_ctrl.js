@@ -79,7 +79,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                         $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
                         $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
                         $scope.bills.totalMoney = $scope.calculateTotalAmount();
-                        $scope.bills.status = 0;
+                        $scope.bills.status = 1;
                         $scope.bills.statusBuy = 1;
                         $scope.bills.moneyShip = $scope.ship;
                         $scope.bills.typePayment = false;
@@ -119,7 +119,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
                     $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
                     $scope.bills.totalMoney = $scope.calculateTotalAmount();
-                    $scope.bills.status = 0;
+                    $scope.bills.status = 1;
                     $scope.bills.statusBuy = 1;
                     $scope.bills.moneyShip = $scope.ship;
                     $scope.bills.typePayment = false;
@@ -191,24 +191,22 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         if (existingItem) {
             // If the same item exists, increase its quantity
             existingItem.quantity++;
+            $rootScope.loadQtyCart();
         } else {
             // Otherwise, add the new item to the cart
             cartItems.push(cartItem);
-            $rootScope.qtyCart++;
-            $rootScope.loadQtyCart();
-            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
         }
 
         // Update the cart items in local storage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        // $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
+        $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
     };
     $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     $rootScope.loadQtyCart=function(){
         $rootScope.qtyCart=0;
         if($rootScope.cartItems){
             $rootScope.cartItems.forEach(item=>{
-                $rootScope.qtyCart+=item.qty;
+                $rootScope.qtyCart+=item.quantity;
             });
         }
     }
