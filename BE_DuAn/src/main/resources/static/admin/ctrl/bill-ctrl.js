@@ -18,8 +18,9 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         {id: 5, name: "Hủy đơn"}
     ];
     // $scope.date= "";
-
+    // $scope.selectedItem = $scope.items[0];
     $scope.getBill = function () {
+        $scope.form.status ="0";
         $http.get(apiUrlBill)
             .then(function (response) {
                 $scope.bills = response.data;
@@ -29,7 +30,6 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 console.log(error);
             });
     };
-
     // $scope.getBillDetails = function (bill) {
     //     $http.get(apiUrlBill + '/' + bill.id)
     //         .then(function (response) {

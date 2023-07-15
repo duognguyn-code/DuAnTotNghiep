@@ -199,30 +199,29 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row col-lg-5 ml-4">
-                <div class="container">
-                    <div class="container-fluid">
-                        <div class="tab-container">
-                            <div class="tabs" style="flex-grow: 1; margin-right: 10px;overflow: hidden;">
-                                <ul class="nav nav-pills" id="menu1">
-                                    <li class="tab Selected" id="check-tab" ng-repeat="tab in tabs"
-                                        ng-class="{ 'active': tab.active }">
-                                        <a href="">Đơn hàng {{tab.id}}</a>
-                                        <a class="closeTab" ng-click="removeTab(tab)"
-                                           ng-disabled="tabs.length <=0">✕</a>
-                                        <!--                                            <input id=""type="radio" name="radio-set">-->
-                                        <!--                                            <label for="" class="tab-label-{{tab.id}}" ng-click="activateTab(tab)">-->
-                                        <!--                                                <a>{{tab.title}}></a>-->
-                                        <!--                                                <a class="" ng-click="removeTab(tab)" ng-disabled="tabs.length <= 0">x</a>-->
-                                        <!--                                            </label>-->
-                                    </li>
-                                </ul>
+
+                <div class="row col-lg-5 ml-4">
+                    <div class="container">
+                        <div class="container-fluid">
+                            <div class="tab-container">
+                                <div class="tabs" style="flex-grow: 1; margin-right: 10px;overflow: hidden;">
+                                    <ul class="nav nav-pills" id="menu1">
+                                        <li class="tab Selected" id="check-tab" ng-repeat="tab in tabs" ng-class="{ 'active': tab.active }">
+                                            <a ng-click="activateTab(tab)">Đơn hàng {{tab.id}}</a>
+                                            <a class="closeTab" ng-click="removeTab(tab)" ng-disabled="tabs.length <=0">✕</a>
+<!--                                            <input id=""type="radio" name="radio-set">-->
+<!--                                            <label for="" class="tab-label-{{tab.id}}" ng-click="activateTab(tab)">-->
+<!--                                                <a>{{tab.title}}></a>-->
+<!--                                                <a class="" ng-click="removeTab(tab)" ng-disabled="tabs.length <= 0">x</a>-->
+<!--                                            </label>-->
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div ng-repeat="item in cart.items" class="row g-0"
-                         style="height:180px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
+                        <div ng-repeat="item in cart.av" class="row g-0"
+                             style="height:180px; border-bottom:0.5px solid #C0C0C0;margin-top:10px;">
+
 
                         <div class="col-md-4">
                             <img src="../images/shoe2.png" class="img-fluid rounded-start" alt="...">
