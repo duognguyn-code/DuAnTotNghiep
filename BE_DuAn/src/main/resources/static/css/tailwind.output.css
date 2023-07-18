@@ -2058,7 +2058,6 @@ img, video {
 }
 .tabs {
     position: relative;
-  width: 700px;
 }
 .tabs ul {
   display: inline-block;
@@ -2151,3 +2150,4 @@ img, video {
     color: orange;
     font-weight: bold;
 }
+html *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
