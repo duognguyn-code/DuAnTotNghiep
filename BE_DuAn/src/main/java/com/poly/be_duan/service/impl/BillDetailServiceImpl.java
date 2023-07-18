@@ -29,4 +29,9 @@ public class BillDetailServiceImpl implements BillDetailService {
     public Bill_detail save(Bill_detail entity) {
         return billDetailRepository.save(entity);
     }
+
+    @Override
+    public Bill_detail update(Bill_detail bill_detail) {
+        return billDetailRepository.save(bill_detail);
+    }
 }

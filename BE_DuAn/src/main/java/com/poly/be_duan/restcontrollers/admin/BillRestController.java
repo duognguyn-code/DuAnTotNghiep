@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -94,5 +95,21 @@ public class BillRestController {
     @PostMapping()
     public Bill create(@RequestBody JsonNode billData) {
         return billService.create(billData);
+    }
+
+    @PutMapping("/updateBill")
+    public Bill update(@RequestBody Bill bill) {
+//        color.setId(id);
+        return billService.update(bill);
+    }
+
+    @PutMapping("/updateTotalMoney/{money}/{id}")
+    public Bill updateTotalMoney(@PathVariable(value = "money")Integer money,@PathVariable(value = "id")Integer id) {
+        System.out.println(money + "--------------------"+id);
+
+        BigDecimal mn = new BigDecimal(money);
+        Bill bill = billService.findBillByID(id).get();
+        bill.setTotalMoney(mn);
+        return billService.update(bill);
     }
 }
