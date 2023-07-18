@@ -11,4 +11,5 @@ public interface BillDetailService {
     List<Bill_detail> getBill_detail(int id);
 
     Bill_detail save(Bill_detail entity);
+    public Bill_detail update(Bill_detail bill_detail);
 }

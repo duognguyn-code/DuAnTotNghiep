@@ -1,52 +1,88 @@
-app.controller('billDetails-ctrl', function ($rootScope,$scope, $http) {
+app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routeParams) {
     const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
+    const apiUrlBill = "http://localhost:8080/api/bill";
 
-    $scope.billDetails=[];
-    $scope.billID=[];
-    $scope.formBillDetail={};
+    $scope.bill = [];
     $scope.formBill={};
-
-    $scope.getBillDetails = function () {
-        $http.get(apiUrlBillDetails)
+    $scope.billDetails = [];
+    $scope.formbillDetails = {};
+    $scope.items= [];
+    $scope.getBillByID = function () {
+        var billId = $routeParams.idBill;
+        $http.get(apiUrlBill+'/'+billId)
             .then(function (response) {
-                $scope.billDetails = response.data;
-                console.log(response);
+                $scope.bill = response.data;
 
+                console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
-            $http.get(apiUrlBillDetails+'/getBillByID')
-                .then(function (response) {
-                    $scope.billID = response.data;
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        // $scope.set();
+    }
+    $scope.getBillByID();
+    $scope.cop=function (){
+        var item = $scope.bill.find(item => item.id == $routeParams.idBill)
+        var item1 = $scope.billDetails.find(item => item.bill.id == $routeParams.idBill)
+        $scope.formBill = angular.copy(item);
+        $scope.formbillDetails = angular.copy(item1);
+    }
+    $scope.getBillDetail = function () {
+        var billId = $routeParams.idBill;
+        $http.get(apiUrlBillDetails+'/'+billId)
+            .then(function (response) {
+                $scope.billDetails = response.data;
+                $scope.items.push(response.data);
+                console.log(response);
+                $scope.cop();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    $scope.getBillDetail();
 
-    }
-    $scope.set =function (bil){
-    $scope.formBill = angular.copy(bil);
-    alert($scope.formBill+"aaaasdas")
-    }
-    $scope.updateBill = function () {
+    $scope.updateBill=function (){
         var item = angular.copy($scope.formBill);
-        alert(item.id)
-        $http.put(apiUrlBillDetails + '/' + item.id, item).then(resp => {
-            var index = $scope.billID.findIndex(p => p.id == item.id);
-            $scope.billID[index] = item;
+        $http.put(apiUrlBill + '/updateBill', item).then(resp => {
+            var index = $scope.bill.findIndex(p => p.id == item.id);
+            $scope.bill[index] = item;
             alert("Cập nhật thành công");
-            $scope.resetColor();
+            $scope.cop();
         }).catch(error => {
             alert("Cập nhật thất bại");
             console.log("Error", error);
         });
     }
-    // $scope.reset= function (){
-    //     $scope.designSearch=
-    // }
-    $scope.getBillDetails();
+    $scope.updateQuantity = function (bill){
+        var item = angular.copy(bill);
+        item.quantity = bill.quantity
+        $http.put(apiUrlBillDetails + '/updateBillDetail', item).then(resp => {
+            var index = $scope.billDetails.findIndex(p => p.id == item.id);
+            $scope.billDetails[index] = item;
+            alert("Cập nhật thành công");
+            $scope.upd();
+            $scope.cop();
+        }).catch(error => {
+            alert("Cập nhật thất bại");
+            console.log("Error", error);
+        });
 
+    }
+    $scope.upd=function (){
+        var totalMn = $scope.formBill.moneyShip + $scope.checktotal.checkbill
+
+        $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.idBill).then(resp => {
+            alert("Cập nhật thành công");
+        }).catch(error => {
+            alert("Cập nhật thất bại");
+            console.log("Error", error);
+        });
+
+    }
+     $scope.checktotal={
+    get checkbill() {
+        return $scope.billDetails.map(item => item.quantity * item.price)
+            .reduce((total, qty) => total += qty, 0);
+    }
+    }
 });

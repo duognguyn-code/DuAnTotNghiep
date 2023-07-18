@@ -47,5 +47,9 @@ public class BillDetailRestController {
 //            System.out.println("abcccc");
             return billService.update(bill);
         }
+        @PutMapping("/updateBillDetail")
+        public Bill_detail update(@RequestBody Bill_detail bill_detail) {
+          return billDetailService.update(bill_detail);
+        }
 
 }
