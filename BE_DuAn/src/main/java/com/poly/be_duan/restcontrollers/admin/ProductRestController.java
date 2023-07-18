@@ -270,7 +270,7 @@ public class ProductRestController {
         productService.save(pd);
         String data = String.valueOf(number1);
 
-        String path = "D:\\QR_PRODUCT\\"+data+".jpg";
+        String path = "C:\\Users\\Lenovo\\Pictures\\Saved Pictures\\"+data+".jpg";
 
         try {
             BitMatrix matrix = new MultiFormatWriter()
