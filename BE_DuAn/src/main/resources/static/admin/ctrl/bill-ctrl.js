@@ -4,10 +4,6 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
 
     $scope.bills = [];
     $scope.formBill = {};
-    $scope.bills1 = [];
-    $scope.formBill1 = {};
-    $scope.billDetails = [];
-    $scope.formBillDetail = {};
     $scope.form = {};
     $scope.status = [
         {id: '', name: "Thay đổi"},
@@ -17,8 +13,6 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         {id: 4, name: "Hoàn tất giao dịch"},
         {id: 5, name: "Hủy đơn"}
     ];
-    // $scope.date= "";
-    // $scope.selectedItem = $scope.items[0];
     $scope.getBill = function () {
         $scope.form.status ="0";
         $http.get(apiUrlBill)
@@ -30,42 +24,6 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 console.log(error);
             });
     };
-    // $scope.getBillDetails = function (bill) {
-    //     $http.get(apiUrlBill + '/' + bill.id)
-    //         .then(function (response) {
-    //             $scope.billID = response.data;
-    //             console.log(response);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    //
-    //
-    // };
-    $scope.getBillDetail = function () {
-        var billId = $routeParams.id;
-        $http.get(apiUrlBillDetails+'/'+billId)
-            .then(function (response) {
-                $scope.billDetails = response.data;
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-    $scope.getBillByID = function () {
-        var billId = $routeParams.id;
-        $http.get(apiUrlBill+'/'+billId)
-            .then(function (response) {
-                $scope.bills1 = response.data;
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }
-    $scope.getBillByID();
-    $scope.getBillDetail();
     $scope.getBill();
     $scope.resetSearch = function () {
         $scope.searchPhone = " ";
@@ -96,7 +54,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 console.log(error);
             })
     };
-    $scope.updateStatus = function (id) {
+    $scope.updateStatus = function (bill) {
         Swal.fire({
             title: 'Bạn có chắc muốn đổi trạng thái không?',
             text: "Đổi không thể quay lại!",
@@ -115,10 +73,76 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
-                        $scope.form.id = id;
+                        $scope.form.id = bill.id;
+                        if (bill.status ===1){
+                            $scope.form.status =2
+                        } if (bill.status===2){
+                            $scope.form.status=3
+                        } if (bill.status===3){
+                            $scope.form.status=4
+                        }
+                        if (bill.status===4){
+                            alert("Bạn không thể cập nhật")
+                        }
                         $http.put(apiUrlBill + '/updateStatus', $scope.form).then(function (response) {
                             if (response.data) {
-                                $scope.form.status = null;
+                                // $scope.form.status = null;
+                                $scope.getBill();
+                                $scope.messageSuccess("Đổi trạng thái thành công");
+                            } else {
+                                $scope.messageError("Đổi trạng thái thất bại");
+                            }
+                        }).catch(error => {
+                            $scope.messageError("Đổi trạng thái thất bại");
+                        });
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
+            }
+        })
+    }
+    $scope.updateStatusCancel = function (bill) {
+        if (bill.status===4){
+            alert("Bạn không thể hủy đơn hàng này")
+            return}
+        if (bill.status===5){
+            alert("Đơn hàng đã được hủy")
+            return}
+        Swal.fire({
+            title: 'Bạn có chắc muốn đổi trạng thái không?',
+            text: "Đổi không thể quay lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang gửi thông báo cho khách hàng!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        $scope.form.id = bill.id;
+                            $scope.form.status=5
+
+                        $http.put(apiUrlBill + '/updateStatus', $scope.form).then(function (response) {
+                            if (response.data) {
+                                // $scope.form.status = null;
                                 $scope.getBill();
                                 $scope.messageSuccess("Đổi trạng thái thành công");
                             } else {
@@ -185,7 +209,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     $scope.edit = function(billId) {
         if (!$scope.isRedirected) {
             $scope.isRedirected = true;
-            $location.path('/billDetail/').search({id: billId});
+            $location.path('/billDetail/').search({idBill: billId});
         }
     };
     $scope.pagerBill = {
