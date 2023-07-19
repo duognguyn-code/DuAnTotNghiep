@@ -7,58 +7,67 @@
             </h2>
 
             <div class="grid gap-6 mb-8 md:grid-cols-1">
-                <div ng-repeat="bil in bills1" class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div  class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                     <div  class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label  class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Tên Khách Hàng</span>
-                            <input   value="{{bil.personTake}}"
+                            <input ng-model="formBill.personTake"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Số Điện Thoại</span>
-                            <input   value="{{bil.phoneTake}}"
+                            <input   ng-model="formBill.phoneTake"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Địa Chỉ</span>
-                            <input  value="{{bil.address}}"
+                            <input disabled ng-model="formBill.address"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Ngày Mua</span>
-                            <input    value="{{bil.createDate}}"
+                            <input disabled ng-model="formBill.createDate"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                     </div>
+
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
                         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Thời Gian Nhận</span>
-                            <input  value="{{bil.timeReceive}}"
+                            <input disabled ng-model="formBill.timeReceive"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">Tiền Ship</span>
-                            <input  ng-model="formBill.moneyShip" value="{{bil.moneyShip}}" type="text"
+                            <input disabled ng-model="formBill.moneyShip" type="text"
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                             </div>
-                        <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Trạng Thái Giao Hàng</span>
-                            <textarea
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            >{{bil.description}}
+                        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
+                            <label class="block text-sm">
+                                <span  class="text-gray-700 dark:text-gray-400">Tổng Tiền</span>
+                                <input disabled ng-model="formBill.totalMoney" type="text"
+                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                />
+                            </label>
+                            <label class="block text-sm">
+                                <span  class="text-gray-700 dark:text-gray-400">Ghi Chú</span>
+                                <textarea ng-model="formBill.description"
+                                          class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                >
                             </textarea>
-                        </label>
-
+                            </label>
+                        </div>
                     </div>
                 </div>
+                <button ng-click="updateBill()">Update</button>
             </div>
 
 
@@ -78,6 +87,7 @@
                             <th class="px-4 py-3" scope="col">Giá</th>
                             <th class="px-4 py-3" scope="col">Số Lượng</th>
                             <th class="px-4 py-3" scope="col">Trạng Thái </th>
+                            <th class="px-4 py-3" scope="col">Update </th>
                         </tr>
                         </thead>
                         <tbody
@@ -94,7 +104,8 @@
                                 {{billDetail.price}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{billDetail.quantity}}
+                                <input  type="number" style="width: 100px"
+                                ng-model="billDetail.quantity" >
                             </td>
 
                             <td class="px-4 py-3 text-sm">
@@ -104,6 +115,12 @@
                                 <span ng-if="billDetail.status==1">
                                  <span class="text-danger">Trả Hàng</span>
                                 </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <div class="flex items-center space-x-4 text-sm">
+                                    <a  ng-click="updateQuantity(billDetail)"
+                                    >Update</a>
+                                </div>
                             </td>
                         </tr>
                         </tbody>

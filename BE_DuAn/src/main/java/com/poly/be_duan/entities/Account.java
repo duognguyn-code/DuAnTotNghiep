@@ -60,4 +60,8 @@ public class Account {
     @Column(columnDefinition = "INT DEFAULT 1")
     private Integer status;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private List<ProductChange> productChanges;
+
 }
