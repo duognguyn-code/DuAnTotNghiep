@@ -21,4 +21,10 @@ app.config(function($routeProvider){
             templateUrl:"/user/address/addressTable.html",
             controller:"address-form-ctrl"
         })
+        .when("/purchase", {
+            templateUrl:"/user/purchase/purchase.html",
+        })
+        .when("/purchaseDetail", {
+            templateUrl:"/user/purchase/purchaseDetail.html",
+        })
 })
