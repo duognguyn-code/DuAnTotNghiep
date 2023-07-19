@@ -86,10 +86,7 @@
                                 {{bill.createDate | date: "dd-MM-yyyy"}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{bill.statusBuy == 0 ? 'Đang Vận Chuyển' : 'Thành Công'}}
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                                <span ng-if="bill.status==1">
+                                 <span ng-if="bill.status==1">
                                  <span class="text-primary">Chờ Xác nhận</span>
                                 </span>
                                 <span ng-if="bill.status==2">
@@ -102,8 +99,11 @@
                                  <span class="text-primary">Giao Dịch Hoàn Tất</span>
                                 </span>
                                 <span ng-if="bill.status==5">
-                                 <span class="text-primary">Hủy Đơn</span>
+                                 <span class="text-danger">Hủy Đơn</span>
                                 </span>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+
 <!--                                <select ng-model="form.status" ng-change="updateStatus(bill.id)" class="form-select"-->
 <!--                                        ng-if="bill.status!=4&&bill.status!=5">-->
 <!--&lt;!&ndash;                                    <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>&ndash;&gt;-->
