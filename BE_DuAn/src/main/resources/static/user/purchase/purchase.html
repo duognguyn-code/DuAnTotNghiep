@@ -1,0 +1,55 @@
+<div xmlns:th="http://wwww.thymeleaf.org"th:replace="~{/user/index :: dynamic(~{::main})}">
+  <main class="row">
+    <div class="container-fluid bg-secondary mb-5">
+      <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Đơn hàng</h1>
+        <div class="d-inline-flex">
+          <p class="m-0"><a href="#!/">Trang chủ</a></p>
+          <p class="m-0 px-2">-</p>
+          <p class="m-0"><a href="#!purchase">Đơn hàng</a></p>
+        </div>
+      </div>
+    </div>
+    <h2 class="text-center" style="font-weight:500;">Đơn hàng</h2>
+    <div class="container-fluid pt-5" style="width:1400px;">
+      <table class="table table-bordered">
+        <thead>
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:18px;">
+          <th class="px-4 py-3" scope="col">Mã đơn</th>
+          <th class="px-4 py-3" scope="col">Địa chỉ</th>
+          <th class="px-4 py-3" scope="col">SĐT</th>
+          <th class="px-4 py-3" scope="col">Ngày mua</th>
+          <th class="px-4 py-3" scope="col">Ngày nhận</th>
+          <th class="px-4 py-3" scope="col">Tiền ship (VNĐ)</th>
+          <th class="px-4 py-3" scope="col">Tổng giá (VNĐ)</th>
+          <th class="px-4 py-3" scope="col">Ghi chú</th>
+          <th class="px-4 py-3" scope="col">Trạng thái</th>
+          <th class="px-4 py-3" scope="col">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr
+            class="text-gray-700 dark:text-gray-400" style="font-size:16px;">
+          <td class="px-4 py-3 ">000001</td>
+          <td class="px-4 py-3 ">Hà Nội</td>
+          <td class="px-4 py-3 ">0123456798</td>
+          <td class="px-4 py-3 ">19/07/2023 12:00:00</td>
+          <td class="px-4 py-3 ">19/07/2023 16:00:00</td>
+          <td class="px-4 py-3 ">30,000</td>
+          <td class="px-4 py-3 ">130,000</td>
+          <td class="px-4 py-3 ">Không có</td>
+          <td class="px-4 py-3 ">Hoàn tất giao dịch</td>
+          <td class="px-4 py-3 ">
+            <button class="btn btn-success" style="border-radius:8px; width:100px;">
+              Chi tiết
+            </button>
+            <button class="btn btn-warning" style="border-radius:8px; width:100px;margin-top:10px;">
+              Hủy đơn
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
