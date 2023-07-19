@@ -26,10 +26,18 @@ public class Image {
     @Column(name = "url_image", nullable = false, length = 255)
     private String urlimage;
 
+    @ManyToOne
+    @JoinColumn(name = "id_productChange")
+    private ProductChange productChange;
 
     @ManyToOne
     @JoinColumn(name = "id_products")
     @JsonBackReference
     private Product products;
+
+    @JsonBackReference
+    public ProductChange getProductChange(){
+        return productChange;
+    }
 
 }

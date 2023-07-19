@@ -4,7 +4,7 @@ import com.poly.be_duan.entities.Bill_detail;
 
 import java.util.List;
 
-public interface BillDetailService {
+public interface BillDetailService extends GenericService<Bill_detail, Integer> {
 
     List<Bill_detail> getAll();
 

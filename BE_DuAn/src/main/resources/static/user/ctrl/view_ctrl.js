@@ -8,6 +8,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     var urlOrderDetail = "http://localhost:8080/rest/guest/order/detail";
 
     var urlShippingOder = "http://localhost:8080/rest/user/address/getShipping-order";
+
+    var urlPaymentVNP = 'http://localhost:8080/api/vnpay/send';
     $scope.products = [];
     $scope.formProduct = {};
     $scope.sizes = [];
@@ -29,7 +31,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.ship = "";
     $scope.checkBuy = null;
     $scope.bills = {};
-
 
 
     $scope.getAcountActive = function () {
@@ -62,19 +63,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             if (result.isConfirmed) {
                 alert("1")
                 if ($scope.checkBuy) {
-                    let price =  ($scope.calculateTotal() / 1).toFixed(2)
-                    alert(price + "tổng tiền")
-                    $http({
-                        url: `http://localhost:8080/pay`,
-                        method: 'POST',
-                        data: price,
-                        transformResponse: [
-                            function (data) {
-                                return data;
-                            }
-                        ]
-                    }).then(res => {
-                        $scope.linkPaypal = res.data;
+                    var vnp_OrderInfo = 'thanh toan hoa don';
+                    var orderType = 'other';
+                    var amount = $scope.calculateTotalAmount();
+                    var bankcode = ''; // Optional
+                    var language = 'vn'; // Optional
+                    $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
+                        alert(res + "object này");
+                        window.location.href = res.data.value;
                         $scope.bills.personTake = $scope.addressAccount.personTake;
                         $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
                         $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
@@ -96,7 +92,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                                         timer: 5000
                                     });
                                 })
-                                $window.location.href = $scope.linkPaypal;
+
                             } else {
                                 Swal.fire(
                                     'Thanh toán thất bại!',
@@ -112,6 +108,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                             'error'
                         )
                         console.log("error buy cart", err)
+                        alert(err + "lỗi 1");
                     })
 
                 } else {
@@ -126,7 +123,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     $http.post(urlOrder + '/add', $scope.bills).then(res => {
                         alert("add vào bill chưa")
                         if (res.data) {
-                            alert("add vào bill_detail chưa chưa" +  res.data)
+                            alert("add vào bill_detail chưa chưa" + res.data)
                             $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
                                 alert($scope.cartItems.id + "số lượng trong cảt");
                                 alert(urlOrderDetail)
@@ -149,7 +146,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                             'error'
                         )
                         console.log("err order", err)
-                        alert(err+  "lỗi")
+                        alert(err + "lỗi")
                     })
                 }
             }
@@ -202,11 +199,11 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
     };
     $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    $rootScope.loadQtyCart=function(){
-        $rootScope.qtyCart=0;
-        if($rootScope.cartItems){
-            $rootScope.cartItems.forEach(item=>{
-                $rootScope.qtyCart+=item.quantity;
+    $rootScope.loadQtyCart = function () {
+        $rootScope.qtyCart = 0;
+        if ($rootScope.cartItems) {
+            $rootScope.cartItems.forEach(item => {
+                $rootScope.qtyCart += item.quantity;
             });
         }
     }
@@ -260,14 +257,17 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         var json = localStorage.getItem("cartItems");
         this.cartItems = json ? JSON.parse(json) : [];
     }
-    $scope.calculateTotal = function(item) {
+    $scope.calculateTotal = function (item) {
+        if (!item || !item.product || !item.quantity) {
+            return 0; // or any default value
+        }
         return item.product.price * item.quantity;
     };
-    $scope.increaseQuantity = function(item) {
+    $scope.increaseQuantity = function (item) {
         item.quantity++;
     };
 
-    $scope.decreaseQuantity = function(item) {
+    $scope.decreaseQuantity = function (item) {
         if (item.quantity > 1) {
             item.quantity--;
         }

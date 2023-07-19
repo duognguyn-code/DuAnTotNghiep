@@ -18,4 +18,7 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
     Image findByProductsLikeAndUrlimage(Product product, String urlImage);
 
     List<Image> findByProductsLike(Product product);
+
+    @Query("select i from Image  i where i.productChange = ?1")
+    public List<Image> findImageByPr(Integer id);
 }

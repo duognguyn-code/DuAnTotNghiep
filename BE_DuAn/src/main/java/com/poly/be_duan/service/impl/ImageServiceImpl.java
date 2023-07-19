@@ -58,4 +58,12 @@ public class ImageServiceImpl implements ImageService {
     public Optional<Image> findById(Integer id) {
         return imageRepository.findById(id);
     }
+
+    @Override
+    public List<Image> findImageByPr(Integer id) {
+        if (id == null){
+            return null;
+        }
+        return imageRepository.findImageByPr(id);
+    }
 }
