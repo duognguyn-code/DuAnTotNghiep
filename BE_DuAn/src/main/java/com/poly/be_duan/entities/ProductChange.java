@@ -1,13 +1,18 @@
 package com.poly.be_duan.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,24 +32,40 @@ public class ProductChange {
     private Bill bill;
 
     @Column(name = "date_change")
-    private LocalDateTime dateChange;
+    private Date dateChange;
 
     @Column(name = "description")
     private String description;
 
-    @Column(name = "username")
-    private String username;
+    @JoinColumn(name = "username")
+    @ManyToOne
+    private Account account;
 
     @Column(name = "email")
-    private String eamil;
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "id_bill_detail", referencedColumnName = "id_bill_detail")
     private Bill_detail billDetail;
 
     @Column(name = "quantity_product_change")
-    private Integer quantityProductChange;
+    private int quantityProductChange;
+
+    @Column(name = "status")
+    private int  status;
 
     @OneToMany(mappedBy = "changeProduct")
     private List<ChangeProductDetail> changeProductDetails;
+
+    @OneToMany(mappedBy = "productChange")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Image> images;
+
+    @JsonManagedReference
+    public List<Image> getImages(){
+        return images;
+    }
+
+    @Transient
+    private List<MultipartFile> files;
 }
