@@ -53,7 +53,7 @@ public class ProductChangeRestController {
                 productChangeService.save(p);
                 Bill_detail bill_detail = billDetailRepository.findById(productChangeDTO.getBill_detail().getId()).get();
                 bill_detail.setStatus(1);
-                billDetailService.update(bill_detail, bill_detail.getId());
+//                billDetailService.update(bill_detail, bill_detail.getId());
                 for (MultipartFile multipartFile: productChangeDTO.getFiles()) {
                     Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
                             ObjectUtils.asMap(
@@ -82,9 +82,9 @@ public class ProductChangeRestController {
                 ChangeProductDetail changeProductDetail = new ChangeProductDetail();
                 changeProductDetail.setBillDetail(changeProductDetailDTO.getBill_detail());
                 changeProductDetailService.createChangeDetails(changeProductDetailDTO.getBill_detail().getId());
-                Optional<Bill_detail> bill_detail = billDetailService.findById(changeProductDetailDTO.getBill_detail().getId());
-                bill_detail.orElseThrow().setStatus(1);
-                billDetailService.save(bill_detail.get());
+//                Optional<Bill_detail> bill_detail = billDetailService.findById(changeProductDetailDTO.getBill_detail().getId());
+//                bill_detail.orElseThrow().setStatus(1);
+//                billDetailService.save(bill_detail.get());
             }
         }catch (Exception e){
             e.getMessage();

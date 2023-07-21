@@ -66,7 +66,8 @@
                             <th class="px-4 py-3" scope="col">Số Điện Thoại</th>
                             <th class="px-4 py-3" scope="col">Ngày Mua</th>
                             <th class="px-4 py-3" scope="col">Trạng Thái</th>
-                            <th class="px-4 py-3" scope="col">Chức Năng</th>
+                            <th style="text-align: center" class="px-4 py-3" scope="col">Chức Năng</th>
+                            <th class="px-4 py-3" scope="col">Chi Tiết Đơn Hàng</th>
                         </tr>
                         </thead>
                         <tbody
@@ -93,10 +94,10 @@
                                  <span class="text-primary">Đã Xác nhận</span>
                                 </span>
                                 <span ng-if="bill.status==3">
-                                 <span class="text-primary">Đang Giao Dịch</span>
+                                 <span class="text-primary">Đang Giao Hàng</span>
                                 </span>
                                 <span ng-if="bill.status==4">
-                                 <span class="text-primary">Giao Dịch Hoàn Tất</span>
+                                 <span class="text-primary">Giao Hàng Hoàn Tất</span>
                                 </span>
                                 <span ng-if="bill.status==5">
                                  <span class="text-danger">Hủy Đơn</span>

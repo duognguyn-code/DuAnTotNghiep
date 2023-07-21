@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <button ng-click="updateBill()">Update</button>
+<!--                <button ng-click="updateBill()">Update</button>-->
             </div>
 
 
@@ -87,13 +87,13 @@
                             <th class="px-4 py-3" scope="col">Giá</th>
                             <th class="px-4 py-3" scope="col">Số Lượng</th>
                             <th class="px-4 py-3" scope="col">Trạng Thái </th>
-                            <th class="px-4 py-3" scope="col">Update </th>
+                            <th class="px-4 py-3" scope="col">Chức Năng </th>
                         </tr>
                         </thead>
                         <tbody
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
-                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="billDetail in billDetails">
+                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="billDetail in pagerbillDetails.billdetails">
                             <td class="px-4 py-3 text-sm">
                                 {{billDetail.id}}
                             </td>
@@ -109,34 +109,49 @@
                             </td>
 
                             <td class="px-4 py-3 text-sm">
-                                <span ng-if="billDetail.status==0">
-                                 <span class="text-primary">Mua Đi</span>
-                                </span>
                                 <span ng-if="billDetail.status==1">
-                                 <span class="text-danger">Trả Hàng</span>
+                                 <span class="text-primary">Chờ Xác nhận</span>
+                                </span>
+                                <span ng-if="billDetail.status==2">
+                                 <span class="text-primary">Đã Xác nhận</span>
+                                </span>
+                                <span ng-if="billDetail.status==3">
+                                 <span class="text-primary">Đang Giao Hàng</span>
+                                </span>
+                                <span ng-if="billDetail.status==4">
+                                 <span class="text-primary">Giao Hàng Hoàn Tất</span>
+                                </span>
+                                <span ng-if="billDetail.status==5">
+                                 <span class="text-danger">Hủy Đơn</span>
                                 </span>
                             </td>
                             <td class="px-4 py-3">
-                                <div class="flex items-center space-x-4 text-sm">
-                                    <a  ng-click="updateQuantity(billDetail)"
-                                    >Update</a>
-                                </div>
+                                <button
+                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                        aria-label="Edit"ng-click="updateQuantity(billDetail)"
+                                >Thay Đổi
+                                </button>
+                                <button
+                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
+                                        aria-label="Edit"ng-click="CancelBillDetails(billDetail)"
+                                >Hủy Đơn
+                                </button>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <div class="panel-footer text-center">
-                        <button ng-click="pagerProducts.first()" style="margin-right: 10px;">
+                        <button ng-click="pagerbillDetails.first()" style="margin-right: 10px;">
                             <b class="text-sm"> |< </b>
                         </button>
-                        <button ng-click="pagerProducts.prev()"  style="margin-right: 10px;">
+                        <button ng-click="pagerbillDetails.prev()"  style="margin-right: 10px;">
                             <b class="text-sm"> < </b>
                         </button>
-                        <button>{{pagerProducts.page +1}}of {{pagerProducts.count}}</button>
-                        <button ng-click="pagerProducts.next()"  style="margin-left: 10px;">
+                        <button>{{pagerbillDetails.page +1}}of {{pagerbillDetails.count}}</button>
+                        <button ng-click="pagerbillDetails.next()"  style="margin-left: 10px;">
                             <b class="text-sm"> > </b>
                         </button>
-                        <button ng-click="pagerProducts.last()"  style="margin-left: 10px;">
+                        <button ng-click="pagerbillDetails.last()"  style="margin-left: 10px;">
                             <b class="text-sm"> >| </b>
                         </button>
                     </div>

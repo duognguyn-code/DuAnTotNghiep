@@ -9,7 +9,7 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <input type="text" class="form-control" placeholder="   tìm kiếm sản phẩm"
-                                       style="width:80%; height:50px;border: 1px solid #8AEC6F; border-radius:10px;">
+                                        style="width:80%; height:50px;border: 1px solid #8AEC6F; border-radius:10px;">
                             </div>
                             <div class="col-lg-3">
                                 <button ng-click="resetSearch()"
@@ -28,7 +28,7 @@
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
-                                        <select id="colorSearch1" ng-model="searchColor"
+                                        <select id="colorSearch1" ng-model="searchColor1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
                                             <option value="undefined">--Chọn Mục--</option>
@@ -40,7 +40,7 @@
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
-                                        <select id="designSearch1" ng-model="searchDesign"
+                                        <select id="designSearch1" ng-model="searchDesign1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
                                             <option value="undefined">--Chọn Mục--</option>
@@ -53,7 +53,7 @@
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
-                                        <select id="matesearch1" ng-model="searchMaterial"
+                                        <select id="matesearch1" ng-model="searchMaterial1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
                                             <option value="undefined">--Chọn Mục--</option>
@@ -66,7 +66,7 @@
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
                                         <span class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
-                                        <select id="sizeSearch1" ng-model="searchSize"
+                                        <select id="sizeSearch1" ng-model="searchSize1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
                                             <option value="undefined">--Chọn Mục--</option>
@@ -101,7 +101,7 @@
             <div class="row col-lg-7 mb-4" style="border-right:1px solid #C0C0C0;">
                 <!--        Search form-->
                 <!--        Search form-->
-                <div class="col-lg-4 col-md-6 col-sm-12 pb-1 " ng-repeat="product in products | limitTo : 9">
+                <div class="col-lg-4 col-md-6 col-sm-12 pb-1 " ng-repeat="product in pagerProducts.products | limitTo : 9">
                     <div class="card product-item border-0 mb-4">
                         <button class="btn" data-bs-target="#exampleModalproduct" data-bs-toggle="modal"
                                 ng-click="getP.getID(product.category.idCategory)">
@@ -120,7 +120,21 @@
                         </button>
                     </div>
 
-
+                </div>
+                <div class="panel-footer text-center">
+                    <button ng-click="pagerProducts.first()" style="margin-right: 10px;">
+                        <b class="text-sm"> |< </b>
+                    </button>
+                    <button ng-click="pagerProducts.prev()" style="margin-right: 10px;">
+                        <b class="text-sm"> < </b>
+                    </button>
+                    <button>{{pagerProducts.page + 1}}of {{pagerProducts.count}}</button>
+                    <button ng-click="pagerProducts.next()" style="margin-left: 10px;">
+                        <b class="text-sm"> > </b>
+                    </button>
+                    <button ng-click="pagerProducts.last()" style="margin-left: 10px;">
+                        <b class="text-sm"> >| </b>
+                    </button>
                 </div>
                 <div class="modal fade" id="exampleModalproduct" tabindex="-1" data-bs-backdrop="static"
                      aria-labelledby="exampleModalLabelMaterial" aria-hidden="true">
@@ -320,7 +334,7 @@
                                                     <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
                                                               style="font-size:16px;font-weight:700;">Họ Tên</span>
-                                                        <input ng-model="bill.personTake"
+                                                        <input ng-model="InforpersonTake"
                                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                style="border: 0.5px solid #7e3af2;"
                                                         />
@@ -330,17 +344,7 @@
                                                     <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
                                                               style="font-size:16px;font-weight:700;">Số điện thoại</span>
-                                                        <input ng-model="bill.personTake"
-                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                               style="border: 0.5px solid #7e3af2;"
-                                                        />
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label class="block text-sm">
-                                                        <span class="text-gray-700 dark:text-gray-400"
-                                                              style="font-size:16px;font-weight:700;">Email</span>
-                                                        <input ng-model="bill.personTake"
+                                                        <input ng-model="InforphoneTake"
                                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                style="border: 0.5px solid #7e3af2;"
                                                         />
@@ -378,9 +382,9 @@
                                             <h3 style="font-weight:700; text-align:center;margin-bottom:10px;">Hóa đơn bán hàng</h3>
                                             <h6 style="text-align:center;margin-bottom:10px;">Mã đơn hàng: <span style="font-weight:bold;">HD00001</span></h6>
                                             <h6 style="text-align:center;margin-bottom:20px;">17/07/2023 12:00</h6>
-                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Nhân viên bán hàng: Nguyễn đức Hoàng Hiệp</p>
-                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Khách hàng: Nguyễn đức Hoàng Hiệp</p>
-                                            <p style="text-align:left;margin-bottom:20px;font-size:16px;">Só điện thoại: 0395060247</p>
+                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Nhân viên bán hàng:{{InforpersonTake}}</p>
+                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Khách hàng: {{InforpersonTake}}</p>
+                                            <p style="text-align:left;margin-bottom:20px;font-size:16px;">Só điện thoại: {{InforphoneTake}}</p>
                                         </div>
                                         <table class="w-full whitespace-no-wrap">
                                             <thead>
