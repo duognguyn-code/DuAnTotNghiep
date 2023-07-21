@@ -34,6 +34,11 @@ public class BillDetailServiceImpl implements BillDetailService {
     }
 
     @Override
+    public Bill_detail update(Bill_detail bill_detail) {
+        return null;
+    }
+
+    @Override
     public List<Bill_detail> save(List<Bill_detail> entities) {
         return null;
     }
