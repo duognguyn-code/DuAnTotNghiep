@@ -8,7 +8,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     $scope.formbillDetails = {};
     $scope.items= [];
     $scope.getBillByID = function () {
-        var billId = $routeParams.idBill;
+        var billId = $routeParams.id;
         $http.get(apiUrlBill+'/'+billId)
             .then(function (response) {
                 $scope.bill = response.data;
@@ -21,13 +21,14 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.getBillByID();
     $scope.cop=function (){
-        var item = $scope.bill.find(item => item.id == $routeParams.idBill)
-        var item1 = $scope.billDetails.find(item => item.bill.id == $routeParams.idBill)
+        var item = $scope.bill.find(item => item.id == $routeParams.id)
+        var item1 = $scope.billDetails.find(item => item.bill.id == $routeParams.id)
         $scope.formBill = angular.copy(item);
         $scope.formbillDetails = angular.copy(item1);
     }
     $scope.getBillDetail = function () {
-        var billId = $routeParams.idBill;
+        var billId = $routeParams.id;
+        alert(billId);
         $http.get(apiUrlBillDetails+'/'+billId)
             .then(function (response) {
                 $scope.billDetails = response.data;
@@ -71,7 +72,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     $scope.upd=function (){
         var totalMn = $scope.formBill.moneyShip + $scope.checktotal.checkbill
 
-        $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.idBill).then(resp => {
+        $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.id).then(resp => {
             alert("Cập nhật thành công");
         }).catch(error => {
             alert("Cập nhật thất bại");

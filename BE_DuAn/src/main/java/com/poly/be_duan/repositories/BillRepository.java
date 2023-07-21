@@ -1,5 +1,6 @@
 package com.poly.be_duan.repositories;
 
+import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,5 +40,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 //    @Query("SELECT b FROM Bill b WHERE b.createDate between ?1 and  ?2")
 //    public List<Bill> searchByDate(Date date,Date date1);
 //    @Query("update Bill b set b.totalMoney = ?1 where b.id =?2")
-//    public Bill UpdateTotalMoney(BigDecimal money, Integer id);
+//    public Bill UpdateTotalMoney(BigDecimal money, Integer id);\
+
+    List<Bill> findAllByAccount(Account account);
 }

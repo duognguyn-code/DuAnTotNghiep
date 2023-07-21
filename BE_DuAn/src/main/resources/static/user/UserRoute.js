@@ -23,8 +23,10 @@ app.config(function($routeProvider){
         })
         .when("/purchase", {
             templateUrl:"/user/purchase/purchase.html",
+            controller:"order-ctrl"
         })
         .when("/purchaseDetail", {
             templateUrl:"/user/purchase/purchaseDetail.html",
+            controller:"order-detail-ctrl"
         })
 })

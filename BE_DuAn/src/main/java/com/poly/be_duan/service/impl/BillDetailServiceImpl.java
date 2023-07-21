@@ -1,6 +1,7 @@
 package com.poly.be_duan.service.impl;
 
 
+import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.repositories.BillDetailRepository;
 import com.poly.be_duan.service.BillDetailService;
@@ -31,6 +32,16 @@ public class BillDetailServiceImpl implements BillDetailService {
     @Override
     public Bill_detail save(Bill_detail entity) {
         return billDetailRepository.save(entity);
+    }
+
+    @Override
+    public Bill_detail update(Bill_detail bill_detail) {
+        return null;
+    }
+
+    @Override
+    public List<Bill_detail> findAllByOrder(Bill bill) {
+        return billDetailRepository.findAllByBill(bill);
     }
 
     @Override

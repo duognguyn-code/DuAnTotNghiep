@@ -35,7 +35,7 @@ public class Image {
     @JsonBackReference
     private Product products;
 
-    @JsonBackReference
+//    @JsonBackReference
     public ProductChange getProductChange(){
         return productChange;
     }

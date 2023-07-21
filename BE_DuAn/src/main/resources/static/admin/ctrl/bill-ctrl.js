@@ -209,7 +209,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     $scope.edit = function(billId) {
         if (!$scope.isRedirected) {
             $scope.isRedirected = true;
-            $location.path('/billDetail/').search({idBill: billId});
+            $location.path('/billDetail/').search({id: billId});
         }
     };
     $scope.pagerBill = {

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -36,7 +37,7 @@ public class BillDetailRestController {
     }
     @GetMapping("/getBillByID")
     public List<Bill> getBillByID() {
-        int a = Integer.parseInt(cookieService.getValue("idBill",""));
+        int a = Integer.parseInt(cookieService.getValue("id",""));
 //        System.out.println(a+"id  s");
         return billService.getBill(a);
     }
@@ -45,11 +46,18 @@ public class BillDetailRestController {
         public Bill update(@PathVariable("id") Integer id,@RequestBody Bill bill) {
 //        color.setId(id);
 //            System.out.println("abcccc");
-            return billService.update(bill);
+            return billService.updateStatus(bill);
         }
         @PutMapping("/updateBillDetail")
         public Bill_detail update(@RequestBody Bill_detail bill_detail) {
           return billDetailService.update(bill_detail);
         }
+
+    @GetMapping(value="/rest/user/{id}")
+    public List<Bill_detail> getAllUserByAccount(@PathVariable("id") Integer id){
+        Optional<Bill> bill = billService.findById(id);
+        List<Bill_detail> billDetails = billDetailService.findAllByOrder(bill.get());
+        return billDetails;
+    }
 
 }
