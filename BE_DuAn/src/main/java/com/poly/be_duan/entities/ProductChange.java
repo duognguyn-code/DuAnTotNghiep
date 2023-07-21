@@ -59,7 +59,6 @@ public class ProductChange {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
 
-//    @JsonManagedReference(value="user-movement")
     public List<Image> getImages(){
         return images;
     }
