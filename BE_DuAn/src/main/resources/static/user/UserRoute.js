@@ -27,4 +27,7 @@ app.config(function($routeProvider){
         .when("/purchaseDetail", {
             templateUrl:"/user/purchase/purchaseDetail.html",
         })
+        .when("/contact", {
+            templateUrl:"/user/product/contact.html",
+        })
 })
