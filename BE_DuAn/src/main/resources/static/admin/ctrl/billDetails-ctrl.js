@@ -21,7 +21,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.getBillByID();
     $scope.cop=function (){
-        var item = $scope.bill.find(item => item.id == $routeParams.id)
+        var item = $scope.bill.find(item => item.id == $routeParams.idBill)
         var item1 = $scope.billDetails.find(item => item.bill.id == $routeParams.id)
         $scope.formBill = angular.copy(item);
         $scope.formbillDetails = angular.copy(item1);
