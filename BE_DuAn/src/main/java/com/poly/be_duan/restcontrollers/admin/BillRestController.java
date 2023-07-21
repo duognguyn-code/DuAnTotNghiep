@@ -2,6 +2,7 @@ package com.poly.be_duan.restcontrollers.admin;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Bill;
+import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.service.BillDetailService;
 import com.poly.be_duan.service.BillService;
 import com.poly.be_duan.service.CookieService;
@@ -79,18 +80,23 @@ public class BillRestController {
 
         }
 
-    @PutMapping("/updateStatus")
-    public Bill updateStatus(@RequestBody Bill bill) {
-        Bill billOld = billService.findBillByID(bill.getId()).get();
-
-        System.out.println(billOld.getId() + "ssss");
-        System.out.println(billService.updateStatus(billOld));
-        if (bill.getStatus() < billOld.getStatus()) {
-            return null;
-        } else {
-            billOld.setStatus(bill.getStatus());
-            return billService.updateStatus(billOld);
+    @PutMapping("/updateStatus/{id}")
+    public Bill updateStatus(@PathVariable(value = "id")Integer id,@RequestBody Bill bill) {
+        List<Bill_detail> detailStatus = billDetailService.getBill_detailForMoney(id);
+        if (detailStatus.isEmpty()){
+            bill.setStatus(5);
+            return billService.update(bill);
         }
+        else {
+            Bill billOld = billService.findBillByID(bill.getId()).get();
+            if (bill.getStatus() < billOld.getStatus()) {
+                return null;
+            } else {
+                billOld.setStatus(bill.getStatus());
+                return billService.updateStatus(billOld);
+            }
+        }
+
     }
     @PostMapping()
     public Bill create(@RequestBody JsonNode billData) {
@@ -105,8 +111,6 @@ public class BillRestController {
 
     @PutMapping("/updateTotalMoney/{money}/{id}")
     public Bill updateTotalMoney(@PathVariable(value = "money")Integer money,@PathVariable(value = "id")Integer id) {
-        System.out.println(money + "--------------------"+id);
-
         BigDecimal mn = new BigDecimal(money);
         Bill bill = billService.findBillByID(id).get();
         bill.setTotalMoney(mn);

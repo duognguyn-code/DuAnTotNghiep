@@ -1,7 +1,6 @@
 package com.poly.be_duan.entities;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +59,7 @@ public class ProductChange {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
 
-    @JsonManagedReference
+//    @JsonManagedReference(value="user-movement")
     public List<Image> getImages(){
         return images;
     }

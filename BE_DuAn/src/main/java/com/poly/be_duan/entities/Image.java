@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "images")
@@ -35,7 +32,7 @@ public class Image {
     @JsonBackReference
     private Product products;
 
-    @JsonBackReference
+//    @JsonBackReference
     public ProductChange getProductChange(){
         return productChange;
     }
