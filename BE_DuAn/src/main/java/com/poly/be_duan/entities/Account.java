@@ -1,7 +1,6 @@
 package com.poly.be_duan.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +31,7 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
-    @JsonIgnoreProperties
+//    @JsonIgnoreProperties
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Author> authorList;
 

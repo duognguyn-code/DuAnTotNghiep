@@ -29,4 +29,7 @@ app.config(function($routeProvider){
             templateUrl:"/user/purchase/purchaseDetail.html",
             controller:"order-detail-ctrl"
         })
+        .when("/contact", {
+            templateUrl:"/user/product/contact.html",
+        })
 })

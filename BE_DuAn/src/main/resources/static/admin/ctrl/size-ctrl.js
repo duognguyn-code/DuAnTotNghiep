@@ -119,4 +119,42 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
         }
     }
     $scope.getSize();
+    $scope.pagerSize = {
+        page: 0,
+        size: 5,
+        get sizes() {
+            var start = this.page * this.size;
+            return $scope.sizes.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.sizes.length / this.size);
+            return $scope.sizes.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.sizes.length / this.size);
+
+        },
+        first() {
+            this.page = 0;
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.first();
+                alert("Bạn đang ở trang đầu")
+            }
+        },
+        next() {
+            this.page++;
+            if (this.page >= this.count) {
+                this.last();
+                alert("Bạn đang ở trang cuối")
+            }
+        },
+        last() {
+            this.page = this.count - 1;
+        }
+    }
 });
