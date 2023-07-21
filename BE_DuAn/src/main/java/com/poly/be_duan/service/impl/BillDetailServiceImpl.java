@@ -33,6 +33,7 @@ public class BillDetailServiceImpl implements BillDetailService {
     @Override
     public Bill_detail update(Bill_detail bill_detail) {
         return billDetailRepository.save(bill_detail);
+
     }
     @Override
     public List<Bill_detail> getBill_detailForMoney(int id) {
