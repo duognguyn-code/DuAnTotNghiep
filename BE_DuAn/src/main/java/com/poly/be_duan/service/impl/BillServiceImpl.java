@@ -4,6 +4,7 @@ package com.poly.be_duan.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.repositories.BillDetailRepository;
@@ -37,8 +38,22 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Optional<Bill> findById(Integer id) {
+        return billRepository.findById(id);
+    }
+
+    @Override
     public List<Bill> getBill(Integer id) {
         return billRepository.getBill(id);
+    }
+
+    @Override
+    public Bill update(Bill bill, Integer id) {
+        Optional<Bill> optional = findById(id) ;
+        if (optional.isPresent()) {
+            return save(bill);
+        }
+        return null;
     }
 
     @Override
@@ -81,5 +96,10 @@ public class BillServiceImpl implements BillService {
                 stream().peek(d -> d.setBill(bill)).collect(Collectors.toList());
         billDetailRepository.saveAll(details);
         return bill;
+    }
+
+    @Override
+    public List<Bill> findAllByAccount(Account account) {
+        return billRepository.findAllByAccount(account);
     }
 }

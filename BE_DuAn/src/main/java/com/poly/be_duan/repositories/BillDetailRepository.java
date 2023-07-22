@@ -1,7 +1,7 @@
 package com.poly.be_duan.repositories;
 
+import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,5 +13,10 @@ public interface BillDetailRepository extends JpaRepository<Bill_detail,Integer>
 
     @Query("SELECT p FROM Bill_detail p WHERE p.bill.id = ?1 ")
     public List<Bill_detail> getBill_detail(int id);
+    @Query("SELECT p FROM Bill_detail p WHERE p.bill.id = ?1 and (p.status =1 or p.status=2)  ")
+    public List<Bill_detail> getBill_detailForMoney(int id);
 
+
+
+    List<Bill_detail> findAllByBill(Bill bill);
 }

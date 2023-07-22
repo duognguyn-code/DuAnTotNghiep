@@ -19,6 +19,25 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style.min.css">
     <link rel="stylesheet" href="../css/index.css">
+    <style>
+        .thumbnail_images .previewImageContainer {
+            list-style: none;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+            margin-top: 10px
+        }
+
+        .thumbnail_images .previewImageContainer img {
+            margin-top: 50px;
+            margin-left: 30px;
+            padding: 10px;
+            border: 2px solid #eee;
+            cursor: pointer;
+            transition: all 0.5s;
+            border: 2px solid #000
+        }
+    </style>
 <!--    <link rel="stylesheet" href="../css/bootstrap.min.css">-->
 </head>
   <body ng-app="Myapp">
@@ -116,7 +135,6 @@
                                           <a href="" class="dropdown-item" data-bs-target="#exampleModalRegister" data-bs-toggle="modal">Đăng ký</a>
                                           <hr>
                                           <a href="#!purchase" class="dropdown-item">Đơn hàng</a>
-                                          <a href="#!purchaseDetail" class="dropdown-item">Đơn hàng chi tiết</a>
                                       </div>
 <!--                                      modal login-->
                                       <div class="modal " id="exampleModalLogin" tabindex="-1" data-bs-backdrop="static"
@@ -369,5 +387,7 @@
     <script src="ctrl/address-form-ctrl.js"></script>
     <script src="../mail/contact.js"></script>
     <script src="ctrl/cart_user-ctrl.js"></script>
+    <script src="ctrl/orderDetail-ctrl.js"></script>
+    <script src="ctrl/order-ctrl.js"></script>
   </body>
 </html>
