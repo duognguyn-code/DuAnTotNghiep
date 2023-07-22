@@ -11,7 +11,8 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         {id: 2, name: "Xác nhận"},
         {id: 3, name: "Đang giao hàng"},
         {id: 4, name: "Hoàn tất giao dịch"},
-        {id: 5, name: "Hủy đơn"}
+        {id: 5, name: "Hủy đơn"},
+        {id: 6, name: "Hoàn Trả"}
     ];
     $scope.getBill = function () {
         $scope.form.status ="0";

@@ -107,11 +107,7 @@ public class SendMailServiceimpl implements SendMailService {
                 msg.setRecipients(Message.RecipientType.TO, toAddresses);
                 msg.setSubject("PlaceUp - Thay đổi thông tin đơn hàng mã: "+bill.getId());
                 msg.setSentDate(new Date());
-                if(bill.getStatus()==0){
-                    msg.setContent(thymeleafService.getContent0(fullName),CONTENT_TYPE_TEXT_HTML);
-                    Transport.send(msg);
-                }
-                else if(bill.getStatus()==1){
+                if(bill.getStatus()==1){
                     msg.setContent(thymeleafService.getContent1(fullName),CONTENT_TYPE_TEXT_HTML);
                     Transport.send(msg);
                 }
@@ -122,8 +118,12 @@ public class SendMailServiceimpl implements SendMailService {
                 else if(bill.getStatus()==3){
                     msg.setContent(thymeleafService.getContent3(fullName),CONTENT_TYPE_TEXT_HTML);
                     Transport.send(msg);
-                }else if(bill.getStatus()==4){
+                }
+                else if(bill.getStatus()==4){
                     msg.setContent(thymeleafService.getContent4(fullName),CONTENT_TYPE_TEXT_HTML);
+                    Transport.send(msg);
+                }else if(bill.getStatus()==5){
+                    msg.setContent(thymeleafService.getContent5(fullName),CONTENT_TYPE_TEXT_HTML);
                     Transport.send(msg);
                 }
             }
