@@ -48,15 +48,15 @@
                     <td class="px-4 py-3 ">{{orderDetail.product.price | number}} VND</td>
                     <td class="px-4 py-3 ">{{orderDetail.quantity * orderDetail.product.price | number}} VND</td>
                     <td class="px-4 py-3 ">
-                        <p ng-if="orderDetail.bill.status == 3 && orderDetail.status == 0">Có thể đổi trẩ</p>
-                        <p ng-if="orderDetail.bill.status == 3 && orderDetail.status == 1">Chờ xác nhận đổi trả</p>
-                        <p ng-if="orderDetail.bill.status == 3 && orderDetail.status == 2">Vui lòng đang chọn máy mới
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 0">Có thể đổi trẩ</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 1">Chờ xác nhận đổi trả</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2">Vui lòng đang chọn giày mới
                             cho bạn</p>
-                        <p ng-if="orderDetail.bill.status == 3 && orderDetail.status == 3">Đổi máy thanh công</p>
-                        <p ng-if="orderDetail.bill.status == 3 && orderDetail.status == 4">Hủy yêu cầu</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 3">Đổi máy thanh công</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 4">Hủy yêu cầu</p>
                     </td>
                     <td class="px-4 py-3 " ng-click="getProductChange(orderDetail)">
-                        <a ng-if="orderDetail.bill.status == 3 && orderDetail.status == 0" style="color:black;"
+                        <a ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2" style="color:black;"
                            data-bs-target="#exampleModalPurchaseDetail" data-bs-toggle="modal"><i
                                 class="fa fa-info-circle" aria-hidden="true"></i>Đổi hàng</a>
                     </td>

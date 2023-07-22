@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+
 import java.util.List;
 
 @CrossOrigin("*")
@@ -100,8 +101,12 @@ public class BillRestController {
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {
-                billOld.setStatus(5);
+                billOld.setStatus(2);
+                billOld.setTotalMoney(BigDecimal.valueOf(0));
+                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+                System.out.println("gửi mail yahfnh công");
                 return billService.updateStatus(billOld);
+
             }
         } else {
             Bill billOld = billService.findBillByID(bill.getId()).get();
@@ -112,6 +117,7 @@ public class BillRestController {
                 return null;
             } else {
                 billOld.setStatus(bill.getStatus());
+                billOld.setTotalMoney(BigDecimal.valueOf(0));
                 sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
                 System.out.println("gửi mail yahfnh công");
                 return billService.updateStatus(billOld);

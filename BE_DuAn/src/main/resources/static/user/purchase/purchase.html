@@ -39,26 +39,26 @@
           <td class="px-4 py-3 ">{{order.totalMoney | number}} VND</td>
           <td class="px-4 py-3 " ng-if="order.description">{{order.description}}</td>
           <td class="px-4 py-3 " ng-if="!order.description">Không có</td>
-          <td class="px-4 py-3 " ng-if="order.status==0 && order.statusBuy==0">
+          <td class="px-4 py-3 " ng-if="order.status==1 && order.statusBuy==0">
             <span class="text-warning">Chờ xác nhận (Chưa thanh toán)</span>
           </td>
-          <td class="px-4 py-3 " ng-if="order.status==0 && order.statusBuy==1">
+          <td class="px-4 py-3 " ng-if="order.status==1 && order.statusBuy==1">
             <span class="text-warning">Chờ xác nhận (Đã thanh toán)</span>
           </td>
-          <td class="px-4 py-3 " ng-if="order.status==1">
+          <td class="px-4 py-3 " ng-if="order.status==2">
             <span class="text-warning">Xác nhận (Chờ đóng gói)</span>
           </td>
-          <td class="px-4 py-3 " ng-if="order.status==2">
+          <td class="px-4 py-3 " ng-if="order.status==3">
             <span class="text-warning">Đang giao hàng</span>
           </td>
-          <td class="px-4 py-3 " ng-if="order.status==3">
+          <td class="px-4 py-3 " ng-if="order.status==4">
             <span class="text-warning">Hoàn tất giao dịch</span>
           </td>
-          <td class="px-4 py-3 " ng-if="order.status==4">
+          <td class="px-4 py-3 " ng-if="order.status==5">
             <span class="text-warning">Hủy Đơn</span>
           </td>
-          <td class="px-4 py-3 " ng-if="order.status==5">
-            <span class="text-warning">hoàn trả</span>
+          <td class="px-4 py-3 " ng-if="order.status==6">
+            <span class="text-warning">Hoàn trả</span>
           </td>
 
           <td class="px-4 py-3 ">
