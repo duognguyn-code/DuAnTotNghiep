@@ -33,6 +33,9 @@ public class GuestRestController {
     @Autowired
     private BillService billService;
 
+    @Autowired
+    private SendMailService sendMailService;
+
     Account account = null;
 
     Bill bill = null;
@@ -71,6 +74,7 @@ public class GuestRestController {
         bill.setAccount(account);
 
         billService.save(bill);
+        sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",bill.getAccount().getEmail(), bill.getPersonTake(),bill);
         logger.info("-- Order: "+bill.getId());
         return bill;
     }

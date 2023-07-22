@@ -21,13 +21,16 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.getBillByID();
     $scope.cop=function (){
+
+
         var item = $scope.bill.find(item => item.id == $routeParams.idBill )
         // var item1 = $scope.billDetails.find(item => item.bill.id == $routeParams.idBill)
+
         $scope.formBill = angular.copy(item);
-        // $scope.formbillDetails = angular.copy(item1);
     }
     $scope.getBillDetail = function () {
         var billId = $routeParams.idBill;
+        alert(billId);
         $http.get(apiUrlBillDetails+'/'+billId)
             .then(function (response) {
                 $scope.billDetails = response.data;

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ProductChangeRepository extends JpaRepository<ProductChange, Integer> {
-    @Query(value = "select * from change_product left join change_product_detail on change_product.id_change_product = change_product_detail.id_change",nativeQuery = true)
+    @Query(value = "select * from change_product left join change_product_detail on change_product.id_change_product = change_product_detail.id_change_product",nativeQuery = true)
     public List<ProductChange> findProductChange();
 
     @Query("select pr from ProductChange pr order by  pr.id")

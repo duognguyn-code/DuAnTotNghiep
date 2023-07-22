@@ -24,8 +24,8 @@ public class UserRestController {
     @Autowired
     ProductService productSV;
 
-    @Autowired
-    ServletContext application;
+//    @Autowired
+//    ServletContext application;
 
     @Autowired
     ModelMapper modelMapper;
@@ -33,10 +33,12 @@ public class UserRestController {
     Account account = null;
 
     @GetMapping("/getAccountActive")
-    public AccountDTO getAccountActive() {
+    public Account getAccountActive() {
         Account account = accountService.findByUsername("Dương");
+        System.out.println(account.getEmail());
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
-        return accountDTO;
+        return account;
+
     }
 
     @GetMapping("/getAddress")

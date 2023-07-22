@@ -20,30 +20,52 @@
           <th class="px-4 py-3" scope="col">SĐT</th>
           <th class="px-4 py-3" scope="col">Ngày mua</th>
           <th class="px-4 py-3" scope="col">Ngày nhận</th>
-          <th class="px-4 py-3" scope="col">Tiền ship (VNĐ)</th>
-          <th class="px-4 py-3" scope="col">Tổng giá (VNĐ)</th>
+          <th class="px-4 py-3" scope="col">Tiền ship </th>
+          <th class="px-4 py-3" scope="col">Tổng giá </th>
           <th class="px-4 py-3" scope="col">Ghi chú</th>
           <th class="px-4 py-3" scope="col">Trạng thái</th>
           <th class="px-4 py-3" scope="col">Thao tác</th>
         </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-        <tr
+        <tr ng-repeat="order in orders"
             class="text-gray-700 dark:text-gray-400" style="font-size:16px;">
-          <td class="px-4 py-3 ">000001</td>
-          <td class="px-4 py-3 ">Hà Nội</td>
-          <td class="px-4 py-3 ">0123456798</td>
-          <td class="px-4 py-3 ">19/07/2023 12:00:00</td>
-          <td class="px-4 py-3 ">19/07/2023 16:00:00</td>
-          <td class="px-4 py-3 ">30,000</td>
-          <td class="px-4 py-3 ">130,000</td>
-          <td class="px-4 py-3 ">Không có</td>
-          <td class="px-4 py-3 ">Hoàn tất giao dịch</td>
+          <td class="px-4 py-3 ">{{order.id}}</td>
+          <td class="px-4 py-3 ">{{order.address}}</td>
+          <td class="px-4 py-3 ">{{order.phoneTake}}</td>
+          <td class="px-4 py-3 ">{{order.createDate}}</td>
+          <td class="px-4 py-3 ">{{order.timeReceive}}</td>
+          <td class="px-4 py-3 ">{{order.moneyShip | number}} VND</td>
+          <td class="px-4 py-3 ">{{order.totalMoney | number}} VND</td>
+          <td class="px-4 py-3 " ng-if="order.description">{{order.description}}</td>
+          <td class="px-4 py-3 " ng-if="!order.description">Không có</td>
+          <td class="px-4 py-3 " ng-if="order.status==0 && order.statusBuy==0">
+            <span class="text-warning">Chờ xác nhận (Chưa thanh toán)</span>
+          </td>
+          <td class="px-4 py-3 " ng-if="order.status==0 && order.statusBuy==1">
+            <span class="text-warning">Chờ xác nhận (Đã thanh toán)</span>
+          </td>
+          <td class="px-4 py-3 " ng-if="order.status==1">
+            <span class="text-warning">Xác nhận (Chờ đóng gói)</span>
+          </td>
+          <td class="px-4 py-3 " ng-if="order.status==2">
+            <span class="text-warning">Đang giao hàng</span>
+          </td>
+          <td class="px-4 py-3 " ng-if="order.status==3">
+            <span class="text-warning">Hoàn tất giao dịch</span>
+          </td>
+          <td class="px-4 py-3 " ng-if="order.status==4">
+            <span class="text-warning">Hủy Đơn</span>
+          </td>
+          <td class="px-4 py-3 " ng-if="order.status==5">
+            <span class="text-warning">hoàn trả</span>
+          </td>
+
           <td class="px-4 py-3 ">
-            <button class="btn btn-success" style="border-radius:8px; width:100px;">
-              Chi tiết
+            <button  ng-click="getOrder(order.id)" class="btn btn-success" style="border-radius:8px; width:100px;">
+              <a href="#!purchaseDetail"><i class="fa fa-info-circle" aria-hidden="true"></i>Chi tiết</a>
             </button>
-            <button class="btn btn-warning" style="border-radius:8px; width:100px;margin-top:10px;">
+            <button ng-click="huyDon(order.id)" ng-if="order.status<2" class="btn btn-warning" style="border-radius:8px; width:100px;margin-top:10px;">
               Hủy đơn
             </button>
           </td>

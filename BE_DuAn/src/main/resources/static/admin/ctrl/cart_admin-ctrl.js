@@ -393,7 +393,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     $scope.bill = {
         createDate: new Date(),
         address: "",
-        account: {username: "Duong1"},
+        account: {username: "Dương"},
         phoneTake:"",
         personTake:"",
         timeReceive: new Date(),
@@ -402,7 +402,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         typePayment: 1,
         description: "1",
         statusBuy: "1",
-        status: "1",
+        status: "4",
         get billDetails() {
             return $scope.cart.av.map(item => {
                 return {
@@ -412,7 +412,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                     dateReturn: null ,
                     moneyRefund: null,
                     description:"Không",
-                    status: 1,
+                    status: 2,
                     previousBillDetail:null
                 }
             })
@@ -426,6 +426,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             var item = JSON.stringify(angular.copy(bill));
             bill.phoneTake = $scope.InforphoneTake
             bill.personTake = $scope.InforpersonTake
+            bill.totalMoney = $scope.cart.amount
             $http.post(apiUrlBill,bill).then(resp =>{
                 alert("Dat hang thanh cong");
                 $scope.removeTab($scope.tabls);

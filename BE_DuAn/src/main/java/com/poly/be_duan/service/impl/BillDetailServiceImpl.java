@@ -1,6 +1,7 @@
 package com.poly.be_duan.service.impl;
 
 
+import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.repositories.BillDetailRepository;
 import com.poly.be_duan.service.BillDetailService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BillDetailServiceImpl implements BillDetailService {
@@ -33,8 +35,30 @@ public class BillDetailServiceImpl implements BillDetailService {
     @Override
     public Bill_detail update(Bill_detail bill_detail) {
         return billDetailRepository.save(bill_detail);
-
     }
+
+    @Override
+    public List<Bill_detail> findAllByOrder(Bill bill) {
+        return billDetailRepository.findAllByBill(bill);
+    }
+
+//    @Override
+//    public List<Bill_detail> save(List<Bill_detail> entities) {
+//        return null;
+//    }
+//
+//    @Override
+//    public void deleteById(Integer id) {
+//
+//    }
+//
+//    @Override
+//    public Optional<Bill_detail> findById(Integer id) {
+//        return billDetailRepository.findById(id);
+//    }
+
+
+
     @Override
     public List<Bill_detail> getBill_detailForMoney(int id) {
         return billDetailRepository.getBill_detailForMoney(id);
