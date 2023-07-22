@@ -393,16 +393,16 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     $scope.bill = {
         createDate: new Date(),
         address: "",
-        account: {username: "Duong"},
-        phoneTake: "",
-        personTake: "",
+        account: {username: "Dương"},
+        phoneTake:"",
+        personTake:"",
         timeReceive: new Date(),
         totalMoney: $scope.cart.amount,
-        moneyShip: "1",
+        moneyShip: "0",
         typePayment: 1,
         description: "1",
         statusBuy: "1",
-        status: "1",
+        status: "4",
         get billDetails() {
             return $scope.cart.av.map(item => {
                 return {
@@ -411,20 +411,24 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                     quantity: item.qty,
                     dateReturn: null ,
                     moneyRefund: null,
-                    description:"123",
-                    status: 1,
+                    description:"Không",
+                    status: 2,
                     previousBillDetail:null
                 }
             })
         },purchase(){
+
             if ($scope.cart.av.length===0){
                 alert("Giỏ hàng trống")
                 return
             }
             var bill = angular.copy(this);
+            var item = JSON.stringify(angular.copy(bill));
+            bill.phoneTake = $scope.InforphoneTake
+            bill.personTake = $scope.InforpersonTake
+            bill.totalMoney = $scope.cart.amount
             $http.post(apiUrlBill,bill).then(resp =>{
                 alert("Dat hang thanh cong");
-
                 $scope.removeTab($scope.tabls);
             }).catch(error =>{
                 alert("Loi~")
@@ -515,23 +519,23 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
 
         }
         $scope.searchProduct = function () {
-            if ($scope.searchPriceMin === "") {
-                $scope.searchPriceMin = "Min"
+            if ($scope.searchPriceMin1 === "") {
+                $scope.searchPriceMin1 = "Min"
 
             }
             if ($scope.searchProducts === "") {
                 $scope.searchProducts = " "
 
             }
-            if ($scope.searchPriceMax === "") {
-                $scope.searchPriceMax = "Max"
+            if ($scope.searchPriceMax1 === "") {
+                $scope.searchPriceMax1 = "Max"
             }
-            if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
-                && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
+            if ($scope.searchColor1 === 'undefined' && $scope.searchDesign1 === 'undefined' && $scope.searchMaterial1 === 'undefined'
+                && $scope.searchSize1 === 'undefined' && $scope.searchPriceMin1 === "" && $scope.searchPriceMax1 === "" && $scope.searchProducts === 'undefined'
             ) {
                 $scope.getProducts();
             } else {
-                $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
+                $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor1 + '/' + $scope.searchMaterial1 + '/' + $scope.searchSize1 + '/' + $scope.searchDesign1 + '/' + $scope.searchPriceMin1 + '/' + $scope.searchPriceMax1 + '/' + $scope.searchStatus)
                     .then(function (response) {
                         $scope.products = response.data;
                         console.log(response);
@@ -553,7 +557,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         };
         $scope.pagerProducts = {
             page: 0,
-            size: 5,
+            size: 6,
             get products() {
                 var start = this.page * this.size;
                 return $scope.products.slice(start, start + this.size);
@@ -590,10 +594,14 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             }
         }
         $scope.resetSearch = function () {
-            $('#matesearch').prop('selectedIndex', 0);
-            $('#colorSearch').prop('selectedIndex', 0);
-            $('#designSearch').prop('selectedIndex', 0);
-            $('#statusSearch').prop('selectedIndex', 0);
+            $('#matesearch1').prop('selectedIndex', 0);
+            $('#colorSearch1').prop('selectedIndex', 0);
+            $('#designSearch1').prop('selectedIndex', 0);
+            $('#statusSearch1').prop('selectedIndex', 0);
+            $scope.searchColor1 = "undefined";
+            $scope.searchDesign1 = "undefined";
+            $scope.searchMaterial1 = "undefined";
+            $scope.searchSize1 = "undefined";
             $scope.searchColor = "undefined";
             $scope.searchDesign = "undefined";
             $scope.searchMaterial = "undefined";
@@ -605,6 +613,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             $('#sizeSearch').prop('selectedIndex', 0);
             $scope.GetresetForm();
         }
+
     $scope.resetSearch();
     $scope.getSize()
     $scope.getDesign();

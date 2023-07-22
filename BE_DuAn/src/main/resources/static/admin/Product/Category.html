@@ -92,7 +92,7 @@
                         <tbody
                                 class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
                         >
-                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="category in categories">
+                        <tr class="text-gray-700 dark:text-gray-400" ng-repeat="category in pagerCategory.category">
                             <td class="px-4 py-3 text-sm">
                                 {{category.idCategory}}
                             </td>
@@ -145,21 +145,21 @@
                         </tr>
                         </tbody>
                     </table>
-<!--                    <div class="panel-footer text-center">-->
-<!--                        <button ng-click="pagerColor.first()" style="margin-right: 10px;">-->
-<!--                            <b class="text-sm"> |< </b>-->
-<!--                        </button>-->
-<!--                        <button ng-click="pagerColor.prev()" style="margin-right: 10px;">-->
-<!--                            <b class="text-sm"> < </b>-->
-<!--                        </button>-->
-<!--                        <button>{{pager.page +1}}of {{pagerColor.count}}</button>-->
-<!--                        <button ng-click="pagerColor.next()" style="margin-left: 10px;">-->
-<!--                            <b class="text-sm"> > </b>-->
-<!--                        </button>-->
-<!--                        <button ng-click="pagerColor.last()" style="margin-left: 10px;">-->
-<!--                            <b class="text-sm"> >| </b>-->
-<!--                        </button>-->
-<!--                    </div>-->
+                    <div class="panel-footer text-center">
+                        <button ng-click="pagerCategory.first()" style="margin-right: 10px;">
+                            <b class="text-sm"> |< </b>
+                        </button>
+                        <button ng-click="pagerCategory.prev()" style="margin-right: 10px;">
+                            <b class="text-sm"> < </b>
+                        </button>
+                        <button>{{pagerCategory.page +1}}of {{pagerCategory.count}}</button>
+                        <button ng-click="pagerCategory.next()" style="margin-left: 10px;">
+                            <b class="text-sm"> > </b>
+                        </button>
+                        <button ng-click="pagerCategory.last()" style="margin-left: 10px;">
+                            <b class="text-sm"> >| </b>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

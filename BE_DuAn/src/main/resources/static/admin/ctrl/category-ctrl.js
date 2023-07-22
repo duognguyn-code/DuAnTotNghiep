@@ -124,4 +124,43 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
         }
     }
     $scope.getCategory();
+
+    $scope.pagerCategory = {
+        page: 0,
+        size: 5,
+        get category() {
+            var start = this.page * this.size;
+            return $scope.categories.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.categories.length / this.size);
+            return $scope.categories.slice(start, start + this.size);
+
+        },
+        get count() {
+            return Math.ceil(1.0 * $scope.categories.length / this.size);
+
+        },
+        first() {
+            this.page = 0;
+        },
+        prev() {
+            this.page--;
+            if (this.page < 0) {
+                this.first();
+                alert("Bạn đang ở trang đầu")
+            }
+        },
+        next() {
+            this.page++;
+            if (this.page >= this.count) {
+                this.last();
+                alert("Bạn đang ở trang cuối")
+            }
+        },
+        last() {
+            this.page = this.count - 1;
+        }
+    }
 });

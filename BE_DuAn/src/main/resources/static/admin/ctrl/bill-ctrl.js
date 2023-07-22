@@ -84,9 +84,9 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                         if (bill.status===4){
                             alert("Bạn không thể cập nhật")
                         }
-                        $http.put(apiUrlBill + '/updateStatus', $scope.form).then(function (response) {
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form).then(function (response) {
                             if (response.data) {
-                                // $scope.form.status = null;
+                                $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
                                 $scope.messageSuccess("Đổi trạng thái thành công");
                             } else {
@@ -142,7 +142,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
 
                         $http.put(apiUrlBill + '/updateStatus', $scope.form).then(function (response) {
                             if (response.data) {
-                                // $scope.form.status = null;
+                                $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
                                 $scope.messageSuccess("Đổi trạng thái thành công");
                             } else {
@@ -167,6 +167,15 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 })
             }
         })
+    }
+    $scope.UpdateBillDetaillByStatusBill = function (status,id){
+        $http.put(apiUrlBillDetails + '/UpdateBillDetaillByStatusBill'+'/'+status +'/'+id).then(function (response) {
+            if (response.data) {
+            } else {
+            }
+        }).catch(error => {
+            $scope.messageError("Đổi trạng thái thất bại");
+        });
     }
     $scope.messageSuccess=function (text) {
         const Toast = Swal.mixin({
@@ -209,7 +218,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     $scope.edit = function(billId) {
         if (!$scope.isRedirected) {
             $scope.isRedirected = true;
-            $location.path('/billDetail/').search({id: billId});
+            $location.path('/billDetail/').search({idBill: billId});
         }
     };
     $scope.pagerBill = {
@@ -250,5 +259,4 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             this.page = this.count - 1;
         }
     }
-
 });

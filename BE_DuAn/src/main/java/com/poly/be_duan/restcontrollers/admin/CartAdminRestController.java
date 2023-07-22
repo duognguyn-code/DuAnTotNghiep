@@ -45,8 +45,8 @@ public class CartAdminRestController {
         int id = 0;
         try {
 
-            ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Windows\\Pictures\\Saved Pictures\\QRCODE.png"));
-            String filePath = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\QRCODE.png";
+            ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Lenovo\\Desktop\\QRCODE.png"));
+            String filePath = "C:\\Users\\Lenovo\\Desktop\\QRCODE.png";
 
             String charset = "UTF-8";
             Map hintMap = new HashMap();
@@ -69,20 +69,19 @@ public class CartAdminRestController {
                 QRImageData = dResult.getBits();
                 hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
                  String a = readQRCode(filePath, charset, hintMap, QRImageData);
-                System.out.println(a+"---abc");
                 id = Integer.parseInt(a);
 
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            System.out.println("Unable to read Qr code: Please dont shake your mobile!");
+            System.out.println("Vui Long Quet Lai Ma QR Code");
             // e.printStackTrace();
         } catch (NotFoundException e) {
             // TODO Auto-generated catch block
-            System.out.println("Unable to read Qr code: Please dont shake your mobile!");
+            System.out.println("Vui Long Quet Lai Ma QR Code");
         } catch (FormatException e) {
             // TODO Auto-generated catch block
-            System.out.println("Unable to read Qr code: Please dont shake your mobile!");
+            System.out.println("Vui Long Quet Lai Ma QR Code");
         }
 //        System.out.println( productService.getProductByBarCode(id));
         if (id==0){
@@ -102,7 +101,7 @@ public class CartAdminRestController {
             qrCodeResult = dr.decode(qRImageData);
         } catch (ChecksumException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Vui Long Quet Lai Ma QR Code");
         }
         return qrCodeResult.getText();
     }

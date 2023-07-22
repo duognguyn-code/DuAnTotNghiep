@@ -35,6 +35,15 @@ public class BillDetailRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    @GetMapping("/forMoney/{id}")
+    public ResponseEntity<List<Bill_detail>> getBill_detailForMoney(@PathVariable Integer id) {
+        try {
+            System.out.println("abc");
+            return ResponseEntity.ok(billDetailService.getBill_detailForMoney(id));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
     @GetMapping("/getBillByID")
     public List<Bill> getBillByID() {
         int a = Integer.parseInt(cookieService.getValue("id",""));
@@ -53,11 +62,32 @@ public class BillDetailRestController {
           return billDetailService.update(bill_detail);
         }
 
+
     @GetMapping(value="/rest/user/{id}")
     public List<Bill_detail> getAllUserByAccount(@PathVariable("id") Integer id){
         Optional<Bill> bill = billService.findById(id);
         List<Bill_detail> billDetails = billDetailService.findAllByOrder(bill.get());
         return billDetails;
+    }
+
+
+    @PutMapping("/UpdateBillDetaillByStatusBill/{status}/{id}")
+    public Bill_detail UpdateBillDetaillByStatusBill(@PathVariable(value = "status")Integer status,@PathVariable(value = "id")Integer id) {
+        if (status==3){
+            status=2;
+        }
+        if (status==4){
+            status=2;
+        }
+        System.out.println("an");
+        List<Bill_detail> detail = billDetailService.getBill_detail(id);
+        for (int i = 0; i < detail.toArray().length; i++) {
+            if (detail.get(i).getStatus()!=5){
+                detail.get(i).setStatus(status);
+                billDetailService.save(detail.get(i));
+            }
+        }
+        return null;
     }
 
 }
