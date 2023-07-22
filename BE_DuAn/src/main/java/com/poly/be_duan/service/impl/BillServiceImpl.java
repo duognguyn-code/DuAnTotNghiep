@@ -57,6 +57,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Bill update(Bill bill) {
+        return billRepository.save(bill);
+    }
+
+    @Override
     public List<Bill> searchByPhoneAndDateAndStatus(String phone, Date date,Date date1, Integer sts) {
         return billRepository.searchByPhoneAndDateAndStatus(phone,date,date1,sts);
     }

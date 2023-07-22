@@ -60,13 +60,13 @@ public class BillRestController {
 
     @GetMapping("/{id}")
     public List<Bill> getByID(@PathVariable(value = "id") Integer id) {
-
+        System.out.println(billService.getBill(id)+"abc----");
         return billService.getBill(id);
 
     }
 
     @GetMapping("/{phone}/{sts}/date")
-    public ResponseEntity<List<Bill>> searchBill(@RequestParam("date1") String date1, @RequestParam("date2") String date2, @PathVariable(value = "phone") String phone, @PathVariable(value = "sts") String sts) throws ParseException,Exception {
+    public ResponseEntity<List<Bill>> searchBill(@RequestParam("date1") String date1, @RequestParam("date2") String date2, @PathVariable(value = "phone") String phone, @PathVariable(value = "sts") String sts) throws ParseException, Exception {
 
 
         LocalDate today = LocalDate.now();
@@ -77,45 +77,49 @@ public class BillRestController {
         if (date2.equals("null")) {
             date2 = today.format(dateTimeFormatter);
         }
-            if (phone.equals(" ")) {
-                phone = "0";
-            }
-            Date dates1 = new Date(date1);
-            Date dates2 = new Date(date2);
-            if (sts == null | sts.equals("6")) {
-                return ResponseEntity.ok(billService.searchByPhoneAndDate(phone, dates1, dates2));
-            } else {
-                int st = Integer.parseInt(sts);
-                return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone, dates1, dates2, st));
-            }
-
+        if (phone.equals(" ")) {
+            phone = "0";
         }
+        Date dates1 = new Date(date1);
+        Date dates2 = new Date(date2);
+        if (sts == null | sts.equals("6")) {
+            return ResponseEntity.ok(billService.searchByPhoneAndDate(phone, dates1, dates2));
+        } else {
+            int st = Integer.parseInt(sts);
+            return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone, dates1, dates2, st));
+        }
+
+    }
 
 
     @PutMapping("/updateStatus/{id}")
-    public Bill updateStatus(@PathVariable(value = "id")Integer id,@RequestBody Bill bill) {
+    public Bill updateStatus(@PathVariable(value = "id") Integer id, @RequestBody Bill bill) {
         List<Bill_detail> detailStatus = billDetailService.getBill_detailForMoney(id);
         if (detailStatus.isEmpty()){
-            bill.setStatus(5);
-            return billService.update(bill);
-
-        }
-        else {
-           Bill billOld = billService.findBillByID(bill.getId()).get();
-
-        System.out.println(billOld.getId() + "ssss");
-        System.out.println(billService.updateStatus(billOld));
-        if (bill.getStatus() < billOld.getStatus()) {
-            return null;
+            Bill billOld = billService.findBillByID(bill.getId()).get();
+            if (bill.getStatus() < billOld.getStatus()) {
+                return null;
+            } else {
+                billOld.setStatus(5);
+                return billService.updateStatus(billOld);
+            }
         } else {
-            billOld.setStatus(bill.getStatus());
-            sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",billOld.getAccount().getEmail(), billOld.getPersonTake(),billOld);
-            System.out.println("gửi mail yahfnh công");
-            return billService.updateStatus(billOld);
+            Bill billOld = billService.findBillByID(bill.getId()).get();
 
-        }
+            System.out.println(billOld.getId() + "ssss");
+            System.out.println(billService.updateStatus(billOld));
+            if (bill.getStatus() < billOld.getStatus()) {
+                return null;
+            } else {
+                billOld.setStatus(bill.getStatus());
+                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+                System.out.println("gửi mail yahfnh công");
+                return billService.updateStatus(billOld);
+
+            }
         }
     }
+
     @PostMapping()
     public Bill create(@RequestBody JsonNode billData) {
         return billService.create(billData);
@@ -128,7 +132,7 @@ public class BillRestController {
     }
 
     @PutMapping("/updateTotalMoney/{money}/{id}")
-    public Bill updateTotalMoney(@PathVariable(value = "money")Integer money,@PathVariable(value = "id")Integer id) {
+    public Bill updateTotalMoney(@PathVariable(value = "money") Integer money, @PathVariable(value = "id") Integer id) {
         BigDecimal mn = new BigDecimal(money);
         Bill bill = billService.findBillByID(id).get();
         bill.setTotalMoney(mn);
@@ -136,7 +140,7 @@ public class BillRestController {
     }
 
     @GetMapping("/rest/user/order")
-    public List<Bill> getAllByAccount(){
+    public List<Bill> getAllByAccount() {
         Account account = accountService.findByUsername("Dương");
         List<Bill> bills = billService.findAllByAccount(account);
         Comparator comparator = new Comparator<Bill>() {
@@ -145,18 +149,19 @@ public class BillRestController {
                 return o2.getId().compareTo(o1.getId());
             }
         };
-        Collections.sort(bills,comparator);
+        Collections.sort(bills, comparator);
         return bills;
     }
+
     @PostMapping(value = "/rest/user/order/change")
-    public Bill billChange(@RequestBody Bill bill){
-        Bill billOld  = billService.findById(bill.getId()).get();
+    public Bill billChange(@RequestBody Bill bill) {
+        Bill billOld = billService.findById(bill.getId()).get();
         List<Bill_detail> billDetails = billDetailService.findAllByOrder(billOld);
-        if(billOld.getStatus() < 2){
+        if (billOld.getStatus() < 2) {
             billOld.setStatus(4);
             billOld.setDescription(bill.getDescription());
             billService.update(billOld, billOld.getId());
-            sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",billOld.getAccount().getEmail(), billOld.getPersonTake(),billOld);
+            sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
             System.out.println("gửi mail yahfnh công");
             return billOld;
         }

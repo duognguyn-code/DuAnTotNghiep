@@ -18,6 +18,8 @@ public interface BillService  {
 
     public Bill update(Bill bill, Integer id);
 
+    public Bill update(Bill bill);
+
     public List<Bill> searchByPhoneAndDateAndStatus(String phone, Date date,Date date1, Integer sts);
     public List<Bill> searchByPhoneAndDate(String phone, Date date,Date date1);
     public List<Bill> searchByPhoneAndStatus(String phone,Integer sts);

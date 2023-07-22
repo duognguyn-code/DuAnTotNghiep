@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BillDetailServiceImpl implements BillDetailService {
@@ -41,23 +42,23 @@ public class BillDetailServiceImpl implements BillDetailService {
         return billDetailRepository.findAllByBill(bill);
     }
 
-    @Override
-    public List<Bill_detail> save(List<Bill_detail> entities) {
-        return null;
-    }
+//    @Override
+//    public List<Bill_detail> save(List<Bill_detail> entities) {
+//        return null;
+//    }
+//
+//    @Override
+//    public void deleteById(Integer id) {
+//
+//    }
+//
+//    @Override
+//    public Optional<Bill_detail> findById(Integer id) {
+//        return billDetailRepository.findById(id);
+//    }
 
-    @Override
-    public void deleteById(Integer id) {
-
-    }
-
-    @Override
-    public Optional<Bill_detail> findById(Integer id) {
-        return billDetailRepository.findById(id);
-    }
 
 
-    }
     @Override
     public List<Bill_detail> getBill_detailForMoney(int id) {
         return billDetailRepository.getBill_detailForMoney(id);

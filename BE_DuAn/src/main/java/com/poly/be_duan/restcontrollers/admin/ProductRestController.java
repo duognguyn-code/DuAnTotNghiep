@@ -273,7 +273,7 @@ public class ProductRestController {
 
         String path = "D:\\QR_PRODUCT\\"+data+".jpg";
 
-        String path = "C:\\Users\\Lenovo\\Pictures\\Saved Pictures\\"+data+".jpg";
+
 
 
         try {
