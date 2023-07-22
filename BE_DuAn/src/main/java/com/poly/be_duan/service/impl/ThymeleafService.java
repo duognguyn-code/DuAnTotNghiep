@@ -47,7 +47,7 @@ public class ThymeleafService {
         return templateResolver;
     }
 
-    public String getContent0(String fullName) {
+    public String getContent1(String fullName) {
         final Context context = new Context();
 
         context.setVariable("CHAO","Xin chào "+ fullName);
@@ -55,7 +55,7 @@ public class ThymeleafService {
 
         return templateEngine.process(TEMPLATE_NAME, context);
     }
-    public String getContent1(String fullName) {
+    public String getContent2(String fullName) {
         final Context context = new Context();
 
         context.setVariable("CHAO","Xin chào "+ fullName);
@@ -63,7 +63,7 @@ public class ThymeleafService {
 
         return templateEngine.process(TEMPLATE_NAME, context);
     }
-    public String getContent2(String fullName) {
+    public String getContent3(String fullName) {
         final Context context = new Context();
 
         context.setVariable("CHAO","Xin chào "+ fullName);
@@ -71,7 +71,7 @@ public class ThymeleafService {
 
         return templateEngine.process(TEMPLATE_NAME, context);
     }
-    public String getContent3(String fullName) {
+    public String getContent4(String fullName) {
         final Context context = new Context();
 
         context.setVariable("CHAO","Xin chào "+ fullName);
@@ -79,7 +79,7 @@ public class ThymeleafService {
 
         return templateEngine.process(TEMPLATE_NAME, context);
     }
-    public String getContent4(String fullName) {
+    public String getContent5(String fullName) {
         final Context context = new Context();
 
         context.setVariable("CHAO","Xin chào "+ fullName);

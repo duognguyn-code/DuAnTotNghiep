@@ -76,4 +76,6 @@ public class Bill {
     @JsonIgnore
     @OneToMany(mappedBy = "bill")
     private List<Sale_detail> saleDetails;
+
+
 }

@@ -94,7 +94,7 @@ public class GuestRestController {
                 if (product.isPresent()) {
                     bill_detail.setProduct(product.get());
                     bill_detail.setBill(bill);
-                    bill_detail.setStatus(0);
+                    bill_detail.setStatus(1);
                     bill_detail.setQuantity(cartItems.get(i).get("quantity").asInt());
                     price = new BigDecimal(productNode.get("price").asDouble());
                     bill_detail.setPrice(price);
