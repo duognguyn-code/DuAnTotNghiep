@@ -25,7 +25,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     $scope.showTab = false;
     $scope.tabid=0;
     $scope.yourJsonData=[];
-
+    $scope.checkTab = false;
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
             toast: true,
@@ -79,7 +79,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
 
         // Hiển thị tab
         $scope.showTab = true;
-
+        $scope.checkTab=true;
         // Đặt tab mới được thêm là active
         $scope.activateTab(newTab);
         var er = JSON.stringify(angular.copy($scope.tabs));
@@ -102,7 +102,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         // Vô hiệu hóa tất cả các tab
         $scope.tabls = tab;
         $scope.tabid = tab.id
-
+        $scope.checkTab=true;
         $scope.cart.saveToLocalStorage();
 
 
@@ -117,7 +117,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     $scope.removeTab = function(tab){
        var index = $scope.tabs.indexOf(tab);
         $scope.tabs.splice(index,1);
-
+        $scope.checkTab = false;
         $scope.cart.av=[];
         var er = JSON.stringify(angular.copy($scope.tabs));
         localStorage.setItem("rt", er);
@@ -136,21 +136,21 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     };
     $scope.detailProduct = {}
     $scope.idCheck = undefined;
-    $scope.getDetailProduct = function (id) {
-        console.log(id)
-        if (id == 0) {
-            id = localStorage.getItem('idDetail');
-            $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
-                $scope.detailProduct = response.data;
-            }).catch(error => {
-                console.log(error, "lỗi")
-            })
-        } else {
-            localStorage.removeItem('idDetail');
-            localStorage.setItem('idDetail', id);
-            $window.location.href = '#!product_detail';
-        }
-    }
+    // $scope.getDetailProduct = function (id) {
+    //     console.log(id)
+    //     if (id == 0) {
+    //         id = localStorage.getItem('idDetail');
+    //         $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
+    //             $scope.detailProduct = response.data;
+    //         }).catch(error => {
+    //             console.log(error, "lỗi")
+    //         })
+    //     } else {
+    //         localStorage.removeItem('idDetail');
+    //         localStorage.setItem('idDetail', id);
+    //         $window.location.href = '#!product_detail';
+    //     }
+    // }
     $scope.checkDesign = 0;
     $scope.checkMaterial = 0;
     $scope.checkSize = 0;
@@ -188,8 +188,14 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         idP:null,
         getID(id){
             this.idP = id
+            console.log(id)
+                $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
+                    $scope.detailProduct = response.data;
+                }).catch(error => {
+                    console.log(error, "lỗi")
+                })
         },getD(){
-            if($scope.tabs.length===0){
+            if($scope.tabs.length===0 || $scope.checkTab==false){
                 alert("Bạn Phải Tạo Hóa Đơn")
                 return
             }

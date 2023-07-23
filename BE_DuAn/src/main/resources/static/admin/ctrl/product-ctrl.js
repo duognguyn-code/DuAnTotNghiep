@@ -209,13 +209,16 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         $http.get('/api/product/' + productId)
             .then(function(response) {
                 var product = response.data; // Đối tượng chứa thông tin sản phẩm
-                $scope.productData.category = product.category; // Gán giá trị thể loại
+                $scope.productData.category = product.category.idCategory; // Gán giá trị thể loại
                 $scope.productData.name = product.name; // Gán giá trị tên sản phẩm
                 $scope.productData.status = product.status; // Gán giá trị trạng thái
-                $scope.productData.material = product.material; // Gán giá trị trạng thái
-                $scope.productData.size = product.size; // Gán giá trị trạng thái
-                $scope.productData.design = product.design; // Gán giá trị trạng thái
+                $scope.productData.material = product.material.id; // Gán giá trị trạng thái
+                $scope.productData.size = product.size.id; // Gán giá trị trạng thái
+                $scope.productData.design = product.design.id; // Gán giá trị trạng thái
                 $scope.productData.price = product.price; // Gán giá trị trạng thái
+                $scope.productData.color = product.color.id
+                // alert(JSON.stringify(response.data))
+                // alert(JSON.stringify($scope.productData))
             })
             .catch(function(error) {
                 // Xử lý khi có lỗi trong việc lấy thông tin sản phẩm
@@ -225,20 +228,21 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
 
     $scope.onUpdate = function() {
         var productId = $routeParams.id;
-        var formData = new FormData();
-        formData.append('name', $scope.productData.name);
-        formData.append('size', $scope.productData.size);
-        formData.append('price', $scope.productData.price);
-        formData.append('status', $scope.productData.status = 1);
-        formData.append('category', $scope.productData.category);
-        formData.append('material', $scope.productData.material);
-        formData.append('design', $scope.productData.design);
-        formData.append('color', $scope.productData.color);
-
+        // var formData = new FormData();
+        // formData.append('name', $scope.productData.name);
+        // formData.append('size', $scope.productData.size);
+        // formData.append('price', $scope.productData.price);
+        // formData.append('status', $scope.productData.status);
+        // formData.append('category', $scope.productData.category);
+        // formData.append('material', $scope.productData.material);
+        // formData.append('design', $scope.productData.design);
+        // formData.append('color', $scope.productData.color);
+        var item = angular.copy($scope.productData)
+        alert(JSON.stringify(item))
         let req = {
             method: 'POST',
             url: '/api/product/updateProduct/' +productId,
-            data: formData,
+            data: item,
             headers: {
                 'Content-Type': undefined // Đặt header 'Content-Type' thành undefined để FormData tự định dạng
             }

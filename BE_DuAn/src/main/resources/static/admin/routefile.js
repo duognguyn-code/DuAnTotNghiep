@@ -60,4 +60,16 @@ app.config(function($routeProvider){
         .when("/statistical",{
             templateUrl:"/admin/Statistical/statistical.html",
         })
+        .when("/productReturn",{
+            templateUrl:"/admin/Bill/Product_Return.html",
+        })
+        .when("/Account",{
+             templateUrl:"/admin/Account/Account.html",
+        })
+        .when("/CreateAccount",{
+             templateUrl:"/admin/Account/CreateAccount.html",
+        })
+        .when("/UpdateAccount",{
+             templateUrl:"/admin/Account/UpdateAccount.html",
+        })
 })
