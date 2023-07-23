@@ -1,0 +1,114 @@
+<div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
+  <main class="h-full pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+      <h2 class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Cập nhật tài khoản
+      </h2>
+      <div class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+        <div class="grid gap-6 mb- md:grid-cols-2">
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Tên tài khoản</span>
+              <input
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="Nhập tên tài khoản"
+              />
+            </label>
+          </div>
+
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm ">
+              <span class="text-gray-700 dark:text-gray-400">Số điện thoại</span>
+              <input
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="Nhập Số điện thoại"
+              />
+            </label>
+          </div>
+        </div>
+        <!--        ===============-->
+        <div class="grid gap-6 mb- md:grid-cols-2">
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Họ và tên</span>
+              <input
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="Nhập họ và tên"
+              />
+            </label>
+          </div>
+
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm ">
+              <span class="text-gray-700 dark:text-gray-400">Địa chỉ</span>
+              <input
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="Nhập Địa chỉ"
+              />
+            </label>
+          </div>
+        </div>
+        <!--        ===========-->
+        <div class="grid gap-6 mb- md:grid-cols-2">
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Email</span>
+              <input
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      placeholder="Nhập địa chỉ Email"
+              />
+            </label>
+          </div>
+
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm ">
+              <span class="text-gray-700 dark:text-gray-400">Chức vụ</span>
+              <select
+                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <option >STAFF - Nhân viên</option>
+                <option >ADMIN - Quản lý</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <!--        ============-->
+        <div class="grid gap-6 mb- md:grid-cols-2">
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
+              <select
+                      class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <option >Nam</option>
+                <option >Nữ</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm ">
+              <span class="text-gray-700 dark:text-gray-400">Ngày Sinh</span>
+              <input
+                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      type="date"
+              />
+            </label>
+          </div>
+        </div>
+        <!--        ============-->
+        <div class="grid gap-6 mb-8 md:grid-cols-2">
+          <div class="mt-4 text-sm">
+            <button  style="margin-top: 10px; margin-left: 100px;"
+                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+              Cập nhật
+            </button>
+            <button  style="margin-top: 10px; margin-left: 65px;"
+                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+              Làm Mới
+            </button>
+          </div>
+        </div>
+        <!--        ===============-->
+      </div>
+    </div>
+  </main>
+</div>
