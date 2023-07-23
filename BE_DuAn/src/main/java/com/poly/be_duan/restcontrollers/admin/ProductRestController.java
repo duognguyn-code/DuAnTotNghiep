@@ -271,7 +271,7 @@ public class ProductRestController {
         String data = String.valueOf(number1);
 
 
-        String path = "D:\\QR_PRODUCT\\"+data+".jpg";
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\"+data+".jpg";
 
 
 

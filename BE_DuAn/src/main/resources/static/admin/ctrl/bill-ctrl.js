@@ -141,7 +141,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                         $scope.form.id = bill.id;
                             $scope.form.status=5
 
-                        $http.put(apiUrlBill + '/updateStatus', $scope.form).then(function (response) {
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form).then(function (response) {
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();

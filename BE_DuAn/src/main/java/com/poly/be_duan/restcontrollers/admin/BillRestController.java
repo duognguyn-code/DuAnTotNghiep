@@ -95,16 +95,17 @@ public class BillRestController {
 
     @PutMapping("/updateStatus/{id}")
     public Bill updateStatus(@PathVariable(value = "id") Integer id, @RequestBody Bill bill) {
+        System.out.println("navc");
         List<Bill_detail> detailStatus = billDetailService.getBill_detailForMoney(id);
         if (detailStatus.isEmpty()){
             Bill billOld = billService.findBillByID(bill.getId()).get();
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {
-                billOld.setStatus(2);
+                billOld.setStatus(5);
                 billOld.setTotalMoney(BigDecimal.valueOf(0));
-                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
-                System.out.println("gửi mail yahfnh công");
+//                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+//                System.out.println("gửi mail yahfnh công");
                 return billService.updateStatus(billOld);
 
             }
@@ -118,8 +119,8 @@ public class BillRestController {
             } else {
                 billOld.setStatus(bill.getStatus());
                 billOld.setTotalMoney(BigDecimal.valueOf(0));
-                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
-                System.out.println("gửi mail yahfnh công");
+//                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+//                System.out.println("gửi mail yahfnh công");
                 return billService.updateStatus(billOld);
 
             }
@@ -167,7 +168,7 @@ public class BillRestController {
             billOld.setStatus(4);
             billOld.setDescription(bill.getDescription());
             billService.update(billOld, billOld.getId());
-            sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+//            sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
             System.out.println("gửi mail yahfnh công");
             return billOld;
         }
