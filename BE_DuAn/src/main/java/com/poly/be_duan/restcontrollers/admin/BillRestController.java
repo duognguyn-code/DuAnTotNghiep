@@ -101,7 +101,7 @@ public class BillRestController {
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {
-                billOld.setStatus(2);
+                billOld.setStatus(5);
                 billOld.setTotalMoney(BigDecimal.valueOf(0));
                 sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
                 System.out.println("gửi mail yahfnh công");

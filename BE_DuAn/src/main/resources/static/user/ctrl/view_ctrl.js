@@ -32,7 +32,43 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.checkBuy = null;
     $scope.bills = {};
 
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
 
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
     $scope.getAcountActive = function () {
         $http.get(apiUrlAccout + `/getAccountActive`).then(function (respon) {
             $scope.accountActive = respon.data;
@@ -192,6 +228,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         } else {
             // Otherwise, add the new item to the cart
             cartItems.push(cartItem);
+            $rootScope.qtyCart++;
+            $scope.messageSuccess("Thêm vào giỏ hàng thành công!");
         }
 
         // Update the cart items in local storage
