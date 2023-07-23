@@ -1,0 +1,101 @@
+<div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
+  <main class="h-full pb-16 overflow-y-auto">
+    <div class="container grid px-6 mx-auto">
+      <h2 class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Danh Sách Hoàn Trả Hàng
+      </h2>
+      <div class="container-fluid pt-5" style="width:1200px;">
+        <table class="table table-bordered">
+          <thead>
+          <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:18px;">
+            <th class="px-4 py-3" scope="col">Khách hàng</th>
+            <th class="px-4 py-3" scope="col">Liên hệ</th>
+            <th class="px-4 py-3" scope="col">Sản phẩm</th>
+            <th class="px-4 py-3" scope="col">Ngày đổi trả </th>
+            <th class="px-4 py-3" scope="col">Lý do đổi trả </th>
+            <th class="px-4 py-3" scope="col">Trạng thái</th>
+            <th class="px-4 py-3" scope="col">Chức năng</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+          <tr
+              class="text-gray-700 dark:text-gray-400" style="font-size:16px;">
+            <td class="px-4 py-3 ">user</td>
+            <td class="px-4 py-3 ">
+              <div>
+                <p>user@gmail.com</p>
+                <p>0123456789</p>
+              </div>
+            </td>
+            <td class="px-4 py-3 " data-bs-target="#exampleModalProductReturn" data-bs-toggle="modal">sản phẩm 1</td>
+            <td class="px-4 py-3 ">23/07/2023 16:00:PM</td>
+            <td class="px-4 py-3 ">khong dung size</td>
+            <td class="px-4 py-3 ">Chờ xác nhận</td>
+            <td class="px-4 py-3 ">
+              <button
+                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                      aria-label="Edit"
+              >Thay Đổi
+
+              </button>
+              <button
+                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
+
+              >Hủy Đơn
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="modal fade" id="exampleModalProductReturn" tabindex="-1" data-bs-backdrop="static"
+              aria-hidden="true">
+          <form role="formProductChange" method="post" class="row" name="myForm"
+                enctype="multipart/form-data">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
+                  <p style="color:black">Sản phẩm 1</p>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                  <div class="container">
+                    <table class="w-full whitespace-no-wrap">
+                      <thead>
+                      <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
+                        <th class="px-4 py-3" scope="col">Hình ảnh</th>
+                        <th class="px-4 py-3" scope="col">Màu sắc</th>
+                        <th class="px-4 py-3" scope="col">Kiểu dáng</th>
+                        <th class="px-4 py-3" scope="col">Chất liệu</th>
+                        <th class="px-4 py-3" scope="col">Size</th>
+                        <th class="px-4 py-3" scope="col">Giá(VNĐ)</th>
+                      </tr>
+                      </thead>
+                      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                      <tr
+                          class="text-gray-700 dark:text-gray-400" style="font-size:18px;">
+                        <td class="px-4 py-3 ">
+                          <img class="img-responsive" width="80px" height="80px"
+                               src="../images/oxford1.png">
+                        </td>
+                        <td class="px-4 py-3 ">Đen</td>
+                        <td class="px-4 py-3 ">abc</td>
+                        <td class="px-4 py-3 ">xyz</td>
+                        <td class="px-4 py-3 ">35</td>
+                        <td class="px-4 py-3 ">1,250,000</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
