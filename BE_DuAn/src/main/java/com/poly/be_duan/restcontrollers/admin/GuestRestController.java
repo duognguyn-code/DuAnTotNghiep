@@ -6,7 +6,6 @@ import com.poly.be_duan.dto.ProductResponDTO;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
 import org.apache.log4j.Logger;
-import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -74,7 +73,7 @@ public class GuestRestController {
         bill.setAccount(account);
 
         billService.save(bill);
-        sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",bill.getAccount().getEmail(), bill.getPersonTake(),bill);
+//        sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",bill.getAccount().getEmail(), bill.getPersonTake(),bill);
         logger.info("-- Order: "+bill.getId());
         return bill;
     }
