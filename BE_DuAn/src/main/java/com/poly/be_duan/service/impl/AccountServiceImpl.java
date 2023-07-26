@@ -1,7 +1,6 @@
 package com.poly.be_duan.service.impl;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.poly.be_duan.dto.*;
 import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Address;
@@ -17,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,7 +49,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account save(Account account) {
-        return null;
+        return repository.save(account);
+    }
+
+    @Override
+    public List<Account> getAll() {
+        return repository.findAll();
     }
 
     @Override

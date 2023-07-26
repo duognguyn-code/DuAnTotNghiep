@@ -65,11 +65,14 @@ app.config(function($routeProvider){
         })
         .when("/Account",{
              templateUrl:"/admin/Account/Account.html",
+            controller:"account-ctrl"
         })
         .when("/CreateAccount",{
              templateUrl:"/admin/Account/CreateAccount.html",
+            controller:"account-ctrl"
         })
         .when("/UpdateAccount",{
              templateUrl:"/admin/Account/UpdateAccount.html",
+            controller:"account-ctrl"
         })
 })

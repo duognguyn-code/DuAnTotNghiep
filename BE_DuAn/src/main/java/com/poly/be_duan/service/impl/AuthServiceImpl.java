@@ -128,4 +128,9 @@ public class AuthServiceImpl implements AuthService {
         System.out.println(roles + "của user");
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),userDetails.getEmail(),roles));
     }
+
+    @Override
+    public Author save(Author author) {
+        return authorRepository.save(author);
+    }
 }
