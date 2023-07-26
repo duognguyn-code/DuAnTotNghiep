@@ -423,23 +423,24 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 }
             })
         },purchase(){
-
-            if ($scope.cart.av.length===0){
-                alert("Giỏ hàng trống")
-                return
-            }
-            var bill = angular.copy(this);
-            var item = JSON.stringify(angular.copy(bill));
-            bill.phoneTake = $scope.InforphoneTake
-            bill.personTake = $scope.InforpersonTake
-            bill.totalMoney = $scope.cart.amount
-            $http.post(apiUrlBill,bill).then(resp =>{
-                alert("Dat hang thanh cong");
-                $scope.removeTab($scope.tabls);
-            }).catch(error =>{
-                alert("Loi~")
-                console.log(error)
-            })
+            $scope.export();
+            // if ($scope.cart.av.length===0){
+            //     alert("Giỏ hàng trống")
+            //     return
+            // }
+            // var bill = angular.copy(this);
+            // var item = JSON.stringify(angular.copy(bill));
+            // bill.phoneTake = $scope.InforphoneTake
+            // bill.personTake = $scope.InforpersonTake
+            // bill.totalMoney = $scope.cart.amount
+            // $http.post(apiUrlBill,bill).then(resp =>{
+            //     alert("Dat hang thanh cong");
+            //
+            //     $scope.removeTab($scope.tabls);
+            // }).catch(error =>{
+            //     alert("Loi~")
+            //     console.log(error)
+            // })
         }
     }
     $scope.generationName = function () {
@@ -599,6 +600,20 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 this.page = this.count - 1;
             }
         }
+    $scope.export = function() {
+        html2canvas(document.getElementById('exportthis'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500,
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("test.pdf");
+            }
+        });
+    }
         $scope.resetSearch = function () {
             $('#matesearch1').prop('selectedIndex', 0);
             $('#colorSearch1').prop('selectedIndex', 0);

@@ -32,4 +32,7 @@ app.config(function($routeProvider){
         .when("/contact", {
             templateUrl:"/user/product/contact.html",
         })
+        .when("/info", {
+            templateUrl:"/user/Profile/AccountInfo.html",
+        })
 })

@@ -14,6 +14,8 @@ public interface AccountService {
 
     Account save(Account account);
 
+    public List<Account> getAll();
+
     List<Account> save(List<Account> entities);
 
     void deleteById(String id);
