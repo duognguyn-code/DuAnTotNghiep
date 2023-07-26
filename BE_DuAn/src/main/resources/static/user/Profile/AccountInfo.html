@@ -1,0 +1,98 @@
+<div xmlns:th="http://wwww.thymeleaf.org"th:replace="~{/user/index :: dynamic(~{::main})}">
+    <main class="h-full pb-16 overflow-y-auto" style="background-color:#F1F1F1;">
+        <div class="container-fluid mb-5">
+            <div class="row px-xl-5" style="margin-top:30px;">
+                <div class="col-lg-4 d-none d-lg-block" style="background-color:#FFFFFF;">
+                    <div class="" style="height:180px;border:1.5px solid #EDF1FF">
+                            <center style="margin-top:30px;"><img class=" img-responsive"
+                                 src="../images/user.jpg" style="border-radius:100%;width:120px;height:120px;">
+                            </center>
+                    </div>
+                    <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0" id="navbar-vertical">
+                        <div class="navbar-nav w-100 overflow-hidden" style="height: 300px">
+                            <a href="" class="nav-item nav-link" style="height:50px;margin-top:10px;font-size:17px;"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Đơn hàng của tôi</a>
+                            <a href="" class="nav-item nav-link" style="height:50px;margin-top:10px;font-size:17px;"><i class="fa fa-address-card" aria-hidden="true"></i> Sổ địa chỉ</a>
+                            <a href="" class="nav-item nav-link" style="height:50px;margin-top:10px;font-size:17px;"><i class="fa fa-sign-in" aria-hidden="true"></i> Đăng xuất</a>
+                        </div>
+                    </nav>
+                </div>
+<!--                ===================-->
+                <div class="col-lg-8 d-none d-lg-block" style="background-color:#FFFFFF;">
+                    <h3 class="text-center" style="margin-top:10px;">Thông tin tài khoản</h3>
+                    <div class="" style="margin-top:10px;color:black;">
+                        <label class="block text-sm">
+                            <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Tài khoản</p>
+                            <input
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    style="width:850px;height:40px;"
+                            />
+                        </label>
+                    </div>
+                    <!--                    ==================-->
+                    <div class="" style="margin-top:10px;color:black;">
+                            <label class="block text-sm">
+                                <p  class="text-gray-700 dark:text-gray-400">Giới tính</p>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                    <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                                </div>
+                            </label>
+                        </div>
+<!--                        ==================-->
+                        <div class="" style="margin-top:10px;color:black;">
+                            <label class="block text-sm">
+                                <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Họ và Tên</p>
+                                <input
+                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                        style="width:850px;height:40px;"
+                                />
+                            </label>
+                        </div>
+<!--                    ==================-->
+                    <div class="" style="margin-top:10px;color:black;">
+                        <label class="block text-sm">
+                            <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Số điện thoại </p>
+                            <input
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    style="width:850px;height:40px;" type="number"
+                            />
+                        </label>
+                    </div>
+                    <!--                    ==================-->
+                    <div class="" style="margin-top:10px;color:black;">
+                        <label class="block text-sm">
+                            <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Email</p>
+                            <input
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    style="width:850px;height:40px;" type="email"
+                            />
+                        </label>
+                    </div>
+                    <!--                    ==================-->
+                    <div class="" style="margin-top:10px;color:black;">
+                        <label class="block text-sm">
+                            <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Ngày sinh</p>
+                            <input
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    style="width:850px;height:40px;" type="date"
+                            />
+                        </label>
+                    </div>
+                    <!--                    ==================-->
+                    <div class="" style="margin-top:10px;color:black;">
+                        <center>
+                        <button class="btn text-center" style="width:400px;height:40px;background-color:#D19C97;color:white;font-size:20px;border-radius:5px;margin-bottom:20px;">
+                            Thay đổi
+                        </button>
+                        </center>
+                    </div>
+                    <!--                    ==================-->
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
