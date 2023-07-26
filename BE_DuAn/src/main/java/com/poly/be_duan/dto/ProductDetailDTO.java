@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductDetailDTO {
     private Integer id;
     private String name;
+    private int quantity;
     private BigDecimal priceMin;
     private BigDecimal priceMax;
     private List<Material> materials;

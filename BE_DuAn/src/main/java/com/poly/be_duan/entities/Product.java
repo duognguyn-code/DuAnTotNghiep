@@ -13,6 +13,7 @@ import org.springframework.stereotype.Indexed;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class Product  {
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
+
+    @Min(value = 0, message = "{Product.quantity.Min")
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
     @Column(name = "status", nullable = false, precision = 10)
     private int status;
 
@@ -79,6 +84,9 @@ public class Product  {
     @Transient
     private List<MultipartFile> files;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<ChangeProductDetail> changeDetails;
     public Product(Integer id, String name, int status, List<Image> images, BigDecimal price, Category category, Size size, Color color, Designs design, Material material, List<MultipartFile> files) {
         this.id = id;
         this.name = name;

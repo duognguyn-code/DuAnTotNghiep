@@ -4,6 +4,7 @@ import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BillDetailService {
 
@@ -14,9 +15,13 @@ public interface BillDetailService {
     Bill_detail save(Bill_detail entity);
     public Bill_detail update(Bill_detail bill_detail);
 
+    public Bill_detail update(Bill_detail bill_detail, Integer id);
+
 
     List<Bill_detail> findAllByOrder(Bill bill);
 
     List<Bill_detail> getBill_detailForMoney(int id);
+
+    Optional<Bill_detail> findById(Integer id);
 
 }

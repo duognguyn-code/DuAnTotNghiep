@@ -28,6 +28,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             $scope.accountActive = respon.data;
             $rootScope.name = $scope.accountActive.username;
             console.log($scope.accountActive.username)
+            alert($scope.accountActive.username);
         }).catch(err => {
             alert(err)
         })
@@ -37,7 +38,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         angular.forEach($scope.files, function(file) {
             form.append('files', file);
         });
-        form.append("orderDetail", $scope.formDetails.id);
+        form.append("bill_detail", $scope.formDetails.id);
         let req = {
             method: 'POST',
             url: '/rest/user/productchange/saveRequest',
@@ -68,18 +69,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                if($scope.files == null){
-                    $scope.error('chưa chọn ảnh tình trạng máy');
-                    return null;
-                }else  if($scope.formProductChange.quantity_product_change > $scope.formDetails.quantity){
-                    $scope.error('Số lượng nhập vào không đúng vui lòng nhập lại');
-                    return null;
-                }
-                else if($scope.formProductChange.quantity_product_change == null){
-                    $scope.error('Vui lòng nhập số lượng máy cần đổi');
-                    return null;
-                }
-
                 alert("chajyd đến đây cbi vào")
                 let timerInterval
                 Swal.fire({
@@ -94,6 +83,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                             formData.append('files', file);
                         });
                         alert("đến đây nha")
+                        alert($scope.formDetails.id)
                         formData.append("description", $scope.formProductChange.description);
                         formData.append("email", $scope.accountActive.email);
                         formData.append("quantityProductChange",$scope.formProductChange.quantity_product_change);
@@ -191,7 +181,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     };
     $scope.getProductChange=function(formProductChange){
         $http.get(`/rest/user/productchange/findProductChange/${formProductChange.id}`).then(resp=>{
-            console.log($scope.formDetails.id)
+            console.log($scope.formDetails.id + "$scope.formDetails.id id")
             $scope.formDetails = resp.data;
             console.log(resp.data)
         }).catch(error=>{

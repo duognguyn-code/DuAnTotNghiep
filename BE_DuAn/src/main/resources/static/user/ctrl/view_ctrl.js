@@ -32,7 +32,32 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.checkBuy = null;
     $scope.bills = {};
 
-    $scope.messageSuccess=function (text) {
+    function toastMessage(heading, text, icon) {
+        // $.toast({
+        //     heading: heading,
+        //     text: text,
+        //     position: 'top-right',
+        //     icon: icon
+        // })
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: icon,
+            title: text
+        })
+    }
+
+    $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -51,7 +76,48 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
 
-    $scope.messageError=function (text) {
+
+    $scope.checkCartItemQuantity = function (item) {
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Tìm tất cả các mặt hàng trong giỏ hàng có cùng product.id
+        var itemsWithSameProduct = cartItems.filter(function (cartItem) {
+            return (
+                cartItem.product.id === item.product.id &&
+                cartItem.design === item.design &&
+                cartItem.size === item.size &&
+                cartItem.color === item.color &&
+                cartItem.material === item.material
+            );
+        });
+
+
+        // Tính tổng số lượng sản phẩm có cùng product.id trong giỏ hàng
+        var totalQuantityInCart = itemsWithSameProduct.reduce(function (total, cartItem) {
+            return total + cartItem.quantity;
+        }, 0);
+        item.totalQuantityInCart = totalQuantityInCart;
+        alert(totalQuantityInCart);
+
+        // Gửi yêu cầu kiểm tra số lượng của sản phẩm trong db
+        var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
+        $http.get(apiUrlProduct).then(function (response) {
+            var dbProductQuantity = response.data.quantity;
+            item.messageQuantity = ""; // Reset thông báo lỗi
+            if (item.quantity == 0) {
+                item.messageQuantity = "Số lượng không trống";
+            } else if (item.quantity > dbProductQuantity) {
+                item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
+                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
+            } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
+                item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
+                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
+            }
+        }).catch(function (error) {
+            console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);
+        });
+    };
+    $scope.messageError = function (text) {
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -87,6 +153,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         $scope.checkBuy = false;
     }
     $scope.buyCart = function () {
+
+        $scope.messageQuantity = '';
         Swal.fire({
             title: 'Xác nhận thanh toán?',
             text: "Xác nhận thanh toán để mua hàng!",
@@ -105,7 +173,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     var bankcode = ''; // Optional
                     var language = 'vn'; // Optional
                     $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
-                        alert(res + "object này");
                         window.location.href = res.data.value;
                         $scope.bills.personTake = $scope.addressAccount.personTake;
                         $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
@@ -117,7 +184,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                         $scope.bills.typePayment = false;
                         $http.post(urlOrder + '/add', $scope.bills).then(res => {
                             if (res.data) {
-                                alert("vào bill detail chưa")
                                 $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
                                     console.log("orderDetail", res.data)
                                 }).catch(err => {
@@ -157,12 +223,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     $scope.bills.moneyShip = $scope.ship;
                     $scope.bills.typePayment = false;
                     $http.post(urlOrder + '/add', $scope.bills).then(res => {
-                        alert("add vào bill chưa")
                         if (res.data) {
-                            alert("add vào bill_detail chưa chưa" + res.data)
                             $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
-                                alert($scope.cartItems.id + "số lượng trong cảt");
-                                alert(urlOrderDetail)
                                 $window.location.href = '/user/cart/buy-cod-success.html';
 
                             }).catch(err => {
@@ -181,6 +243,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                             '',
                             'error'
                         )
+                        if (error.status == 401) {
+                            $scope.isLoading = false;
+                            setTimeout(() => {
+                                document.location = '/admin#!/login';
+                            }, 2000);
+                            sweetError('Mời bạn đăng nhập !');
+                            return;
+                        }
                         console.log("err order", err)
                         alert(err + "lỗi")
                     })
@@ -189,9 +259,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
 
         })
     }
-    $scope.addCart = function (product) {
-        alert("vào ")
-        // Get the selected options (design, size, color, material)
+    $scope.addCart = function (product, quantity) {
+        var totalQuantityInCart = 0;
         var selectedDesign = $scope.checkDesign.name;
         var selectedSize = $scope.checkSize.name;
         var selectedColor = $scope.checkColor.name;
@@ -204,7 +273,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             size: selectedSize,
             color: selectedColor,
             material: selectedMaterial,
-            quantity: 1
+            quantity: quantity
         };
 
         // Retrieve existing cart items from local storage
@@ -222,10 +291,19 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         });
 
         if (existingItem) {
-            // If the same item exists, increase its quantity
+            totalQuantityInCart = existingItem.quantity;
+            if (totalQuantityInCart + quantity > product.quantity) {
+                $scope.messageError("Sản phẩm này chỉ còn " + (product.quantity - totalQuantityInCart) + " sản phẩm trong kho.");
+                return;
+            }
             existingItem.quantity++;
             $rootScope.loadQtyCart();
+            $scope.messageSuccess("Sản phẩm này đã có ,thêm giỏ hàng thành công!");
         } else {
+            if (quantity > product.quantity) {
+                $scope.messageError("Sản phẩm này chỉ còn " + product.quantity + " sản phẩm trong kho.");
+                return;
+            }
             // Otherwise, add the new item to the cart
             cartItems.push(cartItem);
             $rootScope.qtyCart++;
@@ -234,7 +312,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
 
         // Update the cart items in local storage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        $window.location.href = 'http://localhost:8080/user/index.html#!/cart';
     };
     $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     $rootScope.loadQtyCart = function () {
@@ -301,15 +378,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         }
         return item.product.price * item.quantity;
     };
-    $scope.increaseQuantity = function (item) {
-        item.quantity++;
-    };
-
-    $scope.decreaseQuantity = function (item) {
-        if (item.quantity > 1) {
-            item.quantity--;
-        }
-    };
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
         $http.get(apiUrlProduct)
@@ -323,50 +391,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             });
     };
 
-    $scope.addProduct = function () {
-        // Lấy tên tệp tin từ đường dẫn
-        var formData = new FormData();
-        formData.append('name', $scope.formProduct.name);
-        formData.append('size', $scope.formProduct.size);
-        formData.append('price', $scope.formProduct.price);
-        formData.append('status', $scope.formProduct.status = 1)
-        formData.append('category', $scope.formProduct.category)
-        formData.append('material', $scope.formProduct.material)
-        formData.append('design', $scope.formProduct.design)
-        formData.append('color', $scope.formProduct.color)
-        console.log($scope.formProduct.category)
-        var req = {
-            method: 'POST',
-            url: '/api/product/saveProduct',
-            data: formData,
-            headers: {'Content-Type': undefined}
-        }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới sản phẩm thành công");
-            $scope.resetProducts();
-            $scope.getProducts();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
-    };
     $scope.getAddressAcountActive = function () {
         $http.get(apiUrlAccout + "/getAddress").then(function (respon) {
             $scope.addressAccount = respon.data;
@@ -462,67 +486,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             })
         }
     };
-    $scope.editProduct = function (product) {
-        $scope.formProduct = angular.copy(product);
-    }
-    // Cập nhật thông tin sản phẩm
-    $scope.updateProduct = function (product) {
-        $http.put(apiUrlProduct + '/' + product.id, product)
-            .then(function (response) {
-                // Cập nhật thông tin sản phẩm trong danh sách
-                var index = $scope.products.findIndex(p => p.id === product.id);
-                if (index !== -1) {
-                    $scope.products[index] = response.data;
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-    // Xóa sản phẩm
-    $scope.deleteProduct = function (formProduct) {
-        Swal.fire({
-            title: 'Bạn có chắc muốn xóa: ' + formProduct.name + '?',
-            text: "Xóa không thể khôi phục lại!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let timerInterval
-                Swal.fire({
-                    title: 'Đang xóa: ' + formProduct.name + '!',
-                    html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading()
-                        const b = Swal.getHtmlContainer().querySelector('b')
-                        timerInterval = setInterval(() => {
-                            b.textContent = Swal.getTimerLeft()
-                        }, 100)
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval)
-                    }
-                }).then((result) => {
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        $http.post(apiUrlProduct + `/delete?id=${formProduct.id}`, formProduct.id).then(response => {
-                            $scope.message('Đã cập nhật trạng thái  sản phẩm thành hết hàng');
-                            $scope.getProducts();
-                        }).catch(error => {
-                            $scope.error('xóa thất bại');
-                        });
-                        console.log('I was closed by the timer')
-                    }
-                })
 
-            }
-        })
 
-    };
     $scope.resetProducts = function () {
         $scope.formProduct = {
             status: 1
@@ -530,32 +495,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     }
 
 
-    $scope.previewImage = function () {
-        var input = document.getElementById('image');
-        if (input.files && input.files.length > 0) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $scope.imagePreview = e.target.result;
-                $scope.$apply(); // Cập nhật lại scope để hiển thị hình ảnh
-            };
-            $scope.formProduct.url_images = []; // Xóa các hình ảnh hiện có trong danh sách
-            for (var i = 0; i < input.files.length; i++) {
-                var file = input.files[i];
-                var reader1 = new FileReader();
-                reader.onload = (function (file) {
-                    return function (e) {
-                        $scope.formProduct.url_image.push(e.target.result);
-                        $scope.$apply(); // Cập nhật lại scope để hiển thị hình ảnh
-                    };
-                })(file);
-                reader1.readAsDataURL(file);
-                console.log("Tên tệp tin:", file.name);
-            }
-        } else {
-            $scope.imagePreview = ""; // Đặt giá trị rỗng nếu không có tệp tin được chọn
-            $scope.formProduct.url_image = []; // Đặt danh sách hình ảnh thành rỗng
-        }
-    };
     // Thêm sản phẩm mới
 
 
@@ -608,74 +547,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             .catch(function (error) {
                 console.log(error);
             });
-    };
-    $scope.generationName = function () {
-        if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
-            $scope.formProduct.name = '';
-        }
-        if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
-            for (let i = 0; i < $scope.categories.length; i++) {
-                if ($scope.formProduct.category == $scope.categories[i].idCategory) {
-                    $scope.formProduct.name = $scope.categories[i].name;
-                }
-            }
-        }
-        if ($scope.formProduct.color != undefined || $scope.formProduct.color != null || $scope.formProduct.color != '') {
-            for (let i = 0; i < $scope.colors.length; i++) {
-                if ($scope.formProduct.color == $scope.colors[i].id) {
-                    $scope.formProduct.name += ' Màu ' + $scope.colors[i].name;
-                }
-            }
-        }
-        if ($scope.formProduct.design != undefined || $scope.formProduct.design != null || $scope.formProduct.design != '') {
-            for (let i = 0; i < $scope.designs.length; i++) {
-                if ($scope.formProduct.design == $scope.designs[i].id) {
-                    $scope.formProduct.name += ' Thiết kế ' + $scope.designs[i].name;
-                }
-            }
-        }
-        if ($scope.formProduct.material != undefined || $scope.formProduct.material != null || $scope.formProduct.material != '') {
-            for (let i = 0; i < $scope.colors.length; i++) {
-                if ($scope.formProduct.material == $scope.materials[i].id) {
-                    $scope.formProduct.name += ' Chất Liệu ' + $scope.materials[i].name;
-                }
-            }
-        }
-        if ($scope.formProduct.size != undefined || $scope.formProduct.size != null || $scope.formProduct.size != '') {
-            for (let i = 0; i < $scope.sizes.length; i++) {
-                if ($scope.formProduct.size == $scope.sizes[i].id) {
-                    $scope.formProduct.name += ' Size ' + $scope.sizes[i].name;
-                }
-            }
-        }
-
-    }
-    $scope.searchProduct = function () {
-        if ($scope.searchPriceMin === "") {
-            $scope.searchPriceMin = "Min"
-
-        }
-        if ($scope.searchProducts === "") {
-            $scope.searchProducts = " "
-
-        }
-        if ($scope.searchPriceMax === "") {
-            $scope.searchPriceMax = "Max"
-        }
-        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
-            && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
-        ) {
-            $scope.getProducts();
-        } else {
-            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
-                .then(function (response) {
-                    $scope.products = response.data;
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                })
-        }
     };
     $scope.GetresetForm = function () {
         $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
