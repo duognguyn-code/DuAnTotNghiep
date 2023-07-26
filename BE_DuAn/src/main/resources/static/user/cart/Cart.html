@@ -25,8 +25,8 @@
                             <th>Chất liệu</th>
                             <th>Kiểu Dáng</th>
                             <th>Số lượng</th>
-                            <th>Giá tiền</th>
-                            <th>Tổng</th>
+                            <th>Giá tiền (VNĐ)</th>
+                            <th>Tổng (VNĐ)</th>
                             <th>Xóa</th>
                         </tr>
                         </thead>
@@ -52,8 +52,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="align-middle"> {{item.product.price | number}} VND</td>
-                            <td class="align-middle">{{calculateTotal(item) | number}} VND</td>
+                            <td class="align-middle"> {{item.product.price|number}}</td>
+                            <td class="align-middle">{{calculateTotal(item)|number}}</td>
                             <td class="align-middle">
                                 <button class="btn btn-sm btn-primary" ng-click="removeItem(item.id)"><i
                                         class="fa fa-times"></i></button>
@@ -75,7 +75,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Tiền sản phẩm</h6>
-                                <h6 class="font-weight-medium">{{calculateSubtotal() | number}} USD</h6>
+                                <h6 class="font-weight-medium">{{calculateSubtotal()|number}} VNĐ</h6>
                             </div>
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Tiền ship</h6>
@@ -116,7 +116,7 @@
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">{{calculateSubtotal() + ship | number}} USD</h5>
+                                <h5 class="font-weight-bold">{{calculateSubtotal()+ship|number}} VNĐ</h5>
                             </div>
                             <a class="btn btn-outline-primary" href="#!address">Chọn địa chỉ</a>
                             <button class="btn btn-block btn-primary my-3 py-3" ng-click="buyCart()"
