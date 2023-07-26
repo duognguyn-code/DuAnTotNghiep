@@ -38,30 +38,27 @@ public class BillDetailServiceImpl implements BillDetailService {
     }
 
     @Override
+    public Bill_detail update(Bill_detail bill_detail, Integer id) {
+        Optional<Bill_detail> optional = findById(id) ;
+        if (optional.isPresent()) {
+            return save(bill_detail);
+        }
+        return null;
+    }
+
+    @Override
     public List<Bill_detail> findAllByOrder(Bill bill) {
         return billDetailRepository.findAllByBill(bill);
     }
 
-//    @Override
-//    public List<Bill_detail> save(List<Bill_detail> entities) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void deleteById(Integer id) {
-//
-//    }
-//
-//    @Override
-//    public Optional<Bill_detail> findById(Integer id) {
-//        return billDetailRepository.findById(id);
-//    }
-
-
-
     @Override
     public List<Bill_detail> getBill_detailForMoney(int id) {
         return billDetailRepository.getBill_detailForMoney(id);
+    }
+
+    @Override
+    public Optional<Bill_detail> findById(Integer id) {
+        return billDetailRepository.findById(id) ;
     }
 
 

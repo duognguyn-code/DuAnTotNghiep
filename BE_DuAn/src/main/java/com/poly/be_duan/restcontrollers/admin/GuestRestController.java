@@ -73,7 +73,7 @@ public class GuestRestController {
         bill.setAccount(account);
 
         billService.save(bill);
-//        sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",bill.getAccount().getEmail(), bill.getPersonTake(),bill);
+        sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com","iscdvtuyqsfpwmbp",bill.getAccount().getEmail(), bill.getPersonTake(),bill);
         logger.info("-- Order: "+bill.getId());
         return bill;
     }
@@ -98,6 +98,12 @@ public class GuestRestController {
                     price = new BigDecimal(productNode.get("price").asDouble());
                     bill_detail.setPrice(price);
                     billDetailService.save(bill_detail);
+
+                    int quantityInCart = cartItems.get(i).get("quantity").asInt();
+                    int availableQuantity = product.get().getQuantity();
+                    int remainingQuantity = availableQuantity - quantityInCart;
+                    product.get().setQuantity(remainingQuantity);
+                    productService.save(product.get());
                 }
             }
         }

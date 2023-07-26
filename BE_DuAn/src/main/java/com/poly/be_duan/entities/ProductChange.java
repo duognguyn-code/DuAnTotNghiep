@@ -1,6 +1,7 @@
 package com.poly.be_duan.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,6 +53,8 @@ public class ProductChange {
     @Column(name = "status")
     private int  status;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "changeProduct")
     private List<ChangeProductDetail> changeProductDetails;
 
