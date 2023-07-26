@@ -20,14 +20,14 @@ public class ChangeProductDetail {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_product", referencedColumnName = "id_products")
-    private Product productDetail;
+    @JoinColumn(name = "id_product")
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "id_bill_detail", referencedColumnName = "id_bill_detail")
     private Bill_detail billDetail;
 
     @ManyToOne
-    @JoinColumn(name = "id_change_product", referencedColumnName = "id_change_product")
+    @JoinColumn(name = "id_change_product")
     private ProductChange changeProduct;
 }

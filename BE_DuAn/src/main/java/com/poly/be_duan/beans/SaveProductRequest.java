@@ -18,6 +18,7 @@ import java.util.List;
 public class SaveProductRequest {
     private Integer id;
     private String name;
+    private int quantity;
     private List<MultipartFile> files;
     private BigDecimal price;
     private int status;

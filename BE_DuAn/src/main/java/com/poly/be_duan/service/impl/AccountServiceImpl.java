@@ -109,6 +109,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = repository.findByName("Dương");
         Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
         AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
+        System.out.println(addressDTO);
         return addressDTO;
     }
 
