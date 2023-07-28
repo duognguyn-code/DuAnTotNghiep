@@ -4,25 +4,39 @@
             <h2 class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Tạo tài khoản
             </h2>
+            <form name="myForm" class="cen" novalidate>
             <div class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 <div class="grid gap-6 mb- md:grid-cols-2">
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Tên tài khoản</span>
-                            <input ng-model="formAccount.username"
+                            <input ng-model="formAccount.username" required maxlength="250" pattern="^[a-zA-Z0-9_-]{3,100}$" name="username"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     placeholder="Nhập tên tài khoản"
                             />
+                            <span ng-show="myForm.$submitted || myForm.username.$dirty">
+                                        <span class="error" ng-show="myForm.username.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản không được trống</span>
+                                        <span class="error" ng-show="myForm.username.$error.pattern"> <i
+                                                class="fa fa-exclamation-circle"></i>Tên tài khoản gồm 3-100 ký tự theo định dạng</span>
+                            </span>
                         </label>
                     </div>
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm ">
                             <span class="text-gray-700 dark:text-gray-400">Số điện thoại</span>
-                            <input ng-model="formAccount.phone"
+                            <input ng-model="formAccount.phone" name="phone"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="Nhập Số điện thoại"
+                                    placeholder="Nhập Số điện thoại" required maxlength="10" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" ng-minlength="0" ng-maxlength="10"
                             />
+                            <span ng-show="myForm.$submitted || myForm.phone.$dirty">
+                                        <span class="error" ng-show="myForm.phone.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phone.$error.pattern"> <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
                         </label>
                     </div>
                 </div>
@@ -53,10 +67,17 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Email</span>
-                            <input ng-model="formAccount.email"
+                            <input ng-model="formAccount.email" type="email" name="email"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="Nhập địa chỉ Email"
+                                   pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
+                                   placeholder="Ví dụ: abc@gmail.com" maxlength="250"
                             />
+                            <span ng-show="myForm.$submitted || myForm.email.$dirty">
+                                        <span class="error" ng-show="myForm.email.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Email không được trống</span>
+                                                <span class="error" ng-show="myForm.email.$error.pattern"> <i
+                                                        class="fa fa-exclamation-circle"></i>Email sai đinh dạng</span>
+                                    </span>
                         </label>
                     </div>
 
@@ -65,8 +86,7 @@
                             <span class="text-gray-700 dark:text-gray-400">Chức vụ</span>
                             <select ng-model="formAuth.role"
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option ng-value="1">STAFF - Nhân viên</option>
-                                <option ng-value="2">ADMIN - Quản lý</option>
+                                <option ng-repeat="role in roles1" value="{{role.id}}">{{role.name}}</option>
                             </select>
                         </label>
                     </div>
@@ -77,13 +97,13 @@
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
                                 <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                                    <input type="radio"ng-model="formAccount.sex"ng-value="1"
+                                    <input type="radio"ng-model="formAccount.sex" required checked ng-value="1"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
                                     <span class="ml-2">Nam</span>
                                 </label>
                                 <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                    <input type="radio"model="formAccount.sex"ng-value="0"
+                                    <input type="radio"model="formAccount.sex" required ng-value="0"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
                                     <span class="ml-2">Nữ</span>
@@ -94,10 +114,17 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Mật khẩu</span>
-                            <input ng-model="formAccount.password"
+                            <input ng-model="formAccount.password" name="password"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="Nhập Mật khẩu" type="password"
+                                   required placeholder="Mật khẩu" ng-minlength="3" ng-maxlength="250" maxlength="250" type="password"
                             />
+                            <span ng-show="myForm.$submitted || myForm.password.$dirty">
+                                        <span class="error" ng-show="myForm.password.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Mật khẩu không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
+                                </span>
                         </label>
                     </div>
                 </div>
@@ -107,10 +134,15 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm ">
                             <span class="text-gray-700 dark:text-gray-400">Ngày Sinh</span>
-                            <input ng-model="formAccount.date"
+                            <input ng-model="formAccount.date" name="creatDate"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     type="date"
                             />
+                            <span ng-show="myForm.$submitted || myForm.creatDate.$dirty">
+                                            <span class="error" ng-show="myForm.creatDate.$error.pattern"> <i
+                                                    class="fa fa-exclamation-circle"></i>Ngày tạo không được để
+                                                trống</span>
+                                        </span>
                         </label>
                     </div>
                 </div>
@@ -129,6 +161,7 @@
                 </div>
                 <!--        ===============-->
             </div>
+            </form>
         </div>
     </main>
 </div>

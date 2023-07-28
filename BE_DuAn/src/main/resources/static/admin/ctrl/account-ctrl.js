@@ -4,15 +4,25 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
 
     $scope.Accounts = [];
     $scope.formAccount = {};
+    $scope.roles1 = [];
+    $scope.roles = [
+        { id: 1, name: 'Admin' },
+        { id: 2, name: 'Staff' },
+        { id: 3, name: 'User' },
+        { id: 4, name: 'Guest' }
+    ];
+    $scope.selectedRole = $scope.roles[0];
 
     $scope.formAuth={};
     $scope.addAccount = function () {
-        var colorData = angular.copy($scope.formAccount)
+        var colorData = angular.copy($scope.formAccount);
+        colorData.role = $scope.selectedRole.id;
         var req = {
             method: 'POST',
-            url: apiUrlAccount,
+            url: "http://localhost:8080/api/account/create",
             data: colorData
         }
+        alert("đây 1")
         let timerInterval
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
@@ -31,27 +41,35 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
             }
         });
         $http(req).then(response => {
-            $scope.addAuthor();
+            alert("đây")
             $scope.message("Thêm mới tài khoản thành công");
         }).catch(error => {
+            alert(error)
+            console.log(error);
             $scope.error('Thêm  mới thất bại');
         });
     };
 
-    $scope.addAuthor= function (){
+    $scope.addAuthor= function (username, roleId){
         var auth={
-            role :{  idRole:'1'},
-            account: { username: 'username1'}
+            role :{  idRole:roleId},
+            account: { username: username}
         }
-        // // $scope.formAuth.account.username = $scope.formAccount.username;
-        // alert(JSON.stringify(auth));
-        // var item = angular.copy(auth)
         $http.post(apiUrlAuthor,auth).then(response => {
             alert("thanh cong")
         }).catch(error => {
             alert("that bai")
         });
     }
+    $scope.getALlRole = function (){
+        $http.get(apiUrlAccount + "/getAllrole").then(resp => {
+            $scope.roles1 = resp.data;
+            // console.log($scope.roles)
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+    $scope.getALlRole();
     $scope.getAccounts = function () {
         $http.get(apiUrlAccount)
             .then(function (response) {
@@ -75,23 +93,6 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
     $scope.formUpdate=function (){
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     $scope.message = function (mes) {

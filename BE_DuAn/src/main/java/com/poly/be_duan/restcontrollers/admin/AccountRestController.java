@@ -1,8 +1,14 @@
 package com.poly.be_duan.restcontrollers.admin;
 
+import com.poly.be_duan.dto.AccountDTO;
+import com.poly.be_duan.dto.AccountRequestDTO;
 import com.poly.be_duan.entities.Account;
+import com.poly.be_duan.entities.Role;
 import com.poly.be_duan.service.AccountService;
+import com.poly.be_duan.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -18,6 +24,9 @@ public class AccountRestController {
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    private RoleService roleService;
+
 
     @PostMapping
     public Account create(@RequestBody Account account) {
@@ -31,8 +40,24 @@ public class AccountRestController {
     }
 
     @GetMapping
-    public List<Account>getAll(){
-        return accountService.getAll();
+    public List<AccountDTO> getAll(){
+        return accountService.getAllAccountResponseDTO();
+    }
+
+    @GetMapping("/getAllrole")
+    public List<Role> getAllRole(){
+        return roleService.getAll();
+    }
+    @PostMapping("/create")
+    public ResponseEntity<?> registerUser(AccountRequestDTO accountDTO) {
+        ResponseEntity<?> response =  accountService.save(accountDTO);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            // Đăng nhập thành công, trả về URL của trang chính
+            return ResponseEntity.ok("Tạo mới thành công");
+        } else {
+            // Đăng nhập thất bại, trả về response như cũ
+            return response;
+        }
     }
 }
 

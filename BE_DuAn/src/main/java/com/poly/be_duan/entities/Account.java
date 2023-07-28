@@ -13,7 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "account")
+@Table(name = "account", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        })})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -28,11 +31,10 @@ public class Account {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
-    @Column(nullable = false)
+    @Column()
     private String password;
 
 //    @JsonIgnoreProperties
-    @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Author> authorList;
 
@@ -63,5 +65,9 @@ public class Account {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private List<ProductChange> productChanges;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private List<Bill> bills;
 
 }

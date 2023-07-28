@@ -17,10 +17,12 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
+
 
     @JsonIgnore
     @ManyToOne

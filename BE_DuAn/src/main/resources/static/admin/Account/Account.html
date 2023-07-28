@@ -92,13 +92,14 @@
                   class="text-gray-700 dark:text-gray-400" style="font-size:16px;">
             <td class="px-4 py-3 ">{{acc.username}}</td>
             <td class="px-4 py-3 ">{{acc.fullName}}</td>
-            <td class="px-4 py-3 ">{{acc.sex}}</td>
+            <td class="px-4 py-3 " ng-if="acc.gender == 1">Nam</td>
+            <td class="px-4 py-3 " ng-if="acc.gender == 0">Nữ</td>
             <td class="px-4 py-3 ">{{acc.email}}</td>
             <td class="px-4 py-3 ">{{acc.phone}}</td>
             <td class="px-4 py-3 ">{{acc.addresses.addressTake}}</td>
             <td class="px-4 py-3 ">{{acc.date}}</td>
             <td class="px-4 py-3 ">Hoạt động</td>
-            <td class="px-4 py-3 ">{{acc.authorList.id}}</td>
+            <td class="px-4 py-3 ">{{acc.role}}</td>
             <td class="px-4 py-3">
               <div class="flex items-center space-x-4 text-sm">
                 <button  class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray">
