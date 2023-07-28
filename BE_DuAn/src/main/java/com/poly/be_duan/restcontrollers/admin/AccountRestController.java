@@ -34,5 +34,20 @@ public class AccountRestController {
     public List<Account>getAll(){
         return accountService.getAll();
     }
+
+    @GetMapping("/findByUsername/{username}")
+    public Account findByUsername(@PathVariable(value = "username")String username){
+        return accountService.findByUsername(username);
+    }
+    @PutMapping
+    public Account update(@RequestBody Account account){
+
+        return accountService.save(account);
+    }
+
+    @DeleteMapping("/{username}")
+    public void delete(@PathVariable(value = "username")String username){
+         accountService.deleteById(username);
+    }
 }
 

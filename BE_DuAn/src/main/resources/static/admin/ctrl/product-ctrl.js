@@ -204,7 +204,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     };
     $scope.getProductDataUpdate = function() {
         var productId = $routeParams.id;
-        alert(productId)
+        // alert(productId)
         $http.get('/api/product/' + productId)
             .then(function(response) {
                 var product = response.data;

@@ -1,10 +1,13 @@
 package com.poly.be_duan.restcontrollers.admin;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
+import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.service.BillDetailService;
 import com.poly.be_duan.service.BillService;
 import com.poly.be_duan.service.CookieService;
+import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +30,21 @@ public class BillDetailRestController {
     @Autowired
     BillService billService;
 
+    @Autowired
+    ProductService productService;
+
     @GetMapping("/{id}")
-    public ResponseEntity<List<Bill_detail>> getBill_detail(@PathVariable Integer id) {
+    public ResponseEntity<List<Bill_detail>> getBill_detailByBillID(@PathVariable Integer id) {
         try {
             return ResponseEntity.ok(billDetailService.getBill_detail(id));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+    @GetMapping("/forQuantityProduct/{id}")
+    public Optional<Bill_detail> getBill_detail(@PathVariable(value = "id") Integer id) {
+        System.out.println( billDetailService.findById(id));
+            return billDetailService.findById(id);
     }
     @GetMapping("/forMoney/{id}")
     public ResponseEntity<List<Bill_detail>> getBill_detailForMoney(@PathVariable Integer id) {
@@ -83,11 +94,22 @@ public class BillDetailRestController {
         List<Bill_detail> detail = billDetailService.getBill_detail(id);
         for (int i = 0; i < detail.toArray().length; i++) {
             if (detail.get(i).getStatus()!=5){
+                Product products = productService.getId(detail.get(i).getProduct().getId());
+                products.setQuantity(products.getQuantity()+detail.get(i).getQuantity());
                 detail.get(i).setStatus(status);
+                productService.save(products);
                 billDetailService.save(detail.get(i));
             }
         }
         return null;
     }
+    @PutMapping("/updatedt")
+    public List<Product> savealldt(@RequestBody JsonNode products) {
+        System.out.println("ok");
+        return billDetailService.savealldt(products);
+//        return billDetailService.savealldt(bill_detail);
+    }
+
+
 
 }

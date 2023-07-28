@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 //@RequiredArgsConstructor
@@ -47,5 +49,10 @@ public class AuthRestController {
         System.out.println(author.toString());
 
         return authService.save(author);
+    }
+
+    @GetMapping
+    public List<Author> getAccount(){
+        return authService.findAll();
     }
 }

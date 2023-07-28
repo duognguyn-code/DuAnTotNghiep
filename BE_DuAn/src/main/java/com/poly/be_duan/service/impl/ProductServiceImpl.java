@@ -43,6 +43,11 @@ public class ProductServiceImpl implements ProductService {
         return (List<Product>) productRepository.getByColor(color, design, material, size);
     }
 
+    @Override
+    public Product update(Product product) {
+        return productRepository.save(product);
+    }
+
 
     @Override
     public Page<Product> getAll(Pageable page) {
@@ -200,6 +205,11 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Product> getProductByBarCode(Integer barcode) {
         return productRepository.getProductByBarCode(barcode);
 
+    }
+
+    @Override
+    public Product getId(Integer id) {
+        return productRepository.getID(id);
     }
 
     private List<ProductDetailDTO> getallProduct(){

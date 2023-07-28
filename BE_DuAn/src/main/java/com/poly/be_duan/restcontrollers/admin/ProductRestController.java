@@ -317,6 +317,10 @@ public class ProductRestController {
             throw new RuntimeException("Bản ghi này không tồn tại");
         }
     }
+    @PutMapping("/updatePr")
+    public Product updateProduct(@RequestBody Product product) {
+          return  productService.save(product);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable Integer id) {
