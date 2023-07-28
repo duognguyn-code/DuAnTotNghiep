@@ -122,22 +122,22 @@
                                  <span class="text-primary">Giao Hàng Hoàn Tất</span>
                                 </span>
                                 <span ng-if="billDetail.status==5">
-                                 <span class="text-danger">Hủy Đơn</span>
+                                 <span class="text-danger">Hủy SP</span>
                                 </span>
                                 <span ng-if="billDetail.status==6">
                                  <span class="text-danger">Trả Hàng</span>
                                 </span>
                             </td>
                             <td class="px-4 py-3">
-                                <button
+                                <button ng-if="billDetail.status!==5"
                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                         aria-label="Edit"ng-click="updateQuantity(billDetail)"
                                 >Thay Đổi
                                 </button>
-                                <button
+                                <button ng-if="billDetail.status!==5"
                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
                                         aria-label="Edit"ng-click="CancelBillDetails(billDetail)"
-                                >Hủy Đơn
+                                >Hủy SP
                                 </button>
                             </td>
                         </tr>

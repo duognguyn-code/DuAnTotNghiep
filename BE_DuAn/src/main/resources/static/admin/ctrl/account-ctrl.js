@@ -1,18 +1,10 @@
-app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
+app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$routeParams) {
     const apiUrlAccount = "http://localhost:8080/api/account";
     const apiUrlAuthor = "http://localhost:8080/api/auth";
 
     $scope.Accounts = [];
-    $scope.formAccount = {};
-    $scope.roles1 = [];
-    $scope.roles = [
-        { id: 1, name: 'Admin' },
-        { id: 2, name: 'Staff' },
-        { id: 3, name: 'User' },
-        { id: 4, name: 'Guest' }
-    ];
-    $scope.selectedRole = $scope.roles[0];
-
+    $scope.formAccount = {};;
+    $scope.formAccountUpdate={}
     $scope.formAuth={};
     $scope.addAccount = function () {
         var colorData = angular.copy($scope.formAccount);
@@ -52,8 +44,8 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
 
     $scope.addAuthor= function (username, roleId){
         var auth={
-            role :{  idRole:roleId},
-            account: { username: username}
+            role :{  idRole:$scope.formAuth.role},
+            account: { username: $scope.formAccount.username}
         }
         $http.post(apiUrlAuthor,auth).then(response => {
             alert("thanh cong")
@@ -61,20 +53,14 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
             alert("that bai")
         });
     }
-    $scope.getALlRole = function (){
-        $http.get(apiUrlAccount + "/getAllrole").then(resp => {
-            $scope.roles1 = resp.data;
-            // console.log($scope.roles)
-        }).catch(error => {
-            console.log(error);
-        });
-    }
-    $scope.getALlRole();
+
     $scope.getAccounts = function () {
-        $http.get(apiUrlAccount)
+        // alert("abc")
+        $http.get(apiUrlAuthor)
             .then(function (response) {
                 $scope.Accounts = response.data;
-                alert(JSON.stringify($scope.Accounts))
+                var item = angular.copy($scope.Accounts)
+                alert(item.account.username)
                 console.log(response);
             })
             .catch(function (error) {
@@ -84,6 +70,7 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
     $scope.getAccounts();
 
     $scope.edit=function (username){
+        alert(username)
         if (!$scope.isRedirected) {
             $scope.isRedirected = true;
             $location.path('/UpdateAccount/').search({username: username});
@@ -91,9 +78,56 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location) {
     }
     // alert($routeParams.username)
     $scope.formUpdate=function (){
-
+        var us =$routeParams.username
+        $http.get(apiUrlAccount+'/findByUsername'+'/'+us)
+            .then(function (response) {
+                $scope.formAccountUpdate = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
+    $scope.formUpdate();
+
+    $scope.updateAccount = function (){
+        var acc = angular.copy($scope.formAccountUpdate)
+        $http.put(apiUrlAccount,acc)
+            .then(function (response) {
+                alert("Update thành công")
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    $scope.resetFormUpdate = function (){
+       $scope.formUpdate()
+    }
+    $scope.deleteAccount = function (username) {
+        alert(username)
+        $http.get(apiUrlAccount+'/findByUsername'+'/'+username)
+            .then(function (response) {
+                $scope.formAccountUpdate = response.data;
+                var acc = angular.copy($scope.formAccountUpdate)
+                acc.status =0
+                $http.put(apiUrlAccount,acc)
+                    .then(function (response) {
+                        alert("Xóa thành công")
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+
+    };
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({

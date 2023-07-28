@@ -1,7 +1,9 @@
 package com.poly.be_duan.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
+import com.poly.be_duan.entities.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,5 +25,5 @@ public interface BillDetailService {
     List<Bill_detail> getBill_detailForMoney(int id);
 
     Optional<Bill_detail> findById(Integer id);
-
+    public List<Product> savealldt(JsonNode billData);
 }

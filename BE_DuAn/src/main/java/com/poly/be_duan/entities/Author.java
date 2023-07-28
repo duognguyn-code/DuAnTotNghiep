@@ -1,6 +1,5 @@
 package com.poly.be_duan.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,13 +17,11 @@ public class Author {
     private Integer id;
 
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
 
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "username")
     private Account account;

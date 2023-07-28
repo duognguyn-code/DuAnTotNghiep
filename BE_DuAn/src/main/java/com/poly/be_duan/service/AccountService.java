@@ -48,5 +48,9 @@ public interface AccountService {
 
     Role getRoleByUserName(String userName);
 
+
     List<AccountDTO> getAllAccountResponseDTO();
+
+    Account findAccountByUsername(String username);
+
 }

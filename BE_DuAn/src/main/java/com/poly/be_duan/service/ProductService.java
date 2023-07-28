@@ -14,7 +14,7 @@ public interface ProductService extends GenericService<Product, Integer> {
 
   
     List<Product> getByColor(String color, String design, String material, String size);
-
+    public Product update(Product product);
 
     Page<Product> getAll (Pageable page);
     List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status);
@@ -30,5 +30,6 @@ public interface ProductService extends GenericService<Product, Integer> {
   
     public Optional<Product> getProductByBarCode(Integer barcode);
 
+    public Product getId(Integer id);
 
 }
