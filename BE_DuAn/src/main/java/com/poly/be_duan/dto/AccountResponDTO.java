@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,12 +15,12 @@ import java.util.Date;
 public class AccountResponDTO {
     private String username;
     private String fullName;
-    private Boolean gender;
+    private Integer gender;
     private Integer status;
     private String password;
     private String email;
     private String phone;
     private String image;
-    private Integer role;
+    private Set<String> role;
     private Date createDate;
 }

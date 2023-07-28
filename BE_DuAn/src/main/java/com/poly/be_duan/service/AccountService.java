@@ -5,12 +5,13 @@ import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-    AccountResponDTO save(AccountRequestDTO entity);
+    ResponseEntity<?> save(AccountRequestDTO entity);
 
     Account save(Account account);
 
@@ -46,5 +47,10 @@ public interface AccountService {
     Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO);
 
     Role getRoleByUserName(String userName);
+
+
+    List<AccountDTO> getAllAccountResponseDTO();
+
     Account findAccountByUsername(String username);
+
 }

@@ -7,12 +7,14 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     $scope.formAccountUpdate={}
     $scope.formAuth={};
     $scope.addAccount = function () {
-        var colorData = angular.copy($scope.formAccount)
+        var colorData = angular.copy($scope.formAccount);
+        colorData.role = $scope.selectedRole.id;
         var req = {
             method: 'POST',
-            url: apiUrlAccount,
+            url: "http://localhost:8080/api/account/create",
             data: colorData
         }
+        alert("đây 1")
         let timerInterval
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
@@ -31,39 +33,27 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
             }
         });
         $http(req).then(response => {
-            $scope.addAuthor();
+            alert("đây")
             $scope.message("Thêm mới tài khoản thành công");
         }).catch(error => {
+            alert(error)
+            console.log(error);
             $scope.error('Thêm  mới thất bại');
         });
     };
 
-    $scope.addAuthor= function (){
+    $scope.addAuthor= function (username, roleId){
         var auth={
             role :{  idRole:$scope.formAuth.role},
             account: { username: $scope.formAccount.username}
         }
-        // // $scope.formAuth.account.username = $scope.formAccount.username;
-        // alert(JSON.stringify(auth));
-        // var item = angular.copy(auth)
         $http.post(apiUrlAuthor,auth).then(response => {
             alert("thanh cong")
         }).catch(error => {
             alert("that bai")
         });
     }
-    // alert("abc")
-    // $scope.getAccounts = function () {
-    //     $http.get(apiUrlAccount)
-    //         .then(function (response) {
-    //             $scope.Accounts = response.data;
-    //             alert(JSON.stringify($scope.Accounts))
-    //             console.log(response);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // };
+
     $scope.getAccounts = function () {
         // alert("abc")
         $http.get(apiUrlAuthor)
@@ -138,6 +128,7 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
 
 
     };
+
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
             toast: true,
