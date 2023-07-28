@@ -46,4 +46,5 @@ public interface AccountService {
     Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO);
 
     Role getRoleByUserName(String userName);
+    Account findAccountByUsername(String username);
 }

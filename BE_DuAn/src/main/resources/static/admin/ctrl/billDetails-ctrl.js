@@ -1,13 +1,14 @@
 app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routeParams) {
     const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
     const apiUrlBill = "http://localhost:8080/api/bill";
-
+    const apiUrlProduct = "http://localhost:8080/api/product";
     $scope.bill = [];
     $scope.formBill={};
     $scope.billDetails = [];
     $scope.formbillDetails = {};
     $scope.items= [];
     $scope.getBillDetailForMoney =[];
+    $scope.formBillDetailData={}
     $scope.getBillByID = function () {
         var billId = $routeParams.idBill;
         $http.get(apiUrlBill+'/'+billId)
@@ -30,7 +31,6 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.getBillDetail = function () {
         var billId = $routeParams.idBill;
-        alert(billId);
         $http.get(apiUrlBillDetails+'/'+billId)
             .then(function (response) {
                 $scope.billDetails = response.data;
@@ -58,6 +58,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             });
     }
     $scope.getBillDetailForMoney1();
+
     // $scope.updateBill=function (){
     //     var item = angular.copy($scope.formBill);
     //     $http.put(apiUrlBill + '/updateBill', item).then(resp => {
@@ -70,41 +71,154 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     //         console.log("Error", error);
     //     });
     // }
+    $scope.formProductData ={}
     $scope.updateQuantity = function (bill){
-        var item = angular.copy(bill);
-        item.quantity = bill.quantity;
-        if (bill.status ===5||bill.status ===4||bill.status ===3){
-            alert("Bạn Không Thể Sửa Sản Phầm Này")
-            return
-        }
-        $http.put(apiUrlBillDetails + '/updateBillDetail', item).then(resp => {
-            var index = $scope.getBillDetailForMoney.findIndex(p => p.id == item.id);
-            $scope.getBillDetailForMoney[index] = item;
-            alert("Cập nhật thành công1");
-            $scope.updateToTalMoney();
-        }).catch(error => {
-            alert("Cập nhật thất bại12");
-            console.log("Error", error);
-        });
+        $http.get(apiUrlProduct+'/'+bill.product.id)
+            .then(function (response) {
+                $scope.formProductData = response.data;
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        $http.get(apiUrlBillDetails+'/forQuantityProduct'+'/'+bill.id)
+            .then(function (response) {
+                $scope.formBillDetailData = response.data;
+                var quantity = angular.copy($scope.formProductData)   // so luong product trong DB
+                var quantity1 = angular.copy($scope.formBillDetailData) //so luong cua sp trong productdetail
+                var qty = quantity1.quantity - bill.quantity
+                var qtyUpdate = null
+                if (qty < quantity1.quantity || qty ==0){
+                    qtyUpdate = quantity.quantity + qty
+                }if (qty > quantity1.quantity ){
+                    qtyUpdate = quantity.quantity - qty
+                }
+                var product = angular.copy($scope.formProductData)
+                product.quantity = qtyUpdate
+                alert('sl db'+quantity.quantity+'          ' +'sl sp prdt: '+ quantity1.quantity+'      ' +"sl input: "+ bill.quantity)
+                $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
+                    alert("Thay doi thanh cong")
+                    qtyUpdate=null
+                    var item = angular.copy(bill);
+                    item.quantity = bill.quantity;
+                    if (bill.status ===5||bill.status ===4||bill.status ===3){
+                        alert("Bạn Không Thể Sửa Sản Phầm Này")
+                        return
+                    }
+                    $http.put(apiUrlBillDetails + '/updateBillDetail', item).then(resp => {
+                        var index = $scope.getBillDetailForMoney.findIndex(p => p.id == item.id);
+                        $scope.getBillDetailForMoney[index] = item;
+                        alert("Cập nhật thành công1");
+                        $scope.updateToTalMoney();
+                    }).catch(error => {
+                        alert("Cập nhật thất bại12");
+                        console.log("Error", error);
+                    });
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
+
+    $scope.getProduct=function (bill){
+        // $scope.quantityBillDT = bill.quantity
+
+        // $http.get(apiUrlProduct+'/'+bill.product.id)
+        //     .then(function (response) {
+        //         $scope.formProductData = response.data;
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        //
+        // $http.get(apiUrlBillDetails+'/forQuantityProduct'+'/'+bill.id)
+        //     .then(function (response) {
+        //         $scope.formBillDetailData = response.data;
+        //         var quantity = angular.copy($scope.formProductData)   // so luong product trong DB
+        //         var quantity1 = angular.copy($scope.formBillDetailData) //so luong cua sp trong productdetail
+        //         var qty = quantity1.quantity - bill.quantity
+        //         var qtyUpdate = null
+        //         if (qty < quantity1.quantity || qty ==0){
+        //              qtyUpdate = quantity.quantity + qty
+        //
+        //         }else{
+        //              qtyUpdate = quantity.quantity - qty
+        //         }
+        //
+        //         var product = angular.copy($scope.formProductData)
+        //         product.quantity = qtyUpdate
+        //         alert('sl db'+quantity.quantity+'          ' +'sl sp prdt: '+ quantity1.quantity+'      ' +"sl input: "+ bill.quantity)
+        //         $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
+        //             alert("Thay doi thanh cong")
+        //             qtyUpdate=null
+        //         }).catch(function (error) {
+        //             console.log(error);
+        //         });
+        //
+        //
+        //
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+    }
+
     $scope.CancelBillDetails= function (bill){
-        var item = angular.copy(bill);
-        item.status = 5;
-        var item1 = angular.copy(bill);
-        item1.status = 5;
-        item1.quantity=0;
-        $http.put(apiUrlBillDetails + '/updateBillDetail',item).then(resp => {
-            var index = $scope.billDetails.findIndex(p => p.id == item.id);
-            $scope.billDetails[index] = item;
-            var index1 = $scope.getBillDetailForMoney.findIndex(p => p.id == item1.id);
-            $scope.getBillDetailForMoney[index1] = item1;
-            alert("Hủy hàng thành công");
-            $scope.updateToTalMoney();
-            $scope.CancelBill();
-        }).catch(error => {
-            alert("Hủy hàng thất bại");
-            console.log("Error", error);
-        });
+        $http.get(apiUrlProduct+'/'+bill.product.id)
+            .then(function (response) {
+                $scope.formProductData = response.data;
+                console.log(response);
+
+                var product = angular.copy($scope.formProductData)
+                product.quantity = product.quantity + bill.quantity
+                $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
+
+                    var item = angular.copy(bill);
+                    item.status = 5;
+                    var item1 = angular.copy(bill);
+                    item1.status = 5;
+                    item1.quantity=0;
+                    $http.put(apiUrlBillDetails + '/updateBillDetail',item).then(resp => {
+                        var index = $scope.billDetails.findIndex(p => p.id == item.id);
+                        $scope.billDetails[index] = item;
+                        var index1 = $scope.getBillDetailForMoney.findIndex(p => p.id == item1.id);
+                        $scope.getBillDetailForMoney[index1] = item1;
+                        alert("Hủy hàng thành công");
+                        $scope.updateToTalMoney();
+                        $scope.CancelBill();
+                    }).catch(error => {
+                        alert("Hủy hàng thất bại");
+                        console.log("Error", error);
+                    });
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        // var product = angular.copy($scope.formProductData)
+        // // product.quantity = product.quantity + bill.quantity
+        // alert(JSON.stringify(product))
+        // alert(product.quantity +'   ' + bill.quantity)
+        // alert(product.quantity)
+        // $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
+        // }).catch(function (error) {
+        //     console.log(error);
+        // });
+
+
+
     }
     $scope.CancelBill= function (){
         var item = angular.copy($scope.formBill)

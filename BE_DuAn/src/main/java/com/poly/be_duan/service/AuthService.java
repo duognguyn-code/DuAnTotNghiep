@@ -5,9 +5,13 @@ import com.poly.be_duan.dto.SignUpDTO;
 import com.poly.be_duan.entities.Author;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface AuthService {
     ResponseEntity<?> registerUser(SignUpDTO signUpDTO);
     ResponseEntity<?> authenticateUser(LoginDTO loginDTO);
 
     Author save(Author author);
+
+    List<Author>findAll();
 }

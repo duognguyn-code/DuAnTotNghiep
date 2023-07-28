@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteById(String id) {
-
+        repository.deleteById(id);
     }
 
     @Override
@@ -138,5 +138,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Role getRoleByUserName(String userName) {
         return null;
+    }
+
+    @Override
+    public Account findAccountByUsername(String username) {
+        return repository.findByUsername(username);
     }
 }

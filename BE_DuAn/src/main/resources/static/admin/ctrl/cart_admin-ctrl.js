@@ -396,6 +396,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         }
     }
         ,$scope.cart.loadFromLocalStorage();
+    $scope.checkexport = false;
     $scope.bill = {
         createDate: new Date(),
         address: "",
@@ -423,108 +424,61 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 }
             })
         },purchase(){
-            $scope.export();
-            // if ($scope.cart.av.length===0){
-            //     alert("Giỏ hàng trống")
-            //     return
-            // }
-            // var bill = angular.copy(this);
-            // var item = JSON.stringify(angular.copy(bill));
-            // bill.phoneTake = $scope.InforphoneTake
-            // bill.personTake = $scope.InforpersonTake
-            // bill.totalMoney = $scope.cart.amount
-            // $http.post(apiUrlBill,bill).then(resp =>{
-            //     alert("Dat hang thanh cong");
-            //
-            //     $scope.removeTab($scope.tabls);
-            // }).catch(error =>{
-            //     alert("Loi~")
-            //     console.log(error)
-            // })
+            if ($scope.cart.av.length===0){
+                alert("Giỏ hàng trống")
+                return
+            }
+            var bill = angular.copy(this);
+            var item = JSON.stringify(angular.copy(bill));
+            bill.phoneTake = $scope.InforphoneTake
+            bill.personTake = $scope.InforpersonTake
+            bill.totalMoney = $scope.cart.amount
+            $http.post(apiUrlBill,bill).then(resp =>{
+                alert("Dat hang thanh cong");
+                $scope.export();
+                $scope.productQuantity.laydt();
+               if ( $scope.checkexport=true){
+                   $scope.removeTab($scope.tabls);
+               }
+            }).catch(error =>{
+                alert("Loi~")
+                console.log(error)
+            })
         }
     }
-    $scope.generationName = function () {
-            if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
-                $scope.formProduct.name = '';
-            }
-            if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
-                for (let i = 0; i < $scope.categories.length; i++) {
-                    if ($scope.formProduct.category == $scope.categories[i].idCategory) {
-                        $scope.formProduct.name = $scope.categories[i].name;
-                    }
+    const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
+    $scope.productQuantity={
+       get productqty() {
+            return $scope.cart.av.map(item => {
+                return {
+                    id: item.id,
+                    price: item.price,
+                    quantity: item.qty,
+                    name: item.name ,
+                    // images: {idimage: item.images.idimage},
+                    status: 1,
+                    barcode:item.barcode,
+                    category: {idCategory : item.category.idCategory},
+                    size: {id : item.size.id},
+                    color: {id : item.color.id},
+                    design: {id : item.design.id},
+                    material: {id : item.material.id},
+                    // previousBillDetail:null
                 }
-            }
-            if ($scope.formProduct.color != undefined || $scope.formProduct.color != null || $scope.formProduct.color != '') {
-                for (let i = 0; i < $scope.colors.length; i++) {
-                    if ($scope.formProduct.color == $scope.colors[i].id) {
-                        $scope.formProduct.name += 'C' + $scope.colors[i].name;
-                    }
-                }
-            }
-            if ($scope.formProduct.design != undefined || $scope.formProduct.design != null || $scope.formProduct.design != '') {
-                for (let i = 0; i < $scope.designs.length; i++) {
-                    if ($scope.formProduct.design == $scope.designs[i].id) {
-                        $scope.formProduct.name += 'D' + $scope.designs[i].name;
-                    }
-                }
-            }
-            if ($scope.formProduct.material != undefined || $scope.formProduct.material != null || $scope.formProduct.material != '') {
-                for (let i = 0; i < $scope.colors.length; i++) {
-                    if ($scope.formProduct.material == $scope.materials[i].id) {
-                        $scope.formProduct.name += 'M' + $scope.materials[i].name;
-                    }
-                }
-            }
-            if ($scope.formProduct.size != undefined || $scope.formProduct.size != null || $scope.formProduct.size != '') {
-                for (let i = 0; i < $scope.sizes.length; i++) {
-                    if ($scope.formProduct.size == $scope.sizes[i].id) {
-                        $scope.formProduct.name += 'S' + $scope.sizes[i].name;
-                    }
-                }
-            }
-
+            })
         }
-        $scope.generationNameForUpdate = function () {
-            if ($scope.productData.name != undefined || $scope.productData.name != null || $scope.productData.name != '') {
-                $scope.productData.name = '';
-            }
-            if ($scope.productData.category != undefined || $scope.productData.category != null || $scope.productData.category != '') {
-                for (let i = 0; i < $scope.categories.length; i++) {
-                    if ($scope.productData.category == $scope.categories[i].idCategory) {
-                        $scope.productData.name = $scope.categories[i].name;
-                    }
-                }
-            }
-            if ($scope.productData.color != undefined || $scope.productData.color != null || $scope.productData.color != '') {
-                for (let i = 0; i < $scope.colors.length; i++) {
-                    if ($scope.productData.color == $scope.colors[i].id) {
-                        $scope.productData.name += ' Màu ' + $scope.colors[i].name;
-                    }
-                }
-            }
-            if ($scope.productData.design != undefined || $scope.productData.design != null || $scope.productData.design != '') {
-                for (let i = 0; i < $scope.designs.length; i++) {
-                    if ($scope.productData.design == $scope.designs[i].id) {
-                        $scope.productData.name += ' Thiết kế ' + $scope.designs[i].name;
-                    }
-                }
-            }
-            if ($scope.productData.material != undefined || $scope.productData.material != null || $scope.productData.material != '') {
-                for (let i = 0; i < $scope.colors.length; i++) {
-                    if ($scope.formProduct.material == $scope.materials[i].id) {
-                        $scope.productData.name += ' Chất Liệu ' + $scope.materials[i].name;
-                    }
-                }
-            }
-            if ($scope.productData.size != undefined || $scope.productData.size != null || $scope.productData.size != '') {
-                for (let i = 0; i < $scope.sizes.length; i++) {
-                    if ($scope.productData.size == $scope.sizes[i].id) {
-                        $scope.productData.name += ' Size ' + $scope.sizes[i].name;
-                    }
-                }
-            }
+        , laydt(){
+            // alert("ok")
+            var bill = angular.copy(this);
+            alert(bill)
+            $http.put(apiUrlBillDetails+'/updatedt',bill).then(resp =>{
 
+            }).catch(error =>{
+                alert("Loi~")
+                console.log(error)
+            })
         }
+    }
         $scope.searchProduct = function () {
             if ($scope.searchPriceMin1 === "") {
                 $scope.searchPriceMin1 = "Min"
@@ -600,6 +554,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 this.page = this.count - 1;
             }
         }
+
     $scope.export = function() {
         html2canvas(document.getElementById('exportthis'), {
             onrendered: function (canvas) {
@@ -613,6 +568,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 pdfMake.createPdf(docDefinition).download("test.pdf");
             }
         });
+        $scope.checkexport = true;
     }
         $scope.resetSearch = function () {
             $('#matesearch1').prop('selectedIndex', 0);

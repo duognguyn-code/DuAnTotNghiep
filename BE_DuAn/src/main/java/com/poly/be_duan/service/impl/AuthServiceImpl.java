@@ -133,4 +133,9 @@ public class AuthServiceImpl implements AuthService {
     public Author save(Author author) {
         return authorRepository.save(author);
     }
+
+    @Override
+    public List<Author> findAll() {
+        return authorRepository.findAll();
+    }
 }
