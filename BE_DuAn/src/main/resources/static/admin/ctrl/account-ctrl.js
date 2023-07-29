@@ -3,13 +3,8 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     const apiUrlAuthor = "http://localhost:8080/api/auth";
 
     $scope.Accounts = [];
-
     $scope.formAccount = {};;
     $scope.formAccountUpdate={}
-
-    $scope.formAccount = {};
-
-
     $scope.formAuth={};
     $scope.addAccount = function () {
         var colorData = angular.copy($scope.formAccount)
@@ -43,12 +38,10 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
         });
     };
 
-
     $scope.addAuthor= function (){
         var auth={
-            role :{  idRole:'1'},
-            account: { username: 'username1'}
-
+            role :{  idRole:$scope.formAuth.role},
+            account: { username: $scope.formAccount.username}
         }
         // // $scope.formAuth.account.username = $scope.formAccount.username;
         // alert(JSON.stringify(auth));
@@ -59,9 +52,19 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
             alert("that bai")
         });
     }
-
+    // alert("abc")
+    // $scope.getAccounts = function () {
+    //     $http.get(apiUrlAccount)
+    //         .then(function (response) {
+    //             $scope.Accounts = response.data;
+    //             alert(JSON.stringify($scope.Accounts))
+    //             console.log(response);
+    //         })
+    //         .catch(function (error) {
+    //             console.log(error);
+    //         });
+    // };
     $scope.getAccounts = function () {
-        // alert("abc")
         $http.get(apiUrlAuthor)
             .then(function (response) {
                 $scope.Accounts = response.data;
@@ -109,7 +112,7 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
             });
     }
     $scope.resetFormUpdate = function (){
-       $scope.formUpdate()
+        $scope.formUpdate()
     }
     $scope.deleteAccount = function (username) {
         alert(username)
@@ -134,24 +137,6 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
 
 
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
             toast: true,
