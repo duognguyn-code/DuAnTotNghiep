@@ -212,10 +212,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountDTO> getAllAccountResponseDTO() {
-       List<Account> account = repository.findAll();
-       return  account.stream().map(accountMapper::accountToAccountDTO).collect(Collectors.toList());
-
-  @Override
+        List<Account> account = repository.findAll();
+        return account.stream().map(accountMapper::accountToAccountDTO).collect(Collectors.toList());
+    }
+    @Override
     public Account findAccountByUsername(String username) {
         return repository.findByUsername(username);
     }

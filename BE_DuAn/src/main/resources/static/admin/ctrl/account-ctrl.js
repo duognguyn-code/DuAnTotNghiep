@@ -7,14 +7,12 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     $scope.formAccountUpdate={}
     $scope.formAuth={};
     $scope.addAccount = function () {
-        var colorData = angular.copy($scope.formAccount);
-        colorData.role = $scope.selectedRole.id;
+        var colorData = angular.copy($scope.formAccount)
         var req = {
             method: 'POST',
-            url: "http://localhost:8080/api/account/create",
+            url: apiUrlAccount,
             data: colorData
         }
-        alert("đây 1")
         let timerInterval
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
@@ -33,14 +31,13 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
             }
         });
         $http(req).then(response => {
-            alert("đây")
+            $scope.addAuthor();
             $scope.message("Thêm mới tài khoản thành công");
         }).catch(error => {
-            alert(error)
-            console.log(error);
             $scope.error('Thêm  mới thất bại');
         });
     };
+
 
     $scope.addAuthor= function (username, roleId){
         var auth={

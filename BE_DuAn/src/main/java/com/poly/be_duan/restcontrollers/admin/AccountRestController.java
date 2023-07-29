@@ -24,9 +24,6 @@ public class AccountRestController {
     @Autowired
     AccountService accountService;
 
-    @Autowired
-    private RoleService roleService;
-
 
     @PostMapping
     public Account create(@RequestBody Account account) {
@@ -40,24 +37,8 @@ public class AccountRestController {
     }
 
     @GetMapping
-    public List<AccountDTO> getAll(){
-        return accountService.getAllAccountResponseDTO();
-    }
-
-    @GetMapping("/getAllrole")
-    public List<Role> getAllRole(){
-        return roleService.getAll();
-    }
-    @PostMapping("/create")
-    public ResponseEntity<?> registerUser(AccountRequestDTO accountDTO) {
-        ResponseEntity<?> response =  accountService.save(accountDTO);
-        if (response.getStatusCode() == HttpStatus.OK) {
-            // Đăng nhập thành công, trả về URL của trang chính
-            return ResponseEntity.ok("Tạo mới thành công");
-        } else {
-            // Đăng nhập thất bại, trả về response như cũ
-            return response;
-        }
+    public List<Account>getAll(){
+        return accountService.getAll();
     }
 
     @GetMapping("/findByUsername/{username}")
@@ -72,7 +53,7 @@ public class AccountRestController {
 
     @DeleteMapping("/{username}")
     public void delete(@PathVariable(value = "username")String username){
-         accountService.deleteById(username);
+        accountService.deleteById(username);
     }
 }
 
