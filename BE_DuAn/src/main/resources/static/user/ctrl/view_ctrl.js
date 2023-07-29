@@ -219,7 +219,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
                     $scope.bills.totalMoney = $scope.calculateTotalAmount();
                     $scope.bills.status = 1;
-                    $scope.bills.statusBuy = 1;
+                    $scope.bills.statusBuy = 0;
                     $scope.bills.moneyShip = $scope.ship;
                     $scope.bills.typePayment = false;
                     $http.post(urlOrder + '/add', $scope.bills).then(res => {

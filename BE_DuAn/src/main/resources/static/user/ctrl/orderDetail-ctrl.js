@@ -38,6 +38,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         angular.forEach($scope.files, function(file) {
             form.append('files', file);
         });
+        alert($scope.formDetails.id + "rỗng ko")
         form.append("bill_detail", $scope.formDetails.id);
         let req = {
             method: 'POST',
@@ -45,15 +46,10 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             headers: {
                 'Content-Type': undefined,
             },
-            data: form,
-            transformResponse: [
-                function (data) {
-                    return data;
-                }
-            ]
+            data: form
         }
         $http(req).then(resp=>{
-            console.log(resp.data+ " data");
+            console.log(resp.data+ " datanafy cos da ko");
         }).catch(error=>{
             console.log(error);
         })
