@@ -24,6 +24,8 @@ public class UserRestController {
     @Autowired
     ProductService productSV;
 
+//    @Autowired
+//    ServletContext application;
 
     @Autowired
     ModelMapper modelMapper;

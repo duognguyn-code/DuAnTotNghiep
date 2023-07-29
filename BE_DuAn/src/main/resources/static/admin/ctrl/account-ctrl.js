@@ -3,18 +3,21 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     const apiUrlAuthor = "http://localhost:8080/api/auth";
 
     $scope.Accounts = [];
+
     $scope.formAccount = {};;
     $scope.formAccountUpdate={}
+
+    $scope.formAccount = {};
+
+
     $scope.formAuth={};
     $scope.addAccount = function () {
-        var colorData = angular.copy($scope.formAccount);
-        colorData.role = $scope.selectedRole.id;
+        var colorData = angular.copy($scope.formAccount)
         var req = {
             method: 'POST',
-            url: "http://localhost:8080/api/account/create",
+            url: apiUrlAccount,
             data: colorData
         }
-        alert("đây 1")
         let timerInterval
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
@@ -33,20 +36,23 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
             }
         });
         $http(req).then(response => {
-            alert("đây")
+            $scope.addAuthor();
             $scope.message("Thêm mới tài khoản thành công");
         }).catch(error => {
-            alert(error)
-            console.log(error);
             $scope.error('Thêm  mới thất bại');
         });
     };
 
-    $scope.addAuthor= function (username, roleId){
+
+    $scope.addAuthor= function (){
         var auth={
-            role :{  idRole:$scope.formAuth.role},
-            account: { username: $scope.formAccount.username}
+            role :{  idRole:'1'},
+            account: { username: 'username1'}
+
         }
+        // // $scope.formAuth.account.username = $scope.formAccount.username;
+        // alert(JSON.stringify(auth));
+        // var item = angular.copy(auth)
         $http.post(apiUrlAuthor,auth).then(response => {
             alert("thanh cong")
         }).catch(error => {
@@ -128,6 +134,23 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
 
 
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
