@@ -3,8 +3,13 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     const apiUrlAuthor = "http://localhost:8080/api/auth";
 
     $scope.Accounts = [];
+
     $scope.formAccount = {};;
     $scope.formAccountUpdate={}
+
+    $scope.formAccount = {};
+
+
     $scope.formAuth={};
     $scope.addAccount = function () {
         var colorData = angular.copy($scope.formAccount)
@@ -39,11 +44,15 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     };
 
 
-    $scope.addAuthor= function (username, roleId){
+    $scope.addAuthor= function (){
         var auth={
-            role :{  idRole:$scope.formAuth.role},
-            account: { username: $scope.formAccount.username}
+            role :{  idRole:'1'},
+            account: { username: 'username1'}
+
         }
+        // // $scope.formAuth.account.username = $scope.formAccount.username;
+        // alert(JSON.stringify(auth));
+        // var item = angular.copy(auth)
         $http.post(apiUrlAuthor,auth).then(response => {
             alert("thanh cong")
         }).catch(error => {
@@ -125,6 +134,23 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
 
 
     };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({

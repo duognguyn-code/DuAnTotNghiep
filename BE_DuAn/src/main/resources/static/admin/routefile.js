@@ -62,7 +62,6 @@ app.config(function($routeProvider){
         })
         .when("/productReturn",{
             templateUrl:"/admin/Bill/Product_Return.html",
-            controller:"product-change"
         })
         .when("/Account",{
              templateUrl:"/admin/Account/Account.html",
