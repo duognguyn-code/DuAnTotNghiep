@@ -25,7 +25,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     Page<Account> findByUsernameContainingAndStatus(String username, Integer status, Pageable pageable);
 
-
+    @Query(value = "SELECT *  FROM Account where phone like %?1% ", nativeQuery = true)
+    public Account findByPhone(String phone);
 
 
 
