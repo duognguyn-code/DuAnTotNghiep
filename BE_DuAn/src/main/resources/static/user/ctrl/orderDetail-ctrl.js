@@ -65,7 +65,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                alert("chajyd đến đây cbi vào")
                 let timerInterval
                 Swal.fire({
                     title: 'Tạo yêu cầu thành công' + '!',
@@ -78,8 +77,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                         angular.forEach($scope.files, function(file) {
                             formData.append('files', file);
                         });
-                        alert("đến đây nha")
-                        alert($scope.formDetails.id)
                         formData.append("description", $scope.formProductChange.description);
                         formData.append("email", $scope.accountActive.email);
                         formData.append("quantityProductChange",$scope.formProductChange.quantity_product_change);
@@ -98,7 +95,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                                 }
                             ]
                         }
-                        alert("gửi yêu cầu đến admin chưa")
                         Swal.fire({
                             title: 'Đang gửi yêu cầu đến admin' + '!',
                             html: 'Vui lòng chờ <b></b> milliseconds.',
@@ -118,7 +114,6 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                         $http(req).then(response => {
                             console.log("ddd " + response.data);
                             $scope.saveProductChangeDetail();
-                            alert("đến đaya nữa")
                             $scope.message("Gửi yêu cầu đổi trả thành công");
                             $('#staticBackdrop').modal('hide');
                             $scope.formProductChange={};
