@@ -49,5 +49,11 @@ public class AccountRestController {
     public void delete(@PathVariable(value = "username")String username){
          accountService.deleteById(username);
     }
+
+    @GetMapping("/findByPhone/{phone}")
+    public Account findByPhone(@PathVariable(value = "phone")String phone){
+        System.out.println(accountService.findByPhone(phone));
+        return accountService.findByPhone(phone);
+    }
 }
 

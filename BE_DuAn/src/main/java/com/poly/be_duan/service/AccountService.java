@@ -32,6 +32,7 @@ public interface AccountService {
 
     Account findByUsername(String name);
 
+    Account findByPhone(String phone);
 
     String setAddressDefault(Integer id);
 

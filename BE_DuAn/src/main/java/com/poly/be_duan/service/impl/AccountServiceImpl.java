@@ -98,6 +98,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account findByPhone(String phone) {
+        return repository.findByPhone(phone);
+    }
+
+    @Override
     public String setAddressDefault(Integer id) {
         Address address = addressRepository.findById(id).orElse(null);
         Account account = repository.findByName("Dương");

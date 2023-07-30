@@ -94,10 +94,12 @@ public class BillDetailRestController {
         List<Bill_detail> detail = billDetailService.getBill_detail(id);
         for (int i = 0; i < detail.toArray().length; i++) {
             if (detail.get(i).getStatus()!=5){
-                Product products = productService.getId(detail.get(i).getProduct().getId());
-                products.setQuantity(products.getQuantity()+detail.get(i).getQuantity());
+                if (status ==5){
+                    Product products = productService.getId(detail.get(i).getProduct().getId());
+                    products.setQuantity(products.getQuantity()+detail.get(i).getQuantity());
+                    productService.save(products);
+                }
                 detail.get(i).setStatus(status);
-                productService.save(products);
                 billDetailService.save(detail.get(i));
             }
         }
