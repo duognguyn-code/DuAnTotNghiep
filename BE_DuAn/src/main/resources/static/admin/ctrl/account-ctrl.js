@@ -65,7 +65,6 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
     //         });
     // };
     $scope.getAccounts = function () {
-        // alert("abc")
         $http.get(apiUrlAuthor)
             .then(function (response) {
                 $scope.Accounts = response.data;
@@ -113,7 +112,7 @@ app.controller('account-ctrl', function ($rootScope,$scope, $http,$location,$rou
             });
     }
     $scope.resetFormUpdate = function (){
-       $scope.formUpdate()
+        $scope.formUpdate()
     }
     $scope.deleteAccount = function (username) {
         alert(username)

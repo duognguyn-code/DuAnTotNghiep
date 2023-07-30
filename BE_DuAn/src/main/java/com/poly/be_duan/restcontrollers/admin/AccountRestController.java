@@ -47,7 +47,7 @@ public class AccountRestController {
 
     @DeleteMapping("/{username}")
     public void delete(@PathVariable(value = "username")String username){
-         accountService.deleteById(username);
+        accountService.deleteById(username);
     }
 
     @GetMapping("/findByPhone/{phone}")

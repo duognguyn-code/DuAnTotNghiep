@@ -44,7 +44,7 @@ public class ProductChangeRestController {
             if(productChangeDTO != null){
                 ProductChange p =  new ProductChange();
                 p.setAccount(productChangeDTO.getAccount());
-                p.setDateChange(productChangeDTO.getDateChange());
+                p.setDateChange(new Date());
                 p.setDescription(productChangeDTO.getDescription());
                 p.setEmail(productChangeDTO.getEmail());
                 p.setQuantityProductChange(productChangeDTO.getQuantityProductChange());
@@ -52,7 +52,7 @@ public class ProductChangeRestController {
                 p.setStatus(1);
                 productChangeService.save(p);
                 Bill_detail bill_detail = billDetailRepository.findById(productChangeDTO.getBill_detail().getId()).get();
-                bill_detail.setStatus(1);
+                bill_detail.setStatus(3);
                 billDetailService.update(bill_detail, bill_detail.getId());
                 for (MultipartFile multipartFile: productChangeDTO.getFiles()) {
                     Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
@@ -79,11 +79,14 @@ public class ProductChangeRestController {
     public void saveRequest(@ModelAttribute ChangeProductDetailDTO changeProductDetailDTO){
         try {
             if(changeProductDetailDTO != null){
+                System.out.println("Khong loi gi a");
                 ChangeProductDetail changeProductDetail = new ChangeProductDetail();
                 changeProductDetail.setBillDetail(changeProductDetailDTO.getBill_detail());
                 changeProductDetailService.createChangeDetails(changeProductDetailDTO.getBill_detail().getId());
                 Optional<Bill_detail> bill_detail = billDetailService.findById(changeProductDetailDTO.getBill_detail().getId());
+                System.out.println(bill_detail + "rỗng hay không");
                 bill_detail.orElseThrow().setStatus(1);
+                System.out.println(bill_detail.get().getDateReturn());
                 billDetailService.save(bill_detail.get());
             }
         }catch (Exception e){

@@ -145,8 +145,14 @@ public class AccountServiceImpl implements AccountService {
         return null;
     }
 
+
+    @Override
+    public List<AccountDTO> getAllAccountResponseDTO() {
+        return  null;
+    }
     @Override
     public Account findAccountByUsername(String username) {
         return repository.findByUsername(username);
     }
+
 }
