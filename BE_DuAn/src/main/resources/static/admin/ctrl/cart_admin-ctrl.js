@@ -437,9 +437,9 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                 alert("Dat hang thanh cong");
                 $scope.export();
                 $scope.productQuantity.laydt();
-               if ( $scope.checkexport=true){
-                   $scope.removeTab($scope.tabls);
-               }
+               // if ( $scope.checkexport=true){
+               //     $scope.removeTab($scope.tabls);
+               // }
             }).catch(error =>{
                 alert("Loi~")
                 console.log(error)
@@ -472,7 +472,8 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
             var bill = angular.copy(this);
             alert(bill)
             $http.put(apiUrlBillDetails+'/updatedt',bill).then(resp =>{
-
+            $scope.InforpersonTake =""
+                $scope.InforphoneTake =""
             }).catch(error =>{
                 alert("Loi~")
                 console.log(error)
@@ -566,9 +567,31 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
                     }]
                 };
                 pdfMake.createPdf(docDefinition).download("test.pdf");
+                $scope.removeTab($scope.tabls);
             }
         });
         $scope.checkexport = true;
+    }
+    $scope.acc=[];
+        $scope.check =0;
+    const apiUrlAccount = "http://localhost:8080/api/account";
+    $scope.findAccountByPhone=function (){
+        $scope.check =0;
+        $http.get(apiUrlAccount+'/findByPhone'+'/'+$scope.InforphoneTake)
+            .then(function (response) {
+                $scope.acc = response.data;
+                var item = angular.copy($scope.acc)
+                $scope.InforpersonTake = item.fullName
+                if ($scope.InforphoneTake.length==10){
+                    if ($scope.acc.length==0){
+                        $scope.check=1
+                    }
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
         $scope.resetSearch = function () {
             $('#matesearch1').prop('selectedIndex', 0);
@@ -598,4 +621,57 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     $scope.getColors();
     $scope.getCategory();
     $scope.getProducts();
+
+
+
+    $scope.formAccount = {};
+    $scope.formAuth={};
+    const apiUrlAuthor = "http://localhost:8080/api/auth";
+    $scope.addAccount = function () {
+        var colorData = angular.copy($scope.formAccount)
+        var req = {
+            method: 'POST',
+            url: apiUrlAccount,
+            data: colorData
+        }
+        let timerInterval
+        Swal.fire({
+            title: 'Đang thêm  mới vui lòng chờ!',
+            html: 'Vui lòng chờ <b></b> milliseconds.',
+            timer: 5500,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        });
+        $http(req).then(response => {
+            $scope.addAuthor();
+            $scope.message("Thêm mới tài khoản thành công");
+            $scope.InforpersonTake = colorData.fullName
+            $scope.formAccount={}
+        }).catch(error => {
+            $scope.error('Thêm  mới thất bại');
+        });
+    };
+    $scope.addAuthor= function (){
+        var auth={
+            role :{  idRole: 1},
+            account: { username: $scope.formAccount.username}
+        }
+        $http.post(apiUrlAuthor,auth).then(response => {
+            alert("thanh cong")
+        }).catch(error => {
+            alert("that bai")
+        });
+    }
+    $scope.addAcc = function (){
+        $scope.formAccount.phone = $scope.InforphoneTake
+    }
 });
