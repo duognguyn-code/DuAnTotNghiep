@@ -118,7 +118,6 @@ public class BillRestController {
                 return null;
             } else {
                 billOld.setStatus(bill.getStatus());
-                billOld.setTotalMoney(BigDecimal.valueOf(0));
                 sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
                 System.out.println("gửi mail yahfnh công");
                 return billService.updateStatus(billOld);
@@ -165,7 +164,7 @@ public class BillRestController {
         Bill billOld = billService.findById(bill.getId()).get();
         List<Bill_detail> billDetails = billDetailService.findAllByOrder(billOld);
         if (billOld.getStatus() < 2) {
-            billOld.setStatus(4);
+            billOld.setStatus(5);
             billOld.setDescription(bill.getDescription());
             billService.update(billOld, billOld.getId());
             sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);

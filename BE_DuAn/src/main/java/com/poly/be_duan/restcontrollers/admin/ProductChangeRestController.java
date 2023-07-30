@@ -79,10 +79,12 @@ public class ProductChangeRestController {
     public void saveRequest(@ModelAttribute ChangeProductDetailDTO changeProductDetailDTO){
         try {
             if(changeProductDetailDTO != null){
+                System.out.println("Khong loi gi a");
                 ChangeProductDetail changeProductDetail = new ChangeProductDetail();
                 changeProductDetail.setBillDetail(changeProductDetailDTO.getBill_detail());
                 changeProductDetailService.createChangeDetails(changeProductDetailDTO.getBill_detail().getId());
                 Optional<Bill_detail> bill_detail = billDetailService.findById(changeProductDetailDTO.getBill_detail().getId());
+                System.out.println(bill_detail + "rỗng hay không");
                 bill_detail.orElseThrow().setStatus(1);
                 System.out.println(bill_detail.get().getDateReturn());
                 billDetailService.save(bill_detail.get());
