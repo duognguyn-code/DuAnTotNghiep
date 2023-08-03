@@ -1,11 +1,9 @@
 package com.poly.be_duan.restcontrollers.admin;
 
 import com.poly.be_duan.entities.Bill_detail;
+import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.entities.ProductChange;
-import com.poly.be_duan.service.BillDetailService;
-import com.poly.be_duan.service.BillService;
-import com.poly.be_duan.service.ProductChangeService;
-import com.poly.be_duan.service.SendMailService;
+import com.poly.be_duan.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +19,7 @@ public class QLProductChangeRestController {
     private final BillDetailService billDetailService;
 
     private final SendMailService sendMailService;
+    private final ProductService productService;
 
     @RequestMapping(value = "/comfirmRequest", method = RequestMethod.POST)
     public void confirmRequest(@RequestBody List<Integer> id){
@@ -40,7 +39,13 @@ public class QLProductChangeRestController {
                 productChangeService.save(productChange);
                 bill_detail = productChange.getBillDetail();
                 bill_detail.setStatus(5);
+
                 billDetailService.update(bill_detail, bill_detail.getId());
+                int productChangeQuantity = productChange.getQuantityProductChange();
+                Product product = productChange.getBillDetail().getProduct();
+                int currentProductQuantity = product.getQuantity();
+                product.setQuantity(currentProductQuantity + productChangeQuantity);
+                productService.save(product);
                 System.out.println("gửi mail thành công");
             }else {
                 System.out.println("null lỗi");

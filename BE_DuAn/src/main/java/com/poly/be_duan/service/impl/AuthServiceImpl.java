@@ -18,14 +18,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,12 +33,10 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
-    private final RoleRepository roleRepository;
     private final AuthorRepository authorRepository;
     @Override
-    @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public ResponseEntity<?> registerUser(SignUpDTO signUpDTO) {
-        if(accountRepository.existsAccountByUsername(signUpDTO.getUserName())){
+        if(accountRepository.existsAccountByUsername(signUpDTO.getUsername())){
             return ResponseEntity
                     .badRequest()
                     .body("Error: Username is already taken!");
@@ -51,79 +47,31 @@ public class AuthServiceImpl implements AuthService {
                     .body("Error: Email is already in use!");
         }
         Account ac = new Account();
-        ac.setUsername(signUpDTO.getUserName());
-        ac.setFullName(signUpDTO.getFullName());
-        ac.setPhone(signUpDTO.getPhone());
-        ac.setPassword(passwordEncoder.encode(signUpDTO.getPassword()));
-//        ac.setDate(signUpDTO.getDate());
-        ac.setSex(signUpDTO.getSex());
+        ac.setUsername(signUpDTO.getUsername());
         ac.setEmail(signUpDTO.getEmail());
-        ac = accountRepository.save(ac);
-        Set<String> strRole = signUpDTO.getRole();
-        Set<Role> roles = new HashSet<>();
-
-        if (strRole == null || strRole.isEmpty()) {
-            // Nếu không có vai trò được chỉ định, mặc định là vai trò ROLE_USER
-            Role defaultRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: role not found"));
-            roles.add(defaultRole);
-        } else {
-            for (String role : strRole) {
-                Role foundRole = roleRepository.findByName(ERole.ROLE_STAFF)
-                        .orElseThrow(() -> new RuntimeException("Error: role not found"));
-                roles.add(foundRole);
-            }
-        }
-        if(strRole == null){
-            Role accountRole =  roleRepository.findByName(ERole.ROLE_USER).orElseThrow(() -> new RuntimeException("ErrorL: Role is not found "));
-            roles.add(accountRole);
-        }else {
-            strRole.forEach(role -> {
-                switch (role){
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: role is not found"));
-                        roles.add(adminRole);
-                        break;
-                    case "user":
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException(("Error: role not found")));
-                        roles.add(userRole);
-                        break;
-                    case "staff":
-                        Role staffRole = roleRepository.findByName(ERole.ROLE_STAFF)
-                                .orElseThrow(() -> new RuntimeException(("Error: role not found")));
-                        roles.add(staffRole);
-                        break;
-                    case "guest":
-                        Role guestRole = roleRepository.findByName(ERole.ROLE_GUEST)
-                                .orElseThrow(() -> new RuntimeException(("Error: role not found")));
-                        roles.add(guestRole);
-                        break;
-                }
-            });
-        }
-        List<Author> authorList = new ArrayList<>();
-        for (Role role: roles) {
-            Author author = new Author();
-            author.setAccount(accountRepository.getById(ac.getUsername()));
-            author.setRole(role);
-            authorList.add(author);
-        }
-        ac.setAuthorList(authorList);
-        authorList = authorRepository.saveAll(authorList);
+        ac.setPhone(signUpDTO.getPhone());
+        ac.setPassword(passwordEncoder.encode(signUpDTO.getPhone()));
+        ac.setFullName(signUpDTO.getFullName());
+        ac.setDate(new Date());
+        ac.setStatus(1);
+        accountRepository.save(ac);
         return ResponseEntity.ok("User registered successfully1");
     }
 
     @Override
     public ResponseEntity<?> authenticateUser(LoginDTO loginDTO) {
+        System.out.println(loginDTO.getUsername() + loginDTO.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword()));
+
+        System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.generateToken(authentication);
 
+        System.out.println(jwt);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
+        System.out.println(userDetails);
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
         System.out.println(roles + "của user");
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),userDetails.getEmail(),roles));

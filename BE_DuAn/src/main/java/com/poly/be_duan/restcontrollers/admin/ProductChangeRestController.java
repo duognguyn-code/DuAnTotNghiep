@@ -110,9 +110,9 @@ public class ProductChangeRestController {
         return productChangeList;
     }
 
-    @RequestMapping(value= "/getPrChangeDetails/{idChange}",  method =  RequestMethod.GET )
-    public ChangeProductDetail listPrChangeDetails(@PathVariable("idChange") ProductChange  idChange) {
-        ChangeProductDetail listPrChangeDetails = changeProductDetailService.findPrChangeDetails(idChange);
+    @RequestMapping(value= "/getPrChangeDetails/{id}",  method =  RequestMethod.GET )
+    public ChangeProductDetail listPrChangeDetails(@PathVariable("id") ProductChange  id) {
+        ChangeProductDetail listPrChangeDetails = changeProductDetailService.findPrChangeDetails(id);
         if(listPrChangeDetails == null){
             return null;
         }

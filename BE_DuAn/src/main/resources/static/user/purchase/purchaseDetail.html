@@ -140,8 +140,14 @@
                                     <div style="margin-top:20px;">
                                         <h6 class="" style="color:black;font-weight:600;">Lý do đổi</h6>
                                         <label class="block text-sm">
-                                            <textarea ng-model="formProductChange.description" style="width:420px;height:50px;border-radius:5px;" required></textarea>
+                                            <textarea ng-model="formProductChange.description"  name="description" style="width:420px;height:50px;border-radius:5px;" pattern="^[a-zA-Z0-9_-]{3,100}$" required maxlength="250"></textarea>
                                         </label>
+                                        <span ng-show="myForm.$submitted || myForm.description.$dirty">
+                                        <span class="error" ng-show="myForm.description.$error.required"> <i
+                                                class="fa fa-exclamation-circle" style="color: red"></i>Mô tả không được trống</span>
+                                        <span class="error" ng-show="myForm.description.$error.pattern"> <i
+                                                class="fa fa-exclamation-circle" style="color: red"></i>Mô tả gồm 3-100 ký tự theo định dạng</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

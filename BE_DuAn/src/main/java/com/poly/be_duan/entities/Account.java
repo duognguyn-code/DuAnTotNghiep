@@ -42,7 +42,7 @@ public class Account {
     @Column()
     private Date date;
 
-    @Column(nullable = false)
+    @Column()
     private Integer sex;
 
     @JsonIgnore
