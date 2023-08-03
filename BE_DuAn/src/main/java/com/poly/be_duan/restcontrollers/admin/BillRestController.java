@@ -4,12 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
-
 import com.poly.be_duan.service.*;
-import com.poly.be_duan.service.BillDetailService;
-import com.poly.be_duan.service.BillService;
-import com.poly.be_duan.service.CookieService;
-import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +14,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin("*")
 @RestController
@@ -73,7 +64,7 @@ public class BillRestController {
         LocalDate today = LocalDate.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         if (date1.equals("null")) {
-            date1 = "2023/05/03";
+            date1 = "1000/05/03";
         }
         if (date2.equals("null")) {
             date2 = today.format(dateTimeFormatter);

@@ -73,6 +73,12 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     // }
     $scope.formProductData ={}
     $scope.updateQuantity = function (bill){
+        var it = angular.copy($scope.formBill)
+        // alert(it.status)
+        if (it.status == 3 || it.status == 4  ){
+            alert("không the")
+            return
+        }
         $http.get(apiUrlProduct+'/'+bill.product.id)
             .then(function (response) {
                 $scope.formProductData = response.data;
@@ -93,6 +99,10 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                     qtyUpdate = quantity.quantity + qty
                 }if (qty > quantity1.quantity ){
                     qtyUpdate = quantity.quantity - qty
+                }
+                if (qtyUpdate < 0){
+                    alert("Số Lượng Sản Phẩm Chỉ Còn: "+quantity.quantity)
+                    return
                 }
                 var product = angular.copy($scope.formProductData)
                 product.quantity = qtyUpdate
@@ -117,6 +127,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                     });
 
                 }).catch(function (error) {
+                    alert("Thay doi that bai")
                     console.log(error);
                 });
 
