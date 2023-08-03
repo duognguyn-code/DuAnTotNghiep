@@ -102,4 +102,9 @@ public class BillServiceImpl implements BillService {
     public List<Bill> findAllByAccount(Account account) {
         return billRepository.findAllByAccount(account);
     }
+
+    @Override
+    public Integer chart(String date) {
+        return billRepository.chart(date);
+    }
 }

@@ -96,7 +96,6 @@ public class BillDetailRestController {
 
             if (detail.get(i).getStatus() !=5){
                 if(status == 5){
-
                     Product products = productService.getId(detail.get(i).getProduct().getId());
                     products.setQuantity(products.getQuantity()+detail.get(i).getQuantity());
                     productService.save(products);

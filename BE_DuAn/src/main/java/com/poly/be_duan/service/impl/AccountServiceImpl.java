@@ -155,4 +155,9 @@ public class AccountServiceImpl implements AccountService {
         return repository.findByUsername(username);
     }
 
+    @Override
+    public Integer chartAccount(String year) {
+        return repository.chartAccount(year);
+    }
+
 }

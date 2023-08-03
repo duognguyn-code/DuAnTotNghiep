@@ -34,4 +34,5 @@ public interface BillService  {
     Bill create(JsonNode billData);
 
     List<Bill> findAllByAccount(Account account);
+    public Integer chart(String date);
 }

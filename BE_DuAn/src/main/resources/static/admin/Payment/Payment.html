@@ -335,16 +335,6 @@
                                                 <div class="col-md-4">
                                                     <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
-                                                              style="font-size:16px;font-weight:700;">Họ Tên</span>
-                                                        <input ng-model="InforpersonTake"
-                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                                               style="border: 0.5px solid #7e3af2;"
-                                                        />
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label class="block text-sm">
-                                                        <span class="text-gray-700 dark:text-gray-400"
                                                               style="font-size:16px;font-weight:700;">Số điện thoại</span>
                                                         <input ng-change="findAccountByPhone()" ng-model="InforphoneTake"
                                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -354,11 +344,21 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label class="block text-sm">
-                                                        <button ng-if="check==1" class="btn" ng-click="addAcc()"
-                                                                style="width:100%;background-color:#8AEC6F;height:70px;font-size:20px;font-weight:500;"
-                                                                data-bs-target="#exampleModalInfo1" data-bs-toggle="modal">Thêm Account
-                                                        </button>
+                                                        <span class="text-gray-700 dark:text-gray-400"
+                                                              style="font-size:16px;font-weight:700;">Họ Tên</span>
+                                                        <input disabled ng-model="InforpersonTake"
+                                                               class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                                               style="border: 0.5px solid #7e3af2;"
+                                                        />
+                                                    </label>
+                                                </div>
 
+                                                <div class="col-md-4">
+                                                    <label class="block text-sm">
+                                                        <button ng-if="check==1" class="btn" ng-click="addAcc()"
+                                                                style="width:20%; height:40px; border-radius:10px; background-color:#7e3af2; color:white;margin-top: 25px"
+                                                                data-bs-target="#exampleModalInfo1" data-bs-toggle="modal"> +
+                                                        </button>
                                                     </label>
                                                 </div>
                                             </div>
@@ -367,7 +367,7 @@
                                     <div class="modal-footer">
                                         <div class="row">
                                             <div class="">
-                                                <button data-bs-target="#exampleModalPayment" data-bs-toggle="modal"
+                                                <button ng-click="checkForm()" data-bs-target="#exampleModalPayment" data-bs-toggle="modal"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Xác nhận
                                                 </button>
@@ -384,7 +384,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalInfo12"></h5>
-                                        <p>Add</p>
+                                        <p>Thêm Mới Tài Khoản</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
@@ -468,7 +468,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid gap-6 mb- md:grid-cols-2">
-
 
 
                                                 </div>

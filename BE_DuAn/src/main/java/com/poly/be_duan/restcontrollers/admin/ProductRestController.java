@@ -319,7 +319,8 @@ public class ProductRestController {
     }
     @PutMapping("/updatePr")
     public Product updateProduct(@RequestBody Product product) {
-          return  productService.save(product);
+        System.out.println(productService.save(product));
+        return  productService.save(product);
     }
 
     @GetMapping("/{id}")
