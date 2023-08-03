@@ -54,5 +54,7 @@ public interface AccountService {
 
     Account findAccountByUsername(String username);
 
+    public Integer chartAccount(String year);
+
 
 }

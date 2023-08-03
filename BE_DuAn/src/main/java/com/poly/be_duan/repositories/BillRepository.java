@@ -43,4 +43,7 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
 //    public Bill UpdateTotalMoney(BigDecimal money, Integer id);\
 
     List<Bill> findAllByAccount(Account account);
+    @Query(value = "select sum(total_money) as'total money' from Bill \n" +
+            "where create_date like  ?1% ",nativeQuery = true)
+    public Integer chart(String chart);
 }

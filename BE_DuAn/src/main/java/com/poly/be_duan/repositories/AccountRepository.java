@@ -32,4 +32,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     Account findByUsername(String username);
     Account findByEmail(String email);
+
+    @Query(value = "select count(username) as'total account' from account \n" +
+            "where date like  ?1%  ",nativeQuery = true)
+    public Integer chartAccount(String year);
 }

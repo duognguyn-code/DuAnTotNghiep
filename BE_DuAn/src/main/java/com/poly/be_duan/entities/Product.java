@@ -41,7 +41,7 @@ public class Product  {
 
     @OneToMany(mappedBy = "products")
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonManagedReference(value = "products")
+    @JsonManagedReference(value = "product")
     private List<Image> images;
 
     @JsonManagedReference

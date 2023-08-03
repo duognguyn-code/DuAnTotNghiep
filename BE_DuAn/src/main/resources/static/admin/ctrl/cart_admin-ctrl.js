@@ -398,7 +398,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         ,$scope.cart.loadFromLocalStorage();
     $scope.checkexport = false;
     $scope.bill = {
-        createDate: new Date(),
+        createDate: new Date.now(),
         address: "",
         account: {username: "Dương"},
         phoneTake:"",
@@ -673,5 +673,12 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
     }
     $scope.addAcc = function (){
         $scope.formAccount.phone = $scope.InforphoneTake
+    }
+    $scope.checkForm=function (){
+       alert($scope.InforpersonTake)
+        if ($scope.InforpersonTake ===""){
+            alert("Mời Bạn Nhập Thông Tin Khách Hàng")
+            return
+        }
     }
 });
