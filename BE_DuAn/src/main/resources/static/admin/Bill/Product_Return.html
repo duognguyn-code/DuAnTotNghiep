@@ -35,7 +35,7 @@
               </div>
             </td>
             <td class="px-4 py-3 " data-bs-target="#exampleModalProductReturn" data-bs-toggle="modal">{{prChange.billDetail.product.name}}</td>
-            <td class="px-4 py-3 ">{{prChange.dateChange}}</td>
+            <td class="px-4 py-3 ">{{prChange.dateChange | date:'yyyy-MM-dd HH:mm:ss'}}</td>
             <td class="px-4 py-3 ">{{prChange.description}}</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 0">Không có yêu cầu</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 1" >Chờ xác nhận</td>

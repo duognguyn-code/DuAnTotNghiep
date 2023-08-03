@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -31,18 +32,18 @@ public class JwtFilter extends OncePerRequestFilter {
             String jwtToken = getJwtFromRequest(request);
             if (jwtToken!= null && jwtUtil.validateToken(jwtToken)) {
                 String username = jwtUtil.getUserNameFromJwtToken(jwtToken);
-                UserDetails userDetails = userDetailsService.loadUserByUsername(jwtToken);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                         = new UsernamePasswordAuthenticationToken(userDetails,
                         null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("failed on set user authenticaion", e);
         }
-        finally {
             filterChain.doFilter(request, response);
-        }
+
     }
     private String getJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");

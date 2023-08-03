@@ -85,7 +85,6 @@
             <th class="px-4 py-3" scope="col">Giới tính</th>
             <th class="px-4 py-3" scope="col">Email</th>
             <th class="px-4 py-3" scope="col">Số điện thoại</th>
-            <th class="px-4 py-3" scope="col">Địa chỉ</th>
             <th class="px-4 py-3" scope="col">Ngày tạo</th>
             <th class="px-4 py-3" scope="col">Trạng thái</th>
             <th class="px-4 py-3" scope="col">Chức vụ</th>
@@ -100,8 +99,7 @@
               <td class="px-4 py-3 "> {{acc.account.sex == 0 ? 'Nữ' : 'Nam'}}</td>
               <td class="px-4 py-3 ">{{acc.account.email}}</td>
               <td class="px-4 py-3 ">{{acc.account.phone}}</td>
-              <td class="px-4 py-3 ">{{acc.account.addresses.idAddress}}</td>
-              <td class="px-4 py-3 ">{{acc.account.date}}</td>
+              <td class="px-4 py-3 ">{{acc.account.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
               <td class="px-4 py-3 "> {{acc.account.status == 0 ? 'Ngưng Hoạt Động' : 'Hoạt Động'}}</td>
               <td class="px-4 py-3 ">
                                 <span ng-if="acc.role.idRole==1">
