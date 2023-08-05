@@ -138,4 +138,29 @@ public class AuthServiceImpl implements AuthService {
     public List<Author> findAll() {
         return authorRepository.findAll();
     }
+
+    @Override
+    public List<Author> searchAllAccount(String username, String phone, String fullName, String email, Integer status, String roldeName) {
+        return authorRepository.searchAllAccount(username,phone, fullName, email, status, roldeName);
+    }
+
+    @Override
+    public List<Author> searchAccountNoStatus(String username, String phone, String fullName, String email, String roldeName) {
+        return authorRepository.searchAccountNoStatus(username, phone, fullName, email,roldeName);
+    }
+
+    @Override
+    public List<Author> searchAccountNoUsername(String phone, String fullName, String email, Integer status, String roldeName) {
+        return authorRepository.searchAccountNoUsername(phone,fullName, email, status, roldeName );
+    }
+
+    @Override
+    public List<Author> searchAccountNoUsernameNoStatus(String phone, String fullName, String email, String roldeName) {
+        return authorRepository.searchAccountNoUsernameNoStatus(phone, fullName, email, roldeName);
+    }
+
+    @Override
+    public Author searchAccountByUsername(String username) {
+        return authorRepository.searchAccountByUsername(username);
+    }
 }

@@ -102,6 +102,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                 }
                 if (qtyUpdate < 0){
                     alert("Số Lượng Sản Phẩm Chỉ Còn: "+quantity.quantity)
+                    $scope.getBillDetail();
                     return
                 }
                 var product = angular.copy($scope.formProductData)

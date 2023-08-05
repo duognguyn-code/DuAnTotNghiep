@@ -216,6 +216,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
                 $scope.productData.design = product.design.id;
                 $scope.productData.price = product.price;
                 $scope.productData.color = product.color.id
+                $scope.productData.quantity = product.quantity
             })
             .catch(function(error) {
                 // Xử lý khi có lỗi trong việc lấy thông tin sản phẩm
@@ -234,6 +235,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         formData.append('material', $scope.productData.material);
         formData.append('design', $scope.productData.design);
         formData.append('color', $scope.productData.color);
+        formData.append('quantity', $scope.productData.quantity);
         let req = {
             method: 'POST',
             url: '/api/product/updateProduct/' +productId,

@@ -68,8 +68,9 @@ public class CartAdminRestController {
             if (dResult != null) {
                 QRImageData = dResult.getBits();
                 hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-                 String a = readQRCode(filePath, charset, hintMap, QRImageData);
-                id = Integer.parseInt(a);
+//                 String a = readQRCode(filePath, charset, hintMap, QRImageData);
+//                id = Integer.parseInt(a);
+                 id = Integer.parseInt(readQRCode(filePath, charset, hintMap, QRImageData));
 
             }
         } catch (IOException e) {
