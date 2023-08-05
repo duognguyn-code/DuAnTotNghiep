@@ -13,10 +13,12 @@ import com.poly.be_duan.repositories.AuthorRepository;
 import com.poly.be_duan.repositories.RoleRepository;
 import com.poly.be_duan.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,21 +62,26 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<?> authenticateUser(LoginDTO loginDTO) {
-        System.out.println(loginDTO.getUsername() + loginDTO.getPassword());
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(),loginDTO.getPassword()));
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
 
-        System.out.println(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.generateToken(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtTokenProvider.generateToken(authentication);
 
-        System.out.println(jwt);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
 
-        System.out.println(userDetails);
-        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-        System.out.println(roles + "của user");
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),userDetails.getEmail(),roles));
+            return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getEmail(), roles));
+        } catch (AuthenticationException e) {
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            // Return 401 Unauthorized
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return 500 Internal Server Error
+        }
     }
 
     @Override

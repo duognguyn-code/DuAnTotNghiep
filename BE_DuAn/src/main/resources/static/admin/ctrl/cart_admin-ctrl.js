@@ -398,7 +398,7 @@ app.controller('cart_admin-ctrl', function ($rootScope,$scope, $http,$filter) {
         ,$scope.cart.loadFromLocalStorage();
     $scope.checkexport = false;
     $scope.bill = {
-        createDate: new Date.now(),
+        createDate: new Date(),
         address: "",
         account: {username: "Dương"},
         phoneTake:"",
