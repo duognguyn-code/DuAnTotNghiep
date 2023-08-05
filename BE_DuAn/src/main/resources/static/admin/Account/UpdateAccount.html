@@ -9,7 +9,7 @@
           <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
             <label class="block text-sm">
               <span class="text-gray-700 dark:text-gray-400">Tên tài khoản</span>
-              <input ng-model="formAccountUpdate.username"
+              <input disabled ng-model="formAccountUpdate.account.username"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Nhập tên tài khoản"
               />
@@ -19,7 +19,7 @@
           <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
             <label class="block text-sm ">
               <span class="text-gray-700 dark:text-gray-400">Số điện thoại</span>
-              <input ng-model="formAccountUpdate.phone"
+              <input ng-model="formAccountUpdate.account.phone"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Nhập Số điện thoại"
               />
@@ -31,29 +31,47 @@
           <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
             <label class="block text-sm">
               <span class="text-gray-700 dark:text-gray-400">Họ và tên</span>
-              <input ng-model="formAccountUpdate.fullName"
+              <input ng-model="formAccountUpdate.account.fullName"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Nhập họ và tên"
               />
             </label>
           </div>
-
           <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
-            <label class="block text-sm ">
-              <span class="text-gray-700 dark:text-gray-400">Địa chỉ</span>
-              <input ng-model="formAccountUpdate.address"
-                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                      placeholder="Nhập Địa chỉ"
-              />
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
+              <div class="block w-full mt-1 text-sm dark:text-gray-300 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                  <input type="radio"ng-model="formAccountUpdate.account.sex"ng-value="1"
+                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                  />
+                  <span class="ml-2">Nam</span>
+                </label>
+                <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                  <input type="radio"ng-model="formAccountUpdate.account.sex"ng-value="0"
+                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                  />
+                  <span class="ml-2">Nữ</span>
+                </label>
+              </div>
             </label>
           </div>
+<!--          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">-->
+<!--            <label class="block text-sm ">-->
+<!--              <span class="text-gray-700 dark:text-gray-400">Địa chỉ</span>-->
+<!--              <input ng-model="formAccountUpdate.address"-->
+<!--                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
+<!--                      placeholder="Nhập Địa chỉ"-->
+<!--              />-->
+<!--            </label>-->
+<!--          </div>-->
         </div>
         <!--        ===========-->
         <div class="grid gap-6 mb- md:grid-cols-2">
           <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
             <label class="block text-sm">
               <span class="text-gray-700 dark:text-gray-400">Email</span>
-              <input ng-model="formAccountUpdate.email"
+              <input ng-model="formAccountUpdate.account.email"
                       class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                       placeholder="Nhập địa chỉ Email"
               />
@@ -63,43 +81,47 @@
           <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
             <label class="block text-sm ">
               <span class="text-gray-700 dark:text-gray-400">Chức vụ</span>
-              <select ng-model="formAuth.role"
+              <select ng-model="formAccountUpdate.role.idRole" id="role" name="role"
                       class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                <option ng-value="1">STAFF - Nhân viên</option>
-                <option ng-value="2">ADMIN - Quản lý</option>
+<!--                <option ng-value="1">STAFF - Nhân viên</option>-->
+<!--                <option ng-value="2">ADMIN - Quản lý</option>-->
+<!--                <option ng-value="3">ADMIN - Khách Hàng</option>-->
+                <option ng-repeat="role in role" ng-value="role.idRole">{{role.name}}</option>
               </select>
             </label>
           </div>
         </div>
         <!--        ============-->
         <div class="grid gap-6 mb- md:grid-cols-2">
-          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
-            <label class="block text-sm">
-              <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
-              <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
-                <input type="radio"ng-model="formAccountUpdate.sex"ng-value="1"
-                       class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                />
-                <span class="ml-2">Nam</span>
-              </label>
-              <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                <input type="radio"model="formAccountUpdate.sex"ng-value="0"
-                       class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                />
-                <span class="ml-2">Nữ</span>
-              </label>
-            </label>
-          </div>
+<!--          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">-->
+<!--            <label class="block text-sm">-->
+<!--              <span class="text-gray-700 dark:text-gray-400">Giới tính</span>-->
+<!--              <div class="block w-full mt-1 text-sm dark:text-gray-300 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">-->
+<!--                <label class="inline-flex items-center text-gray-600 dark:text-gray-400">-->
+<!--                  <input type="radio"ng-model="formAccountUpdate.sex"ng-value="1"-->
+<!--                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"-->
+<!--                  />-->
+<!--                  <span class="ml-2">Nam</span>-->
+<!--                </label>-->
+<!--                <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">-->
+<!--                  <input type="radio"ng-model="formAccountUpdate.sex"ng-value="0"-->
+<!--                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"-->
+<!--                  />-->
+<!--                  <span class="ml-2">Nữ</span>-->
+<!--                </label>-->
+<!--              </div>-->
+<!--            </label>-->
+<!--          </div>-->
 
-          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
-            <label class="block text-sm ">
-              <span class="text-gray-700 dark:text-gray-400">Ngày Sinh</span>
-              <input ng-model="formAccountUpdate.date"
-                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                     type="date"
-              />
-            </label>
-          </div>
+<!--          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">-->
+<!--            <label class="block text-sm ">-->
+<!--              <span class="text-gray-700 dark:text-gray-400">Ngày Sinh</span>-->
+<!--              <input ng-model="formAccountUpdate.date"-->
+<!--                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
+<!--                     type="date"-->
+<!--              />-->
+<!--            </label>-->
+<!--          </div>-->
         </div>
         <!--        ============-->
         <div class="grid gap-6 mb-8 md:grid-cols-2">

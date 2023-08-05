@@ -61,15 +61,15 @@
                         </label>
                     </div>
 
-                    <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
-                        <label class="block text-sm ">
-                            <span class="text-gray-700 dark:text-gray-400">Địa chỉ</span>
-                            <input ng-model="formAccount.address"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="Nhập Địa chỉ"
+<!--                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+                        <label class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Mật khẩu</span>
+                            <input ng-model="formAccount.password"
+                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                   placeholder="Nhập Mật khẩu" type="password"
                             />
                         </label>
-                    </div>
+                    </div> -->
                 </div>
                 <!--        ===========-->
                 <div class="grid gap-6 mb- md:grid-cols-2">
@@ -94,10 +94,10 @@
                             <span class="text-gray-700 dark:text-gray-400">Chức vụ</span>
                             <select ng-model="formAuth.role" name="role" required
                                     class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                <option ng-value="4">STAFF - Nhân viên</option>
+<!--                                <option ng-value="4">STAFF - Nhân viên</option>-->
                                 <option ng-value="1">STAFF - Nhân viên</option>
                                 <option ng-value="2">ADMIN - Quản lý</option>
-                                <option ng-value="3">USER - Nguwofi dung</option>
+                                <option ng-value="3">USER - Người Dùng</option>
                             </select>
                             <span ng-show="myForm.$submitted || myForm.role.$dirty">
                                         <span class="error" ng-show="myForm.role.$error.required"> <i
@@ -111,6 +111,7 @@
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
+                            <div class="block w-full mt-1 text-sm dark:text-gray-300 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                     <input checked required type="radio"ng-model="formAccount.sex"ng-value="1"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -118,13 +119,17 @@
                                     <span class="ml-2">Nam</span>
                                 </label>
                                 <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
-                                    <input required type="radio"model="formAccount.sex"ng-value="0"
+
+                                    <input type="radio"ng-model="formAccount.sex"ng-value="0"
+
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
                                     <span class="ml-2">Nữ</span>
                                 </label>
+                            </div>
                         </label>
                     </div>
+
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
@@ -142,25 +147,13 @@
                                 </span>
                         </label>
                     </div>
+
                 </div>
                 <!--        ============-->
-                <div class="grid gap-6 mb- md:grid-cols-2">
+<!--                <div class="grid gap-6 mb- md:grid-cols-2">-->
 
-                    <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
-                        <label class="block text-sm ">
-                            <span class="text-gray-700 dark:text-gray-400">Ngày Sinh</span>
-                            <input ng-model="formAccount.date" name="creatDate"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    type="date"
-                            />
-                            <span ng-show="myForm.$submitted || myForm.creatDate.$dirty">
-                                            <span class="error" ng-show="myForm.creatDate.$error.pattern"> <i
-                                                    class="fa fa-exclamation-circle" style="color: red"></i>Ngày tạo không được để
-                                                trống</span>
-                                        </span>
-                        </label>
-                    </div>
-                </div>
+              </div>-->
+
                 <!--        ============-->
                 </form>
                 <div class="grid gap-6 mb-8 md:grid-cols-2">
@@ -169,7 +162,7 @@
                                  class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Thêm Mới
                         </button>
-                        <button  style="margin-top: 10px; margin-left: 65px;"
+                        <button ng-click="resetForm()" style="margin-top: 10px; margin-left: 65px;"
                                  class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Làm Mới
                         </button>

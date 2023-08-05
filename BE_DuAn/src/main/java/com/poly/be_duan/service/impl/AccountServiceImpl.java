@@ -98,6 +98,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account findByNameForcheckUsername(String name) {
+        return repository.findByNameForcheckUsername(name);
+    }
+
+    @Override
     public Account findByPhone(String phone) {
         return repository.findByPhone(phone);
     }
