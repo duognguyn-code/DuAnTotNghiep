@@ -39,6 +39,11 @@ public class AccountRestController {
     public Account findByUsername(@PathVariable(value = "username")String username){
         return accountService.findByUsername(username);
     }
+
+    @GetMapping("/checkusername/{username}")
+    public Account findByNameForcheckUsername(@PathVariable(value = "username")String username){
+        return accountService.findByNameForcheckUsername(username);
+    }
     @PutMapping
     public Account update(@RequestBody Account account){
 

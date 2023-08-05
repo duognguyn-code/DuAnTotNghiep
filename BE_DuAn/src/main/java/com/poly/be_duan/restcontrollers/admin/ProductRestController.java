@@ -270,7 +270,7 @@ public class ProductRestController {
         pd.setBarcode(number1);
         productService.save(pd);
         String data = String.valueOf(number1);
-        String path = "D:\\QR_PRODUCT\\"+data+".jpg";
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\"+data+".jpg";
         try {
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);
@@ -312,6 +312,7 @@ public class ProductRestController {
             product.setMaterial(saveProductRequest.getMaterial());
             product.setStatus(saveProductRequest.getStatus());
             product.setSize(saveProductRequest.getSize());
+            product.setQuantity(saveProductRequest.getQuantity());
             productService.save(product);
         } else {
             throw new RuntimeException("Bản ghi này không tồn tại");

@@ -31,6 +31,7 @@ public interface AccountService {
     Account findByName(String username);
 
     Account findByUsername(String name);
+    Account findByNameForcheckUsername(String name);
 
     Account findByPhone(String phone);
 

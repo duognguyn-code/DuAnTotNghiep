@@ -12,6 +12,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query("SELECT a FROM Account a WHERE a.username LIKE :username AND a.status = 1")
     public Account findByName(String username);
+    @Query("SELECT a FROM Account a WHERE a.username LIKE :username")
+    public Account findByNameForcheckUsername(String username);
 
     @Query(value = "select * from accounts where status = 1 and (full_name like %?1% or username like %?1%)",nativeQuery = true)
     Page<Account> findShowSale(String share, Pageable pageable);
