@@ -26,11 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtFilter();
     }
 
-    @Bean(BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManagerBean(HttpSecurity httpSecurity) throws Exception {
         // Get AuthenticationManager Bean
-        return super.authenticationManagerBean();
+        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder())
+                .and().build();
     }
 
     @Bean
