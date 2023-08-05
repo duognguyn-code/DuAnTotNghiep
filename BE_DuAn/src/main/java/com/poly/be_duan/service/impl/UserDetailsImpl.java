@@ -20,7 +20,6 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
-    @JsonIgnore
     private String password;
 
 
@@ -36,7 +35,9 @@ public class UserDetailsImpl implements UserDetails {
                 .map(emRole -> new SimpleGrantedAuthority(emRole.getRole().getName().name()))
                 .collect(Collectors.toList());
 
-        System.out.println(authorities);
+        System.out.println(authorities + "ưebkjwe");
+        System.out.println(user.getUsername() + "ưebkjwe");
+        System.out.println(authorities + "ưebkjwe");
         return new UserDetailsImpl(
                 user.getUsername(),
                 user.getEmail(),
