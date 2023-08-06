@@ -24,7 +24,7 @@ public class ProductChangeServiceImpl implements ProductChangeService {
 
     @Override
     public ProductChange save(ProductChange entity) {
-        return null;
+        return productChangeRepository.save(entity);
     }
 
     @Override

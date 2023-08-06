@@ -24,6 +24,8 @@
                 <h3 class="font-weight-semi-bold">{{detailProduct.name}}</h3>
                 <h3 class="font-weight-semi-bold mb-4" ng-if="PrD.price == undefined && detailProduct.priceMin != detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ - {{detailProduct.priceMax | number}} VNĐ</h3>
                 <h3 class="font-weight-semi-bold mb-4" ng-if="PrD.price == undefined && detailProduct.priceMin == detailProduct.priceMax">{{detailProduct.priceMin | number}} VNĐ </h3>
+                <h3 class="font-weight-semi-bold mb-4" ng-if="PrD.price != undefined">{{PrD.price | number}} VNĐ</h3>
+                <h3 class="font-weight-semi-bold mb-4">Còn :{{PrD.quantity}} </h3>
                 <div class="d-flex mb-3">
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kiểu dáng:</p>
                     <form>
@@ -69,12 +71,12 @@
                     </form>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <button class="btn btn-primary px-3" ng-click="addCart(PrD)"><i
+                    <button class="btn btn-primary px-3" ng-click="addCart(PrD,1)"><i
                             class="fa fa-shopping-cart mr-1"></i> Add To Cart
                     </button>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <p ng-if="checkQuantity == true "
+                    <p ng-if="{{PrD.quantity}} == 0 "
                        style="height: 70px; width: 100%; color: red; text-align: center ">Sản phẩm đã hết hàng
                     </p>
                 </div>

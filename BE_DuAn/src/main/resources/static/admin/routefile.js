@@ -59,17 +59,79 @@ app.config(function($routeProvider){
         })
         .when("/statistical",{
             templateUrl:"/admin/Statistical/statistical.html",
+            controller:"chart-ctrl"
         })
         .when("/productReturn",{
             templateUrl:"/admin/Bill/Product_Return.html",
+            controller:"product-change"
         })
         .when("/Account",{
              templateUrl:"/admin/Account/Account.html",
+            controller:"account-ctrl"
         })
         .when("/CreateAccount",{
              templateUrl:"/admin/Account/CreateAccount.html",
+            controller:"account-ctrl"
         })
         .when("/UpdateAccount",{
              templateUrl:"/admin/Account/UpdateAccount.html",
+            controller:"account-ctrl"
         })
 })
+
+app.controller("mainAdmin", function($scope,$http) {
+    $scope.lang = sessionStorage.getItem('lang');
+    if ($scope.lang == null) {
+        sessionStorage.setItem('lang', 'vi');
+    }
+    const API_LANGUAGE_NAV_ADMIN = 'http://localhost:8080/rest/language/nav/admin';
+    $http.get(`${API_LANGUAGE_NAV_ADMIN}?lang=${$scope.lang}`)
+        .then(resp => {
+            $scope.languageNav = resp.data;
+            $scope.isLoading = false;
+        })
+        .catch(error => {
+            console.log(error);
+            $scope.isLoading = false;
+        })
+    $scope.languages = [
+        { code: 'vi', name: 'Tiếng Việt', img:'https://viblo.asia/images/vi-flag-32x48.png'},
+        { code: 'en', name: 'English', img:'https://viblo.asia/images/en-flag-32x48.png'}
+    ];
+    $scope.currentLanguage = $scope.languages[0].code;
+    $scope.showDropdown = false;
+    $scope.changeLanguage = function(languageCode) {
+        $scope.currentLanguage = languageCode;
+    };
+
+    $scope.getCurrentLanguageName = function() {
+        for (var i = 0; i < $scope.languages.length; i++) {
+            if ($scope.languages[i].code === $scope.currentLanguage) {
+                return $scope.languages[i].name;
+            }
+        }
+        return '';
+    };
+    $scope.isLoading = true;
+    $scope.navClick = {
+        languageVN() {
+            $scope.isLoading = true;
+            // $http.get(`${API_CHANGE_LANGUAGE}/vi`)
+            //     .then(resp => {
+            //         $scope.isLoading = false;
+            //         location.reload();
+            //     })
+            //     .catch(error => {
+            //         console.log(error);
+            //         $scope.isLoading = false;
+            //     })
+            sessionStorage.setItem('lang', 'vi');
+            location.reload();
+        },
+        languageUS() {
+            sessionStorage.setItem('lang', 'en');
+            location.reload();
+        }
+    }
+
+});

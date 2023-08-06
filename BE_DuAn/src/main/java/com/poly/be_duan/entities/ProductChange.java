@@ -1,6 +1,8 @@
 package com.poly.be_duan.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +27,6 @@ public class ProductChange {
     @Column(name = "id_change_product")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_bills", referencedColumnName = "id_bills")
-    private Bill bill;
-
     @Column(name = "date_change")
     private Date dateChange;
 
@@ -52,10 +50,15 @@ public class ProductChange {
     @Column(name = "status")
     private int  status;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "changeProduct")
     private List<ChangeProductDetail> changeProductDetails;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "productChange")
+    @JsonManagedReference(value = "productChange")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
 

@@ -45,8 +45,8 @@ public class CartAdminRestController {
         int id = 0;
         try {
 
-            ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Lenovo\\Desktop\\QRCODE.png"));
-            String filePath = "C:\\Users\\Lenovo\\Desktop\\QRCODE.png";
+            ImageIO.write(webcam.getImage(), "PNG", new File("C:\\Users\\Windows\\Pictures\\Saved Pictures\\QRCODE.png"));
+            String filePath = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\QRCODE.png";
 
             String charset = "UTF-8";
             Map hintMap = new HashMap();
@@ -68,8 +68,9 @@ public class CartAdminRestController {
             if (dResult != null) {
                 QRImageData = dResult.getBits();
                 hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-                 String a = readQRCode(filePath, charset, hintMap, QRImageData);
-                id = Integer.parseInt(a);
+//                 String a = readQRCode(filePath, charset, hintMap, QRImageData);
+//                id = Integer.parseInt(a);
+                 id = Integer.parseInt(readQRCode(filePath, charset, hintMap, QRImageData));
 
             }
         } catch (IOException e) {

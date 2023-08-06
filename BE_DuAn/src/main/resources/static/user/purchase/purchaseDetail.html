@@ -1,6 +1,7 @@
 
 <div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/user/index :: dynamic(~{::main})}">
     <main class="row">
+
         <div class="container-fluid bg-secondary mb-5">
             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
                 <h1 class="font-weight-semi-bold text-uppercase mb-3">Đơn hàng chi tiết</h1>
@@ -13,6 +14,7 @@
                 </div>
             </div>
         </div>
+
         <h2 class="text-center" style="font-weight:500;">Đơn hàng chi tiết</h2>
         <div class="container-fluid pt-5" style="width:1400px;">
             <table class="table table-bordered">
@@ -48,12 +50,12 @@
                     <td class="px-4 py-3 ">{{orderDetail.product.price | number}} VND</td>
                     <td class="px-4 py-3 ">{{orderDetail.quantity * orderDetail.product.price | number}} VND</td>
                     <td class="px-4 py-3 ">
-                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 0">Có thể đổi trẩ</p>
-                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 1">Chờ xác nhận đổi trả</p>
-                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2">Vui lòng đang chọn giày mới
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2">Có thể đổi trẩ</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 3">Chờ xác nhận đổi trả</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 4">Vui lòng chờ, đang chọn giày mới
                             cho bạn</p>
-                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 3">Đổi máy thanh công</p>
-                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 4">Hủy yêu cầu</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 5">Đổi máy thanh công</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 6">Hủy yêu cầu</p>
                     </td>
                     <td class="px-4 py-3 " ng-click="getProductChange(orderDetail)">
                         <a ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2" style="color:black;"
@@ -138,8 +140,14 @@
                                     <div style="margin-top:20px;">
                                         <h6 class="" style="color:black;font-weight:600;">Lý do đổi</h6>
                                         <label class="block text-sm">
-                                            <textarea ng-model="formProductChange.description" style="width:420px;height:50px;border-radius:5px;" required></textarea>
+                                            <textarea ng-model="formProductChange.description"  name="description" style="width:420px;height:50px;border-radius:5px;" pattern="^[a-zA-Z0-9_-]{3,100}$" required maxlength="250"></textarea>
                                         </label>
+                                        <span ng-show="myForm.$submitted || myForm.description.$dirty">
+                                        <span class="error" ng-show="myForm.description.$error.required"> <i
+                                                class="fa fa-exclamation-circle" style="color: red"></i>Mô tả không được trống</span>
+                                        <span class="error" ng-show="myForm.description.$error.pattern"> <i
+                                                class="fa fa-exclamation-circle" style="color: red"></i>Mô tả gồm 3-100 ký tự theo định dạng</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

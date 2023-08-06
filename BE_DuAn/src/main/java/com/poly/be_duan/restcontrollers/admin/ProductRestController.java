@@ -56,7 +56,7 @@ public class ProductRestController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("")
+    @GetMapping("/api/product")
     public ResponseEntity<List<Product>> getAll() {
         System.out.println(productService.findAll());
         try {
@@ -259,6 +259,7 @@ public class ProductRestController {
         int number1 = a.nextInt(999999999);
         Product pd = new Product();
         pd.setName(generationName(saveProductRequest));
+        pd.setQuantity(saveProductRequest.getQuantity());
         pd.setColor(saveProductRequest.getColor());
         pd.setMaterial(saveProductRequest.getMaterial());
         pd.setDesign(saveProductRequest.getDesign());
@@ -269,13 +270,7 @@ public class ProductRestController {
         pd.setBarcode(number1);
         productService.save(pd);
         String data = String.valueOf(number1);
-
-
-        String path = "C:\\Users\\Lenovo\\Pictures\\Saved Pictures"+data+".jpg";
-
-
-
-
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\"+data+".jpg";
         try {
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);
@@ -317,10 +312,16 @@ public class ProductRestController {
             product.setMaterial(saveProductRequest.getMaterial());
             product.setStatus(saveProductRequest.getStatus());
             product.setSize(saveProductRequest.getSize());
+            product.setQuantity(saveProductRequest.getQuantity());
             productService.save(product);
         } else {
             throw new RuntimeException("Bản ghi này không tồn tại");
         }
+    }
+    @PutMapping("/updatePr")
+    public Product updateProduct(@RequestBody Product product) {
+        System.out.println(productService.save(product));
+        return  productService.save(product);
     }
 
     @GetMapping("/{id}")

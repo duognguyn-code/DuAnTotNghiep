@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -13,11 +14,11 @@ import java.util.Set;
 @Getter
 @Setter
 public class SignUpDTO {
-    private String userName;
+    private String username;
     private String fullName;
     private String phone;
     private String password;
-    private LocalDateTime date;
+    private Date date;
     private Integer sex;
     private String email;
     private Set<String> role;

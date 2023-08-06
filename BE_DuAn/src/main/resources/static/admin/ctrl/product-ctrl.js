@@ -122,7 +122,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
 
         for (var i = 0; i < files.length; i++) {
             if (imageCount >= 3) {
-                break; // Đã đạt số lượng ảnh tối đa, thoát khỏi vòng lặp
+                break;
             }
 
             var file = files[i];
@@ -133,9 +133,9 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
                     var previewImage = document.createElement('img');
                     previewImage.src = e.target.result;
                     previewImage.className = 'previewImage';
-                    previewImage.width = '100'; // Chỉnh kích thước ảnh
+                    previewImage.width = '100'; //
                     previewImagesContainer.appendChild(previewImage);
-                    imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
+                    imageCount++;
                 };
             })(file);
 
@@ -151,6 +151,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         formData.append('name', $scope.formProduct.name);
         formData.append('size', $scope.formProduct.size);
         formData.append('price', $scope.formProduct.price);
+        formData.append('quantity', $scope.formProduct.quantity);
         formData.append('status', $scope.formProduct.status = 1)
         formData.append('category', $scope.formProduct.category)
         formData.append('material', $scope.formProduct.material)
@@ -196,26 +197,26 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         });
     };
     $scope.edit = function(productId) {
-        // Chuyển hướng đến trang UpdateProduct.html với tham số id
         if (!$scope.isRedirected) {
-            // Chuyển hướng đến trang UpdateProduct.html với tham số id
-            $scope.isRedirected = true; // Đánh dấu đã chuyển hướng
+            $scope.isRedirected = true;
             $location.path('/Pageupdateproduct/').search({id: productId});
         }
     };
     $scope.getProductDataUpdate = function() {
         var productId = $routeParams.id;
-        // Sử dụng $http hoặc $resource để lấy thông tin sản phẩm theo ID từ backend
+        // alert(productId)
         $http.get('/api/product/' + productId)
             .then(function(response) {
-                var product = response.data; // Đối tượng chứa thông tin sản phẩm
-                $scope.productData.category = product.category; // Gán giá trị thể loại
-                $scope.productData.name = product.name; // Gán giá trị tên sản phẩm
-                $scope.productData.status = product.status; // Gán giá trị trạng thái
-                $scope.productData.material = product.material; // Gán giá trị trạng thái
-                $scope.productData.size = product.size; // Gán giá trị trạng thái
-                $scope.productData.design = product.design; // Gán giá trị trạng thái
-                $scope.productData.price = product.price; // Gán giá trị trạng thái
+                var product = response.data;
+                $scope.productData.category = product.category.idCategory;
+                $scope.productData.name = product.name;
+                $scope.productData.status = product.status;
+                $scope.productData.material = product.material.id;
+                $scope.productData.size = product.size.id;
+                $scope.productData.design = product.design.id;
+                $scope.productData.price = product.price;
+                $scope.productData.color = product.color.id
+                $scope.productData.quantity = product.quantity
             })
             .catch(function(error) {
                 // Xử lý khi có lỗi trong việc lấy thông tin sản phẩm
@@ -229,19 +230,24 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         formData.append('name', $scope.productData.name);
         formData.append('size', $scope.productData.size);
         formData.append('price', $scope.productData.price);
-        formData.append('status', $scope.productData.status = 1);
+        formData.append('status', $scope.productData.status);
         formData.append('category', $scope.productData.category);
         formData.append('material', $scope.productData.material);
         formData.append('design', $scope.productData.design);
         formData.append('color', $scope.productData.color);
-
+        formData.append('quantity', $scope.productData.quantity);
         let req = {
             method: 'POST',
             url: '/api/product/updateProduct/' +productId,
             data: formData,
             headers: {
-                'Content-Type': undefined // Đặt header 'Content-Type' thành undefined để FormData tự định dạng
-            }
+                'Content-Type': undefined
+            },
+            transformResponse: [
+                function (data) {
+                    return data;
+                }
+            ]
         };
 
         let timerInterval;
@@ -266,11 +272,12 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
             .then(response => {
                 console.log("ddd " + response.data);
                 $scope.message("Cập nhật sản phẩm thành công");
-                $scope.refresh();
                 $scope.getProducts();
             })
             .catch(error => {
                 $scope.error('Cập nhật thất bại');
+                alert(error);
+                console.log(error)
             });
     };
     $scope.doSubmit = function () {

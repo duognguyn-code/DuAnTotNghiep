@@ -2,11 +2,13 @@ package com.poly.be_duan.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poly.be_duan.entities.Account;
+import com.poly.be_duan.entities.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +22,6 @@ public class UserDetailsImpl implements UserDetails {
 
     private String email;
 
-    @JsonIgnore
     private String password;
 
 
@@ -31,16 +32,26 @@ public class UserDetailsImpl implements UserDetails {
         this.password = password;
         this.authorities = authorities;
     }
-    public static UserDetailsImpl build(Account user) {
-        List<GrantedAuthority> authorities = user.getAuthorList().stream()
-                .map(emRole -> new SimpleGrantedAuthority(emRole.getRole().getName().name()))
-                .collect(Collectors.toList());
+    public static UserDetailsImpl build(Account account) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
-        System.out.println(authorities);
+        // Lấy thông tin về vai trò từ bảng Author (nếu có)
+        if (account.getAuthorList() != null && !account.getAuthorList().isEmpty()) {
+            // Lấy vai trò của tài khoản từ bảng Author
+            Role role = account.getAuthorList().get(0).getRole();
+            authorities.add(new SimpleGrantedAuthority(role.getName().name()));
+        }
+
+        // Tiếp tục thêm các quyền khác (nếu có)
+        // ...
+
+        System.out.println(authorities + " đây là role");
+        System.out.println(account.getEmail() + " đây là role");
+        System.out.println(account.getPassword() + " đây là role");
         return new UserDetailsImpl(
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
+                account.getUsername(),
+                account.getEmail(),
+                account.getPassword(),
                 authorities);
     }
 

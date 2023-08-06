@@ -26,11 +26,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new JwtFilter();
     }
 
-    @Bean(BeanIds.AUTHENTICATION_MANAGER)
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
+    @Bean
+    public AuthenticationManager authenticationManagerBean(HttpSecurity httpSecurity) throws Exception {
         // Get AuthenticationManager Bean
-        return super.authenticationManagerBean();
+        return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userService)
+                .passwordEncoder(passwordEncoder())
+                .and().build();
     }
 
     @Bean
@@ -46,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.authorizeRequests().antMatchers("/signup", "/signin","/apiUser/**","/cron-jobs/*","/api/time-keep/*","/admin/**","/apiProject/*").permitAll();
+        http.authorizeRequests().antMatchers("/signup", "/api/auth/signin","/apiUser/**","/cron-jobs/*","/api/time-keep/*","/admin/**","/apiProject/*").permitAll();
 
         http.authorizeRequests().antMatchers( "/company/*","/role/*" )
                 .hasAnyAuthority("ROLE_ADMIN");
@@ -54,6 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/open-talk/*","/api1/project/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
 
+//        http.formLogin()
+//                .loginPage("/user/index.html#!/login")
+//                .loginProcessingUrl("/api/auth/main")
+//                .defaultSuccessUrl("/api/auth/main", false)
+//
+//                .failureUrl("/security/login/error");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/error");
 

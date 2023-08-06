@@ -6,7 +6,6 @@ import com.poly.be_duan.dto.ProductResponDTO;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
 import org.apache.log4j.Logger;
-import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -99,6 +98,12 @@ public class GuestRestController {
                     price = new BigDecimal(productNode.get("price").asDouble());
                     bill_detail.setPrice(price);
                     billDetailService.save(bill_detail);
+
+                    int quantityInCart = cartItems.get(i).get("quantity").asInt();
+                    int availableQuantity = product.get().getQuantity();
+                    int remainingQuantity = availableQuantity - quantityInCart;
+                    product.get().setQuantity(remainingQuantity);
+                    productService.save(product.get());
                 }
             }
         }

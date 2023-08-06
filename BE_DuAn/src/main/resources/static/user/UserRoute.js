@@ -35,4 +35,12 @@ app.config(function($routeProvider){
         .when("/info", {
             templateUrl:"/user/Profile/AccountInfo.html",
         })
+        .when("/register", {
+            templateUrl:"/user/account/register-form.html",
+            controller:"register-ctrl"
+        })
+        .when("/login", {
+            templateUrl:"/user/account/login.html",
+            controller:"login-ctrl"
+        })
 })

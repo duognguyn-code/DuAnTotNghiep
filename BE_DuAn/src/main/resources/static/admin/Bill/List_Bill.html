@@ -84,7 +84,7 @@
                                 {{bill.account.phone}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{bill.createDate | date: "dd-MM-yyyy"}}
+                                {{bill.createDate | date:'yyyy-MM-dd HH:mm:ss'}}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                  <span ng-if="bill.status==1">
@@ -104,25 +104,20 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-sm">
-
-<!--                                <select ng-model="form.status" ng-change="updateStatus(bill.id)" class="form-select"-->
-<!--                                        ng-if="bill.status!=4&&bill.status!=5">-->
-<!--&lt;!&ndash;                                    <option ng-repeat="item in status" ng-value="item.id">{{item.name}}</option>&ndash;&gt;-->
-
-<!--                                    <option value="0">Thay Đổi</option>-->
-<!--                                    <option ng-if="bill.status!=2&&bill.status!=3&&bill.status!=4&&bill.status!=5" value="2">Xác Nhận</option>-->
-<!--                                    <option ng-if="bill.status!=1&&bill.status!=3&&bill.status!=4&&bill.status!=5" value="3">Đang Giao Hàng</option>-->
-<!--                                    <option ng-if="bill.status!=2&&bill.status!=1&&bill.status!=4&&bill.status!=5"value="4">Giao Dịch Hoàn Tất</option>-->
-<!--                                    <option value="5">Hủy Đơn</option>-->
-<!--                                </select>-->
                                 <div class="flex items-center space-x-4 text-sm">
-                                    <button
-                                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                    <button ng-if="bill.status==1" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                             aria-label="Edit" ng-click="updateStatus(bill)"
-                                    >Thay Đổi
-
+                                    >Xác Nhận
                                     </button>
-                                    <button
+                                    <button ng-if="bill.status==2"class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                            aria-label="Edit" ng-click="updateStatus(bill)"
+                                    >Đang Giao Hàng
+                                    </button>
+                                    <button ng-if="bill.status==3" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                            aria-label="Edit" ng-click="updateStatus(bill)"
+                                    >Thành Công
+                                    </button>
+                                    <button ng-if="bill.status !==5 && bill.status !==4 && bill.status !==3"
                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
                                             ng-click="updateStatusCancel(bill)"
                                     >Hủy Đơn

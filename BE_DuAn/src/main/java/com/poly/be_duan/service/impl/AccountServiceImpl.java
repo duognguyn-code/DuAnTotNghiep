@@ -1,7 +1,6 @@
 package com.poly.be_duan.service.impl;
 
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import com.poly.be_duan.dto.*;
 import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Address;
@@ -17,9 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,7 +49,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account save(Account account) {
-        return null;
+        return repository.save(account);
+    }
+
+    @Override
+    public List<Account> getAll() {
+        return repository.findAll();
     }
 
     @Override
@@ -62,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void deleteById(String id) {
-
+        repository.deleteById(id);
     }
 
     @Override
@@ -96,6 +98,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public Account findByNameForcheckUsername(String name) {
+        return repository.findByNameForcheckUsername(name);
+    }
+
+    @Override
+    public Account findByPhone(String phone) {
+        return repository.findByPhone(phone);
+    }
+
+    @Override
     public String setAddressDefault(Integer id) {
         Address address = addressRepository.findById(id).orElse(null);
         Account account = repository.findByName("Dương");
@@ -109,6 +121,7 @@ public class AccountServiceImpl implements AccountService {
         Account account = repository.findByName("Dương");
         Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
         AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
+        System.out.println(addressDTO);
         return addressDTO;
     }
 
@@ -136,4 +149,20 @@ public class AccountServiceImpl implements AccountService {
     public Role getRoleByUserName(String userName) {
         return null;
     }
+
+
+    @Override
+    public List<AccountDTO> getAllAccountResponseDTO() {
+        return  null;
+    }
+    @Override
+    public Account findAccountByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
+    @Override
+    public Integer chartAccount(String year) {
+        return repository.chartAccount(year);
+    }
+
 }

@@ -25,11 +25,12 @@ public class Image {
 
     @ManyToOne
     @JoinColumn(name = "id_productChange")
+    @JsonBackReference(value = "productChange")
     private ProductChange productChange;
 
     @ManyToOne
     @JoinColumn(name = "id_products")
-    @JsonBackReference
+    @JsonBackReference(value = "product")
     private Product products;
 
 //    @JsonBackReference

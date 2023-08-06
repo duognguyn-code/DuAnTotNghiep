@@ -4,46 +4,44 @@
       <h2 class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Danh Sách Hoàn Trả Hàng
       </h2>
+      <div class="mt-2 col-2 offset-10">
+        <button ng-click="postRequest()" class="btn btn-secondary">Xác nhận</button>
+        <button ng-click="putRequest()" class="btn btn-secondary">Hủy bỏ</button>
+      </div>
       <div class="container-fluid pt-5" style="width:1200px;">
         <table class="table table-bordered">
           <thead>
           <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:18px;">
+            <th class="px-4 py-3" scope="col">chọn</th>
             <th class="px-4 py-3" scope="col">Khách hàng</th>
             <th class="px-4 py-3" scope="col">Liên hệ</th>
             <th class="px-4 py-3" scope="col">Sản phẩm</th>
             <th class="px-4 py-3" scope="col">Ngày đổi trả </th>
             <th class="px-4 py-3" scope="col">Lý do đổi trả </th>
             <th class="px-4 py-3" scope="col">Trạng thái</th>
-            <th class="px-4 py-3" scope="col">Chức năng</th>
+
           </tr>
           </thead>
           <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
           <tr
-              class="text-gray-700 dark:text-gray-400" style="font-size:16px;">
-            <td class="px-4 py-3 ">user</td>
+              class="text-gray-700 dark:text-gray-400" style="font-size:16px;" ng-repeat="prChange in listProductChange">
+            <td ><input ng-if="prChange.status != 3" type="checkbox" name="" ng-checked="checkSelect(prChange)"
+                        ng-click="checkSelected(prChange.id)"></td>
+            <td class="px-4 py-3 ">{{prChange.account.username}}</td>
             <td class="px-4 py-3 ">
               <div>
-                <p>user@gmail.com</p>
-                <p>0123456789</p>
+                <p>{{prChange.account.email}}</p>
+                <p>{{prChange.account.phone}}</p>
               </div>
             </td>
-            <td class="px-4 py-3 " data-bs-target="#exampleModalProductReturn" data-bs-toggle="modal">sản phẩm 1</td>
-            <td class="px-4 py-3 ">23/07/2023 16:00:PM</td>
-            <td class="px-4 py-3 ">khong dung size</td>
-            <td class="px-4 py-3 ">Chờ xác nhận</td>
-            <td class="px-4 py-3 ">
-              <button
-                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                      aria-label="Edit"
-              >Thay Đổi
-
-              </button>
-              <button
-                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
-
-              >Hủy Đơn
-              </button>
-            </td>
+            <td class="px-4 py-3 " data-bs-target="#exampleModalProductReturn" data-bs-toggle="modal">{{prChange.billDetail.product.name}}</td>
+            <td class="px-4 py-3 ">{{prChange.dateChange | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="px-4 py-3 ">{{prChange.description}}</td>
+            <td class="px-4 py-3 " ng-if="prChange.status == 0">Không có yêu cầu</td>
+            <td class="px-4 py-3 " ng-if="prChange.status == 1" >Chờ xác nhận</td>
+            <td class="px-4 py-3 " ng-if="prChange.status == 2" >Đã xác nhận, chờ đổi trả</td>
+            <td class="px-4 py-3 " ng-if="prChange.status == 3" >Đã đổi thành công</td>
+            <td class="px-4 py-3 " ng-if="prChange.status == 4" >Hủy yêu cầu</td>
           </tr>
           </tbody>
         </table>

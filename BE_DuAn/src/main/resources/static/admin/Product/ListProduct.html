@@ -79,7 +79,7 @@
                         </label>
                     </div>
                 </class>
-            </class>>
+            </class>
         </div>
         <div class="container grid px-6 mx-auto">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -99,6 +99,7 @@
 
                             <th class="px-4 py-3" scope="col">BarCode</th>
                             <th class="px-4 py-3" scope="col">Màu Sắc</th>
+                            <th class="px-4 py-3" scope="col">Số Lượng</th>
                             <th class="px-4 py-3" scope="col">Kiểu Dáng</th>
                             <th class="px-4 py-3" scope="col">Chất Liệu</th>
                             <th class="px-4 py-3" scope="col">Kích Cỡ</th>
@@ -125,6 +126,9 @@
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{product.color.name}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{product.quantity}}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{product.design.name}}

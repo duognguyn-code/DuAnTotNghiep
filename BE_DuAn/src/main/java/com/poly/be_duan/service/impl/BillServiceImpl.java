@@ -13,6 +13,8 @@ import com.poly.be_duan.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -90,6 +92,11 @@ public class BillServiceImpl implements BillService {
     public Bill create(JsonNode billData) {
         ObjectMapper mapper = new ObjectMapper();
         Bill bill  = mapper.convertValue(billData,Bill.class);
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String date = today.format(dateTimeFormatter);
+        Date date1 = new Date(date);
+        bill.setCreateDate(date1);
         billRepository.save(bill);
         TypeReference<List<Bill_detail>> type =new  TypeReference<List<Bill_detail>>() {};
         List<Bill_detail> details = mapper.convertValue(billData.get("billDetails"),type).
@@ -101,5 +108,10 @@ public class BillServiceImpl implements BillService {
     @Override
     public List<Bill> findAllByAccount(Account account) {
         return billRepository.findAllByAccount(account);
+    }
+
+    @Override
+    public Integer chart(String date) {
+        return billRepository.chart(date);
     }
 }

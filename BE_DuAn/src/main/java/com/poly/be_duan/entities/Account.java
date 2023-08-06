@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -32,6 +32,7 @@ public class Account {
     private String password;
 
 //    @JsonIgnoreProperties
+    @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Author> authorList;
 
@@ -39,9 +40,9 @@ public class Account {
     private String phone;
 
     @Column()
-    private LocalDateTime date;
+    private Date date;
 
-    @Column(nullable = false)
+    @Column()
     private Integer sex;
 
     @JsonIgnore

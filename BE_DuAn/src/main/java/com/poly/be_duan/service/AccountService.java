@@ -14,6 +14,8 @@ public interface AccountService {
 
     Account save(Account account);
 
+    public List<Account> getAll();
+
     List<Account> save(List<Account> entities);
 
     void deleteById(String id);
@@ -29,7 +31,9 @@ public interface AccountService {
     Account findByName(String username);
 
     Account findByUsername(String name);
+    Account findByNameForcheckUsername(String name);
 
+    Account findByPhone(String phone);
 
     String setAddressDefault(Integer id);
 
@@ -44,4 +48,14 @@ public interface AccountService {
     Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO);
 
     Role getRoleByUserName(String userName);
+
+
+
+    List<AccountDTO> getAllAccountResponseDTO();
+
+    Account findAccountByUsername(String username);
+
+    public Integer chartAccount(String year);
+
+
 }
