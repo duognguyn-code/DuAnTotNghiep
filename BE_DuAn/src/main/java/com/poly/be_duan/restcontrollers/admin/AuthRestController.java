@@ -6,6 +6,7 @@ import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Author;
 import com.poly.be_duan.service.AuthService;
 import com.poly.be_duan.service.impl.UserDetailsServiceImpl;
+import com.poly.be_duan.utils.Username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,23 +30,13 @@ public class AuthRestController {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) throws Exception {
         ResponseEntity<?> response = authService.authenticateUser(loginDTO);
-        if (response.getStatusCode() == HttpStatus.OK) {
-            // Đăng nhập thành công, trả về URL của trang chính
-//            String mainPageUrl = "http://localhost:/admin/adminUser/Login.html"; // Thay đổi đường dẫn này cho phù hợp với URL của trang chính
-            return ResponseEntity.ok("alo");
-        } else {
-            // Đăng nhập thất bại, trả về response như cũ
-            return response;
-        }
-
-
+        System.out.println(Username.getUserName() + "đay la fthk đanwg nhập");
+        return response;
     }
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDTO) {
         ResponseEntity<?> response =  authService.registerUser(signUpDTO);
         if (response.getStatusCode() == HttpStatus.OK) {
-            // Đăng nhập thành công, trả về URL của trang chính
-//            String mainPageUrl = "http://localhost:/admin/adminUser/Login.html"; // Thay đổi đường dẫn này cho phù hợp với URL của trang chính
             return ResponseEntity.ok("alo");
         } else {
             // Đăng nhập thất bại, trả về response như cũ

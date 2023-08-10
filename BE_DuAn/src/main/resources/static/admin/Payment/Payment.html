@@ -114,7 +114,7 @@
                                 <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">
                                     {{product.name}}</h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6 style="font-weight:500; font-size:18px;">{{product.price | number}}đ</h6>
+                                    <h6 style="font-weight:500; font-size:18px;">{{product.price | number}} VND</h6>
                                 </div>
                             </div>
                         </button>
@@ -254,7 +254,7 @@
                         <div class="col-md-6">
                             <h5 class="card-title" style="font-size:20px;font-weight:500;">{{item.name}}</h5>
                             <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
-                                {{item.price |number}}đ</p>
+                                {{item.price |number}} VND</p>
                             <p class="card-text" style="margin-top:10px;">
                             <div class="input-group quantity mr-3" style="width: 130px;margin-top:20px;">
                                 <div class="input-group-btn">
@@ -276,7 +276,7 @@
                         </div>
                         <div class="col-md-2">
                             <p class="card-text text-right" style="font-size:18px;font-weight:500;">
-                                {{item.qty * item.price | number}}đ</p>
+                                {{item.qty * item.price | number}} VND</p>
                             <button ng-click="cart.remove(item.id)"
                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                     aria-label="Delete"
@@ -307,10 +307,10 @@
 
                         <div class="col-md-2">
                             <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
-                                {{cart.amount | number}}đ</p>
-                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">0đ</p>
+                                {{cart.amount | number}} VND</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">0 VND</p>
                             <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
-                                {{cart.amc | number}}đ</p>
+                                {{cart.amc | number}} VND</p>
                         </div>
                     </div>
                     <div class="row" style="margin-top:20px;">
@@ -559,7 +559,7 @@
                                                 <div class="col-md-2">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        {{cart.amount | number}}đ</p>
+                                                        {{cart.amount | number}} VND</p>
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
                                                         0đ</p>
@@ -575,7 +575,7 @@
                                                 <div class="col-md-6">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        {{cart.amc | number}}đ</p>
+                                                        {{cart.amc | number}} VND</p>
                                                 </div>
                                             </div>
                                         </div>

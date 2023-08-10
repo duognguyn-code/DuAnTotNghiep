@@ -5,6 +5,7 @@ import com.poly.be_duan.dto.AddressDTO;
 import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.service.AccountService;
 import com.poly.be_duan.service.ProductService;
+import com.poly.be_duan.utils.Username;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class UserRestController {
 
     @GetMapping("/getAccountActive")
     public Account getAccountActive() {
-        Account account = accountService.findByUsername("Dương");
+        Account account = accountService.findByUsername(Username.getUserName());
         System.out.println(account.getEmail());
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return account;

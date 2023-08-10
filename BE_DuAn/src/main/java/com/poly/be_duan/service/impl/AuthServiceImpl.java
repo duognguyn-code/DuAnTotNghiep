@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
         ac.setUsername(signUpDTO.getUsername());
         ac.setEmail(signUpDTO.getEmail());
         ac.setPhone(signUpDTO.getPhone());
-        ac.setPassword(passwordEncoder.encode(signUpDTO.getPhone()));
+        ac.setPassword(passwordEncoder.encode(signUpDTO.getPassword()));
         ac.setFullName(signUpDTO.getFullName());
         ac.setDate(new Date());
         ac.setStatus(1);
@@ -69,6 +69,7 @@ public class AuthServiceImpl implements AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtTokenProvider.generateToken(authentication);
 
+            System.out.println(jwt);
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
@@ -116,6 +117,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public Author searchAccountByUsername(String username) {
+        return authorRepository.searchAccountByUsername(username);
+    }
+
+    @Override
+    public Author findAuthorByUserName(String username) {
         return authorRepository.searchAccountByUsername(username);
     }
 }
