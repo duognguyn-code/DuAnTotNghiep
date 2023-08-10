@@ -1,5 +1,7 @@
 package com.poly.be_duan.restcontrollers.admin;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.entities.ProductChange;
@@ -7,6 +9,7 @@ import com.poly.be_duan.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +23,7 @@ public class QLProductChangeRestController {
 
     private final SendMailService sendMailService;
     private final ProductService productService;
+    private final BillService billService;
 
     @RequestMapping(value = "/comfirmRequest", method = RequestMethod.POST)
     public void confirmRequest(@RequestBody List<Integer> id){
@@ -29,6 +33,7 @@ public class QLProductChangeRestController {
             System.out.println(productChange + "id");
             if(s != null && productChange.getStatus() == 1){
                 productChange.setStatus(2);
+                productChange.setUsernameUpdate("quan");
                 productChangeService.save(productChange);
                 bill_detail = productChange.getBillDetail();
                 bill_detail.setStatus(4);
@@ -58,13 +63,52 @@ public class QLProductChangeRestController {
         for ( Integer  s :  idProductChange) {
             if(s !=null) {
                 ProductChange product = productChangeService.findByStatus(s);
-                if(product.getStatus()==3){
+                if(product.getStatus()==1){
                     product.setStatus(6);
                     productChangeService.save(product);
                 }else if(product.getStatus()==4){
                     System.out.println("không thể hủy ");
                 }
             }
+        }
+    }
+    @PostMapping("/prdList")
+    public List<ProductChange> getListProductChange(@RequestBody List<Integer> id){
+
+        List<ProductChange> a = new ArrayList();
+        for (Integer s: id) {
+            System.out.println(s);
+            ProductChange productChange = productChangeService.findByStatus(s);
+            a.add(productChange);
+        }
+        return a;
+    }
+
+    @PutMapping("/updateProductChange")
+    public List<Product> saveProductReturn(@RequestBody JsonNode products) {
+        return billDetailService.saveReturnProduct(products);
+    }
+    @PutMapping("/updateProductCancel")
+    public List<Product> saveProductCancel(@RequestBody JsonNode products) {
+        return billDetailService.saveCancelProduct(products);
+    }
+    @PostMapping("/CreateBillChange")
+    public Bill create(@RequestBody JsonNode billData) {
+        System.out.println("a");
+        return billService.createBillChange(billData);
+    }
+    @PutMapping("/updateBill/{id}/{ksd}")
+    public void updateBill(@PathVariable(value = "id")Integer id,@PathVariable(value = "ksd")String ksd){
+        ProductChange productChange = productChangeService.findByStatus(id);
+        if (ksd.equals("update")){
+        productChange.setStatus(3);
+        productChangeService.save(productChange);
+        return;
+        }
+        if (ksd.equals("cancel")){
+            productChange.setStatus(5);
+            productChangeService.save(productChange);
+            return;
         }
     }
 }

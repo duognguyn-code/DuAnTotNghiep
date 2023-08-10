@@ -1,12 +1,55 @@
 <div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
   <main class="h-full pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+      <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+        Tìm Kiếm Đơn Hàng
+      </h2>
+
+      <class class="grid gap-6 mb-8 md:grid-cols-1">
+        <class class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+          <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Số Điện Thoại</span>
+              <input ng-model="searchPhone"
+                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+              />
+            </label>
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Trạng Thái Đơn </span>
+              <select ng-model="searchStatus"
+                      class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <option value="6">---Chọn Mục---</option>
+                <option value="1">Chờ Xác Nhận ({{sumSts1}})</option>
+                <option value="2">Đã Xác Nhận ({{sumSts2}}) </option>
+                <option value="3">Thanh Công  (<a style="color: red">{{sumSts3}} </a> )</option>
+                <option value="5">Hủy Đơn</option>
+              </select>
+            </label>
+            <label class="block text-sm" style="margin-top: 18px; margin-left: 30px">
+              <button ng-click="searchBill1()" style="margin-top: 10px;"
+                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Tìm Kiếm
+              </button>
+              <button ng-click="resetSearch()" style="margin-top: 10px;margin-left: 10px"
+                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Reset
+              </button>
+            </label>
+          </div>
+    </div>
     <div class="container grid px-6 mx-auto">
       <h2 class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
         Danh Sách Hoàn Trả Hàng
       </h2>
       <div class="mt-2 col-2 offset-10">
-        <button ng-click="postRequest()" class="btn btn-secondary">Xác nhận</button>
-        <button ng-click="putRequest()" class="btn btn-secondary">Hủy bỏ</button>
+        <button ng-if="checksts==0" data-bs-target="#ReturnProduct" data-bs-toggle="modal" ng-click="getprd()"
+                  class="btn btn-secondary">
+<!--                 ng-click="postRequest()"-->
+        Xác nhận</button>
+        <button ng-if="checksts==1" ng-if="checksts==0" ng-click="postRequest()"
+                 class="btn btn-secondary">
+          Xác nhận</button>
+        <button ng-if="checksts==0" ng-click="putRequest()" class="btn btn-secondary">Hủy bỏ</button>
       </div>
       <div class="container-fluid pt-5" style="width:1200px;">
         <table class="table table-bordered">
@@ -16,9 +59,11 @@
             <th class="px-4 py-3" scope="col">Khách hàng</th>
             <th class="px-4 py-3" scope="col">Liên hệ</th>
             <th class="px-4 py-3" scope="col">Sản phẩm</th>
+            <th class="px-4 py-3" scope="col">Số Lượng</th>
             <th class="px-4 py-3" scope="col">Ngày đổi trả </th>
             <th class="px-4 py-3" scope="col">Lý do đổi trả </th>
             <th class="px-4 py-3" scope="col">Trạng thái</th>
+            <th class="px-4 py-3" scope="col">Chức Năng</th>
 
           </tr>
           </thead>
@@ -34,26 +79,188 @@
                 <p>{{prChange.account.phone}}</p>
               </div>
             </td>
-            <td class="px-4 py-3 " data-bs-target="#exampleModalProductReturn" data-bs-toggle="modal">{{prChange.billDetail.product.name}}</td>
+            <td class="px-4 py-3 " ng-click="getProduct(prChange)" data-bs-target="#Reasonreturn" data-bs-toggle="modal">{{prChange.billDetail.product.name}}</td>
+            <td class="px-4 py-3 "><input ng-change="checkBtn(prChange)" type="number" style="width: 100px"
+                                           ng-model="prChange.quantityProductChange" >
+            </td>
             <td class="px-4 py-3 ">{{prChange.dateChange | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-            <td class="px-4 py-3 ">{{prChange.description}}</td>
+            <td class="px-4 py-3 "ng-click="getForReasonReturn(prChange)" data-bs-target="#exampleModalProductReturn" data-bs-toggle="modal" >{{prChange.description}}</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 0">Không có yêu cầu</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 1" >Chờ xác nhận</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 2" >Đã xác nhận, chờ đổi trả</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 3" >Đã đổi thành công</td>
             <td class="px-4 py-3 " ng-if="prChange.status == 4" >Hủy yêu cầu</td>
-          </tr>
-          </tbody>
-        </table>
-        <div class="modal fade" id="exampleModalProductReturn" tabindex="-1" data-bs-backdrop="static"
+            <td class="px-4 py-3">
+              <button ng-if="prChange.status==1"  ng-click="updateQuantity(prChange)"
+                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+<!--                ng-click="getprd()"-->
+               Thay Đổi
+               </button>
+              <button ng-if="prChange.status==2"  ng-click="addProduct(prChange)" data-bs-target="#addBill" data-bs-toggle="modal"
+                      class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                <!--      ng-click="updateQuantity(prChange)"-->
+                Thêm Hàng
+              </button>
+              <button ng-if="prChange.status==2"
+                      ng-click="NoReturnProduct(prChange.id)" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+              Không Return
+            </button>
+             </td>
+           </tr>
+           </tbody>
+         </table>
+         <div class="modal fade" id="exampleModalProductReturn" tabindex="-1" data-bs-backdrop="static"
+               aria-hidden="true">
+           <form >
+             <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
+                   <p style="color:black">Lí Do </p>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal"
+                           aria-label="Close"></button>
+                 </div>
+
+                 <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                   <div class="container">
+                     <table class="w-full whitespace-no-wrap">
+                       <thead>
+                       <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
+                         <th class="px-4 py-3" scope="col">Người Mua</th>
+                         <th class="px-4 py-3" scope="col">Số Điện Thoại</th>
+                         <th class="px-4 py-3" scope="col">Email</th>
+                         <th class="px-4 py-3" scope="col">Lí Do</th>
+                         <th class="px-4 py-3" scope="col">Hình Ảnh</th>
+                       </tr>
+                       </thead>
+                       <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                       <tr  ng-repeat="infor in formReasonReturn"
+                           class="text-gray-700 dark:text-gray-400" style="font-size:18px;">
+                         <td class="px-4 py-3 ">{{infor.bill.account.username}}</td>
+                         <td class="px-4 py-3 ">{{infor.bill.account.email}}</td>
+                         <td class="px-4 py-3 ">{{infor.bill.account.phone}}</td>
+                       </tr>
+                       </tbody>
+                     </table>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </form>
+
+         </div>
+         <div class="modal fade" id="Reasonreturn" tabindex="-1" data-bs-backdrop="static"
               aria-hidden="true">
-          <form role="formProductChange" method="post" class="row" name="myForm"
-                enctype="multipart/form-data">
+           <form >
+             <div class="modal-dialog modal-lg">
+               <div style="width: 1000px" class="modal-content">
+                 <div class="modal-header">
+                   <h5 class="modal-title" id="Reasonreturn1"></h5>
+                   <p style="color:black">Sản phẩm </p>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal"
+                           aria-label="Close"></button>
+                 </div>
+
+                 <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-1000">
+                   <div class="container">
+                     <table class="w-full whitespace-no-wrap">
+                       <thead>
+                       <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
+                         <th class="px-4 py-3" scope="col">Hình ảnh</th>
+                         <th class="px-4 py-3" scope="col">Tên Sản Phẩm</th>
+                         <th class="px-4 py-3" scope="col">Số Lượng</th>
+                         <th class="px-4 py-3" scope="col">Giá</th>
+                       </tr>
+                       </thead>
+                       <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                       <tr
+                               class="text-gray-700 dark:text-gray-400" style="font-size:18px;">
+                         <td class="px-4 py-3 ">
+                           <img class="img-responsive" width="80px" height="80px"
+                                src="{{formProduct.images.length>0?formProduct.images[0].urlimage:''}}">
+                         </td>
+                         <td class="px-4 py-3 ">{{formProduct.billDetail.product.name}}</td>
+                         <td class="px-4 py-3 ">{{formProduct.billDetail.product.quantity}}</td>
+                         <td class="px-4 py-3 ">{{formProduct.billDetail.product.price}}</td>
+                       </tr>
+                       </tbody>
+                     </table>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </form>
+
+         </div>
+        <div class="modal fade" id="ReturnProduct" tabindex="-1" data-bs-backdrop="static"
+        aria-hidden="true">
+        <form >
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="ReturnProduct1"></h5>
+                <p style="color:black">Danh Sach Return</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+              </div>
+
+              <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="container">
+                  <table class="w-full whitespace-no-wrap">
+                    <thead>
+                    <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
+                      <th class="px-4 py-3" scope="col">Hình ảnh</th>
+                      <th class="px-4 py-3" scope="col">Màu sắc</th>
+                      <th class="px-4 py-3" scope="col">Kiểu dáng</th>
+                      <th class="px-4 py-3" scope="col">Chất liệu</th>
+                      <th class="px-4 py-3" scope="col">Size</th>
+                      <th class="px-4 py-3" scope="col">Giá(VNĐ)</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <tr ng-repeat="formPrdReturn in formPrdReturn"
+                            class="text-gray-700 dark:text-gray-400" style="font-size:18px;">
+                      <td class="px-4 py-3 ">
+                        <img class="img-responsive" width="80px" height="80px"
+                             src="../images/oxford1.png">
+                      </td>
+                      <td class="px-4 py-3 ">{{formPrdReturn.account.username}}</td>
+                      <td class="px-4 py-3 ">{{formPrdReturn.billDetail.product.id}}</td>
+                      <td class="px-4 py-3 ">{{formPrdReturn.quantityProductChange}}</td>
+                      <td class="px-4 py-3 "><input ng-change="chang(formPrdReturn.id)" type="number" style="width: 100px"
+                                                    ng-model="formPrdReturn.quantity1" ></td>
+                      <td class="px-4 py-3 "><input ng-change="chang(formPrdReturn.id)" type="number" style="width: 100px"
+                                                    ng-model="formPrdReturn.quantity2" ></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <div class="row">
+                    <div class="">
+                      <button ng-click="productQuantitychange.updateReturnQuantityProduct()"
+                              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Xác nhận
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+<!--        addBill-->
+        <div class="modal fade" id="addBill" tabindex="-1" data-bs-backdrop="static"
+             aria-hidden="true">
+          <form >
             <div class="modal-dialog modal-lg">
-              <div class="modal-content">
+              <div style="width: 1150px" class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
-                  <p style="color:black">Sản phẩm 1</p>
+                  <h5 class="modal-title" id="addBill1"></h5>
+                  <p style="color:black">Bill</p>
                   <button type="button" class="btn-close" data-bs-dismiss="modal"
                           aria-label="Close"></button>
                 </div>
@@ -63,29 +270,39 @@
                     <table class="w-full whitespace-no-wrap">
                       <thead>
                       <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
-                        <th class="px-4 py-3" scope="col">Hình ảnh</th>
-                        <th class="px-4 py-3" scope="col">Màu sắc</th>
-                        <th class="px-4 py-3" scope="col">Kiểu dáng</th>
-                        <th class="px-4 py-3" scope="col">Chất liệu</th>
-                        <th class="px-4 py-3" scope="col">Size</th>
-                        <th class="px-4 py-3" scope="col">Giá(VNĐ)</th>
+                        <th class="px-4 py-3" scope="col">ID Sản Phẩm</th>
+                        <th class="px-4 py-3" scope="col">Tên Sản Phẩm</th>
+                        <th class="px-4 py-3" scope="col">Số Tiền Trả Lại</th>
+                        <th class="px-4 py-3" scope="col">Giá</th>
+                        <th class="px-4 py-3" scope="col">Số Lượng</th>
+<!--                        <th class="px-4 py-3" scope="col">Size</th>-->
+<!--                        <th class="px-4 py-3" scope="col">Giá(VNĐ)</th>-->
                       </tr>
                       </thead>
                       <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                      <tr
+                      <tr ng-repeat=" it in formAddBill"
                           class="text-gray-700 dark:text-gray-400" style="font-size:18px;">
                         <td class="px-4 py-3 ">
-                          <img class="img-responsive" width="80px" height="80px"
-                               src="../images/oxford1.png">
+                         {{it.billDetail.product.id}}
                         </td>
-                        <td class="px-4 py-3 ">Đen</td>
-                        <td class="px-4 py-3 ">abc</td>
-                        <td class="px-4 py-3 ">xyz</td>
-                        <td class="px-4 py-3 ">35</td>
-                        <td class="px-4 py-3 ">1,250,000</td>
+                        <td class="px-4 py-3 "> {{it.billDetail.product.name}}</td>
+                        <td class="px-4 py-3 ">{{it.billDetail.product.id}}</td>
+                        <td class="px-4 py-3 ">{{it.billDetail.product.price}}</td>
+                        <td class="px-4 py-3 "><input ng-change="updateQuantityBill(it)" type="number" style="width: 100px"
+                                                      ng-model="it.quantityAddBill" ></td>
                       </tr>
                       </tbody>
                     </table>
+                  </div>
+                  <div class="modal-footer">
+                    <div class="row">
+                      <div class="">
+                        <button ng-click="addBill.purchase()"
+                                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                          Xác nhận
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -93,7 +310,7 @@
           </form>
 
         </div>
-      </div>
-    </div>
-  </main>
-</div>
+       </div>
+     </div>
+   </main>
+ </div>

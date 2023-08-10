@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -38,6 +40,12 @@ public class ProductChange {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "username_update")
+    private String usernameUpdate;
+
+    @Column(name = "phone")
+    private String phone;
+
     @ManyToOne
     @JoinColumn(name = "id_bill_detail", referencedColumnName = "id_bill_detail")
     private Bill_detail billDetail;
@@ -56,9 +64,10 @@ public class ProductChange {
 
     @JsonIgnore
     @OneToMany(mappedBy = "productChange")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference(value = "productChange")
     private List<Image> images;
-
+    @JsonManagedReference
     public List<Image> getImages(){
         return images;
     }

@@ -66,4 +66,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(" SELECT p FROM Product p WHERE p.id = ?1 ")
     Product getID(Integer id);
 
+    @Query(" SELECT p FROM Product p WHERE p.name = ?1 and p.status = 2 ")
+    Product getByName(String name);
+
 }
