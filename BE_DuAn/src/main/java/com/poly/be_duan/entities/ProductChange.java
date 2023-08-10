@@ -40,6 +40,9 @@ public class ProductChange {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "phone")
+    private String phone;
+
     @ManyToOne
     @JoinColumn(name = "id_bill_detail", referencedColumnName = "id_bill_detail")
     private Bill_detail billDetail;

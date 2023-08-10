@@ -42,14 +42,13 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
     localStorage.removeItem('jwtToken');
     $scope.onLogin = function () {
         console.log(pathAPI)
-
-        $http.post(pathAPI, $scope.form).then(respon =>{
+        $http.post(pathAPI, JSON.stringify($scope.form)).then(respon =>{
 
             $scope.message('Đăng nhập thành công');
             localStorage.setItem('jwtToken', respon.data.token);
             $scope.jwt = localStorage.getItem('jwtToken')
-            $rootScope.account=respon.data;
-            $window.location.href = '#!home/index';
+            $rootScope.account = respon.data;
+            $window.location.href = 'user/index.html#!';
             location.reload();
         }).catch(error => {
             $scope.error('Đăng nhập thất bại');

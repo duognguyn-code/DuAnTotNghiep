@@ -77,8 +77,13 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                         angular.forEach($scope.files, function(file) {
                             formData.append('files', file);
                         });
-                        formData.append("description", $scope.formProductChange.description);
+                        if ($scope.formProductChange.description === 'other') {
+                            formData.append("description", $scope.customReason);
+                        } else {
+                            formData.append("description", $scope.formProductChange.description);
+                        }
                         formData.append("email", $scope.accountActive.email);
+                        formData.append("phone", $scope.accountActive.phone);
                         formData.append("quantityProductChange",$scope.formProductChange.quantity_product_change);
                         formData.append("account",$scope.accountActive.username);
                         formData.append("bill_detail",$scope.formDetails.id);
@@ -143,7 +148,10 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         $scope.files = files;
         console.log($scope.files);
         var previewImagesContainer = document.getElementById('previewImagesContainer');
+        var previewVideo = document.getElementById('previewVideo');
         previewImagesContainer.innerHTML = ''; // Xóa bỏ các ảnh hiện có
+        previewVideo.style.display = 'none';
+
         var imageCount = 0;
 
         // Biến đếm số lượng ảnh đã hiển thị
@@ -158,11 +166,16 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
 
             reader.onload = (function (file) {
                 return function (e) {
-                    var previewImage = document.createElement('img');
-                    previewImage.src = e.target.result;
-                    previewImage.className = 'previewImage';
-                    previewImage.width = '100'; // Chỉnh kích thước ảnh
-                    previewImagesContainer.appendChild(previewImage);
+                    if (file.type.startsWith('video/')) {
+                        previewVideo.src = e.target.result;
+                        previewVideo.style.display = 'block';
+                    } else {
+                        var previewImage = document.createElement('img');
+                        previewImage.src = e.target.result;
+                        previewImage.className = 'previewImage';
+                        previewImage.width = '100'; // Chỉnh kích thước ảnh
+                        previewImagesContainer.appendChild(previewImage);
+                    }
                     imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
                 };
             })(file);

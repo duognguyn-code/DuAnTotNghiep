@@ -21,6 +21,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.designs = [];
     $scope.formDesign = {};
     $scope.categories = [];
+    $scope.accountHome= {};
     $scope.accountActive = {};
     $rootScope.cartItems = [];
     $rootScope.qtyCart = 0;
@@ -32,13 +33,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.checkBuy = null;
     $scope.bills = {};
 
+
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
     function toastMessage(heading, text, icon) {
-        // $.toast({
-        //     heading: heading,
-        //     text: text,
-        //     position: 'top-right',
-        //     icon: icon
-        // })
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -57,6 +59,19 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
 
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+
+        }else {
+            $http.get("http://localhost:8080/rest/guest/getAccount",token).then(respon =>{
+                if (respon.data.role.name === "ROLE_USER"){
+                    $rootScope.check = "OK";
+                }else {
+                    $rootScope.check = null;
+                }
+            })
+        }
+    }
     $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -76,6 +91,16 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
 
+    $scope.getAcount = function () {
+        $http.get(`http://localhost:8080/rest/guest/getAccount`, token).then(function (respon){
+            $scope.accountHome = respon.data;
+            console.log($scope.accountHome.role.name);
+        }).catch(err => {
+            $scope.accountHome = null;
+        })
+
+    }
+    $scope.getAcount();
 
     $scope.checkCartItemQuantity = function (item) {
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -136,7 +161,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
     $scope.getAcountActive = function () {
-        $http.get(apiUrlAccout + `/getAccountActive`).then(function (respon) {
+        $http.get(apiUrlAccout + `/getAccountActive`,token).then(function (respon) {
             $scope.accountActive = respon.data;
             $rootScope.name = $scope.accountActive.username;
             console.log($scope.accountActive.username)
@@ -185,6 +210,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                         $http.post(urlOrder + '/add', $scope.bills).then(res => {
                             if (res.data) {
                                 $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
+                                    $scope.clearCart();
                                     console.log("orderDetail", res.data)
                                 }).catch(err => {
                                     swal.fire({
@@ -222,9 +248,27 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     $scope.bills.statusBuy = 0;
                     $scope.bills.moneyShip = $scope.ship;
                     $scope.bills.typePayment = false;
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Đang thanh toán  vui lòng chờ!',
+                        html: 'Vui lòng chờ <b></b> milliseconds.',
+                        timer: 5500,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    });
                     $http.post(urlOrder + '/add', $scope.bills).then(res => {
                         if (res.data) {
                             $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
+                                $scope.clearCart();
                                 $window.location.href = '/user/cart/buy-cod-success.html';
 
                             }).catch(err => {
@@ -313,6 +357,11 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         // Update the cart items in local storage
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     };
+    $scope.clearCart = function() {
+        localStorage.removeItem('cartItems');
+        $rootScope.qtyCart = 0;
+        // Add any additional logic or UI updates you need after clearing the cart
+    };
     $scope.cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     $rootScope.loadQtyCart = function () {
         $rootScope.qtyCart = 0;
@@ -392,22 +441,24 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     };
 
     $scope.getAddressAcountActive = function () {
-        $http.get(apiUrlAccout + "/getAddress").then(function (respon) {
-            $scope.addressAccount = respon.data;
-            $scope.to_district_id = $scope.addressAccount.districtId;
-            $scope.getShippingOder();
-            $scope.to_ward_code = $scope.addressAccount.wardId;
-            console.log($scope.to_district_id, $scope.to_ward_code)
-            console.log($scope.addressDefault)
+        if ($rootScope.account != null) {
+            $http.get(apiUrlAccout + "/getAddress").then(function (respon) {
+                $scope.addressAccount = respon.data;
+                $scope.to_district_id = $scope.addressAccount.districtId;
+                $scope.getShippingOder();
+                $scope.to_ward_code = $scope.addressAccount.wardId;
+                console.log($scope.to_district_id, $scope.to_ward_code)
+                console.log($scope.addressDefault)
 
-        }).catch(err => {
-            Swal.fire({
-                icon: 'error',
-                text: 'Vui lòng thêm địa chỉ!!!',
+            }).catch(err => {
+                Swal.fire({
+                    icon: 'error',
+                    text: 'Vui lòng thêm địa chỉ!!!',
+                })
+                console.log(err)
+                $window.location.href = '#!address';
             })
-            console.log(err)
-            $window.location.href = '#!address';
-        })
+        }
     }
     $scope.getShippingOder = function () {
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="

@@ -48,12 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.authorizeRequests().antMatchers("/signup", "/api/auth/signin","/apiUser/**","/cron-jobs/*","/api/time-keep/*","/admin/**","/apiProject/*").permitAll();
+        http.authorizeRequests().antMatchers( "/api/auth/**","/rest/user/address/**","/cron-jobs/*","/api/time-keep/*","/admin/**","/apiProject/*","/error").permitAll();
 
-        http.authorizeRequests().antMatchers( "/company/*","/role/*" )
+        http.authorizeRequests().antMatchers( "/api/category**","/api/chart/**","/api/color/**","/api/design/**","/api/material/**","/rest/staff/productchange/**","/api/size/**" )
                 .hasAnyAuthority("ROLE_ADMIN");
 
-        http.authorizeRequests().antMatchers("/open-talk/*","/api1/project/**")
+        http.authorizeRequests().antMatchers("/api/category**","/api/chart/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
 
 //        http.formLogin()
