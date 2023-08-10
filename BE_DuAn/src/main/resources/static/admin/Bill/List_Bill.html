@@ -31,9 +31,9 @@
                             <select ng-model="searchStatus"
                                     class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option value="6">---Chọn Mục---</option>
-                                <option value="1">Chờ Xác Nhận</option>
-                                <option value="2">Xác Nhận</option>
-                                <option value="3">Đang Giao Hàng</option>
+                                <option value="1">Chờ Xác Nhận  ( {{sumSts1}})</option>
+                                <option value="2">Xác Nhận  ( {{sumSts2}})</option>
+                                <option value="3">Đang Giao Hàng ( <a style="color: red">{{sumSts3}} </a> )</option>
                                 <option value="4">Giao Dịch Hoàn Tất</option>
                                 <option value="5">Hủy Đơn</option>
                             </select>

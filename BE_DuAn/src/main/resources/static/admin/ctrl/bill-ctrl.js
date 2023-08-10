@@ -27,6 +27,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     };
     $scope.getBill();
     $scope.resetSearch = function () {
+
         $scope.searchPhone = " ";
         $scope.searchStatus = "6";
         $scope.date1 = null;
@@ -35,6 +36,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
 
     $scope.resetSearch();
     $scope.searchBill = function () {
+        alert($scope.sumSts1 + '---'+ $scope.sumSts2+'----'+ $scope.sumSts3)
         if ($scope.searchPhone === "") {
             $scope.searchPhone = " "
         }
@@ -260,4 +262,29 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             this.page = this.count - 1;
         }
     }
+    $scope.sumSts1=0;
+    $scope.sumSts2=0;
+    $scope.sumSts3=0;
+    $scope.sumStatus=function (){
+        for (let i = 1; i < 4; i++) {
+        $http.get(apiUrlBill+'/sumStatus'+'/'+i)
+            .then(function (response) {
+               if (i==1){
+                   $scope.sumSts1=response.data;
+               }
+                if (i==2){
+                    $scope.sumSts2=response.data;
+                }
+                if (i==3){
+                    $scope.sumSts3=response.data;
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+
+    }
+    $scope.sumStatus();
 });

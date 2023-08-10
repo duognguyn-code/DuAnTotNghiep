@@ -71,14 +71,17 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
         })
     }
 
-    $scope.getAllProductChange=function(){
-        $http.get('/rest/user/productchange/getAll').then(resp=>{
-            $scope.listProductChange = resp.data;
-            console.log('dsadsadsdsadas '+$scope.listProductChange);
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
+    // $scope.getAllProductChange=function(){
+    //     $http.get('/rest/user/productchange/getAll').then(resp=>{
+    //         $scope.listProductChange = resp.data;
+    //         for (var i = 0; i <  $scope.listProductChange.length; i++) {
+    //             $scope.listProductChange[i].checkQuantity=  $scope.listProductChange[i].quantityProductChange
+    //         }
+    //         console.log('dsadsadsdsadas '+$scope.listProductChange);
+    //     }).catch(error=>{
+    //         console.log(error);
+    //     })
+    // }
 
     $scope.getAllProductChangeDetails=function(id){
         $http.get(`/rest/user/productchange/getPrChangeDetails/${id}`).then(resp=>{
@@ -90,7 +93,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
 
     }
 
-    $scope.getAllProductChange();
+    // $scope.getAllProductChange();
     $scope.checkSelected= function (id){
         console.log('sdsadasadsa '+id)
         var check = true;
@@ -132,7 +135,8 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                         console.log("ddd " + response.data);
                         $scope.message("Đã xác nhận yêu cầu");
                         $scope.seLected=[];
-                        $scope.getAllProductChange();
+                        // $scope.getAllProductChange();
+                        $scope.searchBill();
                     }).catch(error => {
                         $scope.error('lỗi có bug rồi');
                     });
@@ -166,13 +170,284 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             console.log("ddd " + response.data);
             $scope.message("Đã hủy yêu cầu");
             $scope.seLected=[];
-            $scope.getAllProductChange();
+            // $scope.getAllProductChange();
+            $scope.searchBill();
         }).catch(error => {
             $scope.error('lỗi có bug rồi');
         });
 
     }
+    const apiUrlProductChange = "http://localhost:8080/rest/user/productchange";
+    $scope.updateQuantity=function(prChange){
+        var item =angular.copy(prChange)
+        $http.put(apiUrlProductChange+'/updateqQuantity'+'/'+item.id+'/'+item.quantityProductChange).then(response => {
+            alert("ok")
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+    $scope.formReasonReturn={};
+    $scope.getForReasonReturn=function(prChange){
+        // alert("ad")
+        var item =angular.copy(prChange)
+        $http.get(apiUrlProductChange+'/forReasonreturn'+'/'+item.id).then(response => {
+            $scope.formReasonReturn=response.data;
+            alert(JSON.stringify($scope.formReasonReturn))
+            // alert("ok")
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+    $scope.formPrdReturn=[];
+    $scope.quantity1=0
+    $scope.quantity2=0
+    $scope.chang=function (id){
+        var item = $scope.formPrdReturn.find(item => item.id == id);
+        let a =item.quantityProductChange - (item.quantity1+item.quantity2);
+        alert(a)
+        if(a < 0){
+            alert("Khoong dc")
+            item.quantity1=$scope.quantity1
+            item.quantity2=$scope.quantity2
+            return
+        }{
+            quantity=item.quantityProductChange
+            $scope.quantity1= item.quantity1
+            $scope.quantity2=item.quantity2
+            return;
+        }
 
+    }
+    $scope.getprd=function (){
+        $http.post(`/rest/staff/productchange/prdList`,$scope.seLected).then(response => {
 
+            $scope.formPrdReturn=response.data;
+            for (var i = 0; i <  $scope.formPrdReturn.length; i++) {
+                $scope.formPrdReturn[i].quantity1=0
+                $scope.formPrdReturn[i].quantity2=0
 
+        }
+        }).catch(error => {
+            console.log(error);
+        });
+    }
+    $scope.productQuantitychange={
+        get productReturn(){
+            return $scope.formPrdReturn.map(item =>{
+                return {
+                    id: item.billDetail.product.id,
+                    barcode: item.billDetail.product.barcode,
+                    name: item.billDetail.product.name,
+                    price: item.billDetail.product.price,
+                    quantity: item.quantity1,
+                    category: {idCategory: item.billDetail.product.category.idCategory},
+                    size: {id: item.billDetail.product.size.id},
+                    color: {id: item.billDetail.product.color.id},
+                    design: {id: item.billDetail.product.design.id},
+                    material: {id: item.billDetail.product.material.id},
+                    status : 1,
+                }
+            })
+        },get productCancel(){
+            return $scope.formPrdReturn.map(item =>{
+                return {
+                    // id: item.billDetail.product.id,
+                    // barcode: item.billDetail.product.barcode,
+                    name: item.billDetail.product.name,
+                    price: item.billDetail.product.price,
+                    quantity: item.quantity2,
+                    category: {idCategory: item.billDetail.product.category.idCategory},
+                    size: {id: item.billDetail.product.size.id},
+                    color: {id: item.billDetail.product.color.id},
+                    design: {id: item.billDetail.product.design.id},
+                    material: {id: item.billDetail.product.material.id},
+                    status : 2,
+                }
+            })
+        }
+        , updateReturnQuantityProduct(){
+            var prd = angular.copy(this);
+            $http.put(`/rest/staff/productchange/updateProductChange`, prd).then(resp => {
+                // alert("ok")
+                $scope.postRequest();
+            }).catch(error => {
+                // alert("Loi~")
+                console.log(error)
+            })
+            $http.put(`/rest/staff/productchange/updateProductCancel`, prd).then(resp => {
+                // alert("ok")
+            }).catch(error => {
+                // alert("Loi~")
+                console.log(error)
+            })
+        }
+    }
+
+    $scope.formAddBill =[];
+    $scope.formAddBill1 ={};
+    $scope.totalMoneyBill= null
+    $scope.addProduct=function (bill){
+        $scope.formAddBill1 = bill
+        alert(JSON.stringify(bill))
+         var it =$scope.listProductChange.find(item => item.id == bill.id);
+        it.quantityAddBill=0
+        $scope.formAddBill.push(it);
+        var item =angular.copy($scope.formAddBill)
+    }
+    $scope.checkBtn=function (prd){
+        if (prd.quantityProductChange > prd.checkQuantity){
+            alert("Không thể tăng số lượng")
+            prd.quantityProductChange=prd.checkQuantity
+            return
+        }
+        if (prd.quantityProductChange < 0 || prd.quantityProductChange==0){
+            alert("Số lượng phải lớn hơn 0")
+            prd.quantityProductChange=prd.checkQuantity
+            return
+        }
+    }
+    $scope.updateQuantityBill=function (it){
+        var item = $scope.formAddBill.find(item => item.id == it.id);
+       var item2=angular.copy(item);
+        if (item2.quantityAddBill >item2.billDetail.product.quantity){
+            alert("Số Lượng Sản Phẩm Chỉ Còn: "+item2.billDetail.product.quantity)
+            it.quantityAddBill = 0
+            return
+        }
+       $scope.totalMoneyBill = item2.billDetail.product.price * item2.quantityAddBill
+    }
+    $scope.addBill = {
+        createDate: new Date(),
+        address: "",
+        account: {username: " "},
+        phoneTake: "",
+        personTake: "",
+        timeReceive: new Date(),
+        totalMoney: "",
+        moneyShip: "0",
+        typePayment: 1,
+        description: "1",
+        statusBuy: "1",
+        status: "1",
+        oldBill:{id : 9},
+        get billDetails() {
+            return $scope.formAddBill.map(item => {
+                return {
+                    product: {id:item.billDetail.product.id},
+                    price: item.billDetail.product.price,
+                    quantity: item.quantityAddBill,
+                    dateReturn:new Date(),
+                    moneyRefund: null,
+                    description: "Không",
+                    status: 1,
+                    previousBillDetail: {id:item.billDetail.id},
+                }
+            })
+        }
+        , purchase() {
+                    var bill = angular.copy($scope.addBill);
+                    bill.address =  $scope.formAddBill1.billDetail.bill.address
+                    bill.account.username =  $scope.formAddBill1.account.username
+                    bill.phoneTake =  $scope.formAddBill1.billDetail.bill.phoneTake
+                    bill.personTake =  $scope.formAddBill1.billDetail.bill.personTake
+                    bill.totalMoney = $scope.totalMoneyBill
+                    bill.description =  $scope.formAddBill1.billDetail.bill.address
+                    bill.oldBill.id =  $scope.formAddBill1.billDetail.bill.id
+
+                    $http.post(`/rest/staff/productchange/CreateBillChange`, bill).then(resp => {
+                        alert("Tạo Bill Thành Công");
+
+                    }).catch(error => {
+                        alert("Loi~")
+                        console.log(error)
+                    })
+
+        }
+    }
+    $scope.NoReturnProduct = function (id){
+        alert(id)
+        $http.put(`/rest/staff/productchange/updateBill`+`/`+id+`/`+"cancel").then(response => {
+        }).catch(error => {
+            $scope.error('lỗi có bug rồi');
+        });
+    }
+    $scope.resetSearch = function () {
+        $scope.searchPhone = " ";
+        $scope.searchStatus = "1";
+    }
+    $scope.checksts=0;
+    $scope.resetSearch();
+    $scope.searchBill1 = function () {
+
+        if ($scope.searchPhone === "") {
+            $scope.searchPhone = " "
+        }
+        if ($scope.searchStatus==1){
+            $scope.checksts=0
+        }
+        if ($scope.searchStatus==2){
+            $scope.checksts=1
+        }
+
+        $http.get(apiUrlProductChange  +'/'+ $scope.searchPhone + '/' + $scope.searchStatus)
+            .then(function (response) {
+                $scope.listProductChange = response.data;
+                for (var i = 0; i <  $scope.listProductChange.length; i++) {
+                    $scope.listProductChange[i].checkQuantity=  $scope.listProductChange[i].quantityProductChange
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    };
+    $scope.searchBill = function () {
+        $scope.checksts=0
+        if ($scope.searchPhone === "") {
+            $scope.searchPhone = " "
+        }
+        $http.get(apiUrlProductChange  +'/'+ $scope.searchPhone + '/' + 1)
+            .then(function (response) {
+                $scope.listProductChange = response.data;
+                for (var i = 0; i <  $scope.listProductChange.length; i++) {
+                    $scope.listProductChange[i].checkQuantity=  $scope.listProductChange[i].quantityProductChange
+                }
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    };
+    $scope.searchBill();
+    $scope.sumSts1=0;
+    $scope.sumSts2=0;
+    $scope.sumSts3=0;
+    $scope.sumStatus=function (){
+        for (let i = 1; i < 4; i++) {
+            $http.get(apiUrlProductChange+'/sumStatus'+'/'+i)
+                .then(function (response) {
+                    if (i==1){
+                        $scope.sumSts1=response.data;
+                    }
+                    if (i==2){
+                        $scope.sumSts2=response.data;
+                    }
+                    if (i==3){
+                        $scope.sumSts3=response.data;
+                    }
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
+    $scope.sumStatus();
+    $scope.formProduct={}
+    $scope.getProduct=function (prChange){
+        $scope.formProduct=angular.copy(prChange);
+        alert(JSON.stringify($scope.formProduct))
+
+    }
 });

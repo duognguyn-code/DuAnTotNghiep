@@ -104,6 +104,17 @@ public class BillServiceImpl implements BillService {
         billDetailRepository.saveAll(details);
         return bill;
     }
+    @Override
+    public Bill createBillChange(JsonNode billData) {
+        ObjectMapper mapper = new ObjectMapper();
+        Bill bill  = mapper.convertValue(billData,Bill.class);
+        billRepository.save(bill);
+        TypeReference<List<Bill_detail>> type =new  TypeReference<List<Bill_detail>>() {};
+        List<Bill_detail> details = mapper.convertValue(billData.get("billDetails"),type).
+                stream().peek(d -> d.setBill(bill)).collect(Collectors.toList());
+        billDetailRepository.saveAll(details);
+        return bill;
+    }
 
     @Override
     public List<Bill> findAllByAccount(Account account) {
@@ -113,5 +124,10 @@ public class BillServiceImpl implements BillService {
     @Override
     public Integer chart(String date) {
         return billRepository.chart(date);
+    }
+
+    @Override
+    public Integer sumStatus(String number) {
+        return billRepository.SumStatus(number);
     }
 }
