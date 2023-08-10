@@ -110,6 +110,14 @@ public class ProductChangeRestController {
         Collections.sort(productChangeList, comparator);
         return productChangeList;
     }
+    @GetMapping("/{phone}/{status}")
+    public List<ProductChange> findProductChangeByStatus(@PathVariable(value = "status")Integer status,@PathVariable(value = "phone")String phone){
+        System.out.println("seảch");
+        if (phone.equals(" ")) {
+            phone = "0";
+        }
+        return productChangeService.findProductChangeByStatus(status, phone);
+    }
 
     @RequestMapping(value= "/getPrChangeDetails/{id}",  method =  RequestMethod.GET )
     public ChangeProductDetail listPrChangeDetails(@PathVariable("id") ProductChange  id) {
@@ -133,5 +141,22 @@ public class ProductChangeRestController {
             return listImage;
         }
         return null;
+    }
+    @PutMapping("/updateqQuantity/{id}/{quantity}")
+    public ProductChange updateQuantity(@PathVariable(value = "id")Integer id,@PathVariable(value = "quantity")Integer quantity){
+        System.out.println(quantity);
+        ProductChange productChange =productChangeService.findByStatus(id);
+        productChange.setQuantityProductChange(quantity);
+        return productChangeService.save(productChange);
+    }
+
+    @GetMapping("/forReasonreturn/{id}")
+    public List<Bill_detail> getForProductChange(@PathVariable(value = "id")String id){
+        return billDetailRepository.getForProductChange(id);
+    }
+
+    @GetMapping("/sumStatus/{number}")
+    public Integer sumStatus(@PathVariable(value = "number")String number){
+        return productChangeService.sumStatus(number);
     }
 }

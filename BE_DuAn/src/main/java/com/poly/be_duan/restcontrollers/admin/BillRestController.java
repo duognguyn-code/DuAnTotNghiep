@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -68,7 +69,14 @@ public class BillRestController {
             date1 = "1000/05/03";
         }
         if (date2.equals("null")) {
-            date2 = today.format(dateTimeFormatter);
+            String dt =today.format(dateTimeFormatter);
+//            date2 = today.format(dateTimeFormatter);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            Calendar c = Calendar.getInstance();
+            c.setTime(sdf.parse(dt));
+            c.add(Calendar.DATE, 1);  // number of days to add
+            dt = sdf.format(c.getTime());
+            date2=dt;
         }
         if (phone.equals(" ")) {
             phone = "0";
@@ -81,7 +89,6 @@ public class BillRestController {
             int st = Integer.parseInt(sts);
             return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone, dates1, dates2, st));
         }
-
     }
 
 
@@ -164,5 +171,12 @@ public class BillRestController {
             return billOld;
         }
         return null;
+    }
+
+    @GetMapping("/sumStatus/{number}")
+    public Integer sumStatus(@PathVariable(value = "number")String number){
+//        int sts = Integer.parseInt(number);
+//        System.out.println(billService.sumStatus(number));
+        return billService.sumStatus(number);
     }
 }

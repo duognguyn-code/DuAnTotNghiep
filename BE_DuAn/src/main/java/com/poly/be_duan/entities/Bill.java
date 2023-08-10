@@ -5,11 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -64,8 +62,9 @@ public class Bill {
     @Column(name = "status")
     private Integer status;
 
-    @JsonIgnore
-    @OneToOne
+//    @JsonIgnore
+//    @OneToOne
+@ManyToOne
     @JoinColumn(name = "id_bill_old")
     private Bill oldBill;
 

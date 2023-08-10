@@ -31,5 +31,6 @@ public interface ProductService extends GenericService<Product, Integer> {
     public Optional<Product> getProductByBarCode(Integer barcode);
 
     public Product getId(Integer id);
+    public Product getByName(String name);
 
 }

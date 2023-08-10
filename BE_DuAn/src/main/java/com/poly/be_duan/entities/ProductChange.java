@@ -40,6 +40,9 @@ public class ProductChange {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "username_update")
+    private String usernameUpdate;
+
     @Column(name = "phone")
     private String phone;
 
@@ -61,10 +64,11 @@ public class ProductChange {
 
     @JsonIgnore
     @OneToMany(mappedBy = "productChange")
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference(value = "productChange")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
-
+    @JsonManagedReference
     public List<Image> getImages(){
         return images;
     }
