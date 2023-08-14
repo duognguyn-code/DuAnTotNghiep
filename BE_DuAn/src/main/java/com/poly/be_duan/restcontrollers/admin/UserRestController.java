@@ -3,7 +3,9 @@ package com.poly.be_duan.restcontrollers.admin;
 import com.poly.be_duan.dto.AccountDTO;
 import com.poly.be_duan.dto.AddressDTO;
 import com.poly.be_duan.entities.Account;
+import com.poly.be_duan.entities.Author;
 import com.poly.be_duan.service.AccountService;
+import com.poly.be_duan.service.AuthService;
 import com.poly.be_duan.service.ProductService;
 import com.poly.be_duan.utils.Username;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +27,13 @@ public class UserRestController {
     @Autowired
     ProductService productSV;
 
-//    @Autowired
-//    ServletContext application;
+    @Autowired
+    private AuthService authService;
 
     @Autowired
     ModelMapper modelMapper;
+
+
 
     Account account = null;
 
@@ -40,6 +44,12 @@ public class UserRestController {
         AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return account;
 
+    }
+    @GetMapping("/getAccount")
+    public Author getAccountActives() {
+        System.out.println(Username.getUserName() + "nullcuatenthkdangnhap");
+        Author author = authService.searchAccountByUsername(Username.getUserName());
+        return author;
     }
 
     @GetMapping("/getAddress")

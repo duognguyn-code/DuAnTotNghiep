@@ -110,9 +110,6 @@ public class BillRestController {
             }
         } else {
             Bill billOld = billService.findBillByID(bill.getId()).get();
-
-            System.out.println(billOld.getId() + "ssss");
-            System.out.println(billService.updateStatus(billOld));
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {

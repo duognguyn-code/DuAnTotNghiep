@@ -1,4 +1,4 @@
-app.controller('address-form-ctrl', function ($http, $scope, $window) {
+app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window) {
 
     $scope.form = {}
     $scope.title={
@@ -280,6 +280,11 @@ app.controller('address-form-ctrl', function ($http, $scope, $window) {
         }).catch(err=>{
             console.log(err)
         })
+    }
+    $scope.logOut= function () {
+        alert("dang xuat ben dia chi")
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
     }
 
     $scope.getAddressByUsername();
