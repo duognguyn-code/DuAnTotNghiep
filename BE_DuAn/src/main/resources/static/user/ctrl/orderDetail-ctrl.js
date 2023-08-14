@@ -28,7 +28,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             $scope.accountActive = respon.data;
             $rootScope.name = $scope.accountActive.username;
             console.log($scope.accountActive.username)
-            alert($scope.accountActive.username);
+            // alert($scope.accountActive.username);
         }).catch(err => {
             alert(err)
         })
@@ -38,7 +38,7 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         angular.forEach($scope.files, function(file) {
             form.append('files', file);
         });
-        alert($scope.formDetails.id + "rỗng ko")
+        // alert($scope.formDetails.id + "rỗng ko")
         form.append("bill_detail", $scope.formDetails.id);
         let req = {
             method: 'POST',
@@ -55,6 +55,121 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         })
     }
     $scope.getAcountActive();
+    // $scope.saveProductChange = function (){
+    //     Swal.fire({
+    //         title: 'Thực hiện gửi yêu cầu đổi trả ?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Xác nhận!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             let timerInterval
+    //             Swal.fire({
+    //                 title: 'Tạo yêu cầu thành công' + '!',
+    //                 html: 'Vui lòng chờ <b></b> milliseconds.',
+    //                 timer: 1500,
+    //                 timerProgressBar: true,
+    //                 didOpen: () => {
+    //                     Swal.showLoading()
+    //                     var formData = new FormData();
+    //                     angular.forEach($scope.files, function(file) {
+    //                         formData.append('files', file);
+    //                     });
+    //                     formData.append("description", $scope.formProductChange.description);
+    //                     formData.append("email", $scope.accountActive.email);
+    //                     formData.append("quantityProductChange",$scope.formProductChange.quantity_product_change);
+    //                     formData.append("account",$scope.accountActive.username);
+    //                     formData.append("bill_detail",$scope.formDetails.id);
+    //                     let req = {
+    //                         method: 'POST',
+    //                         url: '/rest/user/productchange/save',
+    //                         headers: {
+    //                             'Content-Type': undefined,
+    //                         },
+    //                         data: formData,
+    //                         transformResponse: [
+    //                             function (data) {
+    //                                 return data;
+    //                             }
+    //                         ]
+    //                     }
+    //                     Swal.fire({
+    //                         title: 'Đang gửi yêu cầu đến admin' + '!',
+    //                         html: 'Vui lòng chờ <b></b> milliseconds.',
+    //                         timer: 3500,
+    //                         timerProgressBar: true,
+    //                         didOpen: () => {
+    //                             Swal.showLoading()
+    //                             const b = Swal.getHtmlContainer().querySelector('b')
+    //                             timerInterval = setInterval(() => {
+    //                                 b.textContent = Swal.getTimerLeft()
+    //                             }, 100)
+    //                         },
+    //                         willClose: () => {
+    //                             clearInterval(timerInterval)
+    //                         }
+    //                     })
+    //                     $http(req).then(response => {
+    //                         console.log("ddd " + response.data);
+    //                         $scope.saveProductChangeDetail();
+    //                         $scope.message("Gửi yêu cầu đổi trả thành công");
+    //                         $('#staticBackdrop').modal('hide');
+    //                         $scope.formProductChange={};
+    //                         $scope.files=null;
+    //                         window.location.href = '/user/index.html#!';
+    //                     }).catch(error => {
+    //                         $scope.error('gửi  yêu cầu đổi trả thất bại');
+    //                     });
+    //                     const b = Swal.getHtmlContainer().querySelector('b')
+    //                     timerInterval = setInterval(() => {
+    //                         b.textContent = Swal.getTimerLeft()
+    //                     }, 100)
+    //                 },
+    //                 willClose: () => {
+    //                     clearInterval(timerInterval)
+    //                 }
+    //             }).then((result) => {
+    //                 if (result.dismiss === Swal.DismissReason.timer) {
+    //
+    //
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }
+    // $scope.uploadFile = function (files) {
+    //     $scope.files = files;
+    //     console.log($scope.files);
+    //     var previewImagesContainer = document.getElementById('previewImagesContainer');
+    //     previewImagesContainer.innerHTML = ''; // Xóa bỏ các ảnh hiện có
+    //     var imageCount = 0;
+    //
+    //     // Biến đếm số lượng ảnh đã hiển thị
+    //
+    //     for (var i = 0; i < files.length; i++) {
+    //         if (imageCount >= 3) {
+    //             break; // Đã đạt số lượng ảnh tối đa, thoát khỏi vòng lặp
+    //         }
+    //
+    //         var file = files[i];
+    //         var reader = new FileReader();
+    //
+    //         reader.onload = (function (file) {
+    //             return function (e) {
+    //                 var previewImage = document.createElement('img');
+    //                 previewImage.src = e.target.result;
+    //                 previewImage.className = 'previewImage';
+    //                 previewImage.width = '100'; // Chỉnh kích thước ảnh
+    //                 previewImagesContainer.appendChild(previewImage);
+    //                 imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
+    //             };
+    //         })(file);
+    //
+    //         reader.readAsDataURL(file);
+    //     }
+    // };
     $scope.saveProductChange = function (){
         Swal.fire({
             title: 'Thực hiện gửi yêu cầu đổi trả ?',
@@ -77,8 +192,13 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
                         angular.forEach($scope.files, function(file) {
                             formData.append('files', file);
                         });
-                        formData.append("description", $scope.formProductChange.description);
+                        if ($scope.formProductChange.description === 'other') {
+                            formData.append("description", $scope.customReason);
+                        } else {
+                            formData.append("description", $scope.formProductChange.description);
+                        }
                         formData.append("email", $scope.accountActive.email);
+                        formData.append("phone", $scope.accountActive.phone);
                         formData.append("quantityProductChange",$scope.formProductChange.quantity_product_change);
                         formData.append("account",$scope.accountActive.username);
                         formData.append("bill_detail",$scope.formDetails.id);
@@ -143,7 +263,10 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
         $scope.files = files;
         console.log($scope.files);
         var previewImagesContainer = document.getElementById('previewImagesContainer');
+        var previewVideo = document.getElementById('previewVideo');
         previewImagesContainer.innerHTML = ''; // Xóa bỏ các ảnh hiện có
+        previewVideo.style.display = 'none';
+
         var imageCount = 0;
 
         // Biến đếm số lượng ảnh đã hiển thị
@@ -158,11 +281,16 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
 
             reader.onload = (function (file) {
                 return function (e) {
-                    var previewImage = document.createElement('img');
-                    previewImage.src = e.target.result;
-                    previewImage.className = 'previewImage';
-                    previewImage.width = '100'; // Chỉnh kích thước ảnh
-                    previewImagesContainer.appendChild(previewImage);
+                    if (file.type.startsWith('video/')) {
+                        previewVideo.src = e.target.result;
+                        previewVideo.style.display = 'block';
+                    } else {
+                        var previewImage = document.createElement('img');
+                        previewImage.src = e.target.result;
+                        previewImage.className = 'previewImage';
+                        previewImage.width = '100'; // Chỉnh kích thước ảnh
+                        previewImagesContainer.appendChild(previewImage);
+                    }
                     imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
                 };
             })(file);

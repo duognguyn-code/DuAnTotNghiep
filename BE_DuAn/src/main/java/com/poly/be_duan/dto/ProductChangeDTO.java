@@ -20,6 +20,7 @@ public class ProductChangeDTO {
     private Date dateChange;
     private String description;
     private String email;
+    private String phone;
     private Boolean status;
     private int  quantityProductChange;
     private Account account;

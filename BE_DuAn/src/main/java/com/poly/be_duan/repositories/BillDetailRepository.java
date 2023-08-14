@@ -19,8 +19,9 @@ public interface BillDetailRepository extends JpaRepository<Bill_detail,Integer>
     @Query(value = "select * from bill_detail\n" +
             "inner join bill on bill.id_bills = bill_detail.id_bills\n" +
             "inner join change_product on change_product.id_bill_detail = bill_detail.id_bill_detail\n" +
+            "inner join images on images.id_product_change = change_product.id_change_product\n" +
             "where id_change_product = ?1 ",nativeQuery = true)
-    public List<Bill_detail> getForProductChange(String id);
+    public Bill_detail getForProductChange(String id);
 
     List<Bill_detail> findAllByBill(Bill bill);
 }

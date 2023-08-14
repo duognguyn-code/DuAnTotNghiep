@@ -64,7 +64,7 @@ public class QLProductChangeRestController {
             if(s !=null) {
                 ProductChange product = productChangeService.findByStatus(s);
                 if(product.getStatus()==1){
-                    product.setStatus(6);
+                    product.setStatus(5);
                     productChangeService.save(product);
                 }else if(product.getStatus()==4){
                     System.out.println("không thể hủy ");
@@ -106,7 +106,7 @@ public class QLProductChangeRestController {
         return;
         }
         if (ksd.equals("cancel")){
-            productChange.setStatus(5);
+            productChange.setStatus(4);
             productChangeService.save(productChange);
             return;
         }

@@ -188,12 +188,12 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         });
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("thêm mới sản phẩm thành công");
+            $scope.message("Thêm mới sản phẩm thành công");
             $scope.resetProducts();
             $scope.getProducts();
         }).catch(error => {
-            $scope.error('thêm mới thất bại');
-            alert(angular.toJson(error));
+            $scope.error('Thêm mới thất bại');
+            // alert(angular.toJson(error));
         });
     };
     $scope.edit = function(productId) {
@@ -276,7 +276,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
             })
             .catch(error => {
                 $scope.error('Cập nhật thất bại');
-                alert(error);
+                // alert(error);
                 console.log(error)
             });
     };
@@ -667,35 +667,35 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
                 if ($scope.formProduct.category == $scope.categories[i].idCategory) {
-                    $scope.formProduct.name = $scope.categories[i].name;
+                    $scope.formProduct.name =' ' + $scope.categories[i].name;
                 }
             }
         }
         if ($scope.formProduct.color != undefined || $scope.formProduct.color != null || $scope.formProduct.color != '') {
             for (let i = 0; i < $scope.colors.length; i++) {
                 if ($scope.formProduct.color == $scope.colors[i].id) {
-                    $scope.formProduct.name += 'C' + $scope.colors[i].name;
+                    $scope.formProduct.name += ' ' + $scope.colors[i].name;
                 }
             }
         }
         if ($scope.formProduct.design != undefined || $scope.formProduct.design != null || $scope.formProduct.design != '') {
             for (let i = 0; i < $scope.designs.length; i++) {
                 if ($scope.formProduct.design == $scope.designs[i].id) {
-                    $scope.formProduct.name += 'D' + $scope.designs[i].name;
+                    $scope.formProduct.name += ' ' + $scope.designs[i].name;
                 }
             }
         }
         if ($scope.formProduct.material != undefined || $scope.formProduct.material != null || $scope.formProduct.material != '') {
             for (let i = 0; i < $scope.colors.length; i++) {
                 if ($scope.formProduct.material == $scope.materials[i].id) {
-                    $scope.formProduct.name += 'M' + $scope.materials[i].name;
+                    $scope.formProduct.name += ' ' + $scope.materials[i].name;
                 }
             }
         }
         if ($scope.formProduct.size != undefined || $scope.formProduct.size != null || $scope.formProduct.size != '') {
             for (let i = 0; i < $scope.sizes.length; i++) {
                 if ($scope.formProduct.size == $scope.sizes[i].id) {
-                    $scope.formProduct.name += 'S' + $scope.sizes[i].name;
+                    $scope.formProduct.name += ' ' + $scope.sizes[i].name;
                 }
             }
         }
@@ -708,35 +708,35 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
         if ($scope.productData.category != undefined || $scope.productData.category != null || $scope.productData.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
                 if ($scope.productData.category == $scope.categories[i].idCategory) {
-                    $scope.productData.name = $scope.categories[i].name;
+                    $scope.productData.name = ' ' + $scope.categories[i].name;
                 }
             }
         }
         if ($scope.productData.color != undefined || $scope.productData.color != null || $scope.productData.color != '') {
             for (let i = 0; i < $scope.colors.length; i++) {
                 if ($scope.productData.color == $scope.colors[i].id) {
-                    $scope.productData.name += ' Màu ' + $scope.colors[i].name;
+                    $scope.productData.name += ' ' + $scope.colors[i].name;
                 }
             }
         }
         if ($scope.productData.design != undefined || $scope.productData.design != null || $scope.productData.design != '') {
             for (let i = 0; i < $scope.designs.length; i++) {
                 if ($scope.productData.design == $scope.designs[i].id) {
-                    $scope.productData.name += ' Thiết kế ' + $scope.designs[i].name;
+                    $scope.productData.name += ' ' + $scope.designs[i].name;
                 }
             }
         }
         if ($scope.productData.material != undefined || $scope.productData.material != null || $scope.productData.material != '') {
             for (let i = 0; i < $scope.colors.length; i++) {
                 if ($scope.formProduct.material == $scope.materials[i].id) {
-                    $scope.productData.name += ' Chất Liệu ' + $scope.materials[i].name;
+                    $scope.productData.name += ' ' + $scope.materials[i].name;
                 }
             }
         }
         if ($scope.productData.size != undefined || $scope.productData.size != null || $scope.productData.size != '') {
             for (let i = 0; i < $scope.sizes.length; i++) {
                 if ($scope.productData.size == $scope.sizes[i].id) {
-                    $scope.productData.name += ' Size ' + $scope.sizes[i].name;
+                    $scope.productData.name += ' ' + $scope.sizes[i].name;
                 }
             }
         }
@@ -803,14 +803,15 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("")
+                $scope.message("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                $scope.message("Bạn đang ở trang cuối");
             }
         },
         last() {

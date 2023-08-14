@@ -56,7 +56,10 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             title: text
         })
     }
-
+    $scope.clearCart = function() {
+        localStorage.removeItem('cartItems');
+        $rootScope.qtyCart = 0;
+    };
     $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -97,7 +100,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             return total + cartItem.quantity;
         }, 0);
         item.totalQuantityInCart = totalQuantityInCart;
-        alert(totalQuantityInCart);
+        // alert(totalQuantityInCart);
 
         // Gửi yêu cầu kiểm tra số lượng của sản phẩm trong db
         var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
@@ -165,7 +168,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             confirmButtonText: 'Xác nhận!'
         }).then((result) => {
             if (result.isConfirmed) {
-                alert("1")
+                // alert("1")
                 if ($scope.checkBuy) {
                     var vnp_OrderInfo = 'thanh toan hoa don';
                     var orderType = 'other';
@@ -186,6 +189,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                             if (res.data) {
                                 $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
                                     console.log("orderDetail", res.data)
+                                    $scope.clearCart();
                                 }).catch(err => {
                                     swal.fire({
                                         icon: 'error',
@@ -210,7 +214,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                             'error'
                         )
                         console.log("error buy cart", err)
-                        alert(err + "lỗi 1");
+                        // alert(err + "lỗi 1");
                     })
 
                 } else {
@@ -222,11 +226,28 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                     $scope.bills.statusBuy = 0;
                     $scope.bills.moneyShip = $scope.ship;
                     $scope.bills.typePayment = false;
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Đang thanh toán  vui lòng chờ!',
+                        html: 'Vui lòng chờ <b></b> milliseconds.',
+                        timer: 5500,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    });
                     $http.post(urlOrder + '/add', $scope.bills).then(res => {
                         if (res.data) {
                             $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
+                                $scope.clearCart();
                                 $window.location.href = '/user/cart/buy-cod-success.html';
-
                             }).catch(err => {
                                 swal.fire({
                                     icon: 'error',
@@ -628,7 +649,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
                 $scope.detailProduct = response.data;
-                alert($scope.detailProduct.images[0])
+                // alert($scope.detailProduct.images[0])
             }).catch(error => {
                 console.log(error, "lỗi")
             })

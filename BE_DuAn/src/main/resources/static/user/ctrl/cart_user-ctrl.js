@@ -99,7 +99,7 @@ app.controller('cart_user-ctrl', function ($rootScope,$scope, $http) {
                 }else if($scope.PrD==''){
                     $scope.checkQuantity = true;
                 }
-                alert($scope.checkQuantity);
+                // alert($scope.checkQuantity);
             }).catch(error => {
                 console.log(error,'lỗi check product')
             })
