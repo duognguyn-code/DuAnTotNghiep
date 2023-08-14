@@ -38,75 +38,43 @@ public class ProductChangeRestController {
         return orderDetails.get();
     }
 
-//    @RequestMapping(value = "/save",method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-//    public void requestProductChange(@ModelAttribute ProductChangeDTO productChangeDTO){
-//        try {
-//            if(productChangeDTO != null){
-//                ProductChange p =  new ProductChange();
-//                p.setAccount(productChangeDTO.getAccount());
-//                p.setDateChange(new Date());
-//                p.setDescription(productChangeDTO.getDescription());
-//                p.setEmail(productChangeDTO.getEmail());
-//                p.setQuantityProductChange(productChangeDTO.getQuantityProductChange());
-//                p.setBillDetail(productChangeDTO.getBill_detail());
-//                p.setStatus(1);
-//                productChangeService.save(p);
-//                Bill_detail bill_detail = billDetailRepository.findById(productChangeDTO.getBill_detail().getId()).get();
-//                bill_detail.setStatus(3);
-//                billDetailService.update(bill_detail, bill_detail.getId());
-//                for (MultipartFile multipartFile: productChangeDTO.getFiles()) {
-//                    Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
-//                            ObjectUtils.asMap(
-//                                    "cloud_name", "dcll6yp9s",
-//                                    "api_key", "916219768485447",
-//                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-//                                    "secure", true,
-//                                    "folders","c202a2cae1893315d8bccb24fd1e34b816"
-//                            ));
-//                    Image image = new Image();
-//                    image.setUrlimage(r.get("secure_url").toString());
-//                    image.setProductChange(p);
-//                    imageService.create(image);
-//                }
-//            }else System.out.println("null");
-//        }catch (Exception e){
-//            e.getMessage();
-//        }
-//    }
-@RequestMapping(value = "/save",method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-public void requestProductChange(@ModelAttribute ProductChangeDTO productChangeDTO){
-    try {
-        if(productChangeDTO != null){
-            ProductChange p =  new ProductChange();
-            p.setAccount(productChangeDTO.getAccount());
-            p.setDateChange(new Date());
-            p.setDescription(productChangeDTO.getDescription());
-            p.setEmail(productChangeDTO.getEmail());
-            p.setQuantityProductChange(productChangeDTO.getQuantityProductChange());
-            p.setBillDetail(productChangeDTO.getBill_detail());
-            p.setPhone(productChangeDTO.getPhone());
-            p.setStatus(1);
-            productChangeService.save(p);
-            Bill_detail bill_detail = billDetailRepository.findById(productChangeDTO.getBill_detail().getId()).get();
-            bill_detail.setStatus(3);
-            billDetailService.update(bill_detail, bill_detail.getId());
-            for (MultipartFile multipartFile: productChangeDTO.getFiles()) {
-                Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
-                        ObjectUtils.asMap(
-                                "cloud_name", "dcll6yp9s",
-                                "api_key", "916219768485447",
-                                "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                                "resource_type", "video",
-                                "folder", "c202a2cae1893315d8bccb24fd1e34b816"
-                        ));
-                Image image = new Image();
-                image.setUrlimage(r.get("secure_url").toString());
-                image.setProductChange(p);
-                imageService.create(image);
-            }
-        }else System.out.println("null");
-    }catch (Exception e){
-        e.getMessage();
+
+    @RequestMapping(value = "/save",method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public void requestProductChange(@ModelAttribute ProductChangeDTO productChangeDTO){
+        try {
+            if(productChangeDTO != null){
+                ProductChange p =  new ProductChange();
+                p.setAccount(productChangeDTO.getAccount());
+                p.setDateChange(new Date());
+                p.setDescription(productChangeDTO.getDescription());
+                p.setEmail(productChangeDTO.getEmail());
+                p.setQuantityProductChange(productChangeDTO.getQuantityProductChange());
+                p.setBillDetail(productChangeDTO.getBill_detail());
+                p.setPhone(productChangeDTO.getPhone());
+                p.setStatus(1);
+                productChangeService.save(p);
+                Bill_detail bill_detail = billDetailRepository.findById(productChangeDTO.getBill_detail().getId()).get();
+                bill_detail.setStatus(3);
+                billDetailService.update(bill_detail, bill_detail.getId());
+                for (MultipartFile multipartFile: productChangeDTO.getFiles()) {
+                    Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
+                            ObjectUtils.asMap(
+                                    "cloud_name", "dcll6yp9s",
+                                    "api_key", "916219768485447",
+                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                    "resource_type", "video",
+                                    "folder", "c202a2cae1893315d8bccb24fd1e34b816"
+                            ));
+                    Image image = new Image();
+                    image.setUrlimage(r.get("secure_url").toString());
+                    image.setProductChange(p);
+                    imageService.create(image);
+                }
+            }else System.out.println("null");
+        }catch (Exception e){
+            e.getMessage();
+        }
+
     }
 }
     @RequestMapping(path = "/saveRequest",method = RequestMethod.POST,

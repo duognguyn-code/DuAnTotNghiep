@@ -2,6 +2,12 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
     const apiUrlBill = "http://localhost:8080/api/bill";
     const apiUrlProduct = "http://localhost:8080/api/product";
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer ` + jwtToken
+        }
+    }
     $scope.bill = [];
     $scope.formBill={};
     $scope.billDetails = [];
@@ -31,7 +37,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.getBillDetail = function () {
         var billId = $routeParams.idBill;
-        $http.get(apiUrlBillDetails+'/'+billId)
+        $http.get(apiUrlBillDetails+'/'+billId,token)
             .then(function (response) {
                 $scope.billDetails = response.data;
                 for (var i = 0; i <  $scope.billDetails.length; i++) {
@@ -79,7 +85,6 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
         var it = angular.copy($scope.formBill)
         // alert(it.status)
         if (it.status == 3 || it.status == 4  ){
-            alert("không the")
             return
         }
         $http.get(apiUrlProduct+'/'+bill.product.id)
@@ -91,7 +96,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                 console.log(error);
             });
 
-        $http.get(apiUrlBillDetails+'/forQuantityProduct'+'/'+bill.id)
+        $http.get(apiUrlBillDetails+'/forQuantityProduct'+'/'+bill.id,token)
             .then(function (response) {
                 $scope.formBillDetailData = response.data;
                 var quantity = angular.copy($scope.formProductData)   // so luong product trong DB
@@ -201,7 +206,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
 
                 var product = angular.copy($scope.formProductData)
                 product.quantity = product.quantity + bill.quantity
-                $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
+                $http.put(apiUrlProduct+'/updatePr',product,token).then(function (response){
 
                     var item = angular.copy(bill);
                     item.status = 5;
@@ -246,7 +251,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.CancelBill= function (){
         var item = angular.copy($scope.formBill)
-        $http.put(apiUrlBill + '/updateStatus'+'/'+$routeParams.idBill,item).then(function (response) {
+        $http.put(apiUrlBill + '/updateStatus'+'/'+$routeParams.idBill,item,token).then(function (response) {
             if (response.data) {
             } else {
             }
@@ -255,8 +260,10 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.updateToTalMoney=function (){
         var totalMn = $scope.formBill.moneyShip + $scope.checktotal.checkbill
+
         // alert( $scope.checktotal.checkbill)
         $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.idBill).then(resp => {
+
            $scope.formBill.totalMoney =totalMn;
         }).catch(error => {
             console.log("Error", error);
@@ -309,6 +316,26 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             this.page = this.count - 1;
         }
     }
+
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/rest/user/getRole",token).then(respon =>{
+                if (respon.data.name === "USER"){
+                    $scope.logOut();
+                }else if (respon.data.name === "ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+
+    $scope.checkLogin();
+
     $scope.messageSuccess=function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -345,4 +372,5 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             title: text
         })
     }
+
 });

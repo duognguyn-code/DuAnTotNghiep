@@ -24,6 +24,7 @@ public class ProductChangeDTO {
     private Boolean status;
     private int  quantityProductChange;
     private Account account;
+    private String  phone;
     private List<ChangeProductDetail> changeDetails;
     private List<Image> listImage;
     private List<MultipartFile> files;

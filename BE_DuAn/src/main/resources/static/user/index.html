@@ -44,7 +44,7 @@
     <!--    <link rel="stylesheet" href="../css/bootstrap.min.css">-->
 </head>
 <body ng-app="Myapp" >
-<div class="container-fluid" >
+<div class="container-fluid" ng-controller="UserController">
     <div>
         <div class="row bg-secondary py-2 px-xl-5">
             <div class="col-lg-6 d-none d-lg-block">
@@ -130,12 +130,13 @@
                                 <div class="nav-item dropdown">
                                     <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài khoản</a>
                                     <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="#!login" class="dropdown-item">Đăng nhập</a>
-                                        <a href="#!register" class="dropdown-item">Đăng ký</a>
+                                        <a href="#!login"  class="dropdown-item">Đăng nhập</a>
+                                        <a href="#!register" ng-if="!account" class="dropdown-item">Đăng ký</a>
+                                        <a ng-click="logoff()" ng-if="account"  href="/security/logoff" class="dropdown-item">Đăng Xuất</a>
                                         <hr>
-                                        <a href="#!purchase" class="dropdown-item">Đơn hàng của bạn</a>
-                                        <a href="/admin/main.html" class="dropdown-item">Quản lý</a>
-                                        <a href="#!info" class="dropdown-item">Thông tin tài khoản</a>
+                                        <a href="#!purchase" ng-if="account" class="dropdown-item">Đơn hàng của bạn</a>
+                                        <a href="/admin/main.html" ng-if="account" class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN'">Quản lý</a>
+                                        <a href="#!info" ng-if="account" class="dropdown-item">Thông tin tài khoản</a>
                                     </div>
                                     <!--                                      modal login-->
 
@@ -292,5 +293,7 @@
 <script src="ctrl/order-ctrl.js"></script>
 <script src="ctrl/register-user-ctrl.js"></script>
 <script src="ctrl/login-ctrl.js"></script>
+<script src="ctrl/profile-ctrl.js"></script>
+<script src="ctrl/home-ctrl.js"></script>
 </body>
 </html>

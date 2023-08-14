@@ -7,11 +7,11 @@ app.config(function($routeProvider){
         })
         .when("/product",{
             templateUrl:"/user/product/Product.html",
-            controller:"UserController"
+            controller:"UserController",
         })
         .when("/cart",{
             templateUrl:"/user/cart/Cart.html",
-            controller:"UserController"
+            controller:"cart_user-ctrl",
         })
         .when("/product_detail",{
             templateUrl:"/user/product/ProductDetail.html",
@@ -32,9 +32,6 @@ app.config(function($routeProvider){
         .when("/contact", {
             templateUrl:"/user/product/contact.html",
         })
-        .when("/info", {
-            templateUrl:"/user/Profile/AccountInfo.html",
-        })
         .when("/register", {
             templateUrl:"/user/account/register-form.html",
             controller:"register-ctrl"
@@ -43,4 +40,9 @@ app.config(function($routeProvider){
             templateUrl:"/user/account/login.html",
             controller:"login-ctrl"
         })
+        .when("/info", {
+            templateUrl:"/user/Profile/AccountInfo.html",
+            controller:"profile-ctl"
+        })
+
 })

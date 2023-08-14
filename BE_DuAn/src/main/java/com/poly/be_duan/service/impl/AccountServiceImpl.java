@@ -9,6 +9,7 @@ import com.poly.be_duan.repositories.AccountRepository;
 import com.poly.be_duan.repositories.AddressRepository;
 import com.poly.be_duan.repositories.RoleRepository;
 import com.poly.be_duan.service.AccountService;
+import com.poly.be_duan.utils.Username;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -110,7 +111,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String setAddressDefault(Integer id) {
         Address address = addressRepository.findById(id).orElse(null);
-        Account account = repository.findByName("Dương");
+        Account account = repository.findByName(Username.getUserName());
         account.setAddress_id(address);
         repository.save(account);
         return "OK";
@@ -118,7 +119,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AddressDTO getAddress() {
-        Account account = repository.findByName("Dương");
+        Account account = repository.findByName(Username.getUserName());
         Address address = addressRepository.findById(account.getAddress_id().getIdAddress()).orElse(null);
         AddressDTO addressDTO = modelMapper.map(address, AddressDTO.class);
         System.out.println(addressDTO);

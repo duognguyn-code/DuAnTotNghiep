@@ -1,7 +1,12 @@
 app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$location,$routeParams) {
     const apiUrlBill = "http://localhost:8080/api/bill";
     const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
-
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer ` + jwtToken
+        }
+    }
     $scope.bills = [];
     $scope.formBill = {};
     $scope.form = {};
@@ -14,18 +19,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         {id: 5, name: "Hủy đơn"},
         {id: 6, name: "Hoàn Trả"}
     ];
-    // $scope.getBill = function () {
-    //     $scope.form.status ="0";
-    //     $http.get(apiUrlBill)
-    //         .then(function (response) {
-    //             $scope.bills = response.data;
-    //             console.log(response);
-    //         })
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // };
-    // $scope.getBill();
+
     $scope.searchBill1 = function () {
         $scope.form.status="0"
         // alert($scope.sumSts1 + '---'+ $scope.sumSts2+'----'+ $scope.sumSts3)
@@ -41,6 +35,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             date2 = null
         }
         $http.get(apiUrlBill + '/' + '0' + '/' + '1' + `/date?date1=` + date1+'&&date2='+date2)
+
             .then(function (response) {
                 $scope.bills = response.data;
                 console.log(response);
@@ -113,7 +108,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             // alert("Bạn không thể cập nhật")
                             $scope.messageError("Bạn không thể cập nhật");
                         }
-                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form).then(function (response) {
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
@@ -170,8 +165,10 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                         Swal.showLoading();
                         $scope.form.id = bill.id;
                             $scope.form.status=5
-                            // $scope.form.totalMoney=
-                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form).then(function (response) {
+
+
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
+
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
@@ -200,7 +197,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         })
     }
     $scope.UpdateBillDetaillByStatusBill = function (status,id){
-        $http.put(apiUrlBillDetails + '/UpdateBillDetaillByStatusBill'+'/'+status +'/'+id).then(function (response) {
+        $http.put(apiUrlBillDetails + '/UpdateBillDetaillByStatusBill'+'/'+status +'/'+id,token).then(function (response) {
             if (response.data) {
             } else {
             }
