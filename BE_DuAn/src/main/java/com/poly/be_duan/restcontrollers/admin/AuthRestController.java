@@ -38,8 +38,6 @@ public class AuthRestController {
     public ResponseEntity<?> registerUser(@RequestBody SignUpDTO signUpDTO) {
         ResponseEntity<?> response = authService.registerUser(signUpDTO);
         if (response.getStatusCode() == HttpStatus.OK) {
-            // Đăng nhập thành công, trả về URL của trang chính
-//            String mainPageUrl = "http://localhost:/admin/adminUser/Login.html"; // Thay đổi đường dẫn này cho phù hợp với URL của trang chính
             return ResponseEntity.ok("alo");
         } else {
             // Đăng nhập thất bại, trả về response như cũ

@@ -1,7 +1,12 @@
 app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$location,$routeParams) {
     const apiUrlBill = "http://localhost:8080/api/bill";
     const apiUrlBillDetails = "http://localhost:8080/api/billDetail";
-
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer ` + jwtToken
+        }
+    }
     $scope.bills = [];
     $scope.formBill = {};
     $scope.form = {};
@@ -16,7 +21,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     ];
     $scope.getBill = function () {
         $scope.form.status ="0";
-        $http.get(apiUrlBill)
+        $http.get(apiUrlBill, token)
             .then(function (response) {
                 $scope.bills = response.data;
                 console.log(response);
@@ -87,7 +92,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                         if (bill.status===4){
                             alert("Bạn không thể cập nhật")
                         }
-                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form).then(function (response) {
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
@@ -143,7 +148,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                         $scope.form.id = bill.id;
                             $scope.form.status=5
 
-                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form).then(function (response) {
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
@@ -172,7 +177,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         })
     }
     $scope.UpdateBillDetaillByStatusBill = function (status,id){
-        $http.put(apiUrlBillDetails + '/UpdateBillDetaillByStatusBill'+'/'+status +'/'+id).then(function (response) {
+        $http.put(apiUrlBillDetails + '/UpdateBillDetaillByStatusBill'+'/'+status +'/'+id,token).then(function (response) {
             if (response.data) {
             } else {
             }

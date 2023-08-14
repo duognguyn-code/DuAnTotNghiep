@@ -36,6 +36,9 @@ public class GuestRestController {
     @Autowired
     private SendMailService sendMailService;
 
+    @Autowired
+    private AuthService authService;
+
     Account account = null;
 
     Bill bill = null;
@@ -109,5 +112,12 @@ public class GuestRestController {
             }
         }
         return cartItems;
+    }
+    @GetMapping("/getAccount")
+    public Author getAccountActive() {
+        System.out.println(Username.getUserName() + "null");
+        Author author = authService.searchAccountByUsername(Username.getUserName());
+        System.out.println(author + "null ");
+        return author;
     }
 }

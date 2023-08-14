@@ -38,7 +38,6 @@ app.controller("register-ctrl",function ($scope, $http,$window){
 
     const api ="/api/auth";
     $scope.create =function(){
-        alert("xong chưa")
         $http.get(api).then(resp => {
             var a = 1;
             console.log("Bắt đầu kiểm tra check trùng")
@@ -110,7 +109,6 @@ app.controller("register-ctrl",function ($scope, $http,$window){
             account: { username: $scope.form.username}
         }
 
-        alert("1")
         $http.post(apiUrlAuthor,auth).then(response => {
             alert("thanh cong")
         }).catch(error => {

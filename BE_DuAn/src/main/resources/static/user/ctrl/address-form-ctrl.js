@@ -18,7 +18,12 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
     $scope.id_ward ="";
     const callApiAddress = "http://localhost:8080/rest/user/address";
     const callApiAcounts = "http://localhost:8080/rest/user";
-
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
 
 
     var citis = document.getElementById("city");
@@ -28,7 +33,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
 
 
     $scope.onSave = function() {
-        $http.post(callApiAddress+"/create", $scope.form,
+        $http.post(callApiAddress+"/create", $scope.form,token,
             $scope.form.addressTake = $scope.name_ward+", "+$scope.name_district+", "+$scope.name_province,
             $scope.form.province = $scope.name_province, $scope.form.district = $scope.name_district,
             $scope.form.ward = $scope.name_ward).then(response => {
@@ -120,16 +125,16 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
     };
     //tìm address theo username
     $scope.getAddressByUsername = function () {
-        $http.get(callApiAddress+"/getByUsername").then(function (respon){
+        $http.get(callApiAddress+'/getByUsername',token).then(function (respon){
             $scope.listaddress = respon.data;
-            console.log($scope.listaddress)
+            console.log($scope.listaddress + "adress theo username")
         }).catch(err => {
             console.log(err)
         })
     }
     //get tất cả tỉnh
     $scope.getProvince = function (){
-        $http.get(callApiAddress+"/getProvince").then(function (respon) {
+        $http.get(callApiAddress+"/getProvince",token).then(function (respon) {
             $scope.provinces = respon.data.data;
             console.log($scope.provinces)
         }).catch(err =>{
@@ -138,7 +143,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
     }
     //get tất cả huyện theo id của tỉnh
     $scope.getDistrict = function (provinces){
-        $http.get(callApiAddress+"/getDistrict?province_id="+provinces).then(function (respon) {
+        $http.get(callApiAddress+"/getDistrict?province_id="+provinces,token).then(function (respon) {
             $scope.district = respon.data.data;
             console.log($scope.district)
         }).catch(err =>{
@@ -147,7 +152,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
     }
     //get tất cả xã theo id của huyện
     $scope.getWard = function (district){
-        $http.get(callApiAddress+"/getWard?district_id="+district).then(function (respon) {
+        $http.get(callApiAddress+"/getWard?district_id="+district,token).then(function (respon) {
             $scope.ward = respon.data.data;
             console.log($scope.ward)
         }).catch(err =>{
@@ -269,9 +274,9 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
 
     };
     $scope.setAddressDefault = function (addres) {
-        $http.post(`${callApiAcounts}/setaddressdefault`,addres.idAddress).then(function () {
+        $http.post(`${callApiAcounts}/setaddressdefault`,addres.idAddress,token).then(function () {
+            alert(token)
             $window.location.href = '#!cart';
-
         }).catch(err=>{
             console.log(err)
         })
