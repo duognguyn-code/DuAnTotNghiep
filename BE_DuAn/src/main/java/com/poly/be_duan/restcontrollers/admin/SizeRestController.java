@@ -1,6 +1,5 @@
 package com.poly.be_duan.restcontrollers.admin;
 
-import com.poly.be_duan.entities.Material;
 import com.poly.be_duan.entities.Size;
 import com.poly.be_duan.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,21 @@ public class SizeRestController {
     }
 
     @PutMapping("{id}")
-    public Size update(@PathVariable("id") Integer id, Size size) {
-        size.setId(id);
+    public Size update(@PathVariable("id") Integer id,@RequestBody Size size) {
+        return sizeService.update(size);
+    }
+    @PutMapping("/delete")
+    public Size updateDelete(@RequestBody Size size) {
+        size.setStatus(0);
         return sizeService.update(size);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Integer id) {
         sizeService.delete(id);
+    }
+
+    @GetMapping("{name}")
+    public Size getNameSize(@PathVariable("name") String name) {
+        return sizeService.getNameSize(name);
     }
 }

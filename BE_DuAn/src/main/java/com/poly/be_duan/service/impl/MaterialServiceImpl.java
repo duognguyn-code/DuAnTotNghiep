@@ -37,4 +37,9 @@ public class MaterialServiceImpl implements MaterialService {
     public void delete(Integer id) {
         materialRepository.deleteById(id);
     }
+
+    @Override
+    public Material getNameMaterial(String name) {
+        return materialRepository.getNameMaterial(name);
+    }
 }

@@ -19,29 +19,44 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
         {id: 5, name: "Hủy đơn"},
         {id: 6, name: "Hoàn Trả"}
     ];
-    $scope.getBill = function () {
-        $scope.form.status ="0";
-        $http.get(apiUrlBill, token)
+
+    $scope.searchBill1 = function () {
+        $scope.form.status="0"
+        // alert($scope.sumSts1 + '---'+ $scope.sumSts2+'----'+ $scope.sumSts3)
+        if ($scope.searchPhone === "") {
+            $scope.searchPhone = " "
+        }
+        let date1 = $filter('date')($scope.date1, "yyyy/MM/dd");
+        let date2 = $filter('date')($scope.date2, "yyyy/MM/dd");
+        if (date1 == null) {
+            date1 = null
+        }
+        if (date2 == null) {
+            date2 = null
+        }
+        $http.get(apiUrlBill + '/' + '0' + '/' + '1' + `/date?date1=` + date1+'&&date2='+date2)
+
             .then(function (response) {
                 $scope.bills = response.data;
                 console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            })
     };
-    $scope.getBill();
+
     $scope.resetSearch = function () {
 
         $scope.searchPhone = " ";
-        $scope.searchStatus = "6";
+        $scope.searchStatus = "1";
         $scope.date1 = null;
-        $scope.getBill();
+        // $scope.getBill();
     }
 
     $scope.resetSearch();
+    $scope.searchBill1();
     $scope.searchBill = function () {
-        alert($scope.sumSts1 + '---'+ $scope.sumSts2+'----'+ $scope.sumSts3)
+        // alert($scope.sumSts1 + '---'+ $scope.sumSts2+'----'+ $scope.sumSts3)
         if ($scope.searchPhone === "") {
             $scope.searchPhone = " "
         }
@@ -90,7 +105,8 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             $scope.form.status=4
                         }
                         if (bill.status===4){
-                            alert("Bạn không thể cập nhật")
+                            // alert("Bạn không thể cập nhật")
+                            $scope.messageError("Bạn không thể cập nhật");
                         }
                         $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
                             if (response.data) {
@@ -122,10 +138,12 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     }
     $scope.updateStatusCancel = function (bill) {
         if (bill.status===4){
-            alert("Bạn không thể hủy đơn hàng này")
+            // alert("Bạn không thể hủy đơn hàng này")
+            $scope.messageError("Bạn không thể hủy đơn hàng này");
             return}
         if (bill.status===5){
-            alert("Đơn hàng đã được hủy")
+            // alert("Đơn hàng đã được hủy")
+            $scope.messageError("Đơn hàng đã được hủy");
             return}
         Swal.fire({
             title: 'Bạn có chắc muốn đổi trạng thái không?',
@@ -148,16 +166,18 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                         $scope.form.id = bill.id;
                             $scope.form.status=5
 
+
                         $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
+
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 $scope.getBill();
-                                $scope.messageSuccess("Đổi trạng thái thành công");
+                                $scope.messageSuccess("Hủy đơn thành công");
                             } else {
-                                $scope.messageError("Đổi trạng thái thất bại");
+                                $scope.messageError("Hủy đơn thất bại");
                             }
                         }).catch(error => {
-                            $scope.messageError("Đổi trạng thái thất bại");
+                            $scope.messageError("Hủy đơn thất bại");
                         });
                         const b = Swal.getHtmlContainer().querySelector('b')
                         timerInterval = setInterval(() => {
@@ -253,14 +273,16 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("Bạn đang ở trang đầu")
+                $scope.messageSuccess("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                // alert("Bạn đang ở trang cuối")
+                $scope.messageSuccess("Bạn đang ở trang cuối");
             }
         },
         last() {

@@ -76,7 +76,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                         var bankcode = ''; // Optional
                         var language = 'vn'; // Optional
                         $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
-                            window.location.href = res.data.value;
+window.location.href = res.data.value;
                             $scope.bills.personTake = $scope.addressAccount.personTake;
                             $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
                             $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
@@ -128,7 +128,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                         $scope.bills.typePayment = false;
                         let timerInterval
                         Swal.fire({
-                            title: 'Đang thanh toán  vui lòng chờ!',
+title: 'Đang thanh toán  vui lòng chờ!',
                             html: 'Vui lòng chờ <b></b> milliseconds.',
                             timer: 5500,
                             timerProgressBar: true,
@@ -196,7 +196,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
             });
         }
     }
-    $scope.calculateSubtotal = function () {
+$scope.calculateSubtotal = function () {
         var subtotal = 0;
         for (var i = 0; i < $scope.cartItems.length; i++) {
             var item = $scope.cartItems[i];
@@ -268,7 +268,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
             return total + cartItem.quantity;
         }, 0);
         item.totalQuantityInCart = totalQuantityInCart;
-        var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
+var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
         $http.get(apiUrlProduct).then(function (response) {
             var dbProductQuantity = response.data.quantity;
             item.messageQuantity = ""; // Reset thông báo lỗi
@@ -322,7 +322,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
         })
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53322&to_district_id="
             + $scope.to_district_id + "&to_ward_code=360204"
-            + "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
++ "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
             $scope.ship = respon.data.body.data.total;
             console.log(respon.data.body.data.total)
         })

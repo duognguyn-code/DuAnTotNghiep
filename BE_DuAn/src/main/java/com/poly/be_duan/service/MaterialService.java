@@ -15,4 +15,5 @@ public interface MaterialService {
     public Material update(Material material);
 
     public void delete(Integer id);
+    Material getNameMaterial(String name);
 }

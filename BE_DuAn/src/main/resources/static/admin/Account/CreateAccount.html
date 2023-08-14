@@ -41,7 +41,6 @@
                         </label>
                     </div>
                 </div>
-                <!--        ===============-->
                 <div class="grid gap-6 mb- md:grid-cols-2">
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
@@ -61,15 +60,24 @@
                         </label>
                     </div>
 
-<!--                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+
+
+                    <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Mật khẩu</span>
                             <input ng-model="formAccount.password"
-                                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                   placeholder="Nhập Mật khẩu" type="password"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    placeholder="Nhập Mật khẩu" type="password" name="password" maxlength="250"
                             />
+                            <span ng-show="myForm.$submitted || myForm.password.$dirty">
+                                        <span class="error" ng-show="myForm.password.$error.required"> <i
+                                                class="fa fa-exclamation-circle" style="color: red"></i>Mật khẩu không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle " style="color: red"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
+                                </span>
                         </label>
-                    </div> -->
+                    </div>
                 </div>
                 <!--        ===========-->
                 <div class="grid gap-6 mb- md:grid-cols-2">
@@ -107,7 +115,20 @@
                     </div>
                 </div>
                 <!--        ============-->
+
                 <div class="grid gap-6 mb- md:grid-cols-2">
+                    <div class="grid gap-6 mb-8 md:grid-cols-2">
+                        <div class="mt-4 text-sm">
+                            <button  ng-click="addAccount()" style="margin-top: 10px; margin-left: 10px;"
+                                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                Thêm Mới
+                            </button>
+                            <button ng-click="resetForm()" style="margin-top: 10px; margin-left: 65px;"
+                                    class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                Làm Mới
+                            </button>
+                        </div>
+                    </div>
                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
@@ -131,43 +152,43 @@
                     </div>
 
 
-                    <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
-                        <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Mật khẩu</span>
-                            <input ng-model="formAccount.password"
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="Nhập Mật khẩu" type="password" name="password" maxlength="250"
-                            />
-                            <span ng-show="myForm.$submitted || myForm.password.$dirty">
-                                        <span class="error" ng-show="myForm.password.$error.required"> <i
-                                                class="fa fa-exclamation-circle" style="color: red"></i>Mật khẩu không được trống</span>
-                                        <span class="error"
-                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">
-                                                <i class="fa fa-exclamation-circle " style="color: red"></i>Mật khẩu tối thiểu 3-250 ký tự</span>
-                                </span>
-                        </label>
-                    </div>
+<!--                    <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">-->
+<!--                        <label class="block text-sm">-->
+<!--                            <span class="text-gray-700 dark:text-gray-400">Mật khẩu</span>-->
+<!--                            <input ng-model="formAccount.password"-->
+<!--                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
+<!--                                    placeholder="Nhập Mật khẩu" type="password" name="password" maxlength="250"-->
+<!--                            />-->
+<!--                            <span ng-show="myForm.$submitted || myForm.password.$dirty">-->
+<!--                                        <span class="error" ng-show="myForm.password.$error.required"> <i-->
+<!--                                                class="fa fa-exclamation-circle" style="color: red"></i>Mật khẩu không được trống</span>-->
+<!--                                        <span class="error"-->
+<!--                                              ng-show="((myForm.password.$error.minlength || myForm.password.$error.maxlength) || myForm.fullName.$error.$dirty)">-->
+<!--                                                <i class="fa fa-exclamation-circle " style="color: red"></i>Mật khẩu tối thiểu 3-250 ký tự</span>-->
+<!--                                </span>-->
+<!--                        </label>-->
+<!--                    </div>-->
 
                 </div>
                 <!--        ============-->
 <!--                <div class="grid gap-6 mb- md:grid-cols-2">-->
 
-              </div>-->
+<!--              </div>-->
 
                 <!--        ============-->
                 </form>
-                <div class="grid gap-6 mb-8 md:grid-cols-2">
-                    <div class="mt-4 text-sm">
-                        <button  ng-click="addAccount()" style="margin-top: 10px; margin-left: 100px;"
-                                 class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Thêm Mới
-                        </button>
-                        <button ng-click="resetForm()" style="margin-top: 10px; margin-left: 65px;"
-                                 class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Làm Mới
-                        </button>
-                    </div>
-                </div>
+<!--                <div class="grid gap-6 mb-8 md:grid-cols-2">-->
+<!--                    <div class="mt-4 text-sm">-->
+<!--                        <button  ng-click="addAccount()" style="margin-top: 10px; margin-left: 100px;"-->
+<!--                                 class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">-->
+<!--                            Thêm Mới-->
+<!--                        </button>-->
+<!--                        <button ng-click="resetForm()" style="margin-top: 10px; margin-left: 65px;"-->
+<!--                                 class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">-->
+<!--                            Làm Mới-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
                 <!--        ===============-->
             </div>
         </div>

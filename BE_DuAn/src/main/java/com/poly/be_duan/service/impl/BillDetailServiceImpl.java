@@ -95,7 +95,7 @@ public class BillDetailServiceImpl implements BillDetailService {
     }
 
     @Override
-    public List<Bill_detail> getForProductChange(String id) {
+    public Bill_detail getForProductChange(String id) {
         return billDetailRepository.getForProductChange(id);
     }
 

@@ -14,4 +14,5 @@ public interface ColorService {
     public Color update(Color color);
 
     public void delete(Integer id);
+    Color getNameColor(String name);
 }

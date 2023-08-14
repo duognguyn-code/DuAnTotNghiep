@@ -40,6 +40,9 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
         $http.get(apiUrlBillDetails+'/'+billId,token)
             .then(function (response) {
                 $scope.billDetails = response.data;
+                for (var i = 0; i <  $scope.billDetails.length; i++) {
+                    $scope.billDetails[i].checkQuantity=  $scope.billDetails[i].quantity
+                }
                 $scope.items.push(response.data);
                 console.log(response);
                 $scope.cop();
@@ -112,28 +115,29 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                 }
                 var product = angular.copy($scope.formProductData)
                 product.quantity = qtyUpdate
-                alert('sl db'+quantity.quantity+'          ' +'sl sp prdt: '+ quantity1.quantity+'      ' +"sl input: "+ bill.quantity)
                 $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
-                    alert("Thay doi thanh cong")
+                    // alert("Thay doi thanh cong")
+                        $scope.messageSuccess("Thay đổi thành công");
                     qtyUpdate=null
                     var item = angular.copy(bill);
                     item.quantity = bill.quantity;
                     if (bill.status ===5||bill.status ===4||bill.status ===3){
-                        alert("Bạn Không Thể Sửa Sản Phầm Này")
+                        // alert("Bạn Không Thể Sửa Sản Phầm Này")
+                        $scope.messageError("Bạn Không Thể Sửa Sản Phầm Này");
                         return
                     }
                     $http.put(apiUrlBillDetails + '/updateBillDetail', item).then(resp => {
                         var index = $scope.getBillDetailForMoney.findIndex(p => p.id == item.id);
                         $scope.getBillDetailForMoney[index] = item;
-                        alert("Cập nhật thành công1");
+                        // alert("Cập nhật thành công1");
                         $scope.updateToTalMoney();
                     }).catch(error => {
-                        alert("Cập nhật thất bại12");
+                        // alert("Cập nhật thất bại12");
                         console.log("Error", error);
                     });
 
                 }).catch(function (error) {
-                    alert("Thay doi that bai")
+                    $scope.messageError("Thay đổi thất bại");
                     console.log(error);
                 });
 
@@ -143,7 +147,13 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             });
 
     }
-
+    $scope.checkQuantityPr = function (billDetail){
+        if(billDetail.quantity < 0 || billDetail.quantity==0){
+            $scope.messageError("Số lượng phải lớn hơn 0");
+            billDetail.quantity =billDetail.checkQuantity
+            return
+        }
+    }
     $scope.getProduct=function (bill){
         // $scope.quantityBillDT = bill.quantity
 
@@ -208,11 +218,13 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                         $scope.billDetails[index] = item;
                         var index1 = $scope.getBillDetailForMoney.findIndex(p => p.id == item1.id);
                         $scope.getBillDetailForMoney[index1] = item1;
-                        alert("Hủy hàng thành công");
+                        // alert("Hủy hàng thành công");
+                        $scope.messageSuccess("Hủy hàng thành công");
                         $scope.updateToTalMoney();
                         $scope.CancelBill();
                     }).catch(error => {
-                        alert("Hủy hàng thất bại");
+                        // alert("Hủy hàng thất bại");
+                        $scope.messageError("Hủy hàng thất bại");
                         console.log("Error", error);
                     });
 
@@ -248,8 +260,10 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
     $scope.updateToTalMoney=function (){
         var totalMn = $scope.formBill.moneyShip + $scope.checktotal.checkbill
-        alert( $scope.checktotal.checkbill)
-        $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.idBill,token).then(resp => {
+
+        // alert( $scope.checktotal.checkbill)
+        $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.idBill).then(resp => {
+
            $scope.formBill.totalMoney =totalMn;
         }).catch(error => {
             console.log("Error", error);
@@ -286,20 +300,23 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("Bạn đang ở trang đầu")
+                $scope.messageSuccess("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                // alert("Bạn đang ở trang cuối")
+                $scope.messageSuccess("Bạn đang ở trang cuối");
             }
         },
         last() {
             this.page = this.count - 1;
         }
     }
+
 
     $scope.checkLogin = function () {
         if (jwtToken == null){
@@ -318,4 +335,42 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
     }
 
     $scope.checkLogin();
+
+    $scope.messageSuccess=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: text
+        })
+    }
+    $scope.messageError=function (text) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: text
+        })
+    }
+
 });
