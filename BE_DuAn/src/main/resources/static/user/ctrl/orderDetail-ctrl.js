@@ -8,7 +8,10 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     $scope.form={};
     $scope.formDetails= {};
     $scope.accountActive = {};
-
+    $scope.logOut= function () {
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
     const jwtToken = localStorage.getItem("jwtToken")
     const token = {
         headers: {

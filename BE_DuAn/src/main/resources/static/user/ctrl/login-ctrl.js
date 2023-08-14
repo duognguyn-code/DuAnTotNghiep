@@ -43,22 +43,23 @@ app.controller('login-ctrl',function($rootScope,$scope,$http,$window){
     $scope.onLogin = function () {
         console.log(pathAPI)
 
-        $http.post(pathAPI, $scope.form).then(respon =>{
-
+        $http.post(pathAPI, JSON.stringify($scope.form)).then(respon =>{
             $scope.message('Đăng nhập thành công');
             localStorage.setItem('jwtToken', respon.data.token);
             $scope.jwt = localStorage.getItem('jwtToken')
             $rootScope.account=respon.data;
-            $window.location.href = '#!home/index';
+            $window.location.href = 'http://localhost:8080/user/index.html#!';
             location.reload();
         }).catch(error => {
             $scope.error('Đăng nhập thất bại');
             console.log(error)
+            alert(error)
             $rootScope.account=null;
         })
     }
 
     $scope.logOut= function () {
+        alert("dang xuat ben login")
         $rootScope.account=null;
         localStorage.removeItem('jwtToken');
     }

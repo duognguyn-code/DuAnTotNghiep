@@ -22,5 +22,6 @@ public interface AuthService {
     public List<Author> searchAccountNoUsernameNoStatus(String phone, String fullName, String email, String roldeName);
     Author searchAccountByUsername(String username);
 
+    Author getRoleByUserName(String userName);
 
 }

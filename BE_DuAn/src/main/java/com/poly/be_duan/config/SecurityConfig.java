@@ -46,23 +46,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.authorizeRequests().antMatchers("/signup", "/api/auth/signin","/apiUser/**","/cron-jobs/*","/api/time-keep/*","/admin/**","/apiProject/*").permitAll();
+        http.authorizeRequests().antMatchers( "/api/auth/**","/user/**","/rest/user/getAccount","/rest/guest/**").permitAll();
 
-        http.authorizeRequests().antMatchers( "/company/*","/role/*" )
+        http.authorizeRequests().antMatchers( "/api/account/**","/api/category/**","/api/chart/**","/api/product/**" )
                 .hasAnyAuthority("ROLE_ADMIN");
 
-        http.authorizeRequests().antMatchers("/open-talk/*","/api1/project/**")
+        http.authorizeRequests().antMatchers("/rest/uácasser/**","/api/cart/**")
                 .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
 
-//        http.formLogin()
-//                .loginPage("/user/index.html#!/login")
-//                .loginProcessingUrl("/api/auth/main")
-//                .defaultSuccessUrl("/api/auth/main", false)
-//
-//                .failureUrl("/security/login/error");
+        http.formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/security/login/success")
+                .defaultSuccessUrl("/security/login/success", false)
+
+                .failureUrl("/security/login/error");
 
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/error");
-
+        http.rememberMe()
+                .tokenValiditySeconds(86400);
+        http.logout()
+                .logoutUrl("/security/logoff")// địa chỉ hệ thống xử lý
+                .logoutSuccessUrl("/security/logoff/success");
         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

@@ -3,6 +3,10 @@ app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
     $scope.orders=[];
     $scope.form={};
     $rootScope.id=null;
+    $scope.logOut= function () {
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
     $scope.huyDon=async function (id) {
         $scope.form.id = id;
 

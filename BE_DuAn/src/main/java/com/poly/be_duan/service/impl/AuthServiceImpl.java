@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
         ac.setUsername(signUpDTO.getUsername());
         ac.setEmail(signUpDTO.getEmail());
         ac.setPhone(signUpDTO.getPhone());
-        ac.setPassword(passwordEncoder.encode(signUpDTO.getPhone()));
+        ac.setPassword(passwordEncoder.encode(signUpDTO.getPassword()));
         ac.setFullName(signUpDTO.getFullName());
         ac.setDate(new Date());
         ac.setStatus(1);
@@ -66,15 +66,16 @@ public class AuthServiceImpl implements AuthService {
 
         System.out.println(authentication);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenProvider.generateToken(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
 
-        System.out.println(jwt);
+
+        System.out.println(token + "token cua thk dang nhap");
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         System.out.println(userDetails);
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
         System.out.println(roles + "của user");
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(),userDetails.getEmail(),roles));
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(),userDetails.getEmail(),roles));
     }
 
     @Override
@@ -110,5 +111,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Author searchAccountByUsername(String username) {
         return authorRepository.searchAccountByUsername(username);
+    }
+
+    @Override
+    public Author getRoleByUserName(String userName) {
+        return authorRepository.findByName(userName);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class JwtResponse {
-    private String jwt;
+    private String token;
     private String username;
     private String email;
     private List<String> roles;

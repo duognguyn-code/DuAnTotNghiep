@@ -5,6 +5,7 @@ import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.service.*;
+import com.poly.be_duan.utils.Username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -109,9 +110,6 @@ public class BillRestController {
             }
         } else {
             Bill billOld = billService.findBillByID(bill.getId()).get();
-
-            System.out.println(billOld.getId() + "ssss");
-            System.out.println(billService.updateStatus(billOld));
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {
@@ -145,7 +143,7 @@ public class BillRestController {
 
     @GetMapping("/rest/user/order")
     public List<Bill> getAllByAccount() {
-        Account account = accountService.findByUsername("Dương");
+        Account account = accountService.findByUsername(Username.getUserName());
         List<Bill> bills = billService.findAllByAccount(account);
         Comparator comparator = new Comparator<Bill>() {
             @Override
