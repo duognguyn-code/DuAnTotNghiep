@@ -1,4 +1,4 @@
-app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $routeParams) {
+app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $routeParams,$window) {
     const apiUrlAccount = "http://localhost:8080/api/account";
     const apiUrlAuthor = "http://localhost:8080/api/auth";
 
@@ -49,7 +49,7 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
 
 
                             } else {
-                                alert("Số Điện Thoại Đã Tồn Tại")
+                                $scope.error('Số Điện Thoại Đã Tồn Tại');
                                 return
                             }
                             console.log(response);
@@ -59,7 +59,7 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                         });
 
                 } else {
-                    alert("Tài Khoản Đã Tồn Tại")
+                    $scope.error('Tài Khoản Đã Tồn Tại');
                     return
                 }
                 console.log(response);
@@ -77,6 +77,7 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
         }
         $http.post(apiUrlAuthor, auth).then(response => {
             // alert("thanh cong")
+            // $scope.message('Thêm Mới');
         }).catch(error => {
             // alert("that bai")
         });
@@ -85,8 +86,6 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
         $http.get(apiUrlAuthor)
             .then(function (response) {
                 $scope.Accounts = response.data;
-                // var item = angular.copy($scope.Accounts)
-                // alert(item.account.username)
                 console.log(response);
             })
             .catch(function (error) {
@@ -121,9 +120,7 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
         $http.get(apiUrlAuthor + '/searchUsername' + '/' + us)
             .then(function (response) {
                 $scope.formAccountUpdate = response.data;
-                // alert(JSON.stringify( $scope.formAccountUpdate))
                 $scope.checkPhone = $scope.formAccountUpdate.account.phone
-                // alert($scope.checkPhone)
                 console.log(response);
             })
             .catch(function (error) {
@@ -152,12 +149,14 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                     }
                     $http.put(apiUrlAccount, formUpd)
                         .then(function (response) {
-                            alert("Update thành công")
+                            // alert("Update thành công")
+                            $scope.message('Cập Nhật Thành Công');
                             var auth = {
                                 role: {idRole: $scope.formAccountUpdate.role.idRole},
                                 account: {username: $scope.formAccountUpdate.account.username},
                                 id: $scope.formAccountUpdate.id
                             }
+                            $window.location.href = '#!Account';
                             $http.put(apiUrlAuthor, auth).then(response => {
                                 // alert("thanh cong")
                             }).catch(error => {
@@ -166,10 +165,12 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                             console.log(response);
                         })
                         .catch(function (error) {
+                            $scope.error('Cập Nhật Thất bại');
                             console.log(error);
                         });
                 } else {
-                    alert("Số Điện Thoại Đã Tồn Tại")
+                    // alert("")
+                    $scope.error('Số Điện Thoại Đã Tồn Tại');
                     return
                 }
                 console.log(response);
@@ -182,7 +183,6 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
         $scope.formUpdate()
     }
     $scope.deleteAccount = function (username) {
-        // alert(username)
         $http.get(apiUrlAccount + '/findByUsername' + '/' + username)
             .then(function (response) {
                 $scope.formAccountUpdate = response.data;
@@ -190,10 +190,13 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                 acc.status = 0
                 $http.put(apiUrlAccount, acc)
                     .then(function (response) {
-                        alert("Xóa thành công")
+                        $scope.message('Xóa thành công');
+                        $scope.getAccounts();
+
                         console.log(response);
                     })
                     .catch(function (error) {
+                        $scope.error('Xóa thất bại');
                         console.log(error);
                     });
                 console.log(response);
@@ -204,16 +207,20 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
 
 
     };
+    $scope.formAccount.sex=1;
+    $scope.formAuth.role=1
     $scope.resetForm = function () {
     $scope.formAccount={}
+        $scope.formAccount.email=""
+        $scope.formAccount.phone=""
+        $scope.formAccount.fullName=""
+        $scope.formAccount.sex=1;
+        $scope.formAuth.role=1
     }
     $scope.searchStatus='undefined'
         $scope.searchRole='undefined'
     $scope.searchAccount = function () {
-        // // alert($scope.searchUsername)
-        // if ($scope.searchUsername ===""){
-        //     alert("s")
-        // }
+
         if ($scope.searchUsername == "undefined") {
             $scope.searchUsername = " "
         }
@@ -238,8 +245,6 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
         if ($scope.searchPhone == "") {
             $scope.searchPhone = " "
         }
-        // alert($scope.searchUsername + '--2--'+$scope.searchFullname+'----'+$scope.searchEmail+'----'+$scope.searchPhone+'----'+$scope.searchStatus+'---'+$scope.searchRole)
-
         $http.get(apiUrlAuthor + '/searchAccount' + '/' + $scope.searchUsername + '/' + $scope.searchPhone + '/' + $scope.searchFullname + '/' +
             $scope.searchEmail + '/' + $scope.searchStatus + '/' + $scope.searchRole)
             .then(function (response) {
@@ -311,14 +316,16 @@ $scope.resetSearch=function (){
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("")
+                $scope.message('Bạn đang ở trang đầu');
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                // alert("")
+                $scope.message('Bạn đang ở trang cuối');
             }
         },
         last() {

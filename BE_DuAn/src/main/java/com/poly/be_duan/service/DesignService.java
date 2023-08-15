@@ -15,4 +15,5 @@ public interface DesignService {
     public Designs update(Designs designs);
 
     public void delete(Integer id);
+    Designs getNameDesigns(String name);
 }

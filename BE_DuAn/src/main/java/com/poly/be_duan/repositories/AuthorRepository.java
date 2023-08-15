@@ -1,6 +1,5 @@
 package com.poly.be_duan.repositories;
 
-import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -72,7 +71,7 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
             "on author.username = account.username\n" +
             "inner join role\n" +
             "on role.id_role = author.id_role\n" +
-            "where account.username like %?1% ",nativeQuery = true)
+            "where account.username like ?1 ",nativeQuery = true)
     public Author searchAccountByUsername(String username);
 
 

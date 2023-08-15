@@ -211,6 +211,10 @@ public class ProductServiceImpl implements ProductService {
     public Product getId(Integer id) {
         return productRepository.getID(id);
     }
+    @Override
+    public Product getByName(String name) {
+        return productRepository.getByName(name);
+    }
 
     private List<ProductDetailDTO> getallProduct(){
         List<ProductDetailDTO> listgetAllProduct= new ArrayList<>();

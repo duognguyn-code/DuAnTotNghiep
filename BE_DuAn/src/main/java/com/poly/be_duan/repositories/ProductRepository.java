@@ -57,7 +57,7 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
     List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
 
-    @Query(" SELECT p FROM Product p WHERE p.category.idCategory = ?1 and p.design.id =?2 and p.material.id=?3 and p.color.id=?4 and p.size.id=?5")
+    @Query(" SELECT p FROM Product p WHERE p.category.idCategory = ?1 and p.design.id =?2 and p.material.id=?3 and p.color.id=?4 and p.size.id=?5 and p.status= 1")
     Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize);
 
     @Query(" SELECT p FROM Product p WHERE p.barcode = ?1 ")
@@ -65,5 +65,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query(" SELECT p FROM Product p WHERE p.id = ?1 ")
     Product getID(Integer id);
+
+    @Query(" SELECT p FROM Product p WHERE p.name = ?1 and p.status = 2 ")
+    Product getByName(String name);
 
 }

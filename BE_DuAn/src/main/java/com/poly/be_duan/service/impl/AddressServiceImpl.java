@@ -7,6 +7,7 @@ import com.poly.be_duan.repositories.AccountRepository;
 import com.poly.be_duan.repositories.AddressRepository;
 import com.poly.be_duan.service.AddressService;
 //import com.poly.be_duan.utils.Username;
+import com.poly.be_duan.utils.Username;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public AddressDTO save(AddressDTO addressDTO) {
         Address address = modelMapper.map(addressDTO, Address.class);
-        Account username = accountRepository.findByName("Dương");
+        Account username = accountRepository.findByName(Username.getUserName());
         address.setAccount(username);
         Address addressSave = repository.save(address);
         AddressDTO addressDTOSave = modelMapper.map(addressSave, AddressDTO.class);
@@ -116,7 +117,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDTO> findByUsername() {
-        List<Address> addressList = repository.findByAccount_Username("Duong");
+        List<Address> addressList = repository.findByAccount_Username(Username.getUserName());
         List<AddressDTO> addressDTOList = addressList.stream().map(address ->
                 modelMapper.map(address, AddressDTO.class)).collect(Collectors.toList());
         return addressDTOList;

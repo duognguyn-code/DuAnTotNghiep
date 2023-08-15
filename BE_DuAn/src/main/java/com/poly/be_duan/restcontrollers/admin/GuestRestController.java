@@ -5,6 +5,7 @@ import com.poly.be_duan.dto.ProductDetailDTO;
 import com.poly.be_duan.dto.ProductResponDTO;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
+import com.poly.be_duan.utils.Username;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,9 @@ public class GuestRestController {
     @Autowired
     private SendMailService sendMailService;
 
+    @Autowired
+    private AuthService authService;
+
     Account account = null;
 
     Bill bill = null;
@@ -63,7 +67,7 @@ public class GuestRestController {
     }
     @PostMapping("/order/add")
     public Bill order(@RequestBody Bill bill){
-        account = accountService.findByUsername("Dương");
+        account = accountService.findByUsername(Username.getUserName());
         if(bill.getAddress()==null||account==null){
             return null;
         }
@@ -81,7 +85,7 @@ public class GuestRestController {
 
     @PostMapping("/order/detail/add")
     public JsonNode cartItems(@RequestBody JsonNode cartItems) {
-        account = accountService.findByUsername("Dương");
+        account = accountService.findByUsername(Username.getUserName());
         Bill_detail bill_detail;
         BigDecimal price = null;
         for (int i = 0; i < cartItems.size(); i++) {
@@ -108,5 +112,12 @@ public class GuestRestController {
             }
         }
         return cartItems;
+    }
+    @GetMapping("/getAccount")
+    public Author getAccountActive() {
+        System.out.println(Username.getUserName() + "null");
+        Author author = authService.searchAccountByUsername(Username.getUserName());
+        System.out.println(author + "null ");
+        return author;
     }
 }

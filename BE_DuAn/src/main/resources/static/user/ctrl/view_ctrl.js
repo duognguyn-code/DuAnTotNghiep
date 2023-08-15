@@ -3,13 +3,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
 
     var apiUrlAccout = "http://localhost:8080/rest/user";
 
-    var urlOrder = "http://localhost:8080/rest/guest/order";
-
-    var urlOrderDetail = "http://localhost:8080/rest/guest/order/detail";
-
     var urlShippingOder = "http://localhost:8080/rest/user/address/getShipping-order";
 
-    var urlPaymentVNP = 'http://localhost:8080/api/vnpay/send';
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer ` + jwtToken
+        }
+    }
     $scope.products = [];
     $scope.formProduct = {};
     $scope.sizes = [];
@@ -22,40 +23,13 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.formDesign = {};
     $scope.categories = [];
     $scope.accountActive = {};
-    $rootScope.cartItems = [];
+    $scope.accountHome = {};
     $rootScope.qtyCart = 0;
     $scope.index = 0;
-    $scope.addressAccount = {};
-    $scope.to_district_id = "";
-    $scope.to_ward_code = ""
-    $scope.ship = "";
-    $scope.checkBuy = null;
+    $rootScope.account = jwtToken;
     $scope.bills = {};
 
-    function toastMessage(heading, text, icon) {
-        // $.toast({
-        //     heading: heading,
-        //     text: text,
-        //     position: 'top-right',
-        //     icon: icon
-        // })
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-
-        Toast.fire({
-            icon: icon,
-            title: text
-        })
-    }
+    $rootScope.cartItems = [];
 
     $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
@@ -69,12 +43,12 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-
         Toast.fire({
             icon: 'success',
             title: text
         })
     }
+
 
 
     $scope.checkCartItemQuantity = function (item) {
@@ -97,7 +71,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             return total + cartItem.quantity;
         }, 0);
         item.totalQuantityInCart = totalQuantityInCart;
-        alert(totalQuantityInCart);
+        // alert(totalQuantityInCart);
 
         // Gửi yêu cầu kiểm tra số lượng của sản phẩm trong db
         var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
@@ -117,6 +91,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);
         });
     };
+
     $scope.messageError = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -129,136 +104,22 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                 toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         })
-
         Toast.fire({
             icon: 'error',
             title: text
         })
     }
-    $scope.getAcountActive = function () {
-        $http.get(apiUrlAccout + `/getAccountActive`).then(function (respon) {
-            $scope.accountActive = respon.data;
-            $rootScope.name = $scope.accountActive.username;
-            console.log($scope.accountActive.username)
+    $scope.getAcount = function () {
+        $http.get(`http://localhost:8080/rest/user/getAccount`, token).then(function (respon) {
+            $scope.accountHome = respon.data;
+            alert($scope.accountHome.role.name)
         }).catch(err => {
-            $scope.accountActive = null;
-            $rootScope.account = null;
-        })
 
-    };
-    $scope.checkBuyPaypal = function () {
-        $scope.checkBuy = true;
-    }
-    $scope.checkBuyCOD = function () {
-        $scope.checkBuy = false;
-    }
-    $scope.buyCart = function () {
-
-        $scope.messageQuantity = '';
-        Swal.fire({
-            title: 'Xác nhận thanh toán?',
-            text: "Xác nhận thanh toán để mua hàng!",
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Xác nhận!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                alert("1")
-                if ($scope.checkBuy) {
-                    var vnp_OrderInfo = 'thanh toan hoa don';
-                    var orderType = 'other';
-                    var amount = $scope.calculateTotalAmount();
-                    var bankcode = ''; // Optional
-                    var language = 'vn'; // Optional
-                    $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
-                        window.location.href = res.data.value;
-                        $scope.bills.personTake = $scope.addressAccount.personTake;
-                        $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
-                        $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
-                        $scope.bills.totalMoney = $scope.calculateTotalAmount();
-                        $scope.bills.status = 1;
-                        $scope.bills.statusBuy = 1;
-                        $scope.bills.moneyShip = $scope.ship;
-                        $scope.bills.typePayment = false;
-                        $http.post(urlOrder + '/add', $scope.bills).then(res => {
-                            if (res.data) {
-                                $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
-                                    console.log("orderDetail", res.data)
-                                }).catch(err => {
-                                    swal.fire({
-                                        icon: 'error',
-                                        showConfirmButton: false,
-                                        title: err.data.message,
-                                        timer: 5000
-                                    });
-                                })
-
-                            } else {
-                                Swal.fire(
-                                    'Thanh toán thất bại!',
-                                    '',
-                                    'error'
-                                )
-                            }
-                        })
-                    }).catch(err => {
-                        Swal.fire(
-                            'Thanh toán thất bại!',
-                            '',
-                            'error'
-                        )
-                        console.log("error buy cart", err)
-                        alert(err + "lỗi 1");
-                    })
-
-                } else {
-                    $scope.bills.personTake = $scope.addressAccount.personTake;
-                    $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
-                    $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
-                    $scope.bills.totalMoney = $scope.calculateTotalAmount();
-                    $scope.bills.status = 1;
-                    $scope.bills.statusBuy = 0;
-                    $scope.bills.moneyShip = $scope.ship;
-                    $scope.bills.typePayment = false;
-                    $http.post(urlOrder + '/add', $scope.bills).then(res => {
-                        if (res.data) {
-                            $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
-                                $window.location.href = '/user/cart/buy-cod-success.html';
-
-                            }).catch(err => {
-                                swal.fire({
-                                    icon: 'error',
-                                    showConfirmButton: false,
-                                    title: err.data.message,
-                                    timer: 5000
-                                });
-                            })
-                        }
-
-                    }).catch(err => {
-                        Swal.fire(
-                            'Thanh toán thất bại!',
-                            '',
-                            'error'
-                        )
-                        if (error.status == 401) {
-                            $scope.isLoading = false;
-                            setTimeout(() => {
-                                document.location = '/admin#!/login';
-                            }, 2000);
-                            sweetError('Mời bạn đăng nhập !');
-                            return;
-                        }
-                        console.log("err order", err)
-                        alert(err + "lỗi")
-                    })
-                }
-            }
+            $scope.accountHome = null;
 
         })
     }
+    $scope.getAcount();
     $scope.addCart = function (product, quantity) {
         var totalQuantityInCart = 0;
         var selectedDesign = $scope.checkDesign.name;
@@ -322,93 +183,24 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             });
         }
     }
-    $scope.calculateSubtotal = function () {
-        var subtotal = 0;
-        for (var i = 0; i < $scope.cartItems.length; i++) {
-            var item = $scope.cartItems[i];
-            subtotal += item.product.price * item.quantity;
-        }
-        return subtotal;
-    };
-    $scope.calculateTotalAmount = function () {
-        var subtotal = $scope.calculateSubtotal();
-        return subtotal + $scope.ship;
-    };
-    // Hàm để xóa một mục khỏi giỏ hàng
-    $scope.removeItem = function (index) {
-        Swal.fire({
-            title: 'Bạn có chắc muốn xóa Sản phẩm này khỏi giỏ hàng?',
-            text: "Xóa không thể khôi phục lại!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let timerInterval;
-                Swal.fire({
-                    title: 'Đang xóa!',
-                    html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 1500,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading();
-                        const b = Swal.getHtmlContainer().querySelector('b');
-                    },
-                    willClose: () => {
-                        $scope.cartItems.splice(index, 1);
-                        localStorage.setItem('cartItems', JSON.stringify($scope.cartItems));
-                        location.reload("http://localhost:8080/user/index.html#!/cart");
-                        $scope.message('Đã xóa sản phẩm thành công');
 
-                    }
-                });
-            }
-        });
-    };
 
     $scope.loadFromLocalStorage = function () {
         var json = localStorage.getItem("cartItems");
         this.cartItems = json ? JSON.parse(json) : [];
     }
-    $scope.calculateTotal = function (item) {
-        if (!item || !item.product || !item.quantity) {
-            return 0; // or any default value
-        }
-        return item.product.price * item.quantity;
-    };
-    // Lấy danh sách sản phẩm
+
     $scope.getProducts = function () {
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
-                console.log(response);
-                console.log($scope.products.images.urlimage);
             })
             .catch(function (error) {
                 console.log(error);
             });
     };
 
-    $scope.getAddressAcountActive = function () {
-        $http.get(apiUrlAccout + "/getAddress").then(function (respon) {
-            $scope.addressAccount = respon.data;
-            $scope.to_district_id = $scope.addressAccount.districtId;
-            $scope.getShippingOder();
-            $scope.to_ward_code = $scope.addressAccount.wardId;
-            console.log($scope.to_district_id, $scope.to_ward_code)
-            console.log($scope.addressDefault)
 
-        }).catch(err => {
-            Swal.fire({
-                icon: 'error',
-                text: 'Vui lòng thêm địa chỉ!!!',
-            })
-            console.log(err)
-            $window.location.href = '#!address';
-        })
-    }
     $scope.getShippingOder = function () {
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="
             + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
@@ -429,12 +221,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             console.log(respon.data.body.data.total)
         })
     }
-    $scope.loadMoneyShip = function () {
-        $timeout(function () {
-            $scope.getShippingOder();
-        }, 2000);
-    }
-    $scope.getAddressAcountActive();
+
     $scope.doSubmit = function () {
         if ($scope.formProduct.idProduct) {
             let timerInterval
@@ -496,8 +283,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
 
 
     // Thêm sản phẩm mới
-
-
     $scope.getColors = function () {
         $http.get(`${apiUrlProduct}/getAllColor`)
             .then(function (response) {
@@ -623,12 +408,11 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.detailProduct = {}
     $scope.idCheck = undefined;
     $scope.getDetailProduct = function (id) {
-        console.log(id)
         if (id == 0) {
             id = localStorage.getItem('idDetail');
-            $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
+            $http.post(`/rest/guest/product/product_detail/` + id, token).then(function (response) {
                 $scope.detailProduct = response.data;
-                alert($scope.detailProduct.images[0])
+
             }).catch(error => {
                 console.log(error, "lỗi")
             })
@@ -669,4 +453,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         }
     }
 
+    $scope.getAcountActive = function () {
+        $http.get(apiUrlAccout + `/getAccountActive`, token).then(function (respon) {
+            $scope.accountActive = respon.data;
+            $rootScope.name = $scope.accountActive.username;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+            $scope.accountActive = null;
+            $rootScope.account = null;
+        })
+    };
 });

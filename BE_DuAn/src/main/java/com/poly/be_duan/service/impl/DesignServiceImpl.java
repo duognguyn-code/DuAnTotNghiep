@@ -37,4 +37,9 @@ public class DesignServiceImpl implements DesignService {
     public void delete(Integer id) {
         designRepository.deleteById(id);
     }
+
+    @Override
+    public Designs getNameDesigns(String name) {
+        return designRepository.getNameDesigns(name);
+    }
 }

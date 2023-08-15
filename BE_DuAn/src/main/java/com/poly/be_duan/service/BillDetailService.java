@@ -26,4 +26,8 @@ public interface BillDetailService {
 
     Optional<Bill_detail> findById(Integer id);
     public List<Product> savealldt(JsonNode billData);
+
+    public Bill_detail getForProductChange(String id);
+    public List<Product> saveReturnProduct(JsonNode productChange);
+    public List<Product> saveCancelProduct(JsonNode productChange);
 }

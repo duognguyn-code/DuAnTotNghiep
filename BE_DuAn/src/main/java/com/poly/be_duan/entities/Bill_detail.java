@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -31,7 +31,7 @@ public class Bill_detail {
 
 //null
     @Column(name = "date_return")
-    private LocalDateTime dateReturn;
+    private Date dateReturn;
 
 //null
     @Column(name = "money_refund")

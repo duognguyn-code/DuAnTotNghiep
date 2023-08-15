@@ -94,5 +94,50 @@ public class BillDetailServiceImpl implements BillDetailService {
 //        return billDetailRepository.saveAll(billData);
     }
 
+    @Override
+    public Bill_detail getForProductChange(String id) {
+        return billDetailRepository.getForProductChange(id);
+    }
+
+    @Override
+    public List<Product> saveReturnProduct(JsonNode productChange) {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<List<Product>> type =new  TypeReference<List<Product>>() {};
+        List<Product> products = mapper.convertValue(productChange.get("productReturn"),type).
+                stream().peek(d -> d.getId()).collect(Collectors.toList());
+        for (int i = 0; i < products.toArray().length; i++) {
+            Product prD = productService.getId(products.get(i).getId());
+//            products.get(i).setQuantity(prD.getQuantity() + products.get(i).getQuantity());
+            prD.setQuantity(prD.getQuantity() + products.get(i).getQuantity());
+            productRepository.save(prD);
+        }
+//        productRepository.saveAll(products);
+
+        return products;
+    }
+    @Override
+    public List<Product> saveCancelProduct(JsonNode productChange) {
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<List<Product>> type =new  TypeReference<List<Product>>() {};
+        List<Product> products2 = mapper.convertValue(productChange.get("productCancel"),type).
+                stream().peek(d -> d.getId()).collect(Collectors.toList());
+        for (int i = 0; i < products2.toArray().length; i++) {
+            Product prD = productService.getByName(products2.get(i).getName());
+            if (prD!=null){
+//                products2.get(i).setId(prD.getId());
+//                products2.get(i).setQuantity(prD.getQuantity() + products2.get(i).getQuantity());
+
+                prD.setQuantity(prD.getQuantity() + products2.get(i).getQuantity());
+                productRepository.save(prD);
+            }else{
+                productRepository.save(products2.get(i));
+            }
+
+
+        }
+//        productRepository.saveAll(products2);
+        return products2;
+    }
+
 
 }

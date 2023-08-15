@@ -5,6 +5,7 @@ import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.service.*;
+import com.poly.be_duan.utils.Username;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -67,7 +69,14 @@ public class BillRestController {
             date1 = "1000/05/03";
         }
         if (date2.equals("null")) {
-            date2 = today.format(dateTimeFormatter);
+            String dt =today.format(dateTimeFormatter);
+//            date2 = today.format(dateTimeFormatter);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            Calendar c = Calendar.getInstance();
+            c.setTime(sdf.parse(dt));
+            c.add(Calendar.DATE, 1);  // number of days to add
+            dt = sdf.format(c.getTime());
+            date2=dt;
         }
         if (phone.equals(" ")) {
             phone = "0";
@@ -80,13 +89,11 @@ public class BillRestController {
             int st = Integer.parseInt(sts);
             return ResponseEntity.ok(billService.searchByPhoneAndDateAndStatus(phone, dates1, dates2, st));
         }
-
     }
 
 
     @PutMapping("/updateStatus/{id}")
     public Bill updateStatus(@PathVariable(value = "id") Integer id, @RequestBody Bill bill) {
-        System.out.println("navc");
         List<Bill_detail> detailStatus = billDetailService.getBill_detailForMoney(id);
         if (detailStatus.isEmpty()){
             Bill billOld = billService.findBillByID(bill.getId()).get();
@@ -103,12 +110,14 @@ public class BillRestController {
         } else {
             Bill billOld = billService.findBillByID(bill.getId()).get();
 
-            System.out.println(billOld.getId() + "ssss");
-            System.out.println(billService.updateStatus(billOld));
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {
+                if (bill.getStatus()==5){
+                    billOld.setTotalMoney(BigDecimal.valueOf(0));
+                }
                 billOld.setStatus(bill.getStatus());
+//                billOld.setTotalMoney(BigDecimal.valueOf(0));
                 sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
                 System.out.println("gửi mail yahfnh công");
                 return billService.updateStatus(billOld);
@@ -138,7 +147,7 @@ public class BillRestController {
 
     @GetMapping("/rest/user/order")
     public List<Bill> getAllByAccount() {
-        Account account = accountService.findByUsername("Dương");
+        Account account = accountService.findByUsername(Username.getUserName());
         List<Bill> bills = billService.findAllByAccount(account);
         Comparator comparator = new Comparator<Bill>() {
             @Override
@@ -163,5 +172,12 @@ public class BillRestController {
             return billOld;
         }
         return null;
+    }
+
+    @GetMapping("/sumStatus/{number}")
+    public Integer sumStatus(@PathVariable(value = "number")String number){
+//        int sts = Integer.parseInt(number);
+//        System.out.println(billService.sumStatus(number));
+        return billService.sumStatus(number);
     }
 }

@@ -32,7 +32,12 @@ public interface BillService  {
 
 //    public List<Bill> searchByDate(Date date, Date date1);
     Bill create(JsonNode billData);
+    Bill createBillChange(JsonNode billData);
 
     List<Bill> findAllByAccount(Account account);
     public Integer chart(String date);
+
+    public Integer sumStatus(String number);
+
+    public Integer MaxIdBill();
 }
