@@ -38,6 +38,7 @@ public class ProductChangeRestController {
         return orderDetails.get();
     }
 
+
     @RequestMapping(value = "/save",method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public void requestProductChange(@ModelAttribute ProductChangeDTO productChangeDTO){
         try {
@@ -49,6 +50,7 @@ public class ProductChangeRestController {
                 p.setEmail(productChangeDTO.getEmail());
                 p.setQuantityProductChange(productChangeDTO.getQuantityProductChange());
                 p.setBillDetail(productChangeDTO.getBill_detail());
+                p.setPhone(productChangeDTO.getPhone());
                 p.setStatus(1);
                 productChangeService.save(p);
                 Bill_detail bill_detail = billDetailRepository.findById(productChangeDTO.getBill_detail().getId()).get();
@@ -60,8 +62,8 @@ public class ProductChangeRestController {
                                     "cloud_name", "dcll6yp9s",
                                     "api_key", "916219768485447",
                                     "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                                    "secure", true,
-                                    "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                                    "resource_type", "video",
+                                    "folder", "c202a2cae1893315d8bccb24fd1e34b816"
                             ));
                     Image image = new Image();
                     image.setUrlimage(r.get("secure_url").toString());
@@ -72,8 +74,9 @@ public class ProductChangeRestController {
         }catch (Exception e){
             e.getMessage();
         }
-    }
 
+    }
+}
     @RequestMapping(path = "/saveRequest",method = RequestMethod.POST,
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public void saveRequest(@ModelAttribute ChangeProductDetailDTO changeProductDetailDTO){
@@ -109,6 +112,14 @@ public class ProductChangeRestController {
         Collections.sort(productChangeList, comparator);
         return productChangeList;
     }
+    @GetMapping("/{phone}/{status}")
+    public List<ProductChange> findProductChangeByStatus(@PathVariable(value = "status")Integer status,@PathVariable(value = "phone")String phone){
+        System.out.println("seảch");
+        if (phone.equals(" ")) {
+            phone = "0";
+        }
+        return productChangeService.findProductChangeByStatus(status, phone);
+    }
 
     @RequestMapping(value= "/getPrChangeDetails/{id}",  method =  RequestMethod.GET )
     public ChangeProductDetail listPrChangeDetails(@PathVariable("id") ProductChange  id) {
@@ -132,5 +143,22 @@ public class ProductChangeRestController {
             return listImage;
         }
         return null;
+    }
+    @PutMapping("/updateqQuantity/{id}/{quantity}")
+    public ProductChange updateQuantity(@PathVariable(value = "id")Integer id,@PathVariable(value = "quantity")Integer quantity){
+        System.out.println(quantity);
+        ProductChange productChange =productChangeService.findByStatus(id);
+        productChange.setQuantityProductChange(quantity);
+        return productChangeService.save(productChange);
+    }
+
+    @GetMapping("/forReasonreturn/{id}")
+    public Bill_detail getForProductChange(@PathVariable(value = "id")String id){
+        return billDetailService.getForProductChange(id);
+    }
+
+    @GetMapping("/sumStatus/{number}")
+    public Integer sumStatus(@PathVariable(value = "number")String number){
+        return productChangeService.sumStatus(number);
     }
 }

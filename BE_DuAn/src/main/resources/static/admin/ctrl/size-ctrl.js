@@ -3,7 +3,7 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
     const apiUrlSize = "http://localhost:8080/api/size";
     $scope.sizes = [];
     $scope.formSize = {};
-
+    $scope.checkName={};
     $scope.getSize = function () {
         $http.get(apiUrlSize)
             .then(function (response) {
@@ -58,31 +58,45 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
             url: apiUrlSize,
             data: sizeData
         }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
-        $http(req).then(response => {
-            console.log("ddd " + response);
-            $scope.message("thêm mới size thành công");
-            $scope.resetSize();
-            $scope.getSize();
-        }).catch(error => {
-            $scope.error('thêm mới thất bại');
-        });
+        // let timerInterval
+        // Swal.fire({
+        //     title: 'Đang thêm  mới vui lòng chờ!',
+        //     html: 'Vui lòng chờ <b></b> milliseconds.',
+        //     timer: 5500,
+        //     timerProgressBar: true,
+        //     didOpen: () => {
+        //         Swal.showLoading()
+        //         const b = Swal.getHtmlContainer().querySelector('b')
+        //         timerInterval = setInterval(() => {
+        //             b.textContent = Swal.getTimerLeft()
+        //         }, 100)
+        //     },
+        //     willClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        // });
+        $http.get(apiUrlSize+'/'+$scope.formSize.name)
+            .then(function (response) {
+                $scope.checkName=response.data;
+                if (!$scope.checkName){
+                    $http(req).then(response => {
+                        console.log("ddd " + response);
+                        $scope.message("Thêm mới size thành công");
+                        $scope.resetSize();
+                        $scope.getSize();
+                    }).catch(error => {
+                        $scope.error('Thêm mới thất bại');
+                    });
+                }else{
+                    // alert("")
+                    $scope.error("Size đã tồn tại");
+                    return
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     };
     $scope.editSize = function (size) {
         $scope.formSize = angular.copy(size);
@@ -92,26 +106,29 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
         $http.put(apiUrlSize + '/' + item.id, item).then(resp => {
             var index = $scope.sizes.findIndex(p => p.id == item.id);
             $scope.sizes[index] = item;
-            alert("Cập nhật thành công");
+            // alert("");
+            $scope.message("Cập nhật thành công");
             $scope.resetSize();
             $scope.getSize();
-        }).catch(error => {
-            alert("Cập nhật thất bại");
+        // }).catch(error => {
+            alert("");
+            $scope.message("Cập nhật thất bại");
             console.log("Error", error);
         });
     }
     $scope.deleteSize = function (size) {
-        $http.delete(apiUrlSize + '/' + size.id)
-            .then(function (response) {
-                var index = $scope.sizes.findIndex(p => p.id === size.id);
-                if (index !== -1) {
-                    $scope.sizes.splice(index, 1);
-                    $scope.getSize();
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        $http.put(apiUrlSize + '/delete',size).then(resp => {
+            // var index = $scope.sizes.findIndex(p => p.id == item.id);
+            // $scope.sizes[index] = item;
+            // alert(");
+            $scope.message("Tạm ngưng thành công");
+            $scope.getSize();
+            $scope.resetSize();
+        }).catch(error => {
+            // alert("");
+            $scope.error("Tạm ngưng thất bại");
+            console.log("Error", error);
+        });
     };
     $scope.resetSize = function () {
         $scope.formSize = {
@@ -143,14 +160,15 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("")
+                $scope.message("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                $scope.message("Bạn đang ở trang cuối");
             }
         },
         last() {

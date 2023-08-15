@@ -1,18 +1,13 @@
 package com.poly.be_duan.service.impl;
 
-import com.poly.be_duan.dto.ProductDetailDTO;
-import com.poly.be_duan.dto.ProductResponDTO;
-import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.entities.ProductChange;
 import com.poly.be_duan.repositories.ProductChangeRepository;
 import com.poly.be_duan.service.ProductChangeService;
-import com.poly.be_duan.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,6 +68,11 @@ public class ProductChangeServiceImpl implements ProductChangeService {
     }
 
     @Override
+    public List<ProductChange> findProductChangeByStatus(Integer status, String phone) {
+        return productChangeRepository.findProductChangeByStatus(status,phone);
+    }
+
+    @Override
     public ProductChange findByStatus(Integer idPrChange) {
         if(idPrChange != null){
             return productChangeRepository.findByStatus(idPrChange);
@@ -90,5 +90,10 @@ public class ProductChangeServiceImpl implements ProductChangeService {
     @Override
     public List<ProductChange> findByStatusSendEmail(Integer idChange) {
         return productChangeRepository.findByStatusSendEmail(idChange);
+    }
+
+    @Override
+    public Integer sumStatus(String number) {
+        return productChangeRepository.SumStatus(number);
     }
 }

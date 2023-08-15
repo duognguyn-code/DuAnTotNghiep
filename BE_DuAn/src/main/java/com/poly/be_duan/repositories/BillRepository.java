@@ -46,4 +46,12 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query(value = "select sum(total_money) as'total money' from Bill \n" +
             "where create_date like  ?1% ",nativeQuery = true)
     public Integer chart(String chart);
+
+    @Query(value = "select count(id_bills) as'total money'  from Bill \n" +
+            " where status like ?1% ",nativeQuery = true)
+    public Integer SumStatus(String number);
+
+    @Query(value = "SELECT MAX(id_bills)\n" +
+            "FROM Bill; ",nativeQuery = true)
+    public Integer MaxIdBill();
 }

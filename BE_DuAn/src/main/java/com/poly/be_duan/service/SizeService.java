@@ -15,4 +15,6 @@ public interface SizeService {
     public Size update(Size size);
 
     public void delete(Integer id);
+
+    Size getNameSize(String name);
 }

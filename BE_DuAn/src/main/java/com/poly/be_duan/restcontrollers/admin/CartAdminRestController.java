@@ -110,4 +110,9 @@ public class CartAdminRestController {
     public Optional<Product> SearchByID(@PathVariable("id")Integer id){
         return productService.findById(id);
     }
+
+    @GetMapping("/idBill")
+    public Integer MaxIdBill(){
+        return billService.MaxIdBill();
+    }
 }

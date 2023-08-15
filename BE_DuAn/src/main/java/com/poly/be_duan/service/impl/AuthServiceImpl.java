@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
         ac.setUsername(signUpDTO.getUsername());
         ac.setEmail(signUpDTO.getEmail());
         ac.setPhone(signUpDTO.getPhone());
-        ac.setPassword(passwordEncoder.encode(signUpDTO.getPhone()));
+        ac.setPassword(passwordEncoder.encode(signUpDTO.getPassword()));
         ac.setFullName(signUpDTO.getFullName());
         ac.setDate(new Date());
         ac.setStatus(1);
@@ -62,26 +62,22 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<?> authenticateUser(LoginDTO loginDTO) {
-        try {
+        
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
+        System.out.println(authentication);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtTokenProvider.generateToken(authentication);
 
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            List<String> roles = userDetails.getAuthorities().stream()
-                    .map(item -> item.getAuthority())
-                    .collect(Collectors.toList());
+        System.out.println(token + "token cua thk dang nhap");
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-            return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getEmail(), roles));
-        } catch (AuthenticationException e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-            // Return 401 Unauthorized
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return 500 Internal Server Error
-        }
+        System.out.println(userDetails);
+        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
+        System.out.println(roles + "của user");
+        return ResponseEntity.ok(new JwtResponse(token, userDetails.getUsername(),userDetails.getEmail(),roles));
+
     }
 
     @Override
@@ -117,5 +113,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Author searchAccountByUsername(String username) {
         return authorRepository.searchAccountByUsername(username);
+    }
+
+    @Override
+    public Author getRoleByUserName(String userName) {
+        return authorRepository.findByName(userName);
     }
 }

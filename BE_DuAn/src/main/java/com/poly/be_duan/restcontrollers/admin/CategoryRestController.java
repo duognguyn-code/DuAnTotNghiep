@@ -23,14 +23,22 @@ public class CategoryRestController {
         return categoryService.save(category);
     }
 
-    @PutMapping("{id}")
-    public Category update(@PathVariable("id") Integer id, @RequestBody Category category) {
+    @PutMapping("")
+    public Category update(@RequestBody Category category) {
 //        material.setId_materials(id);
-        return categoryService.update(category,id);
+        return categoryService.update(category);
+    }
+    @PutMapping("/delete")
+    public Category updateDelete(@RequestBody Category category) {
+        category.setStatus(0);
+        return categoryService.update(category);
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable("id") Integer id) {
         categoryService.deleteById(id);
     }
-
+    @GetMapping("{name}")
+    public Category getNameCategory(@PathVariable("name") String name) {
+        return categoryService.getNameCategory(name);
+    }
 }

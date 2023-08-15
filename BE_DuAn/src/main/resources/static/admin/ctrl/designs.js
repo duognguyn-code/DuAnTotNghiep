@@ -3,7 +3,7 @@ app.controller('design', function ($rootScope,$scope, $http) {
 
     $scope.designs = [];
     $scope.formDesign = {};
-
+    $scope.checkName={};
 
     $scope.pagerDesign = {
         page: 0,
@@ -24,14 +24,16 @@ app.controller('design', function ($rootScope,$scope, $http) {
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("Bạn đang ở trang đầu")
+                $scope.message("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                // alert("Bạn đang ở trang cuối")
+                $scope.message("Bạn đang ở trang cuối");
             }
         },
         last() {
@@ -92,31 +94,44 @@ app.controller('design', function ($rootScope,$scope, $http) {
             url: apiUrlDesign,
             data: designData
         }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
+        // let timerInterval
+        // Swal.fire({
+        //     title: 'Đang thêm  mới vui lòng chờ!',
+        //     html: 'Vui lòng chờ <b></b> milliseconds.',
+        //     timer: 5500,
+        //     timerProgressBar: true,
+        //     didOpen: () => {
+        //         Swal.showLoading()
+        //         const b = Swal.getHtmlContainer().querySelector('b')
+        //         timerInterval = setInterval(() => {
+        //             b.textContent = Swal.getTimerLeft()
+        //         }, 100)
+        //     },
+        //     willClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        // });
+        $http.get(apiUrlDesign+'/'+$scope.formDesign.name)
+            .then(function (response) {
+                $scope.checkName=response.data;
+                if (!$scope.checkName){
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("thêm mới kiểu dáng thành công");
+            $scope.message("Thêm mới kiểu dáng thành công");
             $scope.resetDesign();
             $scope.getDesign();
         }).catch(error => {
-            $scope.error('thêm mới thất bại');
+            $scope.error('Thêm mới thất bại');
         });
+                }else{
+                    // alert("")
+                    $scope.message("Kiểu dáng đã tồn tại");
+                    return
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
     $scope.editDesign = function (design) {
         $scope.formDesign = angular.copy(design);
@@ -126,24 +141,28 @@ app.controller('design', function ($rootScope,$scope, $http) {
         $http.put(apiUrlDesign + '/' + item.id, item).then(resp => {
             var index = $scope.designs.findIndex(p => p.id == item.id);
             $scope.designs[index] = item;
-            alert("Cập nhật thành công");
+            // alert("");
+            $scope.message("Cập nhật thành công");
             $scope.resetDesign();
         }).catch(error => {
-            alert("Cập nhật thất bại");
+            // alert("");
+            $scope.error("Cập nhật thất bại");
             console.log("Error", error);
         });
     }
     $scope.deleteDesign = function (design) {
-        $http.delete(apiUrlDesign + '/' + design.id)
-            .then(function (response) {
-                var index = $scope.designs.findIndex(p => p.id === design.id);
-                if (index !== -1) {
-                    $scope.designs.splice(index, 1);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        $http.put(apiUrlDesign + '/delete', design).then(resp => {
+            // var index = $scope.designs.findIndex(p => p.id == item.id);
+            // $scope.designs[index] = item;
+            // alert("");
+            $scope.message("Tạm ngưng thành công");
+            $scope.resetDesign();
+            $scope.getDesign();
+        }).catch(error => {
+            // alert("");
+            $scope.error("Tạm ngưng thất bại");
+            console.log("Error", error);
+        });
     };
     $scope.resetDesign = function () {
         $scope.formDesign = {
