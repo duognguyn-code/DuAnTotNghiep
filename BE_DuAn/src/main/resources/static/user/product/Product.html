@@ -21,124 +21,57 @@
           <div class="border-bottom mb-4 pb-4">
             <h5 class="font-weight-semi-bold mb-4">Giá tiền</h5>
             <form>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" checked id="price-all">
-                <label class="custom-control-label" for="price-all">Tất cả</label>
+              <div class="price-input" style="text-align: center;  font-size: 12px;">
+                <input ng-model="findProductAll.priceSalemin"  class="col-4" type="number" min="0"  maxlength="9" id="minamount" placeholder="Từ"> <b> VNĐ</b>
+                -->
+                <input ng-model="findProductAll.priceSalemax"  class="col-4" type="number" min="0"  maxlength="9" id="maxamount" placeholder="Đến"> <b> VNĐ</b>
               </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-1">
-                <label class="custom-control-label" for="price-1">$0 - $100</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-2">
-                <label class="custom-control-label" for="price-2">$100 - $200</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-3">
-                <label class="custom-control-label" for="price-3">$200 - $300</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="price-4">
-                <label class="custom-control-label" for="price-4">$300 - $400</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                <input type="checkbox" class="custom-control-input" id="price-5">
-                <label class="custom-control-label" for="price-5">$400 - $500</label>
+            </form>
+
+          </div>
+          <!-- Price End -->
+          <div class="border-bottom mb-4 pb-4">
+            <form>
+              <div class="filter__sort">
+                <span>Sắp xếp theo giá</span>
+                <select ng-model="findProductAll.sortMinMax" ng-change="">
+                  <option ng-value="0">Tăng dần</option>
+                  <option ng-value="1">Dảm dần</option>
+                </select>
               </div>
             </form>
           </div>
-          <!-- Price End -->
-
           <!-- Color Start -->
           <div class="border-bottom mb-4 pb-4">
-            <h5 class="font-weight-semi-bold mb-4">Màu sắc</h5>
-            <form>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" checked id="color-all">
-                <label class="custom-control-label" for="price-all">Tất cả</label>
+            <h5 class="font-weight-semi-bold mb-4">Lọc theo màu sắc</h5>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3" ng-repeat="color in colorProducts">
+                <input type="checkbox" class="custom-control-input"  ng-click="checkSelected(color.idColor,1)" id="{{color.idColor}}/">
+                <label class="custom-control-label" for="{{color.idColor}}/">{{color.name}}</label>
               </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="color-1">
-                <label class="custom-control-label" for="color-1">Black</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="color-2">
-                <label class="custom-control-label" for="color-2">White</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="color-3">
-                <label class="custom-control-label" for="color-3">Red</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="color-4">
-                <label class="custom-control-label" for="color-4">Blue</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                <input type="checkbox" class="custom-control-input" id="color-5">
-                <label class="custom-control-label" for="color-5">Green</label>
-              </div>
-            </form>
           </div>
           <!-- Color End -->
 
           <!-- Size Start -->
           <div class="mb-5">
-            <h5 class="font-weight-semi-bold mb-4">Kích cỡ</h5>
-            <form>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" checked id="size-all">
-                <label class="custom-control-label" for="size-all">Tất cả</label>
+            <h5 class="font-weight-semi-bold mb-4">Lọc theo Size</h5>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3" ng-repeat="size in sizeProducts">
+                <input type="checkbox" class="custom-control-input" ng-click="checkSelected(size.idSize,2)" id="{{size.idSize}}-" >
+                <label class="custom-control-label" for="{{size.idSize}}-">{{size.name}}</label>
               </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="size-1">
-                <label class="custom-control-label" for="size-1">38</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="size-2">
-                <label class="custom-control-label" for="size-2">39</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="size-3">
-                <label class="custom-control-label" for="size-3">40</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="size-4">
-                <label class="custom-control-label" for="size-4">41</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                <input type="checkbox" class="custom-control-input" id="size-5">
-                <label class="custom-control-label" for="size-5">42</label>
-              </div>
-            </form>
           </div>
           <div class="mb-5">
-            <h5 class="font-weight-semi-bold mb-4">Chất liệu</h5>
-            <form>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" checked id="material-all">
-                <label class="custom-control-label" for="material-all">Tất cả</label>
+            <h5 class="font-weight-semi-bold mb-4">Lọc theo chất liệu</h5>
+              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3" ng-repeat="material in materialProducts">
+                <input type="checkbox" class="custom-control-input"  ng-click="checkSelected(material.idMaterial,3)" id="{{material.idMaterial}}+">
+                <label class="custom-control-label" for="{{material.idMaterial}}+" >{{material.name}}</label>
               </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="material-1">
-                <label class="custom-control-label" for="material-1">Genuine Leather</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="material-2">
-                <label class="custom-control-label" for="material-2"> Suede Leather</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="material-3">
-                <label class="custom-control-label" for="material-3">Synthetic Leather</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                <input type="checkbox" class="custom-control-input" id="material-4">
-                <label class="custom-control-label" for="material-4">Artificial Leather</label>
-              </div>
-              <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                <input type="checkbox" class="custom-control-input" id="material-5">
-                <label class="custom-control-label" for="material-5">PU</label>
-              </div>
-            </form>
+          </div>
+          <div class="mb-5">
+            <h5 class="font-weight-semi-bold mb-4">Lọc theo Kiểu dáng</h5>
+            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3" ng-repeat="design in designProducts">
+              <input type="checkbox" class="custom-control-input"  ng-click="checkSelected(design.idDesign,4)" id="{{design.idDesign}};">
+              <label class="custom-control-label" for="{{design.idDesign}};" >{{design .name}}</label>
+            </div>
           </div>
           <!-- Size End -->
         </div>
@@ -152,11 +85,10 @@
               <div class="d-flex align-items-center justify-content-between mb-4">
                 <form action="">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search by name" ng-model="query">
+                    <input type="text" class="form-control" placeholder="Search by name" ng-model="findProductAll.search" ng-keydown="findProduct(0)">
                     <div class="input-group-append">
-                                        <span class="input-group-text bg-transparent text-primary">
-                                            <i class="fa fa-search"></i>
-                                        </span>
+                      <button class="btn btn-success" style="text-align: center"
+                              ng-click="findProduct(0)">Lọc sản phẩm</button>
                     </div>
                   </div>
                 </form>
@@ -172,41 +104,47 @@
                   </div>
                 </div>
               </div>
+              <div class="col-lg-4 col-md-4">
+                <div class="filter__found">
+                  <h6><span>{{getAllProduct.length}}</span> Sản phẩm được tìm thấy</h6>
+                </div>
+              </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12 pb-1" ng-repeat="product in products | filter : {name : query}">
+            <div class="col-lg-4 col-md-6 col-sm-12 pb-1" ng-repeat="product in getAllProduct">
               <div class="card product-item border-0 mb-4">
-                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                  <img class="img-fluid w-100" src="{{product.images.length>0?product.images[0].urlimage:''}}" alt="">
+                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0" data-setbg="{{product.images[0]}}">
+                  <img class="img-fluid w-100" src="{{product.images[0]}}" alt="">
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                   <h6 class="text-truncate mb-3">{{product.name}}</h6>
                   <div class="d-flex justify-content-center">
-                    <h6>{{product.price | number}}₫</h6><h6 class="text-muted ml-2"></h6>
+                    <span ng-if="product.priceMin != product.priceMax">{{product.priceMin | number}} VNĐ - {{product.priceMax | number}} VNĐ</span>
+                    <span ng-if="product.priceMin == product.priceMax">{{product.priceMin | number}} VNĐ</span>
                   </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
-                  <a href="#!product_detail" ng-click="getDetailProduct(product.category.idCategory)" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                  <a href="#!cart" ng-click="add_cart(product)" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                  <a href="#!product_detail" ng-click="getDetailProduct(product.id)" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                 </div>
               </div>
             </div>
             <div class="col-12 pb-1">
               <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center mb-3">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item active"><button class="btn btn-default" ng-click="findProduct(0)"ng-disabled="numberPagePRD==0">
+                    <i class="fa fa-fast-backward" aria-hidden="true"></i>
+                  </button></li>
+                  <li class="page-item"><button class="btn btn-default" ng-click="findProduct(numberPagePRD - 1 )" ><i class="fa fa-step-backward"
+                                                                                                                       aria-hidden="true"></i></button></li>
+                  <li class="page-item"> <h4>{{numberPagePRD + 1}}/{{totalPagesPRD}}</h4></li>
                   <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
+                    <button class="btn btn-default"ng-click="findProduct(numberPagePRD +1)">
+                      <i class="fa fa-step-forward" aria-hidden="true"></i>
+                    </button>
+                  </li>
+                  <li class="page-item">
+                    <button class="btn btn-default" ng-click="findProduct(totalPagesPRD - 1)" ng-disabled="numberPagePRD==totalPagesPRD-1">
+                      <i class="fa fa-fast-forward" aria-hidden="true"></i>
+                    </button>
                   </li>
                 </ul>
               </nav>

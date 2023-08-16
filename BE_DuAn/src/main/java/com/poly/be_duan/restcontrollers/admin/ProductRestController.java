@@ -56,7 +56,7 @@ public class ProductRestController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/api/product")
+    @GetMapping()
     public ResponseEntity<List<Product>> getAll() {
         System.out.println(productService.findAll());
         try {
@@ -175,13 +175,13 @@ public class ProductRestController {
         if (prd.getCategory() != null) {
             for (Category cate : listCategory) {
                 if (Objects.equals(prd.getCategory().getIdCategory(), cate.getIdCategory())) {
-                    name.append(cate.getName());
+                    name.append(" ").append(cate.getName());
                 }
             }
         }
         if (prd.getMaterial() != null) {
             for (Material mate : listMate) {
-                if (Objects.equals(prd.getMaterial().getId(), mate.getId())) {
+                if (Objects.equals(prd.getMaterial().getIdMaterial(), mate.getIdMaterial())) {
                     name.append(mate.getName());
                 }
             }
@@ -189,7 +189,7 @@ public class ProductRestController {
 
         if (prd.getDesign() != null) {
             for (Designs des : Designs) {
-                if (prd.getDesign().getId() == des.getId()) {
+                if (prd.getDesign().getIdDesign() == des.getIdDesign()) {
                     name.append(des.getName());
                 }
             }
@@ -197,7 +197,7 @@ public class ProductRestController {
 
         if (prd.getColor() != null) {
             for (Color color : listColor) {
-                if (prd.getColor().getId() == color.getId()) {
+                if (prd.getColor().getIdColor() == color.getIdColor()) {
                     name.append(" Màu ").append(color.getName());
                 }
             }
@@ -205,7 +205,7 @@ public class ProductRestController {
 
         if (prd.getSize() != null) {
             for (Size size : listSize) {
-                if (prd.getSize().getId() == size.getId()) {
+                if (prd.getSize().getIdSize() == size.getIdSize()) {
                     name.append(" Size ").append(size.getName());
                 }
             }
@@ -271,8 +271,9 @@ public class ProductRestController {
         productService.save(pd);
         String data = String.valueOf(number1);
 
-        String path = "C:\\Users\\Lenovo\\Pictures\\Saved Pictures\\"+data+".jpg";
 
+        String path = "C:\\Users\\Lenovo\\Pictures\\Saved Pictures\\"+data+".jpg";
+      
         try {
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);
@@ -316,6 +317,25 @@ public class ProductRestController {
             product.setSize(saveProductRequest.getSize());
             product.setQuantity(saveProductRequest.getQuantity());
             productService.save(product);
+            try {
+                System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+                for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
+                    Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
+                            ObjectUtils.asMap(
+                                    "cloud_name", "dcll6yp9s",
+                                    "api_key", "916219768485447",
+                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                    "secure", true,
+                                    "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                            ));
+                    Image i = new Image();
+                    i.setUrlimage(r.get("secure_url").toString());
+                    i.setProducts(product);
+                    imageService.create(i);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         } else {
             throw new RuntimeException("Bản ghi này không tồn tại");
         }
