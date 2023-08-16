@@ -410,7 +410,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     $scope.getUsernameForBill = {};
     $scope.bill = {
         createDate: new Date(),
-        address: "",
+        address: "Không có(Mua trực tiếp tại cửa hàng)",
         account: {username: "Dương"},
         phoneTake: "",
         personTake: "",
@@ -418,7 +418,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         totalMoney: $scope.cart.amount,
         moneyShip: "0",
         typePayment: 1,
-        description: "1",
+        description: "Không có ghi chú",
         statusBuy: "1",
         status: "4",
         get billDetails() {
@@ -429,7 +429,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     quantity: item.qty,
                     dateReturn: null,
                     moneyRefund: null,
-                    description: "Không",
+                    description: "Không có ghi chú",
                     status: 2,
                     previousBillDetail: null
                 }

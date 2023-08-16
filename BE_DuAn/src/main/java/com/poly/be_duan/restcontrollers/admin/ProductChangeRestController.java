@@ -76,7 +76,7 @@ public class ProductChangeRestController {
         }
 
     }
-}
+
     @RequestMapping(path = "/saveRequest",method = RequestMethod.POST,
             consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public void saveRequest(@ModelAttribute ChangeProductDetailDTO changeProductDetailDTO){

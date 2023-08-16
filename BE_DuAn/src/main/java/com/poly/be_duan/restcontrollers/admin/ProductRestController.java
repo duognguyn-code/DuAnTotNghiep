@@ -56,7 +56,7 @@ public class ProductRestController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/api/product")
+    @GetMapping()
     public ResponseEntity<List<Product>> getAll() {
         System.out.println(productService.findAll());
         try {
@@ -175,14 +175,14 @@ public class ProductRestController {
         if (prd.getCategory() != null) {
             for (Category cate : listCategory) {
                 if (Objects.equals(prd.getCategory().getIdCategory(), cate.getIdCategory())) {
-                    name.append(cate.getName());
+                    name.append(" ").append(cate.getName());
                 }
             }
         }
         if (prd.getMaterial() != null) {
             for (Material mate : listMate) {
                 if (Objects.equals(prd.getMaterial().getId(), mate.getId())) {
-                    name.append(mate.getName());
+                    name.append(" ").append(mate.getName());
                 }
             }
         }
@@ -190,7 +190,7 @@ public class ProductRestController {
         if (prd.getDesign() != null) {
             for (Designs des : Designs) {
                 if (prd.getDesign().getId() == des.getId()) {
-                    name.append(des.getName());
+                    name.append(" ").append(des.getName());
                 }
             }
         }
@@ -198,7 +198,7 @@ public class ProductRestController {
         if (prd.getColor() != null) {
             for (Color color : listColor) {
                 if (prd.getColor().getId() == color.getId()) {
-                    name.append(" Màu ").append(color.getName());
+                    name.append(" ").append(color.getName());
                 }
             }
         }
@@ -206,7 +206,7 @@ public class ProductRestController {
         if (prd.getSize() != null) {
             for (Size size : listSize) {
                 if (prd.getSize().getId() == size.getId()) {
-                    name.append(" Size ").append(size.getName());
+                    name.append(" ").append(size.getName());
                 }
             }
         }
@@ -270,7 +270,7 @@ public class ProductRestController {
         pd.setBarcode(number1);
         productService.save(pd);
         String data = String.valueOf(number1);
-        String path = "D:\\QR_PRODUCT\\"+data+".jpg";
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\"+generationName(saveProductRequest)+".jpg";
         try {
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);

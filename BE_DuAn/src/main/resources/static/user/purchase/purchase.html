@@ -33,8 +33,8 @@
           <td class="px-4 py-3 ">{{order.id}}</td>
           <td class="px-4 py-3 ">{{order.address}}</td>
           <td class="px-4 py-3 ">{{order.phoneTake}}</td>
-          <td class="px-4 py-3 ">{{order.createDate}}</td>
-          <td class="px-4 py-3 ">{{order.timeReceive}}</td>
+          <td class="px-4 py-3 ">{{order.createDate | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
+          <td class="px-4 py-3 ">{{order.timeReceive | date: 'dd-MM-yyyy HH:mm:ss'}}</td>
           <td class="px-4 py-3 ">{{order.moneyShip | number}} VND</td>
           <td class="px-4 py-3 ">{{order.totalMoney | number}} VND</td>
           <td class="px-4 py-3 " ng-if="order.description">{{order.description}}</td>

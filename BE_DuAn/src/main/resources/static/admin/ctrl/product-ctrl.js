@@ -662,7 +662,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     }
     $scope.generationName = function () {
         if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
-            $scope.formProduct.name = '';
+            $scope.formProduct.name = ' ';
         }
         if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
@@ -703,7 +703,7 @@ app.controller('productController', function ($rootScope, $scope, $http ,$locati
     }
     $scope.generationNameForUpdate = function () {
         if ($scope.productData.name != undefined || $scope.productData.name != null || $scope.productData.name != '') {
-            $scope.productData.name = '';
+            $scope.productData.name = ' ';
         }
         if ($scope.productData.category != undefined || $scope.productData.category != null || $scope.productData.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
