@@ -114,7 +114,7 @@
                                 <h6 class="text-truncate mb-3" style="font-weight:500; font-size:20px;">
                                     {{product.name}}</h6>
                                 <div class="d-flex justify-content-center">
-                                    <h6 style="font-weight:500; font-size:18px;">{{product.price | number}} VND</h6>
+                                    <h6 style="font-weight:500; font-size:18px;">{{product.price | number}} vnđ</h6>
                                 </div>
                             </div>
                         </button>
@@ -252,9 +252,9 @@
 
                         </div>
                         <div class="col-md-6">
-                            <h5 class="card-title" style="font-size:20px;font-weight:500;">{{item.name}}</h5>
+                            <h5 class="card-title" style="font-size:18px;font-weight:500;">{{item.name}}</h5>
                             <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
-                                {{item.price |number}} VND</p>
+                                {{item.price |number}} vnđ</p>
                             <p class="card-text" style="margin-top:10px;">
                             <div class="input-group quantity mr-3" style="width: 130px;margin-top:20px;">
                                 <div class="input-group-btn">
@@ -276,11 +276,11 @@
                         </div>
                         <div class="col-md-2">
                             <p class="card-text text-right" style="font-size:18px;font-weight:500;">
-                                {{item.qty * item.price | number}} VND</p>
+                                {{item.qty * item.price | number}} vnđ</p>
                             <button ng-click="cart.remove(item.id)"
                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                     aria-label="Delete"
-                                    style="float:right; margin-top:100px;"
+                                    style="float:right; margin-top:20px;"
                             >
                                 <svg
                                         class="w-5 h-5"
@@ -299,18 +299,18 @@
 
                     </div>
                     <div class="row" style="border-top: 0.5px solid #C0C0C0;">
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                             <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
                             <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
                             <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-4">
+                            <p class="" style="font-size:18px; font-weight:500; ">
+                                {{cart.amount | number}} vnđ</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">0 vnđ</p>
                             <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
-                                {{cart.amount | number}} VND</p>
-                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">0 VND</p>
-                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">
-                                {{cart.amc | number}} VND</p>
+                                {{cart.amc | number}} vnđ</p>
                         </div>
                     </div>
                     <div class="row" style="margin-top:20px;">
@@ -569,7 +569,7 @@
                                                 <div class="col-md-2">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        {{cart.amount | number}} VND</p>
+                                                        {{cart.amount | number}} vnđ</p>
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
                                                         0đ</p>
@@ -585,7 +585,7 @@
                                                 <div class="col-md-6">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        {{cart.amc | number}} VND</p>
+                                                        {{cart.amc | number}} vnđ</p>
                                                 </div>
                                             </div>
                                         </div>

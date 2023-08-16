@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "categories")
 @Getter
 @Setter
-public class    Category {
+public class   Category {
     @Id
     @Column(name = "id_category")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
