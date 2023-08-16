@@ -25,7 +25,7 @@ public class ColorServiceImpl implements ColorService {
 
     @Override
     public Color getColorByID(Integer id) {
-        return  colorRepository.findColorById(id);
+        return  colorRepository.findColorByIdColor(id);
     }
 
     @Override

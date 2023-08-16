@@ -128,7 +128,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountDTO updateAccountActive(AccountDTO accountDTO) {
-        return null;
+        Account accountAcitve = repository.findByName(Username.getUserName());
+        accountAcitve.setPhone(accountDTO.getPhone());
+        accountAcitve.setEmail(accountDTO.getEmail());
+        accountAcitve.setFullName(accountDTO.getFullName());
+        accountAcitve.setSex(accountDTO.getGender());
+        Account account = repository.save(accountAcitve);
+        AccountDTO accountDTO1 = modelMapper.map(account,AccountDTO.class);
+        return  accountDTO1;
     }
 
     @Override

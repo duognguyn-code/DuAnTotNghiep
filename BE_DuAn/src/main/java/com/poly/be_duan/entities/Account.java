@@ -43,7 +43,7 @@ public class Account {
     private Date date;
 
     @Column()
-    private Integer sex;
+    private Boolean sex;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")

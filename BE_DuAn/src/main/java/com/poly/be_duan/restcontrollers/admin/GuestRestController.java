@@ -8,6 +8,7 @@ import com.poly.be_duan.service.*;
 import com.poly.be_duan.utils.Username;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -38,6 +39,19 @@ public class GuestRestController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private ColorService colorService;
+
+    @Autowired
+    private MaterialService materialService;
+
+    @Autowired
+    private DesignService designService;
+
+    @Autowired
+    private SizeService sizeService;
+
 
     Account account = null;
 
@@ -120,4 +134,39 @@ public class GuestRestController {
         System.out.println(author + "null ");
         return author;
     }
+    @GetMapping("/getAllColor")
+    public List<Color> getAllColor() {
+        return colorService.getAll();
+    }
+    @GetMapping("/getAllMaterial")
+    public List<Material> getAllMaterial() {
+        return materialService.getAll();
+    }
+
+    @GetMapping("/getALlDesign")
+    public List<Designs> getAllDesigns() {
+        return designService.getAll();
+    }
+
+    @GetMapping("/getALlSize")
+    public List<Size> getAllSIze() {
+        return sizeService.getAll();
+    }
+
+    @RequestMapping(value = "/product/findProductByPrice",method = RequestMethod.GET)
+    public List<Product> findProductByPrice(){
+        List<Product> listproduct = productService.findProductByPrices();
+        if(listproduct.isEmpty()){
+            return  null;
+        }
+        return listproduct;
+    }
+    @RequestMapping("/product/findproduct/{page}")
+    public Page<ProductDetailDTO> findProduct(
+            @PathVariable ("page") Integer page,
+            @RequestBody JsonNode findProcuctAll
+    ) {
+        return productService.getByPage(page,9,findProcuctAll);
+    }
+
 }

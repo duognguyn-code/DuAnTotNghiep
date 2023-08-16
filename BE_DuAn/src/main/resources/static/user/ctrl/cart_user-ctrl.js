@@ -69,27 +69,94 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                 confirmButtonText: 'Xác nhận!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    if ($scope.checkBuy) {
-                        var vnp_OrderInfo = 'thanh toan hoa don';
-                        var orderType = 'other';
-                        var amount = $scope.calculateTotalAmount();
-                        var bankcode = ''; // Optional
-                        var language = 'vn'; // Optional
-                        $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
-                            window.location.href = res.data.value;
+                    var cartItems = localStorage.getItem('cartItems');
+                    if (!cartItems) {
+                        Swal.fire(
+                            'Giỏ hàng trống!',
+                            'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
+                            'warning'
+                        );
+                        return; // Dừng quá trình thanh toán
+                    } else {
+                        if ($scope.checkBuy) {
+                            var vnp_OrderInfo = 'thanh toan hoa don';
+                            var orderType = 'other';
+                            var amount = $scope.calculateTotalAmount();
+                            var bankcode = ''; // Optional
+                            var language = 'vn'; // Optional
+                            $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
+                                window.location.href = res.data.value;
+                                $scope.bills.personTake = $scope.addressAccount.personTake;
+                                $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
+                                $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
+                                $scope.bills.totalMoney = $scope.calculateTotalAmount();
+                                $scope.bills.status = 1;
+                                $scope.bills.statusBuy = 1;
+                                $scope.bills.moneyShip = $scope.ship;
+                                $scope.bills.typePayment = false;
+                                $http.post(urlOrder + '/add', $scope.bills).then(res => {
+                                    if (res.data) {
+                                        $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
+                                            $scope.clearCart();
+                                            console.log("orderDetail", res.data)
+                                        }).catch(err => {
+                                            swal.fire({
+                                                icon: 'error',
+                                                showConfirmButton: false,
+                                                title: err.data.message,
+                                                timer: 5000
+                                            });
+                                        })
+
+                                    } else {
+                                        Swal.fire(
+                                            'Thanh toán thất bại!',
+                                            '',
+                                            'error'
+                                        )
+                                    }
+                                })
+                            }).catch(err => {
+                                Swal.fire(
+                                    'Thanh toán thất bại!',
+                                    '',
+                                    'error'
+                                )
+                                console.log("error buy cart", err)
+                                alert(err + "lỗi 1");
+                            })
+
+                        } else {
                             $scope.bills.personTake = $scope.addressAccount.personTake;
                             $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
                             $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
                             $scope.bills.totalMoney = $scope.calculateTotalAmount();
                             $scope.bills.status = 1;
-                            $scope.bills.statusBuy = 1;
+                            $scope.bills.statusBuy = 0;
                             $scope.bills.moneyShip = $scope.ship;
                             $scope.bills.typePayment = false;
+                            let timerInterval
+                            Swal.fire({
+                                title: 'Đang thanh toán  vui lòng chờ!',
+                                html: 'Vui lòng chờ <b></b> milliseconds.',
+                                timer: 5500,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                    const b = Swal.getHtmlContainer().querySelector('b')
+                                    timerInterval = setInterval(() => {
+                                        b.textContent = Swal.getTimerLeft()
+                                    }, 100)
+                                },
+                                willClose: () => {
+                                    clearInterval(timerInterval)
+                                }
+                            });
                             $http.post(urlOrder + '/add', $scope.bills).then(res => {
                                 if (res.data) {
                                     $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
                                         $scope.clearCart();
-                                        console.log("orderDetail", res.data)
+                                        $window.location.href = '/user/cart/buy-cod-success.html';
                                     }).catch(err => {
                                         swal.fire({
                                             icon: 'error',
@@ -98,91 +165,36 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                             timer: 5000
                                         });
                                     })
-
-                                } else {
-                                    Swal.fire(
-                                        'Thanh toán thất bại!',
-                                        '',
-                                        'error'
-                                    )
                                 }
+
+                            }).catch(err => {
+                                Swal.fire(
+                                    'Thanh toán thất bại!',
+                                    '',
+                                    'error'
+                                )
+                                if (error.status == 401) {
+                                    $scope.isLoading = false;
+                                    setTimeout(() => {
+                                        document.location = '/admin#!/login';
+                                    }, 2000);
+                                    sweetError('Mời bạn đăng nhập !');
+                                    return;
+                                }
+                                console.log("err order", err)
+                                alert(err + "lỗi")
                             })
-                        }).catch(err => {
-                            Swal.fire(
-                                'Thanh toán thất bại!',
-                                '',
-                                'error'
-                            )
-                            console.log("error buy cart", err)
-                            alert(err + "lỗi 1");
-                        })
-
-                    } else {
-                        $scope.bills.personTake = $scope.addressAccount.personTake;
-                        $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
-                        $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
-                        $scope.bills.totalMoney = $scope.calculateTotalAmount();
-                        $scope.bills.status = 1;
-                        $scope.bills.statusBuy = 0;
-                        $scope.bills.moneyShip = $scope.ship;
-                        $scope.bills.typePayment = false;
-                        let timerInterval
-                        Swal.fire({
-                            title: 'Đang thanh toán  vui lòng chờ!',
-                            html: 'Vui lòng chờ <b></b> milliseconds.',
-                            timer: 5500,
-                            timerProgressBar: true,
-                            didOpen: () => {
-                                Swal.showLoading()
-                                const b = Swal.getHtmlContainer().querySelector('b')
-                                timerInterval = setInterval(() => {
-                                    b.textContent = Swal.getTimerLeft()
-                                }, 100)
-                            },
-                            willClose: () => {
-                                clearInterval(timerInterval)
-                            }
-                        });
-                        $http.post(urlOrder + '/add', $scope.bills).then(res => {
-                            if (res.data) {
-                                $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
-                                    $scope.clearCart();
-                                    $window.location.href = '/user/cart/buy-cod-success.html';
-                                }).catch(err => {
-                                    swal.fire({
-                                        icon: 'error',
-                                        showConfirmButton: false,
-                                        title: err.data.message,
-                                        timer: 5000
-                                    });
-                                })
-                            }
-
-                        }).catch(err => {
-                            Swal.fire(
-                                'Thanh toán thất bại!',
-                                '',
-                                'error'
-                            )
-                            if (error.status == 401) {
-                                $scope.isLoading = false;
-                                setTimeout(() => {
-                                    document.location = '/admin#!/login';
-                                }, 2000);
-                                sweetError('Mời bạn đăng nhập !');
-                                return;
-                            }
-                            console.log("err order", err)
-                            alert(err + "lỗi")
-                        })
+                        }
                     }
+
                 }
 
             })
         }
 
     }
-    $scope.clearCart = function() {
+
+    $scope.clearCart = function () {
         localStorage.removeItem('cartItems');
         $rootScope.qtyCart = 0;
     };

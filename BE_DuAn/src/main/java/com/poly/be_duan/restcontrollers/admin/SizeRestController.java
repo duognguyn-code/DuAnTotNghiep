@@ -28,7 +28,7 @@ public class SizeRestController {
 
     @PutMapping("{id}")
     public Size update(@PathVariable("id") Integer id, Size size) {
-        size.setId(id);
+        size.setIdSize(id);
         return sizeService.update(size);
     }
     @DeleteMapping("{id}")

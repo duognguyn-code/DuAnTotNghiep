@@ -21,4 +21,5 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
 
     @Query("select i from Image  i where i.productChange = ?1")
     public List<Image> findImageByPr(Integer id);
+
 }
