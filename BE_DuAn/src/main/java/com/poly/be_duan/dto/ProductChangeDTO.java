@@ -20,10 +20,11 @@ public class ProductChangeDTO {
     private Date dateChange;
     private String description;
     private String email;
+    private String phone;
     private Boolean status;
     private int  quantityProductChange;
     private Account account;
-    private String  phone;
+//    private String  phone;
     private List<ChangeProductDetail> changeDetails;
     private List<Image> listImage;
     private List<MultipartFile> files;

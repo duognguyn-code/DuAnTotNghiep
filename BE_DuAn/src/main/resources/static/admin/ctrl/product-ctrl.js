@@ -188,12 +188,12 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         });
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("thêm mới sản phẩm thành công");
+            $scope.message("Thêm mới sản phẩm thành công");
             $scope.resetProducts();
             $scope.getProducts();
         }).catch(error => {
-            $scope.error('thêm mới thất bại');
-            alert(angular.toJson(error));
+            $scope.error('Thêm mới thất bại');
+            // alert(angular.toJson(error));
         });
     };
     $scope.edit = function (productId) {
@@ -278,7 +278,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             })
             .catch(error => {
                 $scope.error('Cập nhật thất bại');
-                alert(error);
+                // alert(error);
                 console.log(error)
             });
     };
@@ -664,12 +664,12 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
     }
     $scope.generationName = function () {
         if ($scope.formProduct.name != undefined || $scope.formProduct.name != null || $scope.formProduct.name != '') {
-            $scope.formProduct.name = '';
+            $scope.formProduct.name = ' ';
         }
         if ($scope.formProduct.category != undefined || $scope.formProduct.category != null || $scope.formProduct.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
                 if ($scope.formProduct.category == $scope.categories[i].idCategory) {
-                    $scope.formProduct.name = $scope.categories[i].name;
+                    $scope.formProduct.name =' ' + $scope.categories[i].name;
                 }
             }
         }
@@ -705,12 +705,12 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
     }
     $scope.generationNameForUpdate = function () {
         if ($scope.productData.name != undefined || $scope.productData.name != null || $scope.productData.name != '') {
-            $scope.productData.name = '';
+            $scope.productData.name = ' ';
         }
         if ($scope.productData.category != undefined || $scope.productData.category != null || $scope.productData.category != '') {
             for (let i = 0; i < $scope.categories.length; i++) {
                 if ($scope.productData.category == $scope.categories[i].idCategory) {
-                    $scope.productData.name = $scope.categories[i].name;
+                    $scope.productData.name = ' ' + $scope.categories[i].name;
                 }
             }
         }
@@ -823,14 +823,15 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("")
+                $scope.message("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                $scope.message("Bạn đang ở trang cuối");
             }
         },
         last() {

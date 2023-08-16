@@ -28,6 +28,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.index = 0;
     $rootScope.account = jwtToken;
     $scope.bills = {};
+
     $rootScope.cartItems = [];
 
     $scope.messageSuccess = function (text) {
@@ -47,6 +48,50 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             title: text
         })
     }
+
+
+
+    $scope.checkCartItemQuantity = function (item) {
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Tìm tất cả các mặt hàng trong giỏ hàng có cùng product.id
+        var itemsWithSameProduct = cartItems.filter(function (cartItem) {
+            return (
+                cartItem.product.id === item.product.id &&
+                cartItem.design === item.design &&
+                cartItem.size === item.size &&
+                cartItem.color === item.color &&
+                cartItem.material === item.material
+            );
+        });
+
+
+        // Tính tổng số lượng sản phẩm có cùng product.id trong giỏ hàng
+        var totalQuantityInCart = itemsWithSameProduct.reduce(function (total, cartItem) {
+            return total + cartItem.quantity;
+        }, 0);
+        item.totalQuantityInCart = totalQuantityInCart;
+        // alert(totalQuantityInCart);
+
+        // Gửi yêu cầu kiểm tra số lượng của sản phẩm trong db
+        var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
+        $http.get(apiUrlProduct).then(function (response) {
+            var dbProductQuantity = response.data.quantity;
+            item.messageQuantity = ""; // Reset thông báo lỗi
+            if (item.quantity == 0) {
+                item.messageQuantity = "Số lượng không trống";
+            } else if (item.quantity > dbProductQuantity) {
+                item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
+                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
+            } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
+                item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
+                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
+            }
+        }).catch(function (error) {
+            console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);
+        });
+    };
+
     $scope.messageError = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -69,7 +114,9 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             $scope.accountHome = respon.data;
             alert($scope.accountHome.role.name)
         }).catch(err => {
+
             $scope.accountHome = null;
+
         })
     }
     $scope.getAcount();
@@ -365,6 +412,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/product_detail/` + id, token).then(function (response) {
                 $scope.detailProduct = response.data;
+
             }).catch(error => {
                 console.log(error, "lỗi")
             })

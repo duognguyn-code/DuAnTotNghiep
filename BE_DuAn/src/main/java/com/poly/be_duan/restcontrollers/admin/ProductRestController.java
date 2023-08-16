@@ -175,7 +175,7 @@ public class ProductRestController {
         if (prd.getCategory() != null) {
             for (Category cate : listCategory) {
                 if (Objects.equals(prd.getCategory().getIdCategory(), cate.getIdCategory())) {
-                    name.append(cate.getName());
+                    name.append(" ").append(cate.getName());
                 }
             }
         }
@@ -270,7 +270,7 @@ public class ProductRestController {
         pd.setBarcode(number1);
         productService.save(pd);
         String data = String.valueOf(number1);
-        String path = "D:\\QR_PRODUCT\\"+data+".jpg";
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\"+generationName(saveProductRequest)+".jpg";
         try {
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);

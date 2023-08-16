@@ -38,4 +38,6 @@ public interface BillService  {
     public Integer chart(String date);
 
     public Integer sumStatus(String number);
+
+    public Integer MaxIdBill();
 }

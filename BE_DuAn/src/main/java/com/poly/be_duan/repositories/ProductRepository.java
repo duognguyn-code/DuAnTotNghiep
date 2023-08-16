@@ -57,7 +57,9 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
     List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
 
+
     @Query(" SELECT p FROM Product p WHERE p.category.idCategory = ?1 and p.design.idDesign =?2 and p.material.idMaterial=?3 and p.color.idColor=?4 and p.size.idSize=?5")
+
     Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize);
 
     @Query(" SELECT p FROM Product p WHERE p.barcode = ?1 ")

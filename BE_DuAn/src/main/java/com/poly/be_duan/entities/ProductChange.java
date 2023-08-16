@@ -62,7 +62,7 @@ public class ProductChange {
     private List<ChangeProductDetail> changeProductDetails;
 
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "productChange")
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference(value = "productChange")
