@@ -453,6 +453,38 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         }
     }
 
+    $scope.changeImage = function (id) {
+        var main_prodcut_image = document.getElementById('main_product_image');
+        var image_product_change = document.getElementById('image_product_change');
+        var image_product_change1 = document.getElementById('image_product_change1');
+        var image_product_change2 = document.getElementById('image_product_change2');
+        var image_product_change3 = document.getElementById('image_product_change3');
+        if (id == 1) {
+            main_prodcut_image.src = image_product_change.src;
+        }
+        if (id == 2) {
+            main_prodcut_image.src = image_product_change1.src;
+        }
+        if (id == 3) {
+            main_prodcut_image.src = image_product_change2.src;
+        }
+        if (id == 4) {
+            main_prodcut_image.src = image_product_change3.src;
+        }
+    }
+    $scope.displayProduct = {
+        name: "",
+        price: "",
+        describe: "",
+        imageDefault: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        imageDefault1: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        imageDefault2: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        imageDefault3: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        camera: "",
+        ram: "",
+        capacity: "",
+        color: ""
+    }
     $scope.getAcountActive = function () {
         $http.get(apiUrlAccout + `/getAccountActive`, token).then(function (respon) {
             $scope.accountActive = respon.data;

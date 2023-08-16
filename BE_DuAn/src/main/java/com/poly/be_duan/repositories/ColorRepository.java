@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ColorRepository extends JpaRepository<Color, Integer> {
-    Color findColorById(Integer id);
+
+    Color findColorByIdColor(Integer id);
     @Query(" SELECT s FROM Color s WHERE s.name like %?1% ")
     Color getNameColor(String name);
+
 }
