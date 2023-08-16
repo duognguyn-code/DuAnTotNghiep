@@ -29,15 +29,16 @@
                         </label>
                     </div>
                     <!--                    ==================-->
+                    <form method="post" enctype="multipart/form-data" name="myForm" ng-submit="doSubmit()">
                     <div class="" style="margin-top:10px;color:black;">
                             <label class="block text-sm">
                                 <p  class="text-gray-700 dark:text-gray-400">Giới tính</p>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-value="true" {{accountActive.gender==true?'checked':''}} id="inlineRadio1" ng-model="accountActive.gender" value="option1">
                                     <label class="form-check-label" for="inlineRadio1">Nam</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <input class="form-check-input" ng-model="accountActive.gender"  ng-value="false" {{accountActive.gender==false?'checked':''}} type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
                                     <label class="form-check-label" for="inlineRadio2">Nữ</label>
                                 </div>
                             </label>
@@ -46,39 +47,64 @@
                         <div class="" style="margin-top:10px;color:black;">
                             <label class="block text-sm">
                                 <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Họ và Tên</p>
-                                <input
+                                <input  ng-model="accountActive.fullName" name="fullName" type="text" ng-minlength="6" ng-maxlength="250" required
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         style="width:850px;height:40px;"
                                         value="{{accountActive.fullName}}"
                                 />
+                                <span ng-show="myForm.$submitted || myForm.fullName.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.fullName.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Họ và Tên không được trống</span>
+                                        <span class="error"
+                                              ng-show="((myForm.fullName.$error.minlength || myForm.fullName.$error.maxlength)
+                                              || myForm.fullName.$error.$dirty)">
+                                                <i class="fa fa-exclamation-circle"></i>Họ và tên từ 6-250 ký tự</span>
+                                    </span>
                             </label>
                         </div>
 <!--                    ==================-->
                     <div class="" style="margin-top:10px;color:black;">
                         <label class="block text-sm">
                             <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Số điện thoại </p>
-                            <input
+                            <input  ng-model="accountActive.phone"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    style="width:850px;height:40px;" type="number"
-                                    value="{{accountActive.phone}}"
+                                    style="width:850px;height:40px;" ng-minlength="0" ng-maxlength="10" name="phone" required type="text"
+                                    value="{{accountActive.phone}}" pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b"
                             />
+                            <span ng-show="myForm.$submitted || myForm.phone.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.phone.$error.required"
+                                        > <i
+                                                class="fa fa-exclamation-circle"></i>Số điện thoại không được
+                                            trống</span>
+                                            <span class="error" ng-show="myForm.phone.$error.pattern"
+                                            > <i
+                                                    class="fa fa-exclamation-circle"></i>Số điện thoại sai đinh dạng</span>
+                                    </span>
+
                         </label>
                     </div>
                     <!--                    ==================-->
                     <div class="" style="margin-top:10px;color:black;">
                         <label class="block text-sm">
                             <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Email</p>
-                            <input
+                            <input ng-model="accountActive.email" type="email" name="email"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    style="width:850px;height:40px;" type="email"
+                                    style="width:850px;height:40px;"  required pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
                                     value="{{accountActive.email}}"
                             />
+                            <span ng-show="myForm.$submitted || myForm.email.$dirty" style="color: red">
+                                        <span class="error" ng-show="myForm.email.$error.required"> <i
+                                                class="fa fa-exclamation-circle"></i>Email không được trống</span>
+                                                <span class="error" ng-show="myForm.email.$error.pattern"> <i
+                                                        class="fa fa-exclamation-circle"></i>Email sai đinh dạng</span>
+                                    </span>
                         </label>
                     </div>
 
                     <div class="" style="margin-top:10px;color:black;">
                         <center>
-                        <button class="btn text-center" style="width:400px;height:40px;background-color:#D19C97;color:white;font-size:20px;border-radius:5px;margin-bottom:20px;">
+                        <button class="btn text-center" style="width:400px;height:40px;background-color:#D19C97;color:white;font-size:20px;border-radius:5px;margin-bottom:20px;" type="submit">
                             Thay đổi
                         </button>
                         </center>
@@ -90,6 +116,7 @@
                             </button>
                         </center>
                     </div>
+                    </form>
                     <!--                    ==================-->
                 </div>
             </div>

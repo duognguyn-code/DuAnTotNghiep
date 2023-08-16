@@ -19,7 +19,7 @@ public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_size")
-    private Integer id;
+    private Integer idSize;
 
     @Column(name = "name")
     private String name;

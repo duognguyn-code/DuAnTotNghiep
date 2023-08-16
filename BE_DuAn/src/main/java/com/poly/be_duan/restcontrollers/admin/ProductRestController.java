@@ -181,32 +181,32 @@ public class ProductRestController {
         }
         if (prd.getMaterial() != null) {
             for (Material mate : listMate) {
-                if (Objects.equals(prd.getMaterial().getId(), mate.getId())) {
-                    name.append(" ").append(mate.getName());
+                if (Objects.equals(prd.getMaterial().getIdMaterial(), mate.getIdMaterial())) {
+                    name.append(mate.getName());
                 }
             }
         }
 
         if (prd.getDesign() != null) {
             for (Designs des : Designs) {
-                if (prd.getDesign().getId() == des.getId()) {
-                    name.append(" ").append(des.getName());
+                if (prd.getDesign().getIdDesign() == des.getIdDesign()) {
+                    name.append(des.getName());
                 }
             }
         }
 
         if (prd.getColor() != null) {
             for (Color color : listColor) {
-                if (prd.getColor().getId() == color.getId()) {
-                    name.append(" ").append(color.getName());
+                if (prd.getColor().getIdColor() == color.getIdColor()) {
+                    name.append(" Màu ").append(color.getName());
                 }
             }
         }
 
         if (prd.getSize() != null) {
             for (Size size : listSize) {
-                if (prd.getSize().getId() == size.getId()) {
-                    name.append(" ").append(size.getName());
+                if (prd.getSize().getIdSize() == size.getIdSize()) {
+                    name.append(" Size ").append(size.getName());
                 }
             }
         }
@@ -314,6 +314,25 @@ public class ProductRestController {
             product.setSize(saveProductRequest.getSize());
             product.setQuantity(saveProductRequest.getQuantity());
             productService.save(product);
+            try {
+                System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
+                for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
+                    Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
+                            ObjectUtils.asMap(
+                                    "cloud_name", "dcll6yp9s",
+                                    "api_key", "916219768485447",
+                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                                    "secure", true,
+                                    "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                            ));
+                    Image i = new Image();
+                    i.setUrlimage(r.get("secure_url").toString());
+                    i.setProducts(product);
+                    imageService.create(i);
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         } else {
             throw new RuntimeException("Bản ghi này không tồn tại");
         }

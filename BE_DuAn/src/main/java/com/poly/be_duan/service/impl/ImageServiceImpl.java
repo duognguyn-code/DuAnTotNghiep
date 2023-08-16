@@ -31,7 +31,9 @@ public class ImageServiceImpl implements ImageService {
     public Image update(Image images, Integer id) {
         Optional<Image> optional = findById(id);
         if (optional.isPresent()) {
-            return create(images);
+            Image existingImage = optional.get();
+            existingImage.setUrlimage(images.getUrlimage());
+            return create(existingImage);
         }
         return null;
     }
