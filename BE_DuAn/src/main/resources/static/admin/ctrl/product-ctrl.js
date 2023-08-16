@@ -204,7 +204,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
     };
     $scope.getProductDataUpdate = function () {
         var productId = $routeParams.id;
-        $http.get('/api/product/' + productId)
+        $http.get('/api/product/search/' + productId)
             .then(function (response) {
                 var product = response.data;
                 $scope.productData.category = product.category.idCategory;
@@ -216,7 +216,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                 $scope.productData.price = product.price;
                 $scope.productData.color = product.color.id;
                 $scope.productData.quantity = product.quantity;
-                $scope.productData.images = product.images.urlimage;
+                $scope.productData.images = product.images;
             })
             .catch(function (error) {
                 console.error('Lỗi khi lấy thông tin sản phẩm:', error);

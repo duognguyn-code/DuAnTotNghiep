@@ -100,6 +100,7 @@ public class ProductRestController {
         }
 
     }
+
     @PostMapping("/createSize")
     public Size create(@RequestBody Size size) {
         return sizeService.create(size);
@@ -115,6 +116,7 @@ public class ProductRestController {
         }
 
     }
+
     @PostMapping("/createMaterial")
     public Material create(@RequestBody Material material) {
         return materialService.create(material);
@@ -129,8 +131,9 @@ public class ProductRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
     @PostMapping("/createColor")
-    public Color create( @RequestBody Color color) {
+    public Color create(@RequestBody Color color) {
         return colorService.create(color);
     }
 
@@ -143,6 +146,7 @@ public class ProductRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
     @PostMapping("/createDesign")
     public Designs create(@RequestBody Designs designs) {
         return designService.create(designs);
@@ -158,6 +162,7 @@ public class ProductRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
     @PostMapping("/createCategory")
     public Category create(@RequestBody Category category) {
         return categoryService.save(category);
@@ -239,21 +244,22 @@ public class ProductRestController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @RequestMapping(value = "/delete", method = POST)
-    public void delete(@RequestParam("id") Integer id){
+    public void delete(@RequestParam("id") Integer id) {
         Optional<Product> p = productService.findById(id);
-        if(p!=null){
+        if (p != null) {
             p.ifPresent(product -> {
                 product.setStatus(0);
                 productService.save(product);
             });
 
-        }else{
+        } else {
             System.out.println("không tồn tại");
         }
     }
 
-    @RequestMapping(path = "/saveProduct", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @RequestMapping(path = "/saveProduct", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<String> save(@ModelAttribute SaveProductRequest saveProductRequest) {
         Random a = new Random();
         int number1 = a.nextInt(999999999);
@@ -271,9 +277,8 @@ public class ProductRestController {
         productService.save(pd);
         String data = String.valueOf(number1);
 
+        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\" + generationName(saveProductRequest) + ".jpg";
 
-        String path = "C:\\Users\\Lenovo\\Pictures\\Saved Pictures\\"+data+".jpg";
-      
         try {
             BitMatrix matrix = new MultiFormatWriter()
                     .encode(data, BarcodeFormat.QR_CODE, 500, 500);
@@ -283,14 +288,14 @@ public class ProductRestController {
         }
         try {
             System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
-            for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
+            for (MultipartFile multipartFile : saveProductRequest.getFiles()) {
                 Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
                         ObjectUtils.asMap(
                                 "cloud_name", "dcll6yp9s",
                                 "api_key", "916219768485447",
                                 "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
                                 "secure", true,
-                                "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                                "folders", "c202a2cae1893315d8bccb24fd1e34b816"
                         ));
                 Image i = new Image();
                 i.setUrlimage(r.get("secure_url").toString());
@@ -302,8 +307,9 @@ public class ProductRestController {
         }
         return ResponseEntity.ok("Success");
     }
+
     @PostMapping("/updateProduct/{id}")
-    public void updateProduct(@PathVariable Integer id,@ModelAttribute SaveProductRequest saveProductRequest) {
+    public void updateProduct(@PathVariable Integer id, @ModelAttribute SaveProductRequest saveProductRequest) {
         Optional<Product> optionalProduct = productService.findById(id);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
@@ -319,14 +325,14 @@ public class ProductRestController {
             productService.save(product);
             try {
                 System.out.println("Uploaded the files successfully: " + saveProductRequest.getFiles().size());
-                for ( MultipartFile multipartFile :  saveProductRequest.getFiles()) {
+                for (MultipartFile multipartFile : saveProductRequest.getFiles()) {
                     Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
                             ObjectUtils.asMap(
                                     "cloud_name", "dcll6yp9s",
                                     "api_key", "916219768485447",
                                     "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
                                     "secure", true,
-                                    "folders","c202a2cae1893315d8bccb24fd1e34b816"
+                                    "folders", "c202a2cae1893315d8bccb24fd1e34b816"
                             ));
                     Image i = new Image();
                     i.setUrlimage(r.get("secure_url").toString());
@@ -340,13 +346,16 @@ public class ProductRestController {
             throw new RuntimeException("Bản ghi này không tồn tại");
         }
     }
+
     @PutMapping("/updatePr")
     public Product updateProduct(@RequestBody Product product) {
         System.out.println(productService.save(product));
-        return  productService.save(product);
+        return productService.save(product);
     }
 
-    @GetMapping("/{id}")
+
+
+        @GetMapping("/{id}")
     public ResponseEntity<Product> getById(@PathVariable Integer id) {
         try {
             Optional<Product> product = productService.findById(id);
@@ -359,59 +368,68 @@ public class ProductRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    @GetMapping("/search/{id}")
+    public Product getByIdForImages(@PathVariable Integer id) {
+        System.out.println("abc------------------------");
+        System.out.println(productService.findProductForImages(id));
+        return productService.findProductForImages(id);
+    }
+
     @GetMapping("search/{name}/{color}/{material}/{size}/{design}/{min}/{max}/{status}")
-    public ResponseEntity<List<Product>> search(@PathVariable(value = "name")String name, @PathVariable(value = "color")String color
-            ,@PathVariable(value = "material")String material,@PathVariable(value = "size")String size, @PathVariable(value = "design")String design,
-                                                @PathVariable(value = "min")String min,@PathVariable(value = "max")String max,@PathVariable(value = "status")String status) {
-        BigDecimal mn=null;
-        BigDecimal mx=null;
-        System.out.println("abc"+"/"+min);
-        if (name.equals("undefined")){
-            name= "";
-        } if (color.equals("undefined")){
-            color="";
+    public ResponseEntity<List<Product>> search(@PathVariable(value = "name") String name, @PathVariable(value = "color") String color
+            , @PathVariable(value = "material") String material, @PathVariable(value = "size") String size, @PathVariable(value = "design") String design,
+                                                @PathVariable(value = "min") String min, @PathVariable(value = "max") String max, @PathVariable(value = "status") String status) {
+        BigDecimal mn = null;
+        BigDecimal mx = null;
+        System.out.println("abc" + "/" + min);
+        if (name.equals("undefined")) {
+            name = "";
         }
-        if (material.equals("undefined")){
-            material="";
+        if (color.equals("undefined")) {
+            color = "";
         }
-        if (size.equals("undefined")){
-            size="";
+        if (material.equals("undefined")) {
+            material = "";
         }
-        if (status.equals("undefined")){
-            status="1";
+        if (size.equals("undefined")) {
+            size = "";
         }
-        if (design.equals("undefined")){
-            design="";
+        if (status.equals("undefined")) {
+            status = "1";
         }
-        if (min.equals("undefined") || min.equals("Min")){
+        if (design.equals("undefined")) {
+            design = "";
+        }
+        if (min.equals("undefined") || min.equals("Min")) {
             mn = new BigDecimal(0);
-        }else{
+        } else {
             mn = new BigDecimal(min);
         }
-        if (max.equals("undefined") || max.equals("Max")){
+        if (max.equals("undefined") || max.equals("Max")) {
             mx = productService.searchPriceMAX();
-        }else{
+        } else {
             mx = new BigDecimal(max);
         }
         int sts = Integer.parseInt(String.valueOf(status));
 
-        System.out.println(productService.search(name,color,material,size,design,mn,mx,sts));
+        System.out.println(productService.search(name, color, material, size, design, mn, mx, sts));
         try {
-            return ResponseEntity.ok(productService.search(name,color,material,size,design,mn,mx,sts));
+            return ResponseEntity.ok(productService.search(name, color, material, size, design, mn, mx, sts));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
     }
+
     @GetMapping("/max")
-    public BigDecimal getMax(){
+    public BigDecimal getMax() {
         return productService.searchPriceMAX();
     }
 
     @GetMapping("/searchBill/{idCate}/{idDe}/{idMate}/{idCo}/{idSz}")
-    public Optional<Product> getProductBill(@PathVariable("idCate")String idCate,@PathVariable("idDe")String idDe,
-                                            @PathVariable("idMate")String idMate,@PathVariable("idCo")String idCo,@PathVariable("idSz")String idSz){
+    public Optional<Product> getProductBill(@PathVariable("idCate") String idCate, @PathVariable("idDe") String idDe,
+                                            @PathVariable("idMate") String idMate, @PathVariable("idCo") String idCo, @PathVariable("idSz") String idSz) {
 
 
         int idCT = Integer.parseInt(String.valueOf(idCate));
@@ -419,6 +437,6 @@ public class ProductRestController {
         int idM = Integer.parseInt(String.valueOf(idMate));
         int idC = Integer.parseInt(String.valueOf(idCo));
         int idS = Integer.parseInt(String.valueOf(idSz));
-        return productService.getProductBill(idCT,idD,idM,idC,idS);
+        return productService.getProductBill(idCT, idD, idM, idC, idS);
     }
 }

@@ -142,7 +142,7 @@
                                         <a ng-click="logoff()" ng-if="account"  href="/security/logoff" class="dropdown-item">Đăng Xuất</a>
                                         <hr>
                                         <a href="#!purchase" ng-if="account" class="dropdown-item">Đơn hàng của bạn</a>
-                                        <a href="/admin/main.html"  class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN' && accountHome.role.name=='ROLE_STAFF' ">Quản lý</a>
+                                        <a href="/admin/main.html"  class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN' || accountHome.role.name=='ROLE_STAFF'">Quản lý</a>
                                         <a href="#!info" ng-if="account" class="dropdown-item">Thông tin tài khoản</a>
                                     </div>
                                     <!--                                      modal login-->
