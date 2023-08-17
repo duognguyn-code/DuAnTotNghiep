@@ -105,6 +105,14 @@ app.controller("mainAdmin", function($scope,$http) {
         $scope.currentLanguage = languageCode;
     };
 
+    $scope.getAcount = function () {
+        $http.get(`http://localhost:8080/rest/user/getAccount`).then(function (respon) {
+            $scope.accountHome = respon.data;
+        }).catch(err => {
+            $scope.accountHome = null;
+        })
+    }
+    $scope.getAcount();
     $scope.getCurrentLanguageName = function() {
         for (var i = 0; i < $scope.languages.length; i++) {
             if ($scope.languages[i].code === $scope.currentLanguage) {

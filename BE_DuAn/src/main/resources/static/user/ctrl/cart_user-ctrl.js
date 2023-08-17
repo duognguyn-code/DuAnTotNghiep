@@ -9,6 +9,8 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
 
     var urlShippingOder = "http://localhost:8080/rest/user/address/getShipping-order";
 
+    var urlPaymentVNP = 'http://localhost:8080/api/vnpay/send';
+
     $scope.accountActive = {};
     $scope.item = {};
     $rootScope.qtyCart = 0;
@@ -76,7 +78,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                             'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
                             'warning'
                         );
-                        return; // Dừng quá trình thanh toán
+                        return;
                     } else {
                         if ($scope.checkBuy) {
                             var vnp_OrderInfo = 'thanh toan hoa don';

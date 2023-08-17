@@ -31,6 +31,11 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
 
     $rootScope.cartItems = [];
 
+    $scope.logOut= function () {
+        alert("dang xuat ben login")
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
     $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -112,7 +117,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.getAcount = function () {
         $http.get(`http://localhost:8080/rest/user/getAccount`, token).then(function (respon) {
             $scope.accountHome = respon.data;
-            alert($scope.accountHome.role.name)
         }).catch(err => {
 
             $scope.accountHome = null;
