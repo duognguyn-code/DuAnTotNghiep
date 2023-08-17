@@ -19,9 +19,9 @@
                                     </select>
                                 </label>
                                 <div class="thumbnail_images" id="previewContainer">
-                                    <div class="previewImageContainer" id="previewImagesContainer">
-                                        <img ng-src="{{product.image.urlimage}}" alt="Ảnh sản phẩm" />
-                                    </div>
+                                    <img class="img-fluid w-100"
+                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}" alt=""
+                                         style="transition:.5s;width:165px;height:135px">
                                 </div>
                             </div>
                             <label class="block text-sm">

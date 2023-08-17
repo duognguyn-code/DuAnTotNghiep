@@ -218,6 +218,10 @@ public class ProductRestController {
         List<Product> products = productService.getAll(pageable).getContent();
         return products;
     }
+    @GetMapping("/search/{id}")
+    public Product getByIdForImages(@PathVariable Integer id) {
+        return productService.findProductForImages(id);
+    }
 
     @GetMapping(value = "/page/pushedlist")
     public ResponseEntity<Map<String, Object>> findByPublished(
