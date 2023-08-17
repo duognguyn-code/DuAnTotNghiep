@@ -95,7 +95,7 @@ public class BillDetailRestController {
         for (int i = 0; i < detail.toArray().length; i++) {
 
             if (detail.get(i).getStatus() !=5){
-                if(status == 5){
+                if(status == 5 || status==7){
                     Product products = productService.getId(detail.get(i).getProduct().getId());
                     products.setQuantity(products.getQuantity()+detail.get(i).getQuantity());
                     productService.save(products);

@@ -105,13 +105,12 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             $scope.form.status=4
                         }
                         if (bill.status===4){
-                            // alert("Bạn không thể cập nhật")
                             $scope.messageError("Bạn không thể cập nhật");
                         }
                         $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
-                                $scope.getBill();
+                                // $scope.getBill();
                                 $scope.messageSuccess("Đổi trạng thái thành công");
                             } else {
                                 $scope.messageError("Đổi trạng thái thất bại");
@@ -171,7 +170,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
 
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
-                                $scope.getBill();
+                                // $scope.getBill();
                                 $scope.messageSuccess("Hủy đơn thành công");
                             } else {
                                 $scope.messageError("Hủy đơn thất bại");
@@ -196,13 +195,64 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             }
         })
     }
+    $scope.updateStatusfailure = function (bill) {
+        Swal.fire({
+            title: 'Bạn có chắc muốn đổi trạng thái không?',
+            text: "Đổi không thể quay lại!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xác nhận'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let timerInterval
+                Swal.fire({
+                    title: 'Đang gửi thông báo cho khách hàng!',
+                    html: 'Vui lòng chờ <b></b> milliseconds.',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        $scope.form.id = bill.id;
+                        $scope.form.status=7
+                        $http.put(apiUrlBill + '/updateStatus'+'/'+bill.id, $scope.form,token).then(function (response) {
+                            if (response.data) {
+                                $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
+                                // $scope.getBill();
+                                $scope.messageSuccess("Chuyển trạng thái thành công");
+                                $scope.sumStatus();
+                            }
+                            else {
+                                $scope.messageError("Hủy đơn thất bại");
+                            }
+                        }).catch(error => {
+                            $scope.messageError("Chuyển trạng thái thất bại");
+                        });
+                        const b = Swal.getHtmlContainer().querySelector('b')
+                        timerInterval = setInterval(() => {
+                            b.textContent = Swal.getTimerLeft()
+                        }, 100)
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval)
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
+            }
+        })
+    }
     $scope.UpdateBillDetaillByStatusBill = function (status,id){
         $http.put(apiUrlBillDetails + '/UpdateBillDetaillByStatusBill'+'/'+status +'/'+id,token).then(function (response) {
             if (response.data) {
             } else {
             }
         }).catch(error => {
-            $scope.messageError("Đổi trạng thái thất bại");
+            // $scope.messageError("Đổi trạng thái thất bại");
         });
     }
     $scope.messageSuccess=function (text) {
