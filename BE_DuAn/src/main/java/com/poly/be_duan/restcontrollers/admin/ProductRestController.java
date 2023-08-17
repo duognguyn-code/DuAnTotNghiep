@@ -370,8 +370,6 @@ public class ProductRestController {
     }
     @GetMapping("/search/{id}")
     public Product getByIdForImages(@PathVariable Integer id) {
-        System.out.println("abc------------------------");
-        System.out.println(productService.findProductForImages(id));
         return productService.findProductForImages(id);
     }
 

@@ -1,6 +1,8 @@
 app.controller('paymentController', function ($rootScope, $scope, $http ,$location,$routeParams) {
     const apiUrlProduct = "http://localhost:8080/api/product";
 
+    const apiUrlAccout = "http://localhost:8080/rest/user";
+
     $scope.products = [];
     $scope.formProduct = {};
     $scope.productData = {};
@@ -17,6 +19,7 @@ app.controller('paymentController', function ($rootScope, $scope, $http ,$locati
     $scope.index = 0;
     $scope.checkButton = true;
     $scope.checkSubmit = false;
+    $scope.accountActive = {};
 
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
@@ -54,6 +57,17 @@ app.controller('paymentController', function ($rootScope, $scope, $http ,$locati
         })
     }
 
+    $scope.getAcountActive = function () {
+        $http.get(apiUrlAccout + `/getAccountActive`).then(function (respon) {
+            $scope.accountActive = respon.data;
+            $rootScope.name = $scope.accountActive.username;
+            console.log($scope.accountActive.username)
+        }).catch(err => {
+            $scope.accountActive = null;
+            $rootScope.account = null;
+        })
+
+    }
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
         $http.get(apiUrlProduct)

@@ -125,6 +125,10 @@
                                             aria-label="Edit" ng-click="updateStatus(bill)"
                                     >Thành Công
                                     </button>
+                                    <button ng-if="bill.status==3"class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
+                                            aria-label="Edit" ng-click="updateStatusfailure(bill)"
+                                    >Giao hàng thất bại
+                                    </button>
                                     <button ng-if="bill.status !==5 && bill.status !==4 && bill.status !==3"
                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
                                             ng-click="updateStatusCancel(bill)"

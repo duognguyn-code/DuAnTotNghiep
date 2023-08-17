@@ -2,55 +2,55 @@
   <main class="h-full pb-16 overflow-y-auto">
     <div class="container px-6 mx-auto grid">
       <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Tìm Kiếm Đơn Hàng
+        {{languageNav['Admin.nav.FindBill']}}
       </h2>
 
       <class class="grid gap-6 mb-8 md:grid-cols-1">
         <class class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
           <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
             <label class="block text-sm">
-              <span class="text-gray-700 dark:text-gray-400">Số Điện Thoại</span>
+              <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Phone']}}</span>
               <input ng-model="searchPhone"
                      class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
               />
             </label>
             <label class="block text-sm">
-              <span class="text-gray-700 dark:text-gray-400">Trạng Thái Đơn </span>
+              <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.StatusBIll']}}</span>
               <select ng-model="searchStatus"
                       class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                 <option value="6">---Chọn Mục---</option>
-                <option value="1">Chờ Xác Nhận ({{sumSts1}})</option>
-                <option value="2">Đã Xác Nhận ({{sumSts2}}) </option>
-                <option value="3">Đã Tạo Bill  (<a style="color: red">{{sumSts3}}</a>)</option>
-                <option value="4">Không Return (<a style="color: red">{{sumSts4}}</a>)</option>
-                <option value="5">Hủy Đơn (<a style="color: red">{{sumSts5}}</a>)</option>
+                <option value="1">{{languageNav['Admin.nav.Waitforconfirmation']}} ({{sumSts1}})</option>
+                <option value="2">{{languageNav['Admin.nav.confirmed']}} ({{sumSts2}}) </option>
+                <option value="3">{{languageNav['Admin.nav.Createdanorder']}}  (<a style="color: red">{{sumSts3}}</a>)</option>
+                <option value="4">{{languageNav['Admin.nav.NoReturn']}} (<a style="color: red">{{sumSts4}}</a>)</option>
+                <option value="5">{{languageNav['Admin.nav.cancelorder']}} (<a style="color: red">{{sumSts5}}</a>)</option>
               </select>
             </label>
             <label class="block text-sm" style="margin-top: 18px; margin-left: 30px">
               <button ng-click="searchBill1()" style="margin-top: 10px;"
                       class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Tìm Kiếm
+                {{languageNav['Admin.nav.Find']}}
               </button>
               <button ng-click="resetSearch()" style="margin-top: 10px;margin-left: 10px"
                       class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Reset
+                {{languageNav['Admin.nav.Refresh']}}
               </button>
             </label>
           </div>
     </div>
     <div class="container grid px-6 mx-auto">
       <h2 style="margin-right: 900px" class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-        Danh Sách Hoàn Trả Hàng
+        {{languageNav['Admin.nav.ListReturn']}}
       </h2>
       <div style="margin-right: 50px" class="mt-2 col-2 offset-10">
         <button ng-if="checksts==0" data-bs-target="#ReturnProduct" data-bs-toggle="modal" ng-click="getprd()"
                   class="btn btn-secondary">
 <!--                 ng-click="postRequest()"-->
-        Xác nhận</button>
+          {{languageNav['Admin.nav.Confirm']}}</button>
 <!--        <button ng-if="checksts==1" ng-if="checksts==0" ng-click="postRequest()"-->
 <!--                 class="btn btn-secondary">-->
 <!--          Xác nhận</button>-->
-        <button ng-if="checksts==0" ng-click="putRequest()" class="btn btn-secondary">Hủy bỏ</button>
+        <button ng-if="checksts==0" ng-click="putRequest()" class="btn btn-secondary">{{languageNav['Admin.nav.Cancel']}}</button>
       </div>
 
       <div class="container-fluid pt-5" style="width:1200px;">
@@ -60,15 +60,15 @@
               <thead>
               <tr
                       class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-              ><th ng-if="checksts==0" class="px-4 py-3" scope="col">chọn</th>
-            <th class="px-4 py-3" scope="col">Khách hàng</th>
-            <th class="px-4 py-3" scope="col">Liên hệ</th>
-            <th class="px-4 py-3" scope="col">Sản phẩm</th>
-            <th class="px-4 py-3" scope="col">Số Lượng</th>
-            <th class="px-4 py-3" scope="col">Ngày đổi trả </th>
-            <th class="px-4 py-3" scope="col">Lý do đổi trả </th>
-            <th class="px-4 py-3" scope="col">Trạng thái</th>
-            <th class="px-4 py-3" scope="col">Chức Năng</th>
+              ><th ng-if="checksts==0" class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Select']}}</th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.PositionGuest']}}</th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Contact']}}</th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Product']}}</th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Quantity']}}</th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.DateReturn']}} </th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Note']}} </th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Status']}}</th>
+            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Function']}}</th>
 
           </tr>
           </thead>
@@ -102,16 +102,16 @@
               <button ng-if="prChange.status==1"  ng-click="updateQuantity(prChange)"
                       class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
 <!--                ng-click="getprd()"-->
-               Thay Đổi
+                {{languageNav['Admin.nav.Change1']}}
                </button>
               <button ng-if="prChange.status==2"  ng-click="addProduct(prChange)" data-bs-target="#addBill" data-bs-toggle="modal"
                       class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 <!--      ng-click="updateQuantity(prChange)"-->
-                Tạo Bill
+                {{languageNav['Admin.nav.CreateOrder']}}
               </button>
               <button ng-if="prChange.status==2"
                       ng-click="NoReturnProduct(prChange.id)" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-              Không Return
+                {{languageNav['Admin.nav.NoReturn']}}
             </button>
              </td>
            </tr>
@@ -140,7 +140,7 @@
                <div style="width: 1000px" class="modal-content">
                  <div class="modal-header">
                    <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
-                   <p style="color:black">Lí Do </p>
+                   <p style="color:black">{{languageNav['Admin.nav.Note']}} </p>
                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                            aria-label="Close"></button>
                  </div>
@@ -150,11 +150,11 @@
                      <table class="w-full whitespace-no-wrap">
                        <thead>
                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
-                         <th class="px-4 py-3" scope="col">Người Mua</th>
-                         <th class="px-4 py-3" scope="col">Số Điện Thoại</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.PositionGuest']}}</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Phone']}}</th>
                          <th class="px-4 py-3" scope="col">Email</th>
-                         <th class="px-4 py-3" scope="col">Lí Do</th>
-                         <th class="px-4 py-3" scope="col">Hình Ảnh</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Note']}}</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Image']}}</th>
                        </tr>
                        </thead>
                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -164,12 +164,8 @@
                          <td class="px-4 py-3 ">{{formReasonReturn.account.email}}</td>
                          <td class="px-4 py-3 ">{{formReasonReturn.account.phone}}</td>
                          <td class="px-4 py-3 ">{{formReasonReturn.description}}</td>
-                         <td class="px-4 py-3 "> <img class="img-responsive" width="100px" height="100px">
-<!--                           src="{{formReasonReturn.images.length>0?formReasonReturn.images[0].urlimage:''}}">-->
-                           <video width="400px" height="400px" controls="controls">
-                             <source src="https://www.youtube.com/embed/lcZDWo6hiuI" type="video/mp4" />
-<!--                           <iframe width="100" height="120" src="https://www.youtube.com/embed/lcZDWo6hiuI">-->
-<!--                           </iframe>-->
+                         <td class="px-4 py-3 ">
+                           <button ng-href="" ng-click="redirectToGoogle(formReasonReturn)">Hình Ảnh/Video</button>
                          </td>
                        </tr>
                        </tbody>
@@ -188,7 +184,7 @@
                <div style="width: 1000px" class="modal-content">
                  <div class="modal-header">
                    <h5 class="modal-title" id="Reasonreturn1"></h5>
-                   <p style="color:black">Sản phẩm </p>
+                   <p style="color:black">{{languageNav['Admin.nav.Product']}} </p>
                    <button type="button" class="btn-close" data-bs-dismiss="modal"
                            aria-label="Close"></button>
                  </div>
@@ -198,10 +194,10 @@
                      <table class="w-full whitespace-no-wrap">
                        <thead>
                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
-                         <th class="px-4 py-3" scope="col">Hình ảnh</th>
-                         <th class="px-4 py-3" scope="col">Tên Sản Phẩm</th>
-                         <th class="px-4 py-3" scope="col">Số Lượng</th>
-                         <th class="px-4 py-3" scope="col">Giá</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Image']}}</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Product']}}</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Quantity']}}</th>
+                         <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Price']}}</th>
                        </tr>
                        </thead>
                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -231,7 +227,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="ReturnProduct1"></h5>
-                <p style="color:black">Danh Sách Sản Phẩm Trả Hàng</p>
+                <p style="color:black">{{languageNav['Admin.nav.Image']}}</p>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
               </div>
@@ -242,10 +238,10 @@
                     <thead>
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
 <!--                      <th class="px-4 py-3" scope="col">Hình ảnh</th>-->
-                      <th class="px-4 py-3" scope="col">Người đổi</th>
-                      <th class="px-4 py-3" scope="col">Số lượng đổi</th>
-                      <th class="px-4 py-3" scope="col">Có thể sử dụng lại</th>
-                      <th class="px-4 py-3" scope="col">Không thể sử dụng lại</th>
+                      <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.PersonReturn']}}</th>
+                      <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Quantity']}}</th>
+                      <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Canbereused']}}</th>
+                      <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Cannotbereused']}}</th>
                     </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -270,7 +266,7 @@
                     <div class="">
                       <button ng-click="productQuantitychange.updateReturnQuantityProduct()"
                               class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                        Xác nhận
+                        {{languageNav['Admin.nav.Confirm']}}
                       </button>
                     </div>
                   </div>
@@ -300,10 +296,10 @@
                     <table class="w-full whitespace-no-wrap">
                       <thead>
                       <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
-                        <th class="px-4 py-3" scope="col">ID Sản Phẩm</th>
-                        <th class="px-4 py-3" scope="col">Tên Sản Phẩm</th>
-                        <th class="px-4 py-3" scope="col">Số lượng trong kho</th>
-                        <th class="px-4 py-3" scope="col">Số Lượng đổi trả</th>
+                        <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.IDproduct']}}</th>
+                        <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.NameProduct']}}</th>
+                        <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.QuantityinStock']}}</th>
+                        <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.QuantityReturn']}}</th>
                       </tr>
                       </thead>
                       <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -325,7 +321,7 @@
                       <div class="">
                         <button ng-click="addBill.purchase()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                          Xác nhận
+                          {{languageNav['Admin.nav.Confirm']}}
                         </button>
                       </div>
                     </div>
