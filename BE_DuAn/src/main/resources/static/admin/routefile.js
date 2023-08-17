@@ -80,6 +80,7 @@ app.config(function($routeProvider){
 })
 
 app.controller("mainAdmin", function($scope,$http) {
+
     $scope.lang = sessionStorage.getItem('lang');
     if ($scope.lang == null) {
         sessionStorage.setItem('lang', 'vi');
@@ -141,5 +142,41 @@ app.controller("mainAdmin", function($scope,$http) {
             location.reload();
         }
     }
+    $scope.sumSts=0;
+    const apiUrlProductChange = "http://localhost:8080/rest/user/productchange";
+    $scope.sumStatus=function (){
+        for (let i = 1; i < 6; i++) {
+            $http.get(apiUrlProductChange+'/sumStatus'+'/'+i)
+                .then(function (response) {
+                    if (i==1){
+                        $scope.sumSts=response.data;
+                    }
 
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
+    $scope.sumStatus();
+    $scope.sumSts1=0;
+    const apiUrlBill = "http://localhost:8080/api/bill";
+    $scope.sumStatus1=function (){
+        for (let i = 1; i < 4; i++) {
+            $http.get(apiUrlBill+'/sumStatus'+'/'+i)
+                .then(function (response) {
+                    if (i==1){
+                        $scope.sumSts1=response.data;
+                    }
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
+    $scope.sumStatus1();
 });

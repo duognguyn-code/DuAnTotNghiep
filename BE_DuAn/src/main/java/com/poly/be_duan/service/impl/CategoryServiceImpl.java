@@ -69,4 +69,14 @@ public class CategoryServiceImpl implements CategoryService {
         category.setStatus(entity.getStatus());
         return repository.save(category);
     }
+
+    @Override
+    public Category getNameCategory(String name) {
+        return repository.getNameCategory(name);
+    }
+
+    @Override
+    public Category update(Category category) {
+        return repository.save(category);
+    }
 }

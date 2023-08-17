@@ -38,6 +38,7 @@ public class ProductChangeRestController {
         return orderDetails.get();
     }
 
+
     @RequestMapping(value = "/save",method = RequestMethod.POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public void requestProductChange(@ModelAttribute ProductChangeDTO productChangeDTO){
         try {
@@ -73,6 +74,7 @@ public class ProductChangeRestController {
         }catch (Exception e){
             e.getMessage();
         }
+
     }
 
     @RequestMapping(path = "/saveRequest",method = RequestMethod.POST,
@@ -151,8 +153,8 @@ public class ProductChangeRestController {
     }
 
     @GetMapping("/forReasonreturn/{id}")
-    public List<Bill_detail> getForProductChange(@PathVariable(value = "id")String id){
-        return billDetailRepository.getForProductChange(id);
+    public Bill_detail getForProductChange(@PathVariable(value = "id")String id){
+        return billDetailService.getForProductChange(id);
     }
 
     @GetMapping("/sumStatus/{number}")

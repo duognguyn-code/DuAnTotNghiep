@@ -38,4 +38,9 @@ public class SizeServiceImpl implements SizeService {
     public void delete(Integer id) {
         sizeRepository.deleteById(id);
     }
+
+    @Override
+    public Size getNameSize(String name) {
+        return sizeRepository.getNameSize(name);
+    }
 }

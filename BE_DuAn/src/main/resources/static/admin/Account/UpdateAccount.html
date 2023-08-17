@@ -113,29 +113,39 @@
 <!--            </label>-->
 <!--          </div>-->
 
-<!--          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">-->
-<!--            <label class="block text-sm ">-->
-<!--              <span class="text-gray-700 dark:text-gray-400">Ngày Sinh</span>-->
-<!--              <input ng-model="formAccountUpdate.date"-->
-<!--                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"-->
-<!--                     type="date"-->
-<!--              />-->
-<!--            </label>-->
-<!--          </div>-->
-        </div>
-        <!--        ============-->
-        <div class="grid gap-6 mb-8 md:grid-cols-2">
+          <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
+            <label class="block text-sm">
+              <span class="text-gray-700 dark:text-gray-400">Trạng Thái</span>
+              <div class="block w-full mt-1 text-sm dark:text-gray-300 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                  <input type="radio"ng-model="formAccountUpdate.account.status"ng-value="1"
+                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                  />
+                  <span class="ml-2">Hoạt Động</span>
+                </label>
+                <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                  <input type="radio"ng-model="formAccountUpdate.account.status"ng-value="0"
+                         class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                  />
+                  <span class="ml-2">Ngưng Hoạt Động</span>
+                </label>
+              </div>
+            </label>
+          </div>
           <div class="mt-4 text-sm">
             <button ng-click="updateAccount()"  style="margin-top: 10px; margin-left: 100px;"
-                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
               Cập nhật
             </button>
             <button ng-click="resetFormUpdate()"  style="margin-top: 10px; margin-left: 65px;"
-                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
               Làm Mới
             </button>
           </div>
         </div>
+        <!--        ============-->
+
+
         <!--        ===============-->
       </div>
     </div>

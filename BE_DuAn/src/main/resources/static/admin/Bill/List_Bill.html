@@ -27,13 +27,13 @@
                             />
                         </label>
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Trạng Thái Đơn 2</span>
+                            <span class="text-gray-700 dark:text-gray-400">Trạng Thái Đơn </span>
                             <select ng-model="searchStatus"
                                     class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option value="6">---Chọn Mục---</option>
-                                <option value="1">Chờ Xác Nhận  ( {{sumSts1}})</option>
-                                <option value="2">Xác Nhận  ( {{sumSts2}})</option>
-                                <option value="3">Đang Giao Hàng ( <a style="color: red">{{sumSts3}} </a> )</option>
+                                <option value="1">Chờ Xác Nhận  ({{sumSts1}})</option>
+                                <option value="2">Xác Nhận  ({{sumSts2}})</option>
+                                <option value="3">Đang Giao Hàng (<a style="color: red">{{sumSts3}}</a>)</option>
                                 <option value="4">Giao Dịch Hoàn Tất</option>
                                 <option value="5">Hủy Đơn</option>
                             </select>
@@ -54,6 +54,14 @@
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 Danh Sách Đơn Hàng
             </h2>
+
+<!--            <div class="w-full overflow-hidden rounded-lg shadow-xs">-->
+<!--                <div class="w-full overflow-x-auto">-->
+<!--                    <table class="w-full whitespace-no-wrap">-->
+<!--                        <thead>-->
+<!--                        <tr-->
+<!--                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"-->
+<!--                        >--> <div class="container-fluid pt-5" style="width:1200px;">
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
                     <table class="w-full whitespace-no-wrap">
@@ -61,7 +69,7 @@
                         <tr
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
-                            <th class="px-4 py-3" scope="col">Mã Đơn</th>
+                <th class="px-4 py-3" scope="col">Mã Đơn</th>
                             <th class="px-4 py-3" scope="col">Tên Khách Hàng</th>
                             <th class="px-4 py-3" scope="col">Số Điện Thoại</th>
                             <th class="px-4 py-3" scope="col">Ngày Mua</th>

@@ -26,6 +26,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     $scope.tabid = 0;
     $scope.yourJsonData = [];
     $scope.checkTab = false;
+    $scope.idBill=0;
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
             toast: true,
@@ -175,7 +176,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                 } else if ($scope.PrD == '') {
                     $scope.checkQuantity = true;
                 }
-                alert($scope.checkQuantity);
+                // alert($scope.checkQuantity);
             }).catch(error => {
                 console.log(error, 'lỗi check product')
             })
@@ -195,7 +196,8 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             })
         }, getD() {
             if ($scope.tabs.length === 0 || $scope.checkTab == false) {
-                alert("Bạn Phải Tạo Hóa Đơn")
+                // alert("")
+                $scope.error("Bạn Phải Tạo Hóa Đơn");
                 return
             }
             $http.get(apiUrlProduct + '/searchBill' + '/' + this.idP + '/' + $scope.searchDesign + '/' + $scope.searchMaterial + '/' + $scope.searchColor + '/' + $scope.searchSize)
@@ -270,14 +272,16 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     $scope.getProductByQRCode = function () {
         if ($scope.tabs.length === 0) {
             // alert($scope.tabid)
-            alert("Bạn Phải Tạo Hóa Đơn")
+            // alert("")
+            $scope.error("Bạn Phải Tạo Hóa Đơn");
             return
         }
         $http.get(apiUrlCart)
             .then(function (response) {
                 $scope.formCart = response.data;
                 if ($scope.formCart.length === 0) {
-                    alert("Mời Bạn Quét Lại Mã")
+                    // alert(")
+                    $scope.error("Mời Bạn Quét Lại Mã");
                     return
                 }
                 console.log(response);
@@ -370,7 +374,8 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         , tru(id) {
             var item = this.items.find(item => item.id == id && item.idTab == $scope.tabid);
             if (item.qty == 1) {
-                alert("Bạn Không Thể Trừ")
+                // alert("Bạn Không Thể Trừ")
+                $scope.error("Số lượng phải lớn hơn 1");
             } else {
                 item.qty--;
                 this.saveToLocalStorage();
@@ -405,7 +410,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     $scope.getUsernameForBill = {};
     $scope.bill = {
         createDate: new Date(),
-        address: "",
+        address: "Không có(Mua trực tiếp tại cửa hàng)",
         account: {username: "Dương"},
         phoneTake: "",
         personTake: "",
@@ -413,7 +418,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         totalMoney: $scope.cart.amount,
         moneyShip: "0",
         typePayment: 1,
-        description: "1",
+        description: "Không có ghi chú",
         statusBuy: "1",
         status: "4",
         get billDetails() {
@@ -424,14 +429,15 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     quantity: item.qty,
                     dateReturn: null,
                     moneyRefund: null,
-                    description: "Không",
+                    description: "Không có ghi chú",
                     status: 2,
                     previousBillDetail: null
                 }
             })
         }, purchase() {
             if ($scope.cart.av.length === 0) {
-                alert("Giỏ hàng trống")
+                // alert("Giỏ hàng trống")
+                $scope.error("Giỏ hàng trống");
                 return
             }
             $http.get(apiUrlAccount + '/findByPhone' + '/' + $scope.InforphoneTake)
@@ -441,15 +447,16 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
 
                     var bill = angular.copy($scope.bill);
                     var us = angular.copy($scope.getUsernameForBill);
-                    alert(us)
+                    // alert(us)
                     bill.account.username = us.username
                     bill.phoneTake = $scope.InforphoneTake
                     bill.personTake = $scope.InforpersonTake
                     bill.totalMoney = $scope.cart.amount
                     var item = JSON.stringify(angular.copy(bill));
-                    alert(item)
+                    // alert(item)
                     $http.post(apiUrlBill, bill).then(resp => {
-                        alert("Dat hang thanh cong");
+                        // alert("Đặt Hàng Thành Công");
+                        $scope.message("Đặt Hàng Thành Công");
                         $scope.export();
                         $scope.productQuantity.laydt();
                         // if ( $scope.checkexport=true){
@@ -457,6 +464,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                         // }
                     }).catch(error => {
                         alert("Loi~")
+                        $scope.error("Đặt Hàng Thất Bại");
                         console.log(error)
                     })
                 })
@@ -489,30 +497,23 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         , laydt() {
             // alert("ok")
             var bill = angular.copy(this);
-            alert(bill)
+            // alert(bill)
             $http.put(apiUrlBillDetails + '/updatedt', bill).then(resp => {
                 $scope.InforpersonTake = ""
                 $scope.InforphoneTake = ""
             }).catch(error => {
-                alert("Loi~")
+                // alert("Loi~")
                 console.log(error)
             })
         }
     }
     $scope.searchProduct = function () {
-        if ($scope.searchPriceMin1 === "") {
-            $scope.searchPriceMin1 = "Min"
-
-        }
         if ($scope.searchProducts === "") {
             $scope.searchProducts = " "
 
         }
-        if ($scope.searchPriceMax1 === "") {
-            $scope.searchPriceMax1 = "Max"
-        }
         if ($scope.searchColor1 === 'undefined' && $scope.searchDesign1 === 'undefined' && $scope.searchMaterial1 === 'undefined'
-            && $scope.searchSize1 === 'undefined' && $scope.searchPriceMin1 === "" && $scope.searchPriceMax1 === "" && $scope.searchProducts === 'undefined'
+            && $scope.searchSize1 === 'undefined'&& $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
@@ -560,14 +561,16 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("Bạn đang ở trang đầu")
+                $scope.message("Bạn đang ở trang đầu");
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                // alert("Bạn đang ở trang cuối")
+                $scope.message("Bạn đang ở trang cuối");
             }
         },
         last() {
@@ -593,6 +596,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     }
     $scope.acc = [];
     $scope.check = 0;
+    $scope.check1=0
     const apiUrlAccount = "http://localhost:8080/api/account";
     $scope.findAccountByPhone = function () {
         $scope.check = 0;
@@ -605,6 +609,12 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     if ($scope.acc.length == 0) {
                         $scope.check = 1
                     }
+                }
+                if ($scope.acc.length !== 0) {
+                    $scope.check1=1
+                }
+                if ($scope.acc.length == 0) {
+                    $scope.check1=0
                 }
                 console.log(response);
             })
@@ -688,7 +698,8 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                                     $scope.error('Thêm  mới thất bại');
                                 });
                             } else {
-                                alert("Số Điện Thoại Đã Tồn Tại")
+                                // alert("Số Điện Thoại Đã Tồn Tại")
+                                $scope.error("Số Điện Thoại Đã Tồn Tại");
                                 return
                             }
                             console.log(response);
@@ -697,7 +708,8 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                             console.log(error);
                         });
                 } else {
-                    alert("Tài Khoản Đã Tồn Tại")
+                    // alert("Tài Khoản Đã Tồn Tại")
+                    $scope.error("Tài Khoản Đã Tồn Tại");
                     return
                 }
                 console.log(response);
@@ -712,19 +724,47 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             account: {username: $scope.formAccount.username}
         }
         $http.post(apiUrlAuthor, auth).then(response => {
-            alert("thanh cong")
+            // alert("thanh cong")
         }).catch(error => {
-            alert("that bai")
+            // alert("that bai")
         });
     }
     $scope.addAcc = function () {
         $scope.formAccount.phone = $scope.InforphoneTake
     }
     $scope.checkForm = function () {
-        alert($scope.InforpersonTake)
+        // alert($scope.InforpersonTake)
         if ($scope.InforpersonTake === "") {
-            alert("Mời Bạn Nhập Thông Tin Khách Hàng")
+            // alert("Mời Bạn Nhập Thông Tin Khách Hàng")
+            $scope.error("Thông tin khách hàng trống");
             return
         }
+    }
+    $scope.getIdBill=function (){
+        $http.get(apiUrlCart+'/idBill')
+            .then(function (response) {
+                $scope.idBill = response.data +1 ;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        var json = localStorage.getItem("cart");
+        this.items = json ? JSON.parse(json) : [];
+    }
+    $scope.getIdBill();
+    $scope.checkName=function (){
+        // alert("s")
+    }
+    $scope.chonTab=function (){
+        // alert("Bạn Phải Chọn Hóa Đơn")
+        $scope.error("Bạn Phải Chọn Hóa Đơn");
+    }
+    $scope.msgPhone=function (){
+        // alert("S")
+        $scope.error("Số Điện Thoại Không Tồn Tại");
+    }
+    $scope.resetPhone=function (){
+      $scope.InforphoneTake=""
+        $scope.InforpersonTake=""
     }
 });
