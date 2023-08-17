@@ -317,6 +317,10 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
         }
     }
 
+    $scope.logOut= function () {
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
 
     $scope.checkLogin = function () {
         if (jwtToken == null){

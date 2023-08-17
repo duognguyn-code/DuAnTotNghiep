@@ -96,23 +96,20 @@ app.controller("mainAdmin", function($scope,$http) {
             $scope.isLoading = false;
         })
     $scope.languages = [
-        { code: 'vi', name: 'Tiếng Việt', img:'https://viblo.asia/images/vi-flag-32x48.png'},
-        { code: 'en', name: 'English', img:'https://viblo.asia/images/en-flag-32x48.png'}
+        { code: 'en', name: 'English' },
+        { code: 'vi', name: 'Tiếng Việt' }
+
     ];
-    $scope.currentLanguage = $scope.languages[0].code;
+
+    $scope.currentLanguage = sessionStorage.getItem('lang') || $scope.languages[0].code;
+
     $scope.showDropdown = false;
+
     $scope.changeLanguage = function(languageCode) {
         $scope.currentLanguage = languageCode;
+        $scope.showDropdown = false;
     };
 
-    $scope.getAcount = function () {
-        $http.get(`http://localhost:8080/rest/user/getAccount`).then(function (respon) {
-            $scope.accountHome = respon.data;
-        }).catch(err => {
-            $scope.accountHome = null;
-        })
-    }
-    $scope.getAcount();
     $scope.getCurrentLanguageName = function() {
         for (var i = 0; i < $scope.languages.length; i++) {
             if ($scope.languages[i].code === $scope.currentLanguage) {
@@ -122,26 +119,25 @@ app.controller("mainAdmin", function($scope,$http) {
         return '';
     };
     $scope.isLoading = true;
-    $scope.navClick = {
-        languageVN() {
-            $scope.isLoading = true;
-            // $http.get(`${API_CHANGE_LANGUAGE}/vi`)
-            //     .then(resp => {
-            //         $scope.isLoading = false;
-            //         location.reload();
-            //     })
-            //     .catch(error => {
-            //         console.log(error);
-            //         $scope.isLoading = false;
-            //     })
-            sessionStorage.setItem('lang', 'vi');
-            location.reload();
-        },
-        languageUS() {
-            sessionStorage.setItem('lang', 'en');
-            location.reload();
-        }
+    $scope.languageVN = function() {
+        $scope.isLoading = true;
+        sessionStorage.setItem('lang', 'vi');
+        location.reload();
+    };
+
+    $scope.languageUS = function() {
+        $scope.isLoading = true;
+        sessionStorage.setItem('lang', 'en');
+        location.reload();
+    };
+    $scope.getAcount = function () {
+        $http.get(`http://localhost:8080/rest/user/getAccount`).then(function (respon) {
+            $scope.accountHome = respon.data;
+        }).catch(err => {
+            $scope.accountHome = null;
+        })
     }
+    $scope.getAcount();
     $scope.sumSts=0;
     const apiUrlProductChange = "http://localhost:8080/rest/user/productchange";
     $scope.sumStatus=function (){

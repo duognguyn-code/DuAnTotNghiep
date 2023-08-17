@@ -3,7 +3,7 @@
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Danh mục
+                {{languageNav['Admin.nav.Category']}}
             </h2>
 
             <div class="grid gap-6 mb-8 md:grid-cols-2">
@@ -23,7 +23,7 @@
 <!--                        </label>-->
 <!--                    </div>-->
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Tên thể loại</span>
+                        <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameCategory']}}</span>
                         <input
                                 ng-model="formCategory.name"
                                 class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -32,33 +32,33 @@
 
                     <div class="mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">
-                  Trạng Thái
+                  {{languageNav['Admin.nav.Status']}}
                 </span>
                         <div class="mt-2">
                             <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                 <input type="radio"ng-model="formCategory.status"ng-value="1"
                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                 />
-                                <span class="ml-2">Hoạt Động</span>
+                                <span class="ml-2">{{languageNav['Admin.nav.Active']}}</span>
                             </label>
                             <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                 <input type="radio"ng-model="formCategory.status"ng-value="0"
                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                 />
-                                <span class="ml-2">Không Hoạt Động</span>
+                                <span class="ml-2">{{languageNav['Admin.nav.NoneActive']}}</span>
                             </label>
                         </div>
                         <button style="margin-top: 30px; margin-left: 120px;"ng-click="addCategory()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Thêm Mới
+                            {{languageNav['Admin.nav.Create']}}
                         </button>
                         <button style="margin-top: 30px; margin-left: 45px;"ng-click="updateCategory()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Sửa
+                            {{languageNav['Admin.nav.Update']}}
                         </button>
                         <button style="margin-top: 30px; margin-left: 45px;"ng-click="resetCategory()"
                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Làm Mới
+                            {{languageNav['Admin.nav.Refresh']}}
                         </button>
                     </div>
 
@@ -73,7 +73,7 @@
             <h4
                     class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
             >
-                Danh Sách Màu Sắc
+                {{languageNav['Admin.nav.ListCategory']}}
             </h4>
             <div class="w-full overflow-hidden rounded-lg shadow-xs">
                 <div class="w-full overflow-x-auto">
@@ -83,10 +83,9 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3" scope="col">ID</th>
-<!--                            <th class="px-4 py-3" scope="col">Danh mục</th>-->
-                            <th class="px-4 py-3" scope="col">Tên thể loại</th>
-                            <th class="px-4 py-3" scope="col">Trạng thái</th>
-                            <th class="px-4 py-3" scope="col">Chức năng</th>
+                            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.NameCategory']}}</th>
+                            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Status']}}</th>
+                            <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Function']}}</th>
                         </tr>
                         </thead>
                         <tbody
@@ -96,9 +95,6 @@
                             <td class="px-4 py-3 text-sm">
                                 {{category.idCategory}}
                             </td>
-<!--                            <td class="px-4 py-3 text-sm">-->
-<!--                                {{category.type== 0 ? 'Phụ Kiện' : 'Sản Phẩm'}}-->
-<!--                            </td>-->
                             <td class="px-4 py-3 text-sm">
                                 {{category.name}}
                             </td>

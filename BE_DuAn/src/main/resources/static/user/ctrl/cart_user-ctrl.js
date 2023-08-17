@@ -72,7 +72,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
             }).then((result) => {
                 if (result.isConfirmed) {
                     var cartItems = localStorage.getItem('cartItems');
-                    if (!cartItems) {
+                    if (cartItems.length == 0) {
                         Swal.fire(
                             'Giỏ hàng trống!',
                             'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
@@ -109,7 +109,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                                 timer: 5000
                                             });
                                         })
-
                                     } else {
                                         Swal.fire(
                                             'Thanh toán thất bại!',
@@ -117,6 +116,12 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                             'error'
                                         )
                                     }
+                                }).catch(err => {
+                                    Swal.fire(
+                                        'Thanh toán thất bại!',
+                                        '',
+                                        'error'
+                                    )
                                 })
                             }).catch(err => {
                                 Swal.fire(
@@ -124,8 +129,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                     '',
                                     'error'
                                 )
-                                console.log("error buy cart", err)
-                                alert(err + "lỗi 1");
                             })
 
                         } else {

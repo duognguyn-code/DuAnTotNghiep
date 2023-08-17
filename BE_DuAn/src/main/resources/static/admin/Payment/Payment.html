@@ -1,8 +1,7 @@
 <div xmlns:th="http://wwww.thymeleaf.org" th:replace="~{/admin/main :: dynamic(~{::main})}">
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container pb-2 overflow-y-auto">
-            <h2 class="my-6 text-2xl text-center font-semibold text-gray-700 dark:text-gray-200"> Thanh toán tại
-                quầy</h2>
+            <h2 class="my-6 text-2xl text-center font-semibold text-gray-700 dark:text-gray-200"> {{languageNav['Admin.nav.PaymentCounter']}}</h2>
             <div class="row px-xl-5 pb-3">
                 <div class="row col-lg-7">
                     <div class="container" style=" margin-top:20px;">
@@ -27,7 +26,7 @@
                             <div class="row" style="margin-top:40px;">
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
+                                        <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Color']}}</span>
                                         <select id="colorSearch1" ng-model="searchColor1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
@@ -39,7 +38,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
+                                        <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Design']}}</span>
                                         <select id="designSearch1" ng-model="searchDesign1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
@@ -52,7 +51,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
+                                        <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Material']}}</span>
                                         <select id="matesearch1" ng-model="searchMaterial1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
@@ -65,7 +64,7 @@
                                 </div>
                                 <div class="col-lg-3">
                                     <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
+                                        <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Size']}}</span>
                                         <select id="sizeSearch1" ng-model="searchSize1"
                                                 class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                 ng-click="searchProduct()">
@@ -82,7 +81,7 @@
                 <div class="row col-lg-5">
                     <button ng-click="addTab()"
                             style="width:200px;background-color:#8AEC6F;height:50px;font-size:20px;font-weight:500;border-radius:10px;margin-top:20px;margin-left:30px;">
-                        Tạo hóa đơn
+                        {{languageNav['Admin.nav.CreateOrder']}}
                     </button>
                     <div class="container-fluid">
                             <div class="tabs" style="flex-grow: 1; margin-right: 10px;overflow: hidden;width:500px;">
@@ -142,7 +141,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabelMaterial"></h5>
-                                <p>Chi tiết sản phẩm</p>
+                                <p>{{languageNav['Admin.nav.ProductDetail']}}</p>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -162,7 +161,7 @@
                                         <div class="row d-flex mb-3" style="margin-top:10px;">
                                             <div class="col-md-3">
                                             <p class="text-dark font-weight-medium mb-0 mr-3"
-                                               style="font-size:18px; font-weight:500;">Kiểu dáng:</p>
+                                               style="font-size:18px; font-weight:500;">{{languageNav['Admin.nav.Design']}}</p>
                                             </div>
                                             <div class="col-md-9">
                                             <select id="designSearch" ng-model="searchDesign"
@@ -178,7 +177,7 @@
                                         <div class="row d-flex mb-3" style="margin-top:10px;">
                                             <div class="col-md-3">
                                             <p class="text-dark font-weight-medium mb-0 mr-3"
-                                               style="font-size:18px; font-weight:500;">Size:</p>
+                                               style="font-size:18px; font-weight:500;">{{languageNav['Admin.nav.Size']}}</p>
                                             </div>
                                             <div class="col-md-9">
                                             <select id="sizeSearch" ng-model="searchSize"
@@ -194,7 +193,7 @@
                                         <div class="row d-flex mb-3" style="margin-top:10px;">
                                             <div class="col-md-3">
                                             <p class="text-dark font-weight-medium mb-0 mr-3"
-                                               style="font-size:18px; font-weight:500;">Màu sắc:</p>
+                                               style="font-size:18px; font-weight:500;">{{languageNav['Admin.nav.Color']}}</p>
                                             </div>
                                             <div class="col-md-9">
                                             <select id="colorSearch" ng-model="searchColor"
@@ -210,7 +209,7 @@
                                         <div class="row d-flex mb-3" style="margin-top:10px;">
                                             <div class="col-md-3">
                                             <p class="text-dark font-weight-medium mb-0 mr-3"
-                                               style="font-size:18px; font-weight:500;">Chất liệu:</p>
+                                               style="font-size:18px; font-weight:500;">{{languageNav['Admin.nav.Material']}}:</p>
                                             </div>
                                             <div class="col-md-9">
                                             <select id="matesearch" ng-model="searchMaterial"
@@ -231,7 +230,7 @@
                                     <div class="col-lg-3 mt-4 text-sm">
                                         <button style="margin-top: 30px;" ng-click="getP.getD()"
                                                 class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple float-right">
-                                            Thêm vào hóa đơn
+                                            {{languageNav['Admin.nav.AddBill']}}
                                         </button>
                                     </div>
                                 </div>
@@ -300,9 +299,9 @@
                     </div>
                     <div class="row" style="border-top: 0.5px solid #C0C0C0;">
                         <div class="col-md-8">
-                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tiền hàng</p>
-                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Khuyến mãi</p>
-                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">Tổng</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">{{languageNav['Admin.nav.MoneyProduct']}}</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">{{languageNav['Admin.nav.Promotion']}}</p>
+                            <p class="" style="font-size:18px; font-weight:500; margin-top:10px;">{{languageNav['Admin.nav.TotalMoney']}}</p>
                         </div>
 
                         <div class="col-md-4">
@@ -316,11 +315,11 @@
                     <div class="row" style="margin-top:20px;">
                         <button class="btn" ng-if="checkTab==true" ng-click="resetPhone()"
                                 style="width:100%;background-color:#8AEC6F;height:70px;font-size:20px;font-weight:500;"
-                                data-bs-target="#exampleModalInfo" data-bs-toggle="modal">Thanh toán
+                                data-bs-target="#exampleModalInfo" data-bs-toggle="modal">{{languageNav['Admin.nav.Pay']}}
                         </button>
                         <button class="btn" ng-if="checkTab==false" ng-click="chonTab()"
                                 style="width:100%;background-color:#8AEC6F;height:70px;font-size:20px;font-weight:500;"
-                                >Thanh toán
+                                >{{languageNav['Admin.nav.Pay']}}
                         </button>
                     </div>
                         <div class="modal fade" id="exampleModalInfo" tabindex="-1" data-bs-backdrop="static"
@@ -329,7 +328,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabelInfo"></h5>
-                                        <p>Thông tin khách hàng</p>
+                                        <p>{{languageNav['Admin.nav.InforGuest']}}</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
@@ -339,7 +338,7 @@
                                                 <div class="col-md-4">
                                                     <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
-                                                              style="font-size:16px;font-weight:700;">Số điện thoại</span>
+                                                              style="font-size:16px;font-weight:700;">{{languageNav['Admin.nav.Phone']}}</span>
                                                         <input ng-change="findAccountByPhone()" ng-model="InforphoneTake"
                                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                style="border: 0.5px solid #7e3af2;"
@@ -349,7 +348,7 @@
                                                 <div class="col-md-4">
                                                     <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400"
-                                                              style="font-size:16px;font-weight:700;">Họ Tên</span>
+                                                              style="font-size:16px;font-weight:700;">{{languageNav['Admin.nav.LastNameFirstName']}}</span>
                                                         <input disabled ng-model="InforpersonTake" ng-change="checkName()"
                                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                style="border: 0.5px solid #7e3af2;"
@@ -374,12 +373,12 @@
                                                 <button ng-if="check1==1"
                                                         ng-click="checkForm()" data-bs-target="#exampleModalPayment" data-bs-toggle="modal"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Xác nhận
+                                                    {{languageNav['Admin.nav.Confirm']}}
                                                 </button>
                                                 <button ng-if="check1==0"
                                                         ng-click="msgPhone()"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Xác nhận
+                                                    {{languageNav['Admin.nav.Confirm']}}
                                                 </button>
                                             </div>
                                         </div>
@@ -394,20 +393,20 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalInfo12"></h5>
-                                        <p>Thêm Mới Tài Khoản</p>
+                                        <p>{{languageNav['Admin.nav.CreateAccount']}}</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
 
                                         <div class="container px-6 mx-auto grid">
                                             <h2 class="text-center my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                                                Tạo tài khoản
+                                                {{languageNav['Admin.nav.CreateAccount']}}
                                             </h2>
                                             <div class=" p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                 <div class="grid gap-6 mb- md:grid-cols-2">
                                                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 300px 50px;">
                                                         <label class="block text-sm">
-                                                            <span class="text-gray-700 dark:text-gray-400">Tên tài khoản</span>
+                                                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameAccount']}}</span>
                                                             <input ng-model="formAccount.username"
                                                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                    placeholder="Nhập tên tài khoản"
@@ -417,7 +416,7 @@
 
                                                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 300px 50px;">
                                                         <label class="block text-sm ">
-                                                            <span class="text-gray-700 dark:text-gray-400">Số điện thoại</span>
+                                                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Phone']}}</span>
                                                             <input ng-model="formAccount.phone"
                                                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                    placeholder="Nhập Số điện thoại"
@@ -429,7 +428,7 @@
                                                 <div class="grid gap-6 mb- md:grid-cols-2">
                                                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 300px 50px;">
                                                         <label class="block text-sm">
-                                                            <span class="text-gray-700 dark:text-gray-400">Họ và tên</span>
+                                                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.LastNameFirstName']}}</span>
                                                             <input ng-model="formAccount.fullName"
                                                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                    placeholder="Nhập họ và tên"
@@ -439,7 +438,7 @@
 
                                                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 300px 50px;">
                                                         <label class="block text-sm">
-                                                            <span class="text-gray-700 dark:text-gray-400">Mật khẩu</span>
+                                                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Password']}}</span>
                                                             <input ng-model="formAccount.password"
                                                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                                                    placeholder="Nhập Mật khẩu" type="password"
@@ -461,7 +460,7 @@
 
                                                     <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 300px 50px;">
                                                         <label class="block text-sm">
-                                                            <span class="text-gray-700 dark:text-gray-400">Giới tính</span>
+                                                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Sex']}}</span>
                                                             <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                                                 <input type="radio"ng-model="formAccount.sex"ng-value="1"
                                                                        class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
@@ -485,11 +484,11 @@
 
                                                         <button  ng-click="addAccount()" style="margin-top: 10px;width:40%; margin-left: 100px;"
                                                                  class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                            Thêm Mới
+                                                            {{languageNav['Admin.nav.Create']}}
                                                         </button>
                                                         <button  style="margin-top: 10px; margin-left: 35px;width:40%; height:40px";
                                                                  class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                            Làm Mới
+                                                            {{languageNav['Admin.nav.Refresh']}}
                                                         </button>
 
                                                 </div>
@@ -502,7 +501,7 @@
                                             <div class="">
                                                 <button  ng-click="checkForm()"  data-bs-target="#exampleModalPayment" data-bs-toggle="modal"
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                    Xác nhận
+                                                    {{languageNav['Admin.nav.Confirm']}}
                                                 </button>
                                             </div>
                                         </div>
@@ -517,27 +516,27 @@
                             <div style="width: 1000px" class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
-                                    <p>Thanh toán</p>
+                                    <p>{{languageNav['Admin.nav.Pay']}}</p>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div  id="exportthis" class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                     <div class="container">
                                         <div class="">
-                                            <h3 style="font-weight:700; text-align:center;margin-bottom:10px;">Hóa đơn bán hàng</h3>
+                                            <h3 style="font-weight:700; text-align:center;margin-bottom:10px;">{{languageNav['Admin.nav.Billofsale']}}</h3>
                                             <h6 style="text-align:center;margin-bottom:10px;">Mã đơn hàng: <span style="font-weight:bold;">HD000{{idBill}}</span></h6>
                                             <h6 style="text-align:center;margin-bottom:20px;">{{date | date: "dd-MM-yyyy hh:mm "}}</h6>
-                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Nhân viên bán hàng: Trần Anh Quân</p>
-                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Khách hàng: {{InforpersonTake}}</p>
-                                            <p style="text-align:left;margin-bottom:20px;font-size:16px;">Só điện thoại: {{InforphoneTake}}</p>
+                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">{{languageNav['Admin.nav.Salesagent']}}: {{accountActive.username}}</p>
+                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">{{languageNav['Admin.nav.PositionGuest']}}: {{InforpersonTake}}</p>
+                                            <p style="text-align:left;margin-bottom:20px;font-size:16px;">{{languageNav['Admin.nav.Phone']}}: {{InforphoneTake}}</p>
                                         </div>
                                         <table class="w-full whitespace-no-wrap">
                                             <thead>
                                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
-                                                <th class="px-4 py-3" scope="col">Tên sản phẩm</th>
-                                                <th class="px-4 py-3" scope="col">Giá</th>
-                                                <th class="px-4 py-3" scope="col">Số lượng</th>
-                                                <th class="px-4 py-3" scope="col">Thành tiền</th>
+                                                <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.NameProduct']}}</th>
+                                                <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Price']}}</th>Price
+                                                <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Quantity']}}</th>
+                                                <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Intomoney']}}</th>
                                             </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -561,10 +560,10 @@
                                                 <div class="col-md-6">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        Tiền hàng</p>
+                                                        {{languageNav['Admin.nav.MoneyProduct']}}</p>
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        Khuyến mãi</p>
+                                                        {{languageNav['Admin.nav.Promotion']}}</p>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <p class=""
@@ -580,7 +579,7 @@
                                                 <div class="col-md-6">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
-                                                        Tổng</p>
+                                                        {{languageNav['Admin.nav.TotalMoney']}}</p>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <p class=""
@@ -596,7 +595,7 @@
                                         <div class="">
                                             <button ng-click="bill.purchase()"
                                                     class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                In hóa đơn
+                                                {{languageNav['Admin.nav.Print']}}
                                             </button>
                                         </div>
                                     </div>
