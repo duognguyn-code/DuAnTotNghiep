@@ -142,6 +142,42 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         }
 
     };
+    $scope.uploadFileUpdate = function (files) {
+        $scope.files = files;
+        if (files.length > 4) {
+            $scope.error('Ảnh tối da 4 ảnh');
+        } else {
+            var previewImagesContainerUpdate = document.getElementById('previewImagesContainerUpdate');
+            previewImagesContainerUpdate.innerHTML = '';
+            var imageCount = 0;
+            for (var i = 0; i < files.length; i++) {
+                if (imageCount >= 3) {
+                    break;
+                }
+
+                var file = files[i];
+                var reader = new FileReader();
+
+                reader.onload = (function (file) {
+                    return function (e) {
+                        var previewImage = document.createElement('img');
+                        previewImage.src = e.target.result;
+                        previewImage.className = 'previewImage';
+                        previewImage.width = '100'; //
+                        previewImagesContainerUpdate.appendChild(previewImage);
+                        imageCount++;
+                    };
+                })(file);
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+    };
+    $scope.checkimg=0
+    $scope.checkImgUpdate=function (){
+        $scope.checkimg=1
+    }
     $scope.addProduct = function () {
         // Lấy tên tệp tin từ đường dẫn
         var formData = new FormData();

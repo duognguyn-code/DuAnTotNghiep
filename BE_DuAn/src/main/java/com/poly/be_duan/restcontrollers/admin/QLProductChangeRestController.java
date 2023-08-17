@@ -6,6 +6,7 @@ import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.entities.ProductChange;
 import com.poly.be_duan.service.*;
+import com.poly.be_duan.utils.Username;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,7 @@ public class QLProductChangeRestController {
             System.out.println(productChange + "id");
             if(s != null && productChange.getStatus() == 1){
                 productChange.setStatus(2);
-                productChange.setUsernameUpdate("quan");
+                productChange.setUsernameUpdate(Username.getUserName());
                 productChangeService.save(productChange);
                 bill_detail = productChange.getBillDetail();
                 bill_detail.setStatus(4);

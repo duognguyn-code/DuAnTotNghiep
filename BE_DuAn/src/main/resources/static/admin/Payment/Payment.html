@@ -380,6 +380,11 @@
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     {{languageNav['Admin.nav.Confirm']}}
                                                 </button>
+                                                <button ng-if="check1==2"
+                                                        ng-click="khoaAcc()"
+                                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                    Xác nhận
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -565,7 +570,7 @@
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
                                                         {{languageNav['Admin.nav.Promotion']}}</p>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-6">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
                                                         {{cart.amount | number}} vnđ</p>

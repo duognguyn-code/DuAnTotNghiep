@@ -6,7 +6,8 @@
             </h2>
 
             <div class="grid gap-6 mb-8 md:grid-cols-1">
-                <div class="p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"  ng-init="getProductDataUpdate(productId)" >
+                <div class="p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+                     ng-init="getProductDataUpdate(productId)">
                     <div class="grid gap-6 md:grid-cols-2">
                         <div class="grid gap-6 md:grid-cols-1">
                             <div class="grid gap-6 md:grid-cols-2" style="grid-template-columns: 500px 50px;">
@@ -19,9 +20,30 @@
                                     </select>
                                 </label>
                                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                    <img class="img-fluid w-100"
-                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}" alt=""
-                                         style="transition:.5s;width:165px;height:135px">
+                                    <img ng-if="checkimg==0" class="img-fluid w-100"
+                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
+                                         alt=""
+                                    >
+
+                                    <img ng-if="checkimg==0" class="img-fluid w-100"
+                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
+                                         alt=""
+                                    >
+
+                                    <img ng-if="checkimg==0" class="img-fluid w-100"
+                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
+                                         alt=""
+                                    >
+
+                                    <img ng-if="checkimg==0" class="img-fluid w-100"
+                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
+                                         alt=""
+                                    >
+
+                                    <div ng-if="checkimg==1" class="thumbnail_images" id="previewContainer">
+                                        <div class="previewImageContainer" id="previewImagesContainerUpdate">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <label class="block text-sm">
@@ -48,7 +70,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameProduct']}}</span>
                                 <input ng-model="productData.name"
                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                       name="name" required />
+                                       name="name" required/>
                             </label>
                         </div>
                         <div class="grid gap-6 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
