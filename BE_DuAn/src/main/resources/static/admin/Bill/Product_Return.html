@@ -164,12 +164,8 @@
                          <td class="px-4 py-3 ">{{formReasonReturn.account.email}}</td>
                          <td class="px-4 py-3 ">{{formReasonReturn.account.phone}}</td>
                          <td class="px-4 py-3 ">{{formReasonReturn.description}}</td>
-                         <td class="px-4 py-3 "> <img class="img-responsive" width="100px" height="100px">
-<!--                           src="{{formReasonReturn.images.length>0?formReasonReturn.images[0].urlimage:''}}">-->
-                           <video width="400px" height="400px" controls="controls">
-                             <source src="https://www.youtube.com/embed/lcZDWo6hiuI" type="video/mp4" />
-<!--                           <iframe width="100" height="120" src="https://www.youtube.com/embed/lcZDWo6hiuI">-->
-<!--                           </iframe>-->
+                         <td class="px-4 py-3 ">
+                           <button ng-href="" ng-click="redirectToGoogle(formReasonReturn)">Hình Ảnh/Video</button>
                          </td>
                        </tr>
                        </tbody>

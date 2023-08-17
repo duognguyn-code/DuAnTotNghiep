@@ -28,7 +28,7 @@
         </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-        <tr ng-repeat="order in orders"
+        <tr ng-repeat="order in pagerBill.orders"
             class="text-gray-700 dark:text-gray-400" style="font-size:16px;">
           <td class="px-4 py-3 ">{{order.id}}</td>
           <td class="px-4 py-3 ">{{order.address}}</td>
@@ -72,6 +72,21 @@
         </tr>
         </tbody>
       </table>
+      <div class="panel-footer text-center">
+        <button ng-click="pagerBill.first()" style="margin-right: 10px;">
+          <b class="text-sm"> |< </b>
+        </button>
+        <button ng-click="pagerBill.prev()" style="margin-right: 10px;">
+          <b class="text-sm"> < </b>
+        </button>
+        <button>{{pagerBill.page + 1}}of {{pagerBill.count}}</button>
+        <button ng-click="pagerBill.next()" style="margin-left: 10px;">
+          <b class="text-sm"> > </b>
+        </button>
+        <button ng-click="pagerBill.last()" style="margin-left: 10px;">
+          <b class="text-sm"> >| </b>
+        </button>
+      </div>
     </div>
   </main>
 </div>

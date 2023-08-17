@@ -381,6 +381,11 @@
                                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                                     Xác nhận
                                                 </button>
+                                                <button ng-if="check1==2"
+                                                        ng-click="khoaAcc()"
+                                                        class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                                    Xác nhận
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -527,7 +532,7 @@
                                             <h3 style="font-weight:700; text-align:center;margin-bottom:10px;">Hóa đơn bán hàng</h3>
                                             <h6 style="text-align:center;margin-bottom:10px;">Mã đơn hàng: <span style="font-weight:bold;">HD000{{idBill}}</span></h6>
                                             <h6 style="text-align:center;margin-bottom:20px;">{{date | date: "dd-MM-yyyy hh:mm "}}</h6>
-                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Nhân viên bán hàng: Trần Anh Quân</p>
+                                            <p style="text-align:left;margin-bottom:10px;font-size:16px;">Nhân viên bán hàng: {{accountAdmin.fullName}}</p>
                                             <p style="text-align:left;margin-bottom:10px;font-size:16px;">Khách hàng: {{InforpersonTake}}</p>
                                             <p style="text-align:left;margin-bottom:20px;font-size:16px;">Só điện thoại: {{InforphoneTake}}</p>
                                         </div>
@@ -566,7 +571,7 @@
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
                                                         Khuyến mãi</p>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-6">
                                                     <p class=""
                                                        style="font-size:18px; font-weight:500; margin-top:10px;">
                                                         {{cart.amount | number}} vnđ</p>
