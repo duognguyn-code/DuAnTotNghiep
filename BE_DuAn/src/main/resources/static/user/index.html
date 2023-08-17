@@ -1,9 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,7 +21,7 @@
     <link rel="stylesheet" href="../css/style.min.css">
     <link rel="stylesheet" href="../css/index.css">
     <style>
-        .thumbnail_images .previewImageContainer {
+        .thumbnail_images  {
             list-style: none;
             justify-content: center;
             display: flex;
@@ -30,16 +29,25 @@
             margin-top: 10px
         }
 
-        .thumbnail_images .previewImageContainer img {
-            margin-top: 50px;
-            margin-left: 30px;
-            padding: 10px;
-            border: 2px solid #eee;
-            cursor: pointer;
-            transition: all 0.5s;
-            border: 2px solid #000
+        .thumbnail-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .thumbnail-list li {
+            margin-right: 10px; /* Add spacing between items */
+        }
+
+        .thumbnail-list img {
+            display: block;
+            max-width: 100%;
+            height: auto;
         }
     </style>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <title>Place Up</title>
     <!--    <link rel="stylesheet" href="../css/bootstrap.min.css">-->
 </head>
 <body ng-app="Myapp" >
@@ -129,12 +137,12 @@
                                 <div class="nav-item dropdown">
                                     <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài khoản</a>
                                     <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="#!login"  class="dropdown-item">Đăng nhập</a>
+                                        <a href="#!login"   class="dropdown-item">Đăng nhập</a>
                                         <a href="#!register" ng-if="!account" class="dropdown-item">Đăng ký</a>
                                         <a ng-click="logoff()" ng-if="account"  href="/security/logoff" class="dropdown-item">Đăng Xuất</a>
                                         <hr>
                                         <a href="#!purchase" ng-if="account" class="dropdown-item">Đơn hàng của bạn</a>
-                                        <a href="/admin/main.html" ng-if="account" class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN'">Quản lý</a>
+                                        <a href="/admin/main.html"  class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN' || accountHome.role.name=='ROLE_STAFF'">Quản lý</a>
                                         <a href="#!info" ng-if="account" class="dropdown-item">Thông tin tài khoản</a>
                                     </div>
                                     <!--                                      modal login-->
@@ -294,5 +302,6 @@
 <script src="ctrl/login-ctrl.js"></script>
 <script src="ctrl/profile-ctrl.js"></script>
 <script src="ctrl/home-ctrl.js"></script>
+<script src="ctrl/product-sort.js"></script>
 </body>
 </html>

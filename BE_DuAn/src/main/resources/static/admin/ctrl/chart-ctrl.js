@@ -16,7 +16,7 @@ app.controller('chart-ctrl', function ($rootScope,$scope,$http) {
             });
     };
     // $scope.getBill();
-    $scope.getAccount = function () {
+    $scope.getYear = function () {
         $http.get(apiUrlChart+'/account'+'/'+$scope.searchYear)
             .then(function (response) {
                 $scope.account=response.data;
@@ -27,7 +27,26 @@ app.controller('chart-ctrl', function ($rootScope,$scope,$http) {
                 console.log(error);
             });
     };
-    // $scope.getAccount();
+    $scope.getYear1 = function () {
+        $http.get(apiUrlChart+'/account'+'/'+2023)
+            .then(function (response) {
+                $scope.account=response.data;
+                console.log(response);
+                $http.get(apiUrlChart+'/'+2023)
+                    .then(function (response) {
+                        $scope.a=response.data;
+                        console.log(response);
+                        $scope.ChartTotalMoney();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+    $scope.getYear1();
 
     $scope.ChartTotalMoney = function (){
         const  labels =['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11', 'Tháng 12']
@@ -57,6 +76,6 @@ app.controller('chart-ctrl', function ($rootScope,$scope,$http) {
         const  chart = new Chart(canvas,config)
     }
 
-
+    $scope.searchYear="2023"
 
 })

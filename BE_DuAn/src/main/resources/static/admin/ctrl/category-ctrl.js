@@ -3,7 +3,7 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
     const apiUrlCategory = "http://localhost:8080/api/category";
     $scope.categories = [];
     $scope.formCategory = {};
-
+    $scope.checkName={};
     $scope.message = function (mes) {
         const Toast = Swal.mixin({
             toast: true,
@@ -61,62 +61,78 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
             url: apiUrlCategory,
             data: categoryData
         }
-        let timerInterval
-        Swal.fire({
-            title: 'Đang thêm  mới vui lòng chờ!',
-            html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading()
-                const b = Swal.getHtmlContainer().querySelector('b')
-                timerInterval = setInterval(() => {
-                    b.textContent = Swal.getTimerLeft()
-                }, 100)
-            },
-            willClose: () => {
-                clearInterval(timerInterval)
-            }
-        });
+        // let timerInterval
+        // Swal.fire({
+        //     title: 'Đang thêm  mới vui lòng chờ!',
+        //     html: 'Vui lòng chờ <b></b> milliseconds.',
+        //     timer: 5500,
+        //     timerProgressBar: true,
+        //     didOpen: () => {
+        //         Swal.showLoading()
+        //         const b = Swal.getHtmlContainer().querySelector('b')
+        //         timerInterval = setInterval(() => {
+        //             b.textContent = Swal.getTimerLeft()
+        //         }, 100)
+        //     },
+        //     willClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        // });
+        $http.get(apiUrlCategory+'/'+$scope.formCategory.name)
+            .then(function (response) {
+                $scope.checkName=response.data;
+                if (!$scope.checkName){
         $http(req).then(response => {
             console.log("ddd " + response);
-            $scope.message("thêm mới thể loại thành công");
+            $scope.message("Thêm mới thể loại thành công");
             $scope.resetCategory();
             $scope.getCategory();
         }).catch(error => {
             console.log(error)
-            $scope.error('thêm mới thất bại');
+            $scope.error('Thêm mới thất bại');
 
         });
+                }else{
+                    // alert("Thể loại đã tồn tại")
+                    $scope.error('Thể Loại đã tồn tại');
+                    return
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     };
     $scope.editCategory = function (category) {
         $scope.formCategory = angular.copy(category);
     }
     $scope.updateCategory = function () {
         var item = angular.copy($scope.formCategory);
-        $http.put(apiUrlCategory + '/' + item.id, item).then(resp => {
+        $http.put(apiUrlCategory, item).then(resp => {
             var index = $scope.categories.findIndex(p => p.id == item.id);
             $scope.categories[index] = item;
-            alert("Cập nhật thành công");
+            // alert("");
+            $scope.message('Cập nhật thành công');
             $scope.resetCategory();
             $scope.getCategory();
         }).catch(error => {
-            alert("Cập nhật thất bại");
+            // alert("");
+            $scope.error('Cập nhật thất bại');
             console.log("Error", error);
         });
     }
-    $scope.deleteCategory = function (size) {
-        $http.delete(apiUrlCategory + '/' + size.id)
-            .then(function (response) {
-                var index = $scope.categories.findIndex(p => p.id === size.id);
-                if (index !== -1) {
-                    $scope.categories.splice(index, 1);
-                    $scope.getCategory();
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    $scope.deleteCategory = function (item) {
+        $http.put(apiUrlCategory + '/delete', item).then(resp => {
+            // var index = $scope.categories.findIndex(p => p.id == item.id);
+            // $scope.categories[index] = item;
+            // alert("");
+            $scope.message('Tạm ngưng thành công');
+            $scope.resetCategory();
+            $scope.getCategory();
+        }).catch(error => {
+            // alert("");
+            $scope.error('Tạm ngưng thất bại');
+            console.log("Error", error);
+        });
     };
     $scope.resetCategory = function () {
         $scope.formCategory = {
@@ -149,14 +165,16 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
             this.page--;
             if (this.page < 0) {
                 this.first();
-                alert("Bạn đang ở trang đầu")
+                // alert("Bạn đang ở trang đầu")
+                $scope.message('Bạn đang ở trang đầu');
             }
         },
         next() {
             this.page++;
             if (this.page >= this.count) {
                 this.last();
-                alert("Bạn đang ở trang cuối")
+                // alert("Bạn đang ở trang cuối")
+                $scope.message('Bạn đang ở trang cuối');
             }
         },
         last() {

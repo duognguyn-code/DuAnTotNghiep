@@ -1,5 +1,6 @@
 package com.poly.be_duan.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.dto.ProductDetailDTO;
 import com.poly.be_duan.dto.ProductResponDTO;
 import com.poly.be_duan.entities.Product;
@@ -21,6 +22,9 @@ public interface ProductService extends GenericService<Product, Integer> {
     BigDecimal searchPriceMin();
     BigDecimal searchPriceMAX();
     ProductDetailDTO getDetailProduct(Integer id);
+
+    Product findProductForImages(Integer id);
+
     Product getdeTailPrd(Integer idDesign, Integer idSize, Integer idColor, Integer idMaterial);
     List<ProductResponDTO> findByCategoryAndStatus(Integer id);
 
@@ -32,5 +36,11 @@ public interface ProductService extends GenericService<Product, Integer> {
 
     public Product getId(Integer id);
     public Product getByName(String name);
+
+    List<Product> findProductByPrices();
+
+    Page<ProductDetailDTO> getByPage(int pageNumber, int maxRecord, JsonNode findProcuctAll);
+//    Product findProductForImages(Integer id);
+
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +37,7 @@
             border: 1px solid #ccc;
             border-radius: 1px;
         }
-        .thumbnail_images .previewImageContainer {
+        .thumbnail_images {
             list-style: none;
             justify-content: center;
             display: flex;
@@ -45,7 +45,7 @@
             margin-top: 10px
         }
 
-        .thumbnail_images .previewImageContainer img {
+        .thumbnail_images  img {
             margin: 5px;
             padding: 10px;
             border: 2px solid #eee;
@@ -53,10 +53,9 @@
             transition: all 0.5s;
             border: 2px solid #000
         }
-
     </style>
-
-    <title>Admin</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <title>Place Up</title>
 </head>
 <body ng-app="Myapp" ng-controller="mainAdmin" >
 <div class="row" >
@@ -68,7 +67,7 @@
                 <ul class="mt-6">
                     <li class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                           href="/">
+                           href="/user/index.html">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
                                  stroke-linejoin="round"
                                  stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -76,12 +75,12 @@
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
                                 </path>
                             </svg>
-                            <span class="ml-4">{{languageNav['Admin.nav.Home']}}</span>
+                            <span  class="ml-4">{{languageNav['Admin.nav.Home']}}</span>
                         </a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="relative px-6 py-3">
+                <ul >
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <button
                                 class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                                 @click="togglePagesMenu1" aria-haspopup="true">
@@ -98,20 +97,20 @@
                         </button>
 
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!createproduct">
                             <span class="ml-4">Thêm Mới</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!listproduct">
                             <span class="ml-4">Danh Sach</span>
                         </a>
                     </li>
 
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <button
                                 class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                                 @click="togglePagesMenu" aria-haspopup="true">
@@ -122,35 +121,35 @@
                           d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z">
                   </path>
                 </svg>
-                <span class="ml-4">Thuộc tính</span>
+                <span class="ml-4" ng-if="accountHome.role.name=='ROLE_ADMIN'">Thuộc tính</span>
               </span>
                         </button>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!category">
                             <span class="ml-4">Thể loại giày</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!designs">
                             <span class="ml-4">Kiểu dáng</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!color">
                             <span class="ml-4">Màu Sắc</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!material">
                             <span class="ml-4">Chất Liệu</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!size">
                             <span class="ml-4">Size</span>
@@ -196,19 +195,19 @@
                     </button>
 
                 </li>
-                    <li class="relative px-6 py-3">
+                    <li  class="relative px-6 py-3">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!bill">
-                            <span class="ml-4">Danh Sách Hóa Đơn</span>
+                            <span class="ml-4">Danh Sách Hóa Đơn  <span style="color: red">({{sumSts1}})</span></span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!productReturn">
-                            <span class="ml-4">Danh Sách Trả hàng</span>
+                            <span class="ml-4">Danh Sách Trả hàng <span style="color: red">({{sumSts}})</span></span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            >
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -220,19 +219,19 @@
                             <span class="ml-4">Tài Khoản</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!CreateAccount">
                             <span class="ml-4">Tạo tài khoản</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!Account">
                             <span class="ml-4">Thông tin tài khoản</span>
                         </a>
                     </li>
-                    <li class="relative px-6 py-3">
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN'">
                         <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                            href="#!statistical">
                             <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round"
@@ -243,6 +242,12 @@
                                 </path>
                             </svg>
                             <span class="ml-4">Thống Kê</span>
+                        </a>
+                    </li>
+                    <li class="relative px-6 py-3" ng-if="accountHome.role.name=='ROLE_ADMIN' || ng-if="accountHome.role.name=='ROLE_STAFF' ">
+                        <a class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                           href="#!statistical">
+                            <span class="ml-4">Đăng xuất</span>
                         </a>
                     </li>
                 </ul>

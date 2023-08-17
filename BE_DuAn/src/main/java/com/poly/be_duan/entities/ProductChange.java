@@ -62,11 +62,10 @@ public class ProductChange {
     private List<ChangeProductDetail> changeProductDetails;
 
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(mappedBy = "productChange")
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonManagedReference(value = "productChange")
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Image> images;
     @JsonManagedReference
     public List<Image> getImages(){

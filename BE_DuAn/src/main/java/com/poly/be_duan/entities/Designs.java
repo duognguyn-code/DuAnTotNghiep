@@ -19,10 +19,14 @@ public class Designs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_designs")
-    private Integer id;
+    private Integer idDesign;
 
     @Column(name = "name", nullable = false)
     private String name;
+
+
+    @Column(name = "status")
+    private Integer status;
 
     @JsonIgnore
     @OneToMany(mappedBy = "design")

@@ -28,7 +28,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.index = 0;
     $rootScope.account = jwtToken;
     $scope.bills = {};
+
     $rootScope.cartItems = [];
+
+    $scope.logOut= function () {
+        alert("dang xuat ben login")
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
     $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -46,6 +53,50 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             title: text
         })
     }
+
+
+
+    $scope.checkCartItemQuantity = function (item) {
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Tìm tất cả các mặt hàng trong giỏ hàng có cùng product.id
+        var itemsWithSameProduct = cartItems.filter(function (cartItem) {
+            return (
+                cartItem.product.id === item.product.id &&
+                cartItem.design === item.design &&
+                cartItem.size === item.size &&
+                cartItem.color === item.color &&
+                cartItem.material === item.material
+            );
+        });
+
+
+        // Tính tổng số lượng sản phẩm có cùng product.id trong giỏ hàng
+        var totalQuantityInCart = itemsWithSameProduct.reduce(function (total, cartItem) {
+            return total + cartItem.quantity;
+        }, 0);
+        item.totalQuantityInCart = totalQuantityInCart;
+        // alert(totalQuantityInCart);
+
+        // Gửi yêu cầu kiểm tra số lượng của sản phẩm trong db
+        var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
+        $http.get(apiUrlProduct).then(function (response) {
+            var dbProductQuantity = response.data.quantity;
+            item.messageQuantity = ""; // Reset thông báo lỗi
+            if (item.quantity == 0) {
+                item.messageQuantity = "Số lượng không trống";
+            } else if (item.quantity > dbProductQuantity) {
+                item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
+                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
+            } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
+                item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
+                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
+            }
+        }).catch(function (error) {
+            console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);
+        });
+    };
+
     $scope.messageError = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -66,9 +117,10 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.getAcount = function () {
         $http.get(`http://localhost:8080/rest/user/getAccount`, token).then(function (respon) {
             $scope.accountHome = respon.data;
-            alert($scope.accountHome.role.name)
         }).catch(err => {
+
             $scope.accountHome = null;
+
         })
     }
     $scope.getAcount();
@@ -364,6 +416,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             id = localStorage.getItem('idDetail');
             $http.post(`/rest/guest/product/product_detail/` + id, token).then(function (response) {
                 $scope.detailProduct = response.data;
+
             }).catch(error => {
                 console.log(error, "lỗi")
             })
@@ -404,6 +457,38 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         }
     }
 
+    $scope.changeImage = function (id) {
+        var main_prodcut_image = document.getElementById('main_product_image');
+        var image_product_change = document.getElementById('image_product_change');
+        var image_product_change1 = document.getElementById('image_product_change1');
+        var image_product_change2 = document.getElementById('image_product_change2');
+        var image_product_change3 = document.getElementById('image_product_change3');
+        if (id == 1) {
+            main_prodcut_image.src = image_product_change.src;
+        }
+        if (id == 2) {
+            main_prodcut_image.src = image_product_change1.src;
+        }
+        if (id == 3) {
+            main_prodcut_image.src = image_product_change2.src;
+        }
+        if (id == 4) {
+            main_prodcut_image.src = image_product_change3.src;
+        }
+    }
+    $scope.displayProduct = {
+        name: "",
+        price: "",
+        describe: "",
+        imageDefault: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        imageDefault1: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        imageDefault2: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        imageDefault3: "https://res.cloudinary.com/dcll6yp9s/image/upload/v1692068401/e2hebwyb9jyygy0ii1ym.png",
+        camera: "",
+        ram: "",
+        capacity: "",
+        color: ""
+    }
     $scope.getAcountActive = function () {
         $http.get(apiUrlAccout + `/getAccountActive`, token).then(function (respon) {
             $scope.accountActive = respon.data;

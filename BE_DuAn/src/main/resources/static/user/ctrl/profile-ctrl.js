@@ -54,15 +54,15 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
         var account = angular.copy($scope.form);
 
         if (account.fullName.trim() == null) {
-            alert("Họ và tên không được để trống khoản trống")
+            $scope.error("Họ và tên không được để trống khoản trống")
             return null;
         }
         if (account.phone.trim() == null) {
-            alert("Số điện thoại không được để trống")
+            $scope.error("Số điện thoại không được để trống")
             return null;
         }
         if (account.email.trim() == null) {
-            alert("Email không được để trống")
+            $scope.error("Email không được để trống")
             return null;
         }
         return account;
@@ -119,6 +119,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
             console.log($scope.accountActive)
 
         }).catch(error => {
+            alert(error + "Lỗi")
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -183,6 +184,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
     }
 
     $scope.logOut= function () {
+        alert("Bên profile")
         localStorage.removeItem('jwtToken');
         $rootScope.account=null;
     }
@@ -214,7 +216,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
         }
     };
 
-    $scope.getAddress();
+    // $scope.getAddress();
     $scope.getAcountActive();
 
 

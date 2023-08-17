@@ -57,7 +57,9 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(value = "SELECT * FROM products p where p.id_category = :id and p.status = :status", nativeQuery = true)
     List<Product> getProductByCategoryIdAndStatus(Integer id, Integer status);
 
-    @Query(" SELECT p FROM Product p WHERE p.category.idCategory = ?1 and p.design.id =?2 and p.material.id=?3 and p.color.id=?4 and p.size.id=?5")
+
+    @Query(" SELECT p FROM Product p WHERE p.category.idCategory = ?1 and p.design.idDesign =?2 and p.material.idMaterial=?3 and p.color.idColor=?4 and p.size.idSize=?5")
+
     Optional<Product> getProductBill(Integer idCategory, Integer idDesign, Integer idMaterial, Integer idColor, Integer idSize);
 
     @Query(" SELECT p FROM Product p WHERE p.barcode = ?1 ")
@@ -69,4 +71,15 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
     @Query(" SELECT p FROM Product p WHERE p.name = ?1 and p.status = 2 ")
     Product getByName(String name);
 
+    @Query("SELECT p FROM Product p where p.price between 100000 and 500000")
+    List<Product> findProductByPrices();
+
+    @Query(value = "select * from products where status = 1",nativeQuery = true)
+    List<Product> findProduct();
+
+    @Query(value = "select * from products\n" +
+            "inner join images\n" +
+            "on products.id_products = images.id_products\n" +
+            "where products.id_products = ?1 ",nativeQuery = true)
+    Product findProductForImages(Integer id);
 }

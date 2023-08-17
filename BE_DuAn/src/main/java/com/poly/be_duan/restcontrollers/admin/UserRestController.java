@@ -40,10 +40,7 @@ public class UserRestController {
     @GetMapping("/getAccountActive")
     public Account getAccountActive() {
         Account account = accountService.findByUsername(Username.getUserName());
-        System.out.println(account.getEmail());
-        AccountDTO accountDTO = modelMapper.map(account, AccountDTO.class);
         return account;
-
     }
     @GetMapping("/getAccount")
     public Author getAccountActives() {
