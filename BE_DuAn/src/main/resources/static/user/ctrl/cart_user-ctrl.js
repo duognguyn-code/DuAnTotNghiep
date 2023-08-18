@@ -71,8 +71,8 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                 confirmButtonText: 'Xác nhận!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var cartItems = localStorage.getItem('cartItems');
-                    if (cartItems.length == 0) {
+                    var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                    if (cartItems === null || cartItems.length === 0) {
                         Swal.fire(
                             'Giỏ hàng trống!',
                             'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
@@ -289,14 +289,15 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
         $http.get(apiUrlProduct).then(function (response) {
             var dbProductQuantity = response.data.quantity;
             item.messageQuantity = ""; // Reset thông báo lỗi
-            if (item.quantity == 0) {
+            if (item.quantity == 0 || item.quantity === null) {
                 item.messageQuantity = "Số lượng không trống";
-            } else if (item.quantity > dbProductQuantity) {
+            }else if (item.quantity < 0) {
+                item.messageQuantity = "Số lượng phải là số và lớn hơn 0";
+            }
+            else if (item.quantity > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             }
         }).catch(function (error) {
             console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);

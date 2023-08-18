@@ -24,4 +24,7 @@ public interface BillDetailRepository extends JpaRepository<Bill_detail,Integer>
     public Bill_detail getForProductChange(String id);
 
     List<Bill_detail> findAllByBill(Bill bill);
+
+    @Query("SELECT bd, b.timeReceive FROM Bill_detail bd JOIN bd.bill b WHERE bd.bill = ?1")
+    List<Object[]> findAllBillDetailWithTimeReceiveByBill(Bill bill);
 }
