@@ -141,10 +141,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             quantity: quantity
         };
 
-        // Retrieve existing cart items from local storage
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        // Check if the same product with the same options already exists in the cart
         var existingItem = cartItems.find(function (item) {
             return (
                 item.product.id === cartItem.product.id &&

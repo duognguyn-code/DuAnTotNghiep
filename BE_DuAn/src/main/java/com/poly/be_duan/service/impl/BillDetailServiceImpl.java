@@ -14,6 +14,7 @@ import com.poly.be_duan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,6 +63,19 @@ public class BillDetailServiceImpl implements BillDetailService {
     @Override
     public List<Bill_detail> findAllByOrder(Bill bill) {
         return billDetailRepository.findAllByBill(bill);
+    }
+
+    @Override
+    public List<Bill_detail> findAllByOrderWithTimeReceive(Bill bill) {
+        List<Object[]> result = billDetailRepository.findAllBillDetailWithTimeReceiveByBill(bill);
+
+        List<Bill_detail> billDetailsWithTimeReceive = new ArrayList<>();
+        for (Object[] objects : result) {
+            Bill_detail billDetail = (Bill_detail) objects[0];
+            billDetailsWithTimeReceive.add(billDetail);
+        }
+
+        return billDetailsWithTimeReceive;
     }
 
     @Override
