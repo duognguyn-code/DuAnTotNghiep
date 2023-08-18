@@ -42,4 +42,5 @@ public interface ProductService extends GenericService<Product, Integer> {
     Page<ProductDetailDTO> getByPage(int pageNumber, int maxRecord, JsonNode findProcuctAll);
 //    Product findProductForImages(Integer id);
 
+
 }

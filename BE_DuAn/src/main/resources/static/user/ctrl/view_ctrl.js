@@ -31,6 +31,11 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
 
     $rootScope.cartItems = [];
 
+    $scope.logOut= function () {
+        alert("dang xuat ben login")
+        $rootScope.account=null;
+        localStorage.removeItem('jwtToken');
+    }
     $scope.messageSuccess = function (text) {
         const Toast = Swal.mixin({
             toast: true,
@@ -112,7 +117,6 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.getAcount = function () {
         $http.get(`http://localhost:8080/rest/user/getAccount`, token).then(function (respon) {
             $scope.accountHome = respon.data;
-            alert($scope.accountHome.role.name)
         }).catch(err => {
 
             $scope.accountHome = null;
@@ -137,10 +141,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             quantity: quantity
         };
 
-        // Retrieve existing cart items from local storage
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        // Check if the same product with the same options already exists in the cart
         var existingItem = cartItems.find(function (item) {
             return (
                 item.product.id === cartItem.product.id &&

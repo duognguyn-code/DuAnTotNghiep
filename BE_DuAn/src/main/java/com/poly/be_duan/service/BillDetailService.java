@@ -21,6 +21,7 @@ public interface BillDetailService {
 
 
     List<Bill_detail> findAllByOrder(Bill bill);
+    List<Bill_detail> findAllByOrderWithTimeReceive(Bill bill);
 
     List<Bill_detail> getBill_detailForMoney(int id);
 

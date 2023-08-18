@@ -22,7 +22,7 @@
                     <div class="" style="margin-top:10px;color:black;">
                         <label class="block text-sm">
                             <p  class="text-gray-700 dark:text-gray-400" style="font-size:17px;">Tài khoản</p>
-                            <input
+                            <input disabled
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     style="width:850px;height:40px;" value="{{accountActive.username}}"
                             />
@@ -34,11 +34,11 @@
                             <label class="block text-sm">
                                 <p  class="text-gray-700 dark:text-gray-400">Giới tính</p>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-value="true" {{accountActive.gender==true?'checked':''}} id="inlineRadio1" ng-model="accountActive.gender" value="option1">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" ng-value="true" {{accountActive.gender==true?'checked':''}} id="inlineRadio1" ng-model="accountActive.sex" value="option1">
                                     <label class="form-check-label" for="inlineRadio1">Nam</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" ng-model="accountActive.gender"  ng-value="false" {{accountActive.gender==false?'checked':''}} type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <input class="form-check-input" ng-model="accountActive.gender"  ng-value="false" {{accountActive.sex==false?'checked':''}} type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
                                     <label class="form-check-label" for="inlineRadio2">Nữ</label>
                                 </div>
                             </label>

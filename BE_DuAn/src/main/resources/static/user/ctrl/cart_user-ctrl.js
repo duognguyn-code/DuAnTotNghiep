@@ -9,6 +9,8 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
 
     var urlShippingOder = "http://localhost:8080/rest/user/address/getShipping-order";
 
+    var urlPaymentVNP = 'http://localhost:8080/api/vnpay/send';
+
     $scope.accountActive = {};
     $scope.item = {};
     $rootScope.qtyCart = 0;
@@ -69,14 +71,14 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                 confirmButtonText: 'Xác nhận!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var cartItems = localStorage.getItem('cartItems');
-                    if (!cartItems) {
+                    var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                    if (cartItems === null || cartItems.length === 0) {
                         Swal.fire(
                             'Giỏ hàng trống!',
                             'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
                             'warning'
                         );
-                        return; // Dừng quá trình thanh toán
+                        return;
                     } else {
                         if ($scope.checkBuy) {
                             var vnp_OrderInfo = 'thanh toan hoa don';
@@ -107,7 +109,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                                 timer: 5000
                                             });
                                         })
-
                                     } else {
                                         Swal.fire(
                                             'Thanh toán thất bại!',
@@ -115,6 +116,12 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                             'error'
                                         )
                                     }
+                                }).catch(err => {
+                                    Swal.fire(
+                                        'Thanh toán thất bại!',
+                                        '',
+                                        'error'
+                                    )
                                 })
                             }).catch(err => {
                                 Swal.fire(
@@ -122,8 +129,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                     '',
                                     'error'
                                 )
-                                console.log("error buy cart", err)
-                                alert(err + "lỗi 1");
                             })
 
                         } else {
@@ -284,14 +289,15 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
         $http.get(apiUrlProduct).then(function (response) {
             var dbProductQuantity = response.data.quantity;
             item.messageQuantity = ""; // Reset thông báo lỗi
-            if (item.quantity == 0) {
+            if (item.quantity == 0 || item.quantity === null) {
                 item.messageQuantity = "Số lượng không trống";
-            } else if (item.quantity > dbProductQuantity) {
+            }else if (item.quantity < 0) {
+                item.messageQuantity = "Số lượng phải là số và lớn hơn 0";
+            }
+            else if (item.quantity > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             }
         }).catch(function (error) {
             console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);

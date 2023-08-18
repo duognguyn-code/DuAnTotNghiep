@@ -2,7 +2,7 @@
     <main class="h-full pb-16 overflow-y-auto" >
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Chi Tiết Sản Phẩm
+                {{languageNav['Admin.nav.ProductDetails']}}
             </h2>
 
             <div class="grid gap-6 mb-8 md:grid-cols-1">
@@ -10,13 +10,13 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Tên chi tiết sản phẩm</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.nameProductDetails']}}</span>
                             <input ng-model="formProductDetail.name"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm" >
-                            <span class="text-gray-700 dark:text-gray-400">Tên sản phẩm</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameProduct']}}</span>
                             <select ng-model="formProductDetail.product" id="product" name="name" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option ng-repeat="product in products" ng-value="product.id">{{product.name}}</option>
                             </select>
@@ -25,13 +25,13 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Giá</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Price']}}</span>
                             <input ng-model="formProductDetail.price"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm" >
-                            <span class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Design']}}</span>
                             <select ng-model="formProductDetail.design" id="design" name="design" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option ng-repeat="design in pagerDesign.designs" ng-value="design.id">{{design.name}}</option>
                             </select>
@@ -40,13 +40,13 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Color']}}</span>
                             <select ng-model="formProductDetail.color" id="color" name="color" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option ng-repeat="color in pagerColor.colors" ng-value="color.id">{{color.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Material']}}</span>
                             <select ng-model="formProductDetail.material" id="material" name="material" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option ng-repeat="material in pagerMaterial.materials" ng-value="material.id">{{material.name}}</option>
                             </select>
@@ -55,25 +55,25 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2">
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Size']}}</span>
                             <select ng-model="formProductDetail.size" name="size" id="size" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                 <option ng-repeat="size in sizes" ng-value="size.id">{{size.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
-                            <span class="text-gray-700 dark:text-gray-400">Trạng thái</span>
+                            <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Status']}}</span>
                             <div class="mt-2">
                                 <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                     <input type="radio" ng-model="formProductDetail.status" ng-value="0"name="available"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
-                                    <span class="ml-2">Hoạt Động</span>
+                                    <span class="ml-2">{{languageNav['Admin.nav.Active']}}</span>
                                 </label>
                                 <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                     <input type="radio" ng-model="formProductDetail.status" ng-value="1"name="available"
                                            class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                     />
-                                    <span class="ml-2">Ngừng Hoạt Động</span>
+                                    <span class="ml-2">{{languageNav['Admin.nav.NoneActive']}}</span>
                                 </label>
                             </div>
                         </label>
@@ -81,13 +81,13 @@
 
                     <div class="mt-4 text-sm">
                         <button ng-click="onSaveProductDetail()"  style="margin-top: 10px; margin-left: 120px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Thêm Mới
+                            {{languageNav['Admin.nav.Create']}}
                         </button>
                         <button style="margin-top: 10px; margin-left: 45px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Sửa
+                            {{languageNav['Admin.nav.Update']}}
                         </button>
                         <button style="margin-top: 10px; margin-left: 45px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Làm Mới
+                            {{languageNav['Admin.nav.Refresh']}}
                         </button>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
         </div>
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Tìm Kiếm Sản Phẩm
+                {{languageNav['Admin.nav.FindProduct']}}
             </h2>
 
             <class class="grid gap-6 mb-8 md:grid-cols-1">
@@ -103,7 +103,7 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
+                            <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Color']}}</span>
                             <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
                                 <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
@@ -111,7 +111,7 @@
                         </label>
 
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
+                            <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Design']}}</span>
                             <select id="designSearch" ng-model="searchDesigns" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
                                 <option ng-repeat="design in designs" value="{{design.name}}">{{design.name}}</option>
@@ -119,14 +119,14 @@
                         </label>
 
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
+                            <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Material']}}</span>
                             <select id="matesearch" ng-model="searchMaterial" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
                                 <option ng-repeat="material in materials" value="{{material.name}}">{{material.name}}</option>
                             </select>
                         </label>
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
+                            <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Size']}}</span>
                             <select id="sizeSearch" ng-model="searchSize" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null" >--Chọn Mục--</option>
                                 <option ng-repeat="size in sizes" value="{{size.name}}">{{size.name}}</option>
@@ -136,7 +136,7 @@
 <!--                    <div class="grid gap-6 mb-8 md:grid-cols-2">-->
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400">Tên Sản Phẩm</span>
+                            <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameProduct']}}</span>
                             <select id="productSearch" ng-model="searchProduct" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="null">--Chọn Mục--</option>
                                 <option ng-repeat="product in products" value="{{product.name}}">{{product.name}}</option>
@@ -144,10 +144,10 @@
                         </label>
                         <label class="block text-sm" style="margin-top: 18px; margin-left: 30px">
                             <button ng-click="getProductDetailsColor()" style="margin-top: 10px;" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Tìm Kiếm
+                                {{languageNav['Admin.nav.Find']}}
                             </button>
                             <button ng-click="getresetSe()"style="margin-top: 10px;margin-left: 10px" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Reset
+                                {{languageNav['Admin.nav.Refresh']}}
                             </button>
                         </label>
                     </div>
