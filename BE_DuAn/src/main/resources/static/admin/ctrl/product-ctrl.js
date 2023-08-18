@@ -238,6 +238,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             $location.path('/Pageupdateproduct/').search({id: productId});
         }
     };
+    alert("123")
     $scope.getProductDataUpdate = function () {
         var productId = $routeParams.id;
         $http.get('/api/product/search/' + productId)
