@@ -2,7 +2,7 @@
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container px-6 mx-auto grid">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Thêm Mới Sản Phẩm
+                {{languageNav['Admin.nav.ProductCreate']}}
             </h2>
 
             <div class="grid gap-6 mb-8 md:grid-cols-1">
@@ -12,7 +12,7 @@
                         <div class="grid gap-6  md:grid-cols-2">
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Thể Loại</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Category']}}</span>
                                     <select ng-model="formProduct.category" name="category" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
@@ -33,13 +33,13 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabelCategory"></h5>
-                                                <p ng-if="saleadd.idSale==null">Thêm mới thể loại nhanh</p>
+                                                <p ng-if="saleadd.idSale==null">{{languageNav['Admin.nav.InsertCategory']}}</p>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                 <label class="block text-sm">
-                                                    <span class="text-gray-700 dark:text-gray-400">Tên thể loại</span>
+                                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameCategory']}}</span>
                                                     <input
                                                             ng-model="formCategory.name"
                                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -47,20 +47,20 @@
                                                 </label>
                                                 <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400">
-                                                      Trạng Thái
+                                                      {{languageNav['Admin.nav.Status']}}
                                                     </span>
                                                     <div class="mt-2">
                                                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formCategory.status" ng-value="1"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="1">Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="1">{{languageNav['Admin.nav.Active']}}</span>
                                                         </label>
                                                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formCategory.status" ng-value="0"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="0">Không Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="0">{{languageNav['Admin.nav.NoneActive']}}</span>
                                                         </label>
                                                     </div>
                                                 </label>
@@ -68,12 +68,12 @@
                                                     <button style="margin-top: 30px; margin-left: 120px;"
                                                             ng-click="addCategory()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Thêm Mới
+                                                        {{languageNav['Admin.nav.Create']}}
                                                     </button>
                                                     <button style="margin-top: 30px; margin-left: 45px;"
                                                             ng-click="resetSize()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Làm Mới
+                                                        {{languageNav['Admin.nav.Refresh']}}
                                                     </button>
                                                 </div>
 
@@ -84,7 +84,7 @@
                             </div>
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Số lượng</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Quantity']}}</span>
                                     <input  ng-model="formProduct.quantity" placeholder="Số lượng  sản phẩm"
                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     />
@@ -96,28 +96,28 @@
                             <div class="grid gap-6  md:grid-cols-1">
                                 <div class="grid gap-6  md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                     <label class="block text-sm">
-                                        <span class="text-gray-700 dark:text-gray-400">Tên sản phẩm</span>
+                                        <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameProduct']}}</span>
                                         <input disabled ng-model="formProduct.name" placeholder="Tên sản phẩm"
                                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                         />
                                     </label>
                                 </div>
                                 <label class="block text-sm" ng-if="checkSubmit">
-                                    <span class="text-gray-700 dark:text-gray-400">Trạng thái</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Status']}}</span>
                                     <div class="mt-2">
                                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                             <input type="radio" ng-model="formProduct.status" ng-value="0" checked
                                                    name="status"
                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                             />
-                                            <span class="ml-2">Hoạt Động</span>
+                                            <span class="ml-2">{{languageNav['Admin.nav.Active']}}</span>
                                         </label>
                                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                             <input type="radio" ng-model="formProduct.status" ng-value="1"
                                                    name="status"
                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                             />
-                                            <span class="ml-2">Ngừng Hoạt Động</span>
+                                            <span class="ml-2">{{languageNav['Admin.nav.NoneActive']}}</span>
                                         </label>
                                     </div>
                                 </label>
@@ -131,7 +131,7 @@
                         <div class="grid gap-6 mb- md:grid-cols-2">
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Giá</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Price']}}</span>
                                     <input ng-model="formProduct.price" required type="number" name="price"
                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     />
@@ -140,7 +140,7 @@
 
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm ">
-                                    <span class="text-gray-700 dark:text-gray-400">Ảnh</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Image']}}</span>
                                     <input id="image" type="file"
                                            onchange="angular.element(this).scope().uploadFile(this.files)" name="files"
                                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -153,7 +153,7 @@
                             <!-- ----------- -->
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Kiểu Dáng</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Design']}}</span>
                                     <select ng-model="formProduct.design" id="design" name="design" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
@@ -173,13 +173,13 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabelDesign"></h5>
-                                                <p ng-if="saleadd.idSale==null">Thêm mới kiểu dáng nhanh</p>
+                                                <p ng-if="saleadd.idSale==null">{{languageNav['Admin.nav.InsertDesign']}}</p>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                 <label class="block text-sm">
-                                                    <span class="text-gray-700 dark:text-gray-400">Tên kiểu dáng</span>
+                                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.nameDesign']}}</span>
                                                     <input
                                                             ng-model="formDesign.name"
                                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -187,20 +187,20 @@
                                                 </label>
                                                 <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400">
-                                                      Trạng Thái
+                                                      {{languageNav['Admin.nav.Status']}}
                                                     </span>
                                                     <div class="mt-2">
                                                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formDesign.status" ng-value="1"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="1">Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="1">{{languageNav['Admin.nav.Active']}}</span>
                                                         </label>
                                                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formDesign.status" ng-value="0"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="0">Không Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="0">{{languageNav['Admin.nav.NoneActive']}}</span>
                                                         </label>
                                                     </div>
                                                 </label>
@@ -208,12 +208,12 @@
                                                     <button style="margin-top: 30px; margin-left: 120px;"
                                                             ng-click="addDesign()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Thêm Mới
+                                                        {{languageNav['Admin.nav.Create']}}
                                                     </button>
                                                     <button style="margin-top: 30px; margin-left: 45px;"
                                                             ng-click="resetCategory()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Làm Mới
+                                                        {{languageNav['Admin.nav.Refresh']}}
                                                     </button>
                                                 </div>
 
@@ -225,7 +225,7 @@
                             </div>
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Kích Cỡ</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Size']}}</span>
                                     <select ng-model="formProduct.size" name="size" id="size" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
@@ -243,13 +243,13 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabelSize"></h5>
-                                                <p ng-if="saleadd.idSale==null">Thêm mới Size nhanh</p>
+                                                <p ng-if="saleadd.idSale==null">{{languageNav['Admin.nav.InsertSize']}}</p>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                 <label class="block text-sm">
-                                                    <span class="text-gray-700 dark:text-gray-400">Tên size</span>
+                                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.nameSize']}}</span>
                                                     <input
                                                             ng-model="formSize.name"
                                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -257,20 +257,20 @@
                                                 </label>
                                                 <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400">
-                                                      Trạng Thái
+                                                      {{languageNav['Admin.nav.Status']}}
                                                     </span>
                                                     <div class="mt-2">
                                                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formSize.status" ng-value="1"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="1">Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="1">{{languageNav['Admin.nav.Active']}}</span>
                                                         </label>
                                                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formSize.status" ng-value="0"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="0">Không Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="0">{{languageNav['Admin.nav.NoneActive']}}</span>
                                                         </label>
                                                     </div>
                                                 </label>
@@ -278,12 +278,12 @@
                                                     <button style="margin-top: 30px; margin-left: 120px;"
                                                             ng-click="addSize()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Thêm Mới
+                                                        {{languageNav['Admin.nav.Create']}}
                                                     </button>
                                                     <button style="margin-top: 30px; margin-left: 45px;"
                                                             ng-click="resetCategory()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Làm Mới
+                                                        {{languageNav['Admin.nav.Refresh']}}
                                                     </button>
                                                 </div>
 
@@ -296,7 +296,7 @@
                         <div class="grid gap-6 md:grid-cols-2">
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Màu Sắc</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Color']}}</span>
                                     <select ng-model="formProduct.color" id="color" name="color" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
@@ -315,13 +315,13 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabelColor"></h5>
-                                                <p ng-if="saleadd.idSale==null">Thêm mới Màu nhanh</p>
+                                                <p ng-if="saleadd.idSale==null">{{languageNav['Admin.nav.InsertColor']}}</p>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                 <label class="block text-sm">
-                                                    <span class="text-gray-700 dark:text-gray-400">Tên màu</span>
+                                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.nameColor']}}</span>
                                                     <input
                                                             ng-model="formColor.name"
                                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -329,20 +329,20 @@
                                                 </label>
                                                 <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400">
-                                                      Trạng Thái
+                                                      {{languageNav['Admin.nav.Status']}}
                                                     </span>
                                                     <div class="mt-2">
                                                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formColor.status" ng-value="1"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="1">Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="1">{{languageNav['Admin.nav.Active']}}</span>
                                                         </label>
                                                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formColor.status" ng-value="0"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="0">Không Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="0">{{languageNav['Admin.nav.NoneActive']}}</span>
                                                         </label>
                                                     </div>
                                                 </label>
@@ -350,12 +350,12 @@
                                                     <button style="margin-top: 30px; margin-left: 120px;"
                                                             ng-click="addColor()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Thêm Mới
+                                                        {{languageNav['Admin.nav.Create']}}
                                                     </button>
                                                     <button style="margin-top: 30px; margin-left: 45px;"
                                                             ng-click="resetSize()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Làm Mới
+                                                        {{languageNav['Admin.nav.Refresh']}}
                                                     </button>
                                                 </div>
 
@@ -366,7 +366,7 @@
                             </div>
                             <div class="grid gap-6 mb-8 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 dark:text-gray-400">Chất Liệu</span>
+                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Material']}}</span>
                                     <select ng-model="formProduct.material" id="material" name="material" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
@@ -386,13 +386,13 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabelMaterial"></h5>
-                                                <p ng-if="saleadd.idSale==null">Thêm mới chất liệu nhanh</p>
+                                                <p ng-if="saleadd.idSale==null">{{languageNav['Admin.nav.InsertMaterial']}}</p>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
                                             <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                 <label class="block text-sm">
-                                                    <span class="text-gray-700 dark:text-gray-400">Tên chất liệu</span>
+                                                    <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.nameMaterial']}}</span>
                                                     <input
                                                             ng-model="formMaterial.name"
                                                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -400,20 +400,20 @@
                                                 </label>
                                                 <label class="block text-sm">
                                                         <span class="text-gray-700 dark:text-gray-400">
-                                                      Trạng Thái
+                                                      {{languageNav['Admin.nav.Status']}}
                                                     </span>
                                                     <div class="mt-2">
                                                         <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formMaterial.status" ng-value="1"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="1">Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="1">{{languageNav['Admin.nav.Active']}}</span>
                                                         </label>
                                                         <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
                                                             <input type="radio" ng-model="formMaterial.status" ng-value="0"
                                                                    class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                                                             />
-                                                            <span class="ml-2" ng-value="0">Không Hoạt Động</span>
+                                                            <span class="ml-2" ng-value="0">{{languageNav['Admin.nav.NoneActive']}}</span>
                                                         </label>
                                                     </div>
                                                 </label>
@@ -421,12 +421,12 @@
                                                     <button style="margin-top: 30px; margin-left: 120px;"
                                                             ng-click="addMaterial()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Thêm Mới
+                                                        {{languageNav['Admin.nav.Create']}}
                                                     </button>
                                                     <button style="margin-top: 30px; margin-left: 45px;"
                                                             ng-click="resetCategory()"
                                                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                                        Làm Mới
+                                                        {{languageNav['Admin.nav.Refresh']}}
                                                     </button>
                                                 </div>
 
@@ -445,11 +445,11 @@
 <!--                                                            </button>-->
                             <button ng-click="addProduct()" style="margin-top: 10px; margin-left: 50px;"
                                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Thêm Mới
+                                {{languageNav['Admin.nav.Create']}}
                             </button>
                             <button ng-click="resetProducts()" style="margin-top: 10px; margin-left: 50px;"
                                     class="px-3 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Làm Mới
+                                {{languageNav['Admin.nav.Refresh']}}
                             </button>
                         </div>
                        

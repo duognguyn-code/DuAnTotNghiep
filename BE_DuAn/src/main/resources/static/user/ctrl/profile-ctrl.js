@@ -184,6 +184,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
     }
 
     $scope.logOut= function () {
+        alert("Bên profile")
         localStorage.removeItem('jwtToken');
         $rootScope.account=null;
     }

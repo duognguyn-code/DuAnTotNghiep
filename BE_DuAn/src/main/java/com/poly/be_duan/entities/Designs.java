@@ -23,8 +23,11 @@ public class Designs {
 
     @Column(name = "name", nullable = false)
     private String name;
+
+
     @Column(name = "status")
     private Integer status;
+
     @JsonIgnore
     @OneToMany(mappedBy = "design")
     private List<Product> products;

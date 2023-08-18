@@ -23,8 +23,10 @@ public class Size {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "status")
     private Integer status;
+
     @JsonIgnore
     @OneToMany(mappedBy = "size")
     private List<Product> products;

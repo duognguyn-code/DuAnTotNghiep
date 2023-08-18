@@ -76,4 +76,10 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
 
     @Query(value = "select * from products where status = 1",nativeQuery = true)
     List<Product> findProduct();
+
+    @Query(value = "select * from products\n" +
+            "inner join images\n" +
+            "on products.id_products = images.id_products\n" +
+            "where products.id_products = ?1 ",nativeQuery = true)
+    Product findProductForImages(Integer id);
 }

@@ -16,7 +16,7 @@
         <div class="container-fluid pt-5">
             <div class="row">
                 <div class="col-md-12">
-                    <div ng-repeat="addres in listaddress" class="card mb-4">
+                    <div ng-repeat="addres in pagerAddress.listaddress" class="card mb-4">
                         <div class="card-body">
                             <div class="card mb-2">
                                 <div class="card-header">
@@ -79,9 +79,24 @@
                     </div>
                 </div>
             </div>
+            <div class="panel-footer text-center">
+                <button ng-click="pagerAddress.first()" style="margin-right: 10px;">
+                    <b class="text-sm"> |< </b>
+                </button>
+                <button ng-click="pagerAddress.prev()" style="margin-right: 10px;">
+                    <b class="text-sm"> < </b>
+                </button>
+                <button>{{pagerAddress.page + 1}}of {{pagerAddress.count}}</button>
+                <button ng-click="pagerAddress.next()" style="margin-left: 10px;">
+                    <b class="text-sm"> > </b>
+                </button>
+                <button ng-click="pagerAddress.last()" style="margin-left: 10px;">
+                    <b class="text-sm"> >| </b>
+                </button>
+            </div>
             <div class="row">
                 <form method="post" name="myForm" ng-submit="doSubmit()" enctype="multipart/form-data">
-                    <div class="row" style="margin-bottom:30px;">
+                    <div class="row" style="margin-bottom:30px; margin-top: 50px">
                         <div class="col-lg-12" style="margin-bottom:30px;">
                             <label class="block text-sm" style="margin-left:30px;">
                                 <span class="col-md-4 text-gray-700 dark:text-gray-400"

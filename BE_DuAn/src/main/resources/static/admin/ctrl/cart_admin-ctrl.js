@@ -2,6 +2,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     const apiUrlCart = "http://localhost:8080/api/cart";
     const apiUrlBill = "http://localhost:8080/api/bill";
     const apiUrlProduct = "http://localhost:8080/api/product";
+    const apiUser = "http://localhost:8080/rest/user";
     $scope.cart = [];
     $scope.formCart = {};
     $scope.products = [];
@@ -410,7 +411,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
     $scope.getUsernameForBill = {};
     $scope.bill = {
         createDate: new Date(),
-        address: "Không có(Mua trực tiếp tại cửa hàng)",
+        address: "Mua trực tiếp tại cửa hàng",
         account: {username: "Dương"},
         phoneTake: "",
         personTake: "",
@@ -604,7 +605,12 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             .then(function (response) {
                 $scope.acc = response.data;
                 var item = angular.copy($scope.acc)
+               var sts =item.status
                 $scope.InforpersonTake = item.fullName
+                if (sts==0){
+                    $scope.check1 = 2
+                    return
+                }
                 if ($scope.InforphoneTake.length == 10) {
                     if ($scope.acc.length == 0) {
                         $scope.check = 1
@@ -621,6 +627,23 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             .catch(function (error) {
                 console.log(error);
             })
+    }
+    $scope.accountAdmin={}
+    $scope.user=function (){
+        $http.get(apiUser+'/getAccountActive')
+            .then(function (response) {
+                // alert(JSON.stringify(response.data))
+                $scope.accountAdmin = response.data
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    $scope.user();
+    $scope.khoaAcc=function (){
+        $scope.error("Tài khoản bị khóa")
+        $scope.check1=0
+        return
     }
     $scope.resetSearch = function () {
         $('#matesearch1').prop('selectedIndex', 0);
