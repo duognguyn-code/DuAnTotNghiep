@@ -189,6 +189,13 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             console.log(error);
         });
     }
+    $scope.redirectToGoogle = function (formReasonReturn) {
+        for (var i = 0; i < formReasonReturn.images.length; i++) {
+            $window.open(formReasonReturn.images[i].urlimage, '_blank');
+        }
+        // var reason=formReasonReturn.images[1].urlimage
+        // $window.open(reason, '_blank');
+    };
     $scope.formReasonReturn={};
     $scope.getForReasonReturn=function(prChange){
         $scope.formReasonReturn=angular.copy(prChange);

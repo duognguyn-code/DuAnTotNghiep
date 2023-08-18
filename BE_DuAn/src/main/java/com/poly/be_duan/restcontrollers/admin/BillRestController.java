@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -115,6 +116,16 @@ public class BillRestController {
             } else {
                 if (bill.getStatus()==5){
                     billOld.setTotalMoney(BigDecimal.valueOf(0));
+                }
+                if (bill.getStatus()==7){
+                    billOld.setTotalMoney(BigDecimal.valueOf(0));
+                }
+                if (bill.getStatus()==4){
+                    LocalDateTime today = LocalDateTime.now();
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                    String date = today.format(dateTimeFormatter);
+                    Date date1 = new Date(date);
+                    billOld.setTimeReceive(date1);
                 }
                 billOld.setStatus(bill.getStatus());
 //                billOld.setTotalMoney(BigDecimal.valueOf(0));

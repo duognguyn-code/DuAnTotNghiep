@@ -336,6 +336,11 @@ public class ProductServiceImpl implements ProductService {
         return pageFindProductAll;
     }
 
+    @Override
+    public Product findProductForImages(Integer id) {
+        return productRepository.findProductForImages(id);
+    }
+
     private List<ProductDetailDTO> sortProduct(List<ProductDetailDTO> listPRD,Integer check) {
         if(listPRD.size()==0){
             return listPRD;
