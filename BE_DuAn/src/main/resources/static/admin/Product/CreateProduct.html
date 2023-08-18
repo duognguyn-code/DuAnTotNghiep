@@ -16,7 +16,7 @@
                                     <select ng-model="formProduct.category" name="category" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                        <option ng-repeat="category in categories" ng-value="category.idCategory">
+                                        <option ng-repeat="category in categories" ng-if="category.status==1" ng-value="category.idCategory">
                                             {{category.name}}
                                         </option>
                                     </select>
@@ -123,7 +123,7 @@
                                 </label>
                             </div>
                             <div class="thumbnail_images" id="previewContainer">
-                                <div class="previewImageContainer" id="previewImagesContainer">
+                                <div class="previewImageContainer row" id="previewImagesContainer">
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                                     <select ng-model="formProduct.design" id="design" name="design" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                        <option ng-repeat="design in designs" ng-value="design.idDesign">{{design.name}}
+                                        <option ng-repeat="design in designs" ng-if="design.status==1" ng-value="design.idDesign">{{design.name}}
                                         </option>
                                     </select>
                                 </label>
@@ -229,7 +229,7 @@
                                     <select ng-model="formProduct.size" name="size" id="size" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                        <option ng-repeat="size in sizes" ng-value="size.idSize">{{size.name}}</option>
+                                        <option ng-repeat="size in sizes"  ng-if="size.status==1"ng-value="size.idSize">{{size.name}}</option>
                                     </select>
                                 </label>
                                 <button data-bs-target="#exampleModaladdSize" data-bs-toggle="modal"
@@ -300,7 +300,7 @@
                                     <select ng-model="formProduct.color" id="color" name="color" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                        <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}</option>
+                                        <option ng-repeat="color in colors"  ng-if="color.status==1" ng-value="color.idColor">{{color.name}}</option>
                                     </select>
                                 </label>
                                 <button data-bs-target="#exampleModaladdColor" data-bs-toggle="modal"
@@ -370,7 +370,7 @@
                                     <select ng-model="formProduct.material" id="material" name="material" required
                                             ng-change="generationName()"
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                        <option ng-repeat="material in materials" ng-value="material.idMaterial">{{material.name}}
+                                        <option ng-repeat="material in materials" ng-if="material.status==1"  ng-value="material.idMaterial">{{material.name}}
                                         </option>
                                     </select>
                                 </label>
