@@ -419,6 +419,14 @@ public class ProductRestController {
         }
 
     }
+    @PutMapping("/deleteByProduct/{id}")
+    public List<Image> deleteByProduct(@PathVariable(value = "id")Integer id){
+        List<Image> img = imageService.selectByIdProduct(id);
+        for (int i = 0; i < img.size(); i++) {
+            imageService.delete(img.get(i).getIdimage());
+        }
+        return null;
+    }
 
     @GetMapping("/max")
     public BigDecimal getMax() {
