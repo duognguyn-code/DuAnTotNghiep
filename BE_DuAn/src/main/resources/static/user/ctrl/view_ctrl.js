@@ -219,11 +219,13 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         $http.get(apiUrlProduct)
             .then(function (response) {
                 $scope.products = response.data;
+                // alert($scope.products)
             })
             .catch(function (error) {
                 console.log(error);
             });
     };
+    $scope.getProducts()
 
 
     $scope.getShippingOder = function () {

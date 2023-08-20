@@ -251,10 +251,10 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                     price: item.billDetail.product.price,
                     quantity: item.quantity1,
                     category: {idCategory: item.billDetail.product.category.idCategory},
-                    size: {id: item.billDetail.product.size.id},
-                    color: {id: item.billDetail.product.color.id},
-                    design: {id: item.billDetail.product.design.id},
-                    material: {id: item.billDetail.product.material.id},
+                    size: {idSize: item.billDetail.product.size.idSize},
+                    color: {idColor: item.billDetail.product.color.idColor},
+                    design: {idDesign: item.billDetail.product.design.idDesign},
+                    material: {idMaterial: item.billDetail.product.material.idMaterial},
                     status : 1,
                 }
             })
@@ -267,10 +267,10 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                     price: item.billDetail.product.price,
                     quantity: item.quantity2,
                     category: {idCategory: item.billDetail.product.category.idCategory},
-                    size: {id: item.billDetail.product.size.id},
-                    color: {id: item.billDetail.product.color.id},
-                    design: {id: item.billDetail.product.design.id},
-                    material: {id: item.billDetail.product.material.id},
+                    size: {idSize: item.billDetail.product.size.idSize},
+                    color: {idColor: item.billDetail.product.color.idColor},
+                    design: {idDesign: item.billDetail.product.design.idDesign},
+                    material: {idMaterial: item.billDetail.product.material.idMaterial},
                     status : 2,
                 }
             })

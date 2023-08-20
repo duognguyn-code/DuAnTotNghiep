@@ -18,7 +18,7 @@ public interface ProductService extends GenericService<Product, Integer> {
     public Product update(Product product);
 
     Page<Product> getAll (Pageable page);
-    List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status);
+    List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status,String category);
     BigDecimal searchPriceMin();
     BigDecimal searchPriceMAX();
     ProductDetailDTO getDetailProduct(Integer id);
