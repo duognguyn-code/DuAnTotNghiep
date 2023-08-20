@@ -79,8 +79,14 @@ app.config(function($routeProvider){
         })
 })
 
-app.controller("mainAdmin", function($scope,$http) {
+app.controller("mainAdmin", function($scope,$http,$window) {
 
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
     $scope.lang = sessionStorage.getItem('lang');
     if ($scope.lang == null) {
         sessionStorage.setItem('lang', 'vi');
@@ -174,5 +180,29 @@ app.controller("mainAdmin", function($scope,$http) {
         }
 
     }
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/api/auth/getRole",token).then(respon =>{
+                if (respon.data.role.name === "ROLE_USER"){
+                    $scope.logOut();
+                }else if (respon.data.role.name === "ROLE_ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/user/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+    $scope.checkLogin();
     $scope.sumStatus1();
 });

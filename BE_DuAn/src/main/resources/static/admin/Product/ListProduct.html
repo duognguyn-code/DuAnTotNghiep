@@ -10,10 +10,10 @@
 
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label class="block text-sm">
-                            <span  class="text-gray-700 dark:text-gray-400"> {{languageNav['Admin.nav.Color']}}</span>
-                            <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                            <span  class="text-gray-700 dark:text-gray-400"> {{languageNav['Admin.nav.Category']}}</span>
+                            <select id="categorySearch" ng-model="searchCategory" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
                                 <option value="undefined">--Chọn Mục--</option>
-                                <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
+                                <option ng-repeat="cate in categories" value="{{cate.name}}">{{cate.name}}</option>
                             </select>
                         </label>
 
@@ -42,6 +42,13 @@
                     </div>
                     <!--                    <div class="grid gap-6 mb-8 md:grid-cols-2">-->
                     <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+                        <label class="block text-sm">
+                            <span  class="text-gray-700 dark:text-gray-400"> {{languageNav['Admin.nav.Color']}}</span>
+                            <select id="colorSearch" ng-model="searchColor" class=" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" >
+                                <option value="undefined">--Chọn Mục--</option>
+                                <option ng-repeat="color in colors" value="{{color.name}}">{{color.name}}</option>
+                            </select>
+                        </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NameProduct']}}</span>
                             <input ng-model="searchProducts"

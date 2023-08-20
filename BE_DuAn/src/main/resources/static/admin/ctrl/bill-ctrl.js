@@ -111,6 +111,8 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 // $scope.getBill();
+                                $scope.searchBill1();
+                                $scope.sumStatus();
                                 $scope.messageSuccess("Đổi trạng thái thành công");
                             } else {
                                 $scope.messageError("Đổi trạng thái thất bại");
@@ -171,6 +173,8 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 // $scope.getBill();
+                                $scope.searchBill1();
+                                $scope.sumStatus();
                                 $scope.messageSuccess("Hủy đơn thành công");
                             } else {
                                 $scope.messageError("Hủy đơn thất bại");

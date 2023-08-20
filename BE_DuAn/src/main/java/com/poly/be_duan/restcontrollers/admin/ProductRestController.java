@@ -373,10 +373,10 @@ public class ProductRestController {
         return productService.findProductForImages(id);
     }
 
-    @GetMapping("search/{name}/{color}/{material}/{size}/{design}/{min}/{max}/{status}")
+    @GetMapping("search/{name}/{color}/{material}/{size}/{design}/{min}/{max}/{status}/{category}")
     public ResponseEntity<List<Product>> search(@PathVariable(value = "name") String name, @PathVariable(value = "color") String color
             , @PathVariable(value = "material") String material, @PathVariable(value = "size") String size, @PathVariable(value = "design") String design,
-                                                @PathVariable(value = "min") String min, @PathVariable(value = "max") String max, @PathVariable(value = "status") String status) {
+                                                @PathVariable(value = "min") String min, @PathVariable(value = "max") String max, @PathVariable(value = "status") String status, @PathVariable(value = "category") String category) {
         BigDecimal mn = null;
         BigDecimal mx = null;
         System.out.println("abc" + "/" + min);
@@ -391,6 +391,9 @@ public class ProductRestController {
         }
         if (size.equals("undefined")) {
             size = "";
+        }
+        if (category.equals("undefined")) {
+            category = "";
         }
         if (status.equals("undefined")) {
             status = "1";
@@ -410,14 +413,22 @@ public class ProductRestController {
         }
         int sts = Integer.parseInt(String.valueOf(status));
 
-        System.out.println(productService.search(name, color, material, size, design, mn, mx, sts));
+        System.out.println(productService.search(name, color, material, size, design, mn, mx, sts,category));
         try {
-            return ResponseEntity.ok(productService.search(name, color, material, size, design, mn, mx, sts));
+            return ResponseEntity.ok(productService.search(name, color, material, size, design, mn, mx, sts,category));
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
+    }
+    @PutMapping("/deleteByProduct/{id}")
+    public List<Image> deleteByProduct(@PathVariable(value = "id")Integer id){
+        List<Image> img = imageService.selectByIdProduct(id);
+        for (int i = 0; i < img.size(); i++) {
+            imageService.delete(img.get(i).getIdimage());
+        }
+        return null;
     }
 
     @GetMapping("/max")

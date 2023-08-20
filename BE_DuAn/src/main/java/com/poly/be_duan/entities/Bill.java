@@ -29,6 +29,8 @@ public class Bill {
 
     @Column(name = "address")
     private String address;
+    @Column(name = "user_confirm")
+    private String userConfirm;
 
     @Column(name = "phone_take")
     private String phoneTake;

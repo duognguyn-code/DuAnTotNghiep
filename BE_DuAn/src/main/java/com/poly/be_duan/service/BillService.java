@@ -26,7 +26,7 @@ public interface BillService  {
 //    public List<Bill> searchByPhone(String phone);
 
 //    public Bill updateStatus(Integer sts,Integer id);
-
+public Integer sumBillStatus5(String date);
     public Bill updateStatus(Bill bill);
     public Optional<Bill> findBillByID(Integer id);
 
@@ -40,4 +40,5 @@ public interface BillService  {
     public Integer sumStatus(String number);
 
     public Integer MaxIdBill();
+    public Integer sumMoneyRefurn(String year);
 }

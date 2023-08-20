@@ -71,8 +71,8 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                 confirmButtonText: 'Xác nhận!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    var cartItems = localStorage.getItem('cartItems');
-                    if (cartItems.length == 0) {
+                    var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                    if (cartItems === null || cartItems.length === 0) {
                         Swal.fire(
                             'Giỏ hàng trống!',
                             'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.',
@@ -87,6 +87,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                             var bankcode = ''; // Optional
                             var language = 'vn'; // Optional
                             $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`).then(res => {
+                                alert(res.data.value)
                                 window.location.href = res.data.value;
                                 $scope.bills.personTake = $scope.addressAccount.personTake;
                                 $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
@@ -100,7 +101,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                     if (res.data) {
                                         $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
                                             $scope.clearCart();
-                                            console.log("orderDetail", res.data)
+                                            console.log("orderDetail", res.data);
                                         }).catch(err => {
                                             swal.fire({
                                                 icon: 'error',
@@ -108,21 +109,21 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                                 title: err.data.message,
                                                 timer: 5000
                                             });
-                                        })
+                                        });
                                     } else {
                                         Swal.fire(
                                             'Thanh toán thất bại!',
                                             '',
                                             'error'
-                                        )
+                                        );
                                     }
                                 }).catch(err => {
                                     Swal.fire(
                                         'Thanh toán thất bại!',
                                         '',
                                         'error'
-                                    )
-                                })
+                                    );
+                                });
                             }).catch(err => {
                                 Swal.fire(
                                     'Thanh toán thất bại!',
@@ -130,7 +131,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                     'error'
                                 )
                             })
-
                         } else {
                             $scope.bills.personTake = $scope.addressAccount.personTake;
                             $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
@@ -289,14 +289,14 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
         $http.get(apiUrlProduct).then(function (response) {
             var dbProductQuantity = response.data.quantity;
             item.messageQuantity = ""; // Reset thông báo lỗi
-            if (item.quantity == 0) {
+            if (item.quantity == 0 || item.quantity === null) {
                 item.messageQuantity = "Số lượng không trống";
+            } else if (item.quantity < 0) {
+                item.messageQuantity = "Số lượng phải là số và lớn hơn 0";
             } else if (item.quantity > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             }
         }).catch(function (error) {
             console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);

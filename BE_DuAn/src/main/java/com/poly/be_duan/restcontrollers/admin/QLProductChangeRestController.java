@@ -10,6 +10,7 @@ import com.poly.be_duan.utils.Username;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +38,13 @@ public class QLProductChangeRestController {
                 productChange.setUsernameUpdate(Username.getUserName());
                 productChangeService.save(productChange);
                 bill_detail = productChange.getBillDetail();
+                BigDecimal aa = BigDecimal.valueOf(productChange.getQuantityProductChange());
                 bill_detail.setStatus(4);
+                bill_detail.setQuantity(bill_detail.getQuantity()-productChange.getQuantityProductChange());
+                bill_detail.setMoneyRefund(aa.multiply(bill_detail.getPrice()));
                 billDetailService.update(bill_detail, bill_detail.getId());
+                System.out.println("------------------------------------");
+                System.out.println(productChange.getQuantityProductChange()+"---------");
                 System.out.println("gửi mail thành công");
             }else if(s != null && productChange.getStatus() == 2){
                 productChange.setStatus(3);

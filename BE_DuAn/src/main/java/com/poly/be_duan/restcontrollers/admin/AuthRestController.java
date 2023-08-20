@@ -29,6 +29,7 @@ public class AuthRestController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) throws Exception {
+        System.out.println(loginDTO.getPassword());
         ResponseEntity<?> response = authService.authenticateUser(loginDTO);
         System.out.println("đay la fthk đanwg nhập");
         return response;

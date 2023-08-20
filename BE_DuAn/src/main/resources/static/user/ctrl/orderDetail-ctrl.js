@@ -1,5 +1,6 @@
 app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     var urlBillDetail=`http://localhost:8080/api/billDetail/rest/user`;
+    var urlOrder=`http://localhost:8080/api/bill/rest/user/order`;
     $scope.orderDetails=[];
     $scope.formProductChange={};
     $scope.idCheckBox = {};
@@ -18,6 +19,13 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             Authorization: `Bearer `+jwtToken
         }
     }
+    $scope.shouldShowChangeButton = function(orderDetail) {
+        const receivedTime = new Date(orderDetail.bill.timeReceive).getTime();
+        const currentTime = new Date().getTime();
+        const threeDaysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+        return (currentTime - receivedTime) < threeDaysInMilliseconds;
+    };
+
     $scope.getAllByOrder=function(){
         let id = $rootScope.id;
         $http.get(urlBillDetail + `/${id}`).then(resp=>{
@@ -301,6 +309,14 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             reader.readAsDataURL(file);
         }
     };
+    $scope.getAllByUser=function(){
+        $http.get(urlOrder).then(function(response){
+            $scope.orders=response.data;
+            $rootScope.id = $scope.orders.id;
+        }).catch(error=>{
+            console.log('error getOrder',error);
+        });
+    }
     $scope.getProductChange=function(formProductChange){
         $http.get(`/rest/user/productchange/findProductChange/${formProductChange.id}`).then(resp=>{
             console.log($scope.formDetails.id + "$scope.formDetails.id id")

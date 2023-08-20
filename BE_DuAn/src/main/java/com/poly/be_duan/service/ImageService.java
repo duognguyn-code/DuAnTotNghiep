@@ -52,4 +52,5 @@ public interface ImageService {
     Optional<Image> findById(Integer id);
 
     public List<Image> findImageByPr(Integer id);
+    List<Image> selectByIdProduct(Integer id);
 }

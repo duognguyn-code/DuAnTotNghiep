@@ -66,9 +66,6 @@ app.controller('order-ctrl',function($rootScope,$scope,$http,$filter){
         $http.get(url).then(function(response){
             if(response.data){
                 $scope.ordersDetail=response.data;
-                // for(let i=0;i<$scope.ordersDetail.length;i++){
-                //     $scope.getSaleOrDeTail(i)
-                // }
             }
         }).catch(error=>{
             console.log(error);
