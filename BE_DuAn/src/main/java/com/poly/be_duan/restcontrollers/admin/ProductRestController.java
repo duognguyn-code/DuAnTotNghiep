@@ -277,7 +277,7 @@ public class ProductRestController {
         productService.save(pd);
         String data = String.valueOf(number1);
 
-        String path = "C:\\Users\\Windows\\Pictures\\Saved Pictures\\" + generationName(saveProductRequest) + ".jpg";
+        String path = "C:\\Users\\Lenovo\\Pictures\\Camera Roll" + generationName(saveProductRequest) + ".jpg";
 
         try {
             BitMatrix matrix = new MultiFormatWriter()

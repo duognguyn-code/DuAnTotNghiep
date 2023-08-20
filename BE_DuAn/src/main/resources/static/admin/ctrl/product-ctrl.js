@@ -131,7 +131,8 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                         var previewImage = document.createElement('img');
                         previewImage.src = e.target.result;
                         previewImage.className = 'previewImage';
-                        previewImage.width = '100'; //
+//                        previewImage.width = '100';
+                        previewImage.style = "width:100px;";//
                         previewImagesContainer.appendChild(previewImage);
                         imageCount++;
                     };
