@@ -26,9 +26,11 @@ public interface ProductRepository extends PagingAndSortingRepository<Product, I
             "and p.size.name LIKE %?4% " +
             "and p.design.name LIKE %?5%"+
             "and p.price between ?6 and ?7 "+
-            "and p.status = ?8"
+            "and p.status = ?8" +
+            " and p.category.name LIKE %?9%"
+
     )
-    public List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status);
+    public List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status, String category);
     @Query("select MIN(p.price) FROM Product p")
     public BigDecimal searchMin();
     @Query("select MAX(p.price) FROM Product p")

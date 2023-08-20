@@ -68,6 +68,7 @@ app.controller('paymentController', function ($rootScope, $scope, $http ,$locati
         })
 
     }
+    $scope.getAcountActive();
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
         $http.get(apiUrlProduct)

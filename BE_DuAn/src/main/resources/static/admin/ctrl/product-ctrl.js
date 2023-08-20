@@ -238,7 +238,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             $location.path('/Pageupdateproduct/').search({id: productId});
         }
     };
-    alert("123")
+    // alert("123")
     $scope.getProductDataUpdate = function () {
         var productId = $routeParams.id;
         $http.get('/api/product/search/' + productId)
@@ -815,12 +815,12 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         if ($scope.searchPriceMax === "") {
             $scope.searchPriceMax = "Max"
         }
-        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
+        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'&& $scope.searchCategory === 'undefined'
             && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
-            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
+            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus+ '/' + $scope.searchCategory)
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
@@ -849,7 +849,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         }
     }
     $scope.GetresetForm = function () {
-        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
+        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1"+ '/' + "undefined")
             .then(function (response) {
                 $scope.products = response.data;
                 console.log(response);
@@ -906,6 +906,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         $scope.searchDesign = "undefined";
         $scope.searchMaterial = "undefined";
         $scope.searchSize = "undefined";
+        $scope.searchCategory = "undefined";
         $scope.searchStatus = "1";
         $scope.searchPriceMin = "";
         $scope.searchPriceMax = "";
