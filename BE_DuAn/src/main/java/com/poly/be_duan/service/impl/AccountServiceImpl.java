@@ -9,6 +9,7 @@ import com.poly.be_duan.repositories.AccountRepository;
 import com.poly.be_duan.repositories.AddressRepository;
 import com.poly.be_duan.repositories.RoleRepository;
 import com.poly.be_duan.service.AccountService;
+import com.poly.be_duan.utils.HashUtil;
 import com.poly.be_duan.utils.Username;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,7 +151,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Boolean updatePassword(UpdatePasswordDTO updatePasswordDTO) {
-        return null;
+        Account account = repository.findByName(Username.getUserName());
+        if (HashUtil.verify(updatePasswordDTO.getOldPassword(), account.getPassword())== false){
+            return false;
+        }else {
+            account.setPassword(HashUtil.hash(updatePasswordDTO.getPassword()));
+            repository.save(account);
+            return true;
+        }
     }
 
     @Override

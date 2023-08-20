@@ -28,11 +28,11 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.index = 0;
     $rootScope.account = jwtToken;
     $scope.bills = {};
-
     $rootScope.cartItems = [];
-
+    $scope.formChangePassMail = {
+        email: ''
+    };
     $scope.logOut= function () {
-        alert("dang xuat ben login")
         $rootScope.account=null;
         localStorage.removeItem('jwtToken');
     }
@@ -55,11 +55,37 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     }
 
 
+    $scope.message = function (mes){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.changePassword = function (email) {
+        $http.get(`/rest/guest/forgetPassword/${email}`)
+            .then(function (respon) {
+                $scope.message('Mật khẩu đã gửi về email của quý khách vui lòng kiêm tra');
+                console.log('sessuce ' + respon.data);
+                $window.location.href = '#!login';
+            }).catch(error => {
+            console.log('lỗi ' +error);
+        })
+    }
 
     $scope.checkCartItemQuantity = function (item) {
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
-        // Tìm tất cả các mặt hàng trong giỏ hàng có cùng product.id
         var itemsWithSameProduct = cartItems.filter(function (cartItem) {
             return (
                 cartItem.product.id === item.product.id &&
@@ -71,26 +97,23 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         });
 
 
-        // Tính tổng số lượng sản phẩm có cùng product.id trong giỏ hàng
         var totalQuantityInCart = itemsWithSameProduct.reduce(function (total, cartItem) {
             return total + cartItem.quantity;
         }, 0);
         item.totalQuantityInCart = totalQuantityInCart;
-        // alert(totalQuantityInCart);
-
-        // Gửi yêu cầu kiểm tra số lượng của sản phẩm trong db
         var apiUrlProduct = `http://localhost:8080/api/product/${item.product.id}`;
         $http.get(apiUrlProduct).then(function (response) {
             var dbProductQuantity = response.data.quantity;
-            item.messageQuantity = ""; // Reset thông báo lỗi
+            item.messageQuantity = "";
             if (item.quantity == 0) {
                 item.messageQuantity = "Số lượng không trống";
+            }
+            else if (item.quantity < 0) {
+                item.messageQuantity = "Số lượng lớn hơn không.";
             } else if (item.quantity > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             } else if (item.quantity + item.totalQuantityInCart > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có .";
-                console.log("Số lượng trong giỏ hàng vượt quá số lượng của sản phẩm trong db.")
             }
         }).catch(function (error) {
             console.log("Lỗi khi truy vấn số lượng sản phẩm từ cơ sở dữ liệu: ", error);
