@@ -7,8 +7,10 @@ import com.poly.be_duan.repositories.AccountRepository;
 import com.poly.be_duan.service.ProductChangeService;
 import com.poly.be_duan.service.ProductService;
 import com.poly.be_duan.service.SendMailService;
+import com.poly.be_duan.utils.HashUtil;
 import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -31,6 +33,9 @@ public class SendMailServiceimpl implements SendMailService {
     ThymeleafService thymeleafService;
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     public void SendEmail(String user, String pass, Integer idchange) {
         try {
@@ -81,7 +86,38 @@ public class SendMailServiceimpl implements SendMailService {
 
     @Override
     public void SendEmailChangePass(String user, String pass, String mail) {
+        try {
+            Properties properties = new Properties();
+            properties.put("mail.smtp.host", "smtp.gmail.com");
+            properties.put("mail.smtp.port", "587");
+            properties.put("mail.smtp.auth", "true");
+            properties.put("mail.smtp.starttls.enable", "true");
+            Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(user,pass);
+                }
+            });
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(user, false));
+            Account acc= accountRepository.findByEmail(mail);
 
+            if(acc.getEmail().equals(mail)){
+                acc.setPassword(passwordEncoder.encode("kdi23239dsad"));
+                accountRepository.save(acc);
+                msg.setFrom(new InternetAddress(user));
+                InternetAddress[] toAddresses = {new InternetAddress(acc.getEmail())};
+                msg.setRecipients(Message.RecipientType.TO, toAddresses);
+                msg.setSubject("PlaceUp - Đổi mật khẩu tài khoản");
+                msg.setSentDate(new Date());
+                msg.setText("Mật khẩu của bạn là: kdi23239dsad");
+                Transport.send(msg);
+            }
+            else{
+                System.out.println("bắn log");
+            }
+        } catch (Exception e) {
+            throw new StaleStateException("Email này không tìm thấy trong database");
+        }
     }
 
     @Override

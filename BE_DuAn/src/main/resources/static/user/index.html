@@ -137,13 +137,14 @@
                                 <div class="nav-item dropdown">
                                     <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài khoản</a>
                                     <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="#!login"   class="dropdown-item">Đăng nhập</a>
+                                        <a href="#!login" ng-if="!account"  class="dropdown-item">Đăng nhập</a>
                                         <a href="#!register" ng-if="!account" class="dropdown-item">Đăng ký</a>
                                         <a ng-click="logOut()" ng-if="account"  href="/security/logoff" class="dropdown-item">Đăng Xuất</a>
                                         <hr>
                                         <a href="#!purchase" ng-if="account" class="dropdown-item">Đơn hàng của bạn</a>
-                                        <a href="/admin/main.html"  class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN' || accountHome.role.name=='ROLE_STAFF'">Quản lý</a>
+                                        <a href="/admin/main.html#!/listproduct" ng-if="account"  class="dropdown-item" ng-if="accountHome.role.name=='ROLE_ADMIN' || accountHome.role.name=='ROLE_STAFF'">Quản trị hệ thống</a>
                                         <a href="#!info" ng-if="account" class="dropdown-item">Thông tin tài khoản</a>
+                                        <a href="#!changePassword" ng-if="account" class="dropdown-item">Đổi mật khẩu</a>
                                     </div>
                                     <!--                                      modal login-->
 
@@ -162,7 +163,7 @@
                                                 </div>
                                                 <div class="modal-body min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                                                     <div class="container">
-                                                        <form class="form" style="width:500px;">
+                                                        <form class="form" style="width:500px;" method="post" name="myForm">
                                                             <h2 class="text-center"
                                                                 style="font-weight:bold;margin-bottom:10px;">Đặt lại mật
                                                                 khẩu</h2>
@@ -181,10 +182,10 @@
                                                                     </g>
                                                                 </svg>
                                                                 <input placeholder="Nhập Email" class="input"
-                                                                       type="text">
+                                                                       type="text" ng-model="formChangePassMail.email">
                                                             </div>
                                                             <button class="button-submit1"
-                                                                    style="align-self: center;width:350px;">Lấy lại mật
+                                                                    style="align-self: center;width:350px;" ng-click="changePassword(formChangePassMail.email)" >Lấy lại mật
                                                                 khẩu
                                                             </button>
                                                         </form>
@@ -303,5 +304,6 @@
 <script src="ctrl/profile-ctrl.js"></script>
 <script src="ctrl/home-ctrl.js"></script>
 <script src="ctrl/product-sort.js"></script>
+<script src="ctrl/ChangePassword-ctrl.js"></script>
 </body>
 </html>

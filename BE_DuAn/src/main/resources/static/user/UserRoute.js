@@ -44,5 +44,9 @@ app.config(function($routeProvider){
             templateUrl:"/user/Profile/AccountInfo.html",
             controller:"profile-ctl"
         })
+        .when("/changePassword", {
+            templateUrl:"/user/account/changePassword.html",
+            controller:"changePassword-ctrl"
+        })
 
 })
