@@ -9,7 +9,7 @@
                 <div class="p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
                      ng-init="getProductDataUpdate(productId)">
                     <div class="grid gap-6 md:grid-cols-2">
-                        <div class="grid gap-6 md:grid-cols-1">
+<!--                        <div class="grid gap-6 md:grid-cols-1">-->
                             <div class="grid gap-6 md:grid-cols-2" style="grid-template-columns: 500px 50px;">
                                 <label class="block text-sm">
                                     <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Category']}}</span>
@@ -19,33 +19,32 @@
                                             class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
                                     </select>
                                 </label>
-                                <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                    <img ng-if="checkimg==0" class="img-fluid w-100"
+                            </div>
+<!--                                <div  class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">-->
+                                    <div   class="thumbnail_images" id="previewContainer">
+                                        <div  class="previewImageContainer row">
+                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0"
                                          src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
                                          alt=""
                                     >
-
-                                    <img ng-if="checkimg==0" class="img-fluid w-100"
-                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
+                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0"
+                                         src="{{productData.images.length>0?productData.images[1].urlimage:''}}"
+                                         alt=""
+                                    ><img style="width: 90px;height: 90px" ng-if="checkimg==0" class="img-fluid w-10"
+                                          src="{{productData.images.length>0?productData.images[2].urlimage:''}}"
+                                          alt=""
+                                >
+                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0" class="img-fluid w-10"
+                                         src="{{productData.images.length>0?productData.images[3].urlimage:''}}"
                                          alt=""
                                     >
+                                    </div>
 
-                                    <img ng-if="checkimg==0" class="img-fluid w-100"
-                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
-                                         alt=""
-                                    >
-
-                                    <img ng-if="checkimg==0" class="img-fluid w-100"
-                                         src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
-                                         alt=""
-                                    >
-
-                                    <div ng-if="checkimg==1" class="thumbnail_images" id="previewContainer">
-                                        <div class="previewImageContainer" id="previewImagesContainerUpdate">
+                                        <div  ng-if="checkimg==1" class="previewImageContainer row" id="previewImagesContainerUpdate">
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+<!--                                </div>-->
+<!--                            </div>-->
                             <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Status']}}</span>
                                 <div class="mt-2">
@@ -62,7 +61,7 @@
                                 </div>
                             </label>
 
-                        </div>
+<!--                        </div>-->
                     </div>
                     <div class="grid gap-6 md:grid-cols-2">
                         <div class="grid gap-6 md:grid-cols-2" style="grid-template-columns: 500px 50px;">
@@ -76,8 +75,8 @@
                         <div class="grid gap-6 md:grid-cols-2" style=" grid-template-columns: 500px 50px;">
                             <label class="block text-sm ">
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Image']}}</span>
-                                <input id="image" type="file"
-                                       onchange="angular.element(this).scope().uploadFile(this.files)"
+                                <input id="image" type="file" ng-click="checkImgUpdate()"
+                                       onchange="angular.element(this).scope().uploadFileUpdate(this.files)"name="files"
                                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                        multiple/>
                             </label>
@@ -90,7 +89,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Design']}}</span>
                                 <select ng-model="productData.design" id="design" name="design" ng-change="generationNameForUpdate()"
                                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option ng-repeat="design in designs" ng-value="design.id">
+                                    <option ng-repeat="design in designs" ng-value="design.idDesign">
                                         {{design.name}}
                                     </option>
                                 </select>
@@ -101,7 +100,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Size']}}</span>
                                 <select ng-model="productData.size" name="size" id="size" ng-change="generationNameForUpdate()"
                                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option ng-repeat="size in sizes" ng-value="size.id">{{size.name}}</option>
+                                    <option ng-repeat="size in sizes" ng-value="size.idSize">{{size.name}}</option>
                                 </select>
                             </label>
                         </div>
@@ -110,10 +109,12 @@
                     <div class="grid gap-6 md:grid-cols-2">
                         <div class="grid gap-6 mb-8 md:grid-cols-2" style="grid-template-columns: 500px 50px;">
                             <label class="block text-sm">
+
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Color']}}</span>
                                 <select ng-model="productData.color" id="color" name="color" ng-change="generationNameForUpdate()"
+
                                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option ng-repeat="color in colors" ng-value="color.id">{{color.name}}
+                                    <option ng-repeat="color in colors" ng-value="color.idColor">{{color.name}}
                                     </option>
                                 </select>
                             </label>
@@ -123,7 +124,7 @@
                                 <span class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Material']}}</span>
                                 <select ng-model="productData.material" id="material" name="material" ng-change="generationNameForUpdate()"
                                         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
-                                    <option ng-repeat="material in materials" ng-value="material.id">
+                                    <option ng-repeat="material in materials" ng-value="material.idMaterial">
                                         {{material.name}}
                                     </option>
                                 </select>

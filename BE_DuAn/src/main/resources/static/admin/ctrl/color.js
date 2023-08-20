@@ -104,8 +104,8 @@ app.controller('color', function ($rootScope,$scope, $http) {
     }
     $scope.updateColor = function () {
         var item = angular.copy($scope.formColor);
-        $http.put(apiUrlColor + '/' + item.id, item).then(resp => {
-            var index = $scope.colors.findIndex(p => p.id == item.id);
+        $http.put(apiUrlColor + '/' + item.idColor, item).then(resp => {
+            var index = $scope.colors.findIndex(p => p.idColor == item.idColor);
             $scope.colors[index] = item;
             // alert("");
             $scope.message("Cập nhật thành công");

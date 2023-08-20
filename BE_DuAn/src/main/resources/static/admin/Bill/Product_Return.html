@@ -136,7 +136,7 @@
          <div class="modal fade" id="exampleModalProductReturn" tabindex="-1" data-bs-backdrop="static"
                aria-hidden="true">
            <form >
-             <div class="modal-dialog modal-lg">
+             <div  class="modal-dialog modal-lg ">
                <div style="width: 1000px" class="modal-content">
                  <div class="modal-header">
                    <h5 class="modal-title" id="exampleModalLabelPayment"></h5>
@@ -160,9 +160,9 @@
                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                        <tr
                            class="text-gray-700 dark:text-gray-400" style="font-size:18px;">
-                         <td class="px-4 py-3 ">{{formReasonReturn.account.username}}</td>
-                         <td class="px-4 py-3 ">{{formReasonReturn.account.email}}</td>
+                         <td class="px-4 py-3 ">{{formReasonReturn.account.fullName}}</td>
                          <td class="px-4 py-3 ">{{formReasonReturn.account.phone}}</td>
+                         <td class="px-4 py-3 ">{{formReasonReturn.account.email}}</td>
                          <td class="px-4 py-3 ">{{formReasonReturn.description}}</td>
                          <td class="px-4 py-3 ">
                            <button ng-href="" ng-click="redirectToGoogle(formReasonReturn)">Hình Ảnh/Video</button>
@@ -223,8 +223,9 @@
         <div class="modal fade" id="ReturnProduct" tabindex="-1" data-bs-backdrop="static"
         aria-hidden="true">
         <form >
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+
+          <div style="modal-width: 1200px;" class="modal-dialog modal-lg modal-xl">
+            <div style="width: 1200px" class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="ReturnProduct1"></h5>
                 <p style="color:black">{{languageNav['Admin.nav.Image']}}</p>
@@ -239,6 +240,7 @@
                     <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800" style="font-size:20px;">
 <!--                      <th class="px-4 py-3" scope="col">Hình ảnh</th>-->
                       <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.PersonReturn']}}</th>
+                      <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Product']}}</th>
                       <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Quantity']}}</th>
                       <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Canbereused']}}</th>
                       <th class="px-4 py-3" scope="col">{{languageNav['Admin.nav.Cannotbereused']}}</th>
@@ -252,6 +254,7 @@
 <!--                             src="{{formPrdReturn.images.length>0?formPrdReturn.images[0].urlimage:''}}">-->
 <!--                      </td>-->
                       <td class="px-4 py-3 ">{{formPrdReturn.billDetail.bill.account.username}}</td>
+                      <td class="px-4 py-3 ">{{formPrdReturn.billDetail.product.name}}</td>
                       <td class="px-4 py-3 ">{{formPrdReturn.quantityProductChange}}</td>
                       <td class="px-4 py-3 "><input ng-change="chang(formPrdReturn.id)" type="number" style="width: 100px"
                                                     ng-model="formPrdReturn.quantity1" ></td>

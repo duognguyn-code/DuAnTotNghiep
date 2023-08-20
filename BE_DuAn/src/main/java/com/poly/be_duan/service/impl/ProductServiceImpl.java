@@ -94,8 +94,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status) {
-        return productRepository.search(name, color, material, size, design, min, max, status);
+    public List<Product> search(String name, String color, String material, String size, String design, BigDecimal min, BigDecimal max, Integer status,String category) {
+        return productRepository.search(name, color, material, size, design, min, max, status,category);
     }
 
     @Override

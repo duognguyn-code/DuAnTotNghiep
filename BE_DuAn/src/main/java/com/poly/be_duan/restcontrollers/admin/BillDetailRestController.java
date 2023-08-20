@@ -82,6 +82,7 @@ public class BillDetailRestController {
     }
 
 
+
     @PutMapping("/UpdateBillDetaillByStatusBill/{status}/{id}")
     public Bill_detail UpdateBillDetaillByStatusBill(@PathVariable(value = "status")Integer status,@PathVariable(value = "id")Integer id) {
         if (status==3){

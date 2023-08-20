@@ -22,4 +22,9 @@ public interface ImageRepository extends JpaRepository<Image, Integer> {
     @Query("select i from Image  i where i.productChange = ?1")
     public List<Image> findImageByPr(Integer id);
 
+//    @Modifying
+    @Query("select i from Image  i where i.products.id = ?1")
+    List<Image> selectByIdProduct(Integer id);
+
+
 }
