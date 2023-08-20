@@ -1,10 +1,17 @@
-app.controller('chart-ctrl', function ($rootScope,$scope,$http) {
+app.controller('chart-ctrl', function ($rootScope,$scope,$http,$window) {
     const apiUrlChart = "http://localhost:8080/api/chart";
     $scope.a=[];
     $scope.account=[];
     $scope.billStatus=[];
     $scope.year=[];
+    const jwtToken = localStorage.getItem("jwtToken")
+    const token = {
+        headers: {
+            Authorization: `Bearer `+jwtToken
+        }
+    }
     $scope.input=[];
+
     $scope.getTotalMoney = function () {
         $http.get(apiUrlChart+'/'+$scope.searchYear)
             .then(function (response) {
@@ -130,5 +137,30 @@ app.controller('chart-ctrl', function ($rootScope,$scope,$http) {
     }
 
     $scope.searchYear="2023"
+    $scope.logOut = function (){
+        $window.location.href = "http://localhost:8080/views/index.html#!/login"
+        Swal.fire({
+            icon: 'error',
+            title: 'Vui lòng đăng nhập lại!!',
+            text: 'Tài khoản của bạn không có quyền truy cập!!',
+        })
+    }
+
+    $scope.checkLogin = function () {
+        if (jwtToken == null){
+            $scope.logOut();
+        }else {
+            $http.get("http://localhost:8080/api/auth/getRole",token).then(respon =>{
+                if (respon.data.role.name === "ROLE_USER"){
+                    $scope.logOut();
+                }else if (respon.data.role.name === "ROLE_ADMIN"){
+                    $rootScope.check = null;
+                }else {
+                    $rootScope.check = "OK";
+                }
+            })
+        }
+    }
+    $scope.checkLogin();
 
 })
