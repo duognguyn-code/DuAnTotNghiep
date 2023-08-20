@@ -77,6 +77,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Integer sumBillStatus5(String date) {
+        return billRepository.sumBillStatus5(date);
+    }
+
+    @Override
     public Bill updateStatus(Bill bill) {
         return billRepository.save(bill);
     }
@@ -132,5 +137,10 @@ public class BillServiceImpl implements BillService {
     @Override
     public Integer MaxIdBill() {
         return billRepository.MaxIdBill();
+    }
+
+    @Override
+    public Integer sumMoneyRefurn(String year) {
+        return billRepository.sumMoneyRefurn(year);
     }
 }

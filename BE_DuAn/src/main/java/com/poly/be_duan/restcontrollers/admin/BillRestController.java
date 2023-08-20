@@ -127,6 +127,9 @@ public class BillRestController {
                     Date date1 = new Date(date);
                     billOld.setTimeReceive(date1);
                 }
+                if (bill.getStatus()==2){
+                    billOld.setUserConfirm(Username.getUserName());
+                }
                 billOld.setStatus(bill.getStatus());
 //                billOld.setTotalMoney(BigDecimal.valueOf(0));
                 sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
