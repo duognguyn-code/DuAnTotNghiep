@@ -68,4 +68,11 @@ public class ImageServiceImpl implements ImageService {
         }
         return imageRepository.findImageByPr(id);
     }
+
+    @Override
+    public List<Image> selectByIdProduct(Integer id) {
+        return imageRepository.selectByIdProduct(id);
+    }
+
+
 }

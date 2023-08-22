@@ -40,7 +40,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -127,7 +127,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             Swal.fire({
                 title: 'Đang gửi thông báo cho khách hàng!',
                 html: 'Vui lòng chờ <b></b> milliseconds.',
-                timer: 4000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading();
@@ -251,10 +251,10 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                     price: item.billDetail.product.price,
                     quantity: item.quantity1,
                     category: {idCategory: item.billDetail.product.category.idCategory},
-                    size: {id: item.billDetail.product.size.id},
-                    color: {id: item.billDetail.product.color.id},
-                    design: {id: item.billDetail.product.design.id},
-                    material: {id: item.billDetail.product.material.id},
+                    size: {idSize: item.billDetail.product.size.idSize},
+                    color: {idColor: item.billDetail.product.color.idColor},
+                    design: {idDesign: item.billDetail.product.design.idDesign},
+                    material: {idMaterial: item.billDetail.product.material.idMaterial},
                     status : 1,
                 }
             })
@@ -267,10 +267,10 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                     price: item.billDetail.product.price,
                     quantity: item.quantity2,
                     category: {idCategory: item.billDetail.product.category.idCategory},
-                    size: {id: item.billDetail.product.size.id},
-                    color: {id: item.billDetail.product.color.id},
-                    design: {id: item.billDetail.product.design.id},
-                    material: {id: item.billDetail.product.material.id},
+                    size: {idSize: item.billDetail.product.size.idSize},
+                    color: {idColor: item.billDetail.product.color.idColor},
+                    design: {idDesign: item.billDetail.product.design.idDesign},
+                    material: {idMaterial: item.billDetail.product.material.idMaterial},
                     status : 2,
                 }
             })

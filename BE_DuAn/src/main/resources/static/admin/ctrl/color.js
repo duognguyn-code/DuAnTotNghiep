@@ -9,7 +9,7 @@ app.controller('color', function ($rootScope,$scope, $http) {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -102,10 +102,11 @@ app.controller('color', function ($rootScope,$scope, $http) {
     $scope.editColor = function (color) {
         $scope.formColor = angular.copy(color);
     }
+    $scope.formColor.status=1;
     $scope.updateColor = function () {
         var item = angular.copy($scope.formColor);
-        $http.put(apiUrlColor + '/' + item.id, item).then(resp => {
-            var index = $scope.colors.findIndex(p => p.id == item.id);
+        $http.put(apiUrlColor + '/' + item.idColor, item).then(resp => {
+            var index = $scope.colors.findIndex(p => p.idColor == item.idColor);
             $scope.colors[index] = item;
             // alert("");
             $scope.message("Cập nhật thành công");

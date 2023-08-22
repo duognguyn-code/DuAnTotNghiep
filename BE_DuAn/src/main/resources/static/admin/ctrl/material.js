@@ -136,10 +136,11 @@ app.controller('material', function ($rootScope, $scope, $http) {
     $scope.editMaterial = function (material) {
         $scope.formMaterial = angular.copy(material);
     }
+    $scope.formMaterial.status=1
     $scope.updateMaterial = function () {
         var item = angular.copy($scope.formMaterial);
-        $http.put(apiUrlMaterial + '/' + item.id, item).then(resp => {
-            var index = $scope.materials.findIndex(p => p.id == item.id);
+        $http.put(apiUrlMaterial + '/' + item.idMaterial, item).then(resp => {
+            var index = $scope.materials.findIndex(p => p.idMaterial == item.idMaterial);
             $scope.materials[index] = item;
             // alert("");
             $scope.message("Cập nhật thành công");

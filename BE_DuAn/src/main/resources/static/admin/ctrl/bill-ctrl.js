@@ -39,6 +39,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             .then(function (response) {
                 $scope.bills = response.data;
                 console.log(response);
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -46,11 +47,12 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
     };
 
     $scope.resetSearch = function () {
-
         $scope.searchPhone = " ";
         $scope.searchStatus = "1";
         $scope.date1 = null;
         // $scope.getBill();
+        $scope.searchBill1();
+
     }
 
     $scope.resetSearch();
@@ -72,6 +74,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             .then(function (response) {
                 $scope.bills = response.data;
                 console.log(response);
+                $scope.pagerBill.first();
             })
             .catch(function (error) {
                 console.log(error);
@@ -92,7 +95,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 Swal.fire({
                     title: 'Đang gửi thông báo cho khách hàng!',
                     html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 4000,
+                    timer: 1500,
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
@@ -111,6 +114,8 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 // $scope.getBill();
+                                $scope.searchBill1();
+                                $scope.sumStatus();
                                 $scope.messageSuccess("Đổi trạng thái thành công");
                             } else {
                                 $scope.messageError("Đổi trạng thái thất bại");
@@ -158,7 +163,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 Swal.fire({
                     title: 'Đang gửi thông báo cho khách hàng!',
                     html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 4000,
+                    timer: 1500,
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
@@ -171,6 +176,8 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                             if (response.data) {
                                 $scope.UpdateBillDetaillByStatusBill( $scope.form.status,$scope.form.id);
                                 // $scope.getBill();
+                                $scope.searchBill1();
+                                $scope.sumStatus();
                                 $scope.messageSuccess("Hủy đơn thành công");
                             } else {
                                 $scope.messageError("Hủy đơn thất bại");
@@ -210,7 +217,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
                 Swal.fire({
                     title: 'Đang gửi thông báo cho khách hàng!',
                     html: 'Vui lòng chờ <b></b> milliseconds.',
-                    timer: 4000,
+                    timer: 1500,
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
@@ -260,7 +267,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1400,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -278,7 +285,7 @@ app.controller('bill-ctrl', function ($rootScope, $scope, $http, $filter,$locati
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)

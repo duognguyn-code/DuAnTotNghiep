@@ -27,7 +27,7 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                                 Swal.fire({
                                     title: 'Đang thêm  mới vui lòng chờ!',
                                     html: 'Vui lòng chờ <b></b> milliseconds.',
-                                    timer: 5500,
+                                    timer: 1500,
                                     timerProgressBar: true,
                                     didOpen: () => {
                                         Swal.showLoading()
@@ -249,6 +249,7 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
             $scope.searchEmail + '/' + $scope.searchStatus + '/' + $scope.searchRole)
             .then(function (response) {
                 $scope.Accounts = response.data;
+                $scope.pagerAccount.first();
             })
             .catch(function (error) {
                 console.log(error);
@@ -262,7 +263,7 @@ $scope.resetSearch=function (){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)

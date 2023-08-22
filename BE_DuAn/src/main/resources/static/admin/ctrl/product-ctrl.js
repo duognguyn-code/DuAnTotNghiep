@@ -25,7 +25,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -131,7 +131,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                         var previewImage = document.createElement('img');
                         previewImage.src = e.target.result;
                         previewImage.className = 'previewImage';
-                        previewImage.width = '100'; //
+                        previewImage.style = "width:100px;";
                         previewImagesContainer.appendChild(previewImage);
                         imageCount++;
                     };
@@ -143,7 +143,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
 
     };
     $scope.uploadFileUpdate = function (files) {
-        $scope.files = files;
+        $scope.files1 = files;
         if (files.length > 4) {
             $scope.error('Ảnh tối da 4 ảnh');
         } else {
@@ -163,7 +163,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                         var previewImage = document.createElement('img');
                         previewImage.src = e.target.result;
                         previewImage.className = 'previewImage';
-                        previewImage.width = '100'; //
+                        previewImage.style = "width:100px;";
                         previewImagesContainerUpdate.appendChild(previewImage);
                         imageCount++;
                     };
@@ -209,7 +209,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -238,6 +238,14 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             $location.path('/Pageupdateproduct/').search({id: productId});
         }
     };
+    $scope.formMaterial.status=1
+    $scope.formSize.status=1
+    $scope.formDesign.status=1
+    $scope.formColor.status=1
+    $scope.formCategory.status=1
+    $scope.refreshUpdate=function (){
+        $scope.getProductDataUpdate();
+    }
     $scope.getProductDataUpdate = function () {
         var productId = $routeParams.id;
         $http.get('/api/product/search/' + productId)
@@ -246,11 +254,11 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                 $scope.productData.category = product.category.idCategory;
                 $scope.productData.name = product.name;
                 $scope.productData.status = product.status;
-                $scope.productData.material = product.material.id;
-                $scope.productData.size = product.size.id;
-                $scope.productData.design = product.design.id;
+                $scope.productData.material = product.material.idMaterial;
+                $scope.productData.size = product.size.idSize;
+                $scope.productData.design = product.design.idDesign;
                 $scope.productData.price = product.price;
-                $scope.productData.color = product.color.id;
+                $scope.productData.color = product.color.idColor;
                 $scope.productData.quantity = product.quantity;
                 $scope.productData.images = product.images;
             })
@@ -262,8 +270,9 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
     $scope.onUpdate = function () {
         var productId = $routeParams.id;
         var formData = new FormData();
-        angular.forEach($scope.files, function(image) {
-            formData.append('image', image);
+        angular.forEach($scope.files1, function(file) {
+            // formData.append('image', image);
+            formData.append('files', file);
         });
         formData.append('name', $scope.productData.name);
         formData.append('size', $scope.productData.size);
@@ -292,7 +301,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang cập nhật, vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading();
@@ -305,18 +314,39 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                 clearInterval(timerInterval);
             }
         });
+        if ($scope.checkimg==1) {
+            alert("1")
+            $http.put(apiUrlProduct + '/deleteByProduct'+'/'+productId).then(resp => {
+                $http(req)
+                    .then(response => {
+                        console.log("ddd " + response.data);
+                        $scope.message("Cập nhật sản phẩm thành công");
+                        $scope.getProducts();
+                    })
+                    .catch(error => {
+                        $scope.error('Cập nhật thất bại');
+                        // alert(error);
+                        console.log(error)
+                    });
+            }).catch(error => {
 
-        $http(req)
-            .then(response => {
-                console.log("ddd " + response.data);
-                $scope.message("Cập nhật sản phẩm thành công");
-                $scope.getProducts();
-            })
-            .catch(error => {
-                $scope.error('Cập nhật thất bại');
-                // alert(error);
-                console.log(error)
             });
+
+        }
+        if ($scope.checkimg==0) {
+            alert("0")
+            $http(req)
+                .then(response => {
+                    console.log("ddd " + response.data);
+                    $scope.message("Cập nhật sản phẩm thành công");
+                    $scope.getProducts();
+                })
+                .catch(error => {
+                    $scope.error('Cập nhật thất bại');
+                    // alert(error);
+                    console.log(error)
+                });
+        }
     };
     $scope.doSubmit = function () {
         if ($scope.formProduct.idProduct) {
@@ -348,7 +378,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             Swal.fire({
                 title: 'Đang lưu mới!',
                 html: 'Vui lòng chờ <b></b> milliseconds.',
-                timer: 2500,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
@@ -422,7 +452,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
     }
 
 
-    $scope.previewImage = function () {
+/*    $scope.previewImage = function () {
         var input = document.getElementById('image');
         if (input.files && input.files.length > 0) {
             var reader = new FileReader();
@@ -447,7 +477,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             $scope.imagePreview = ""; // Đặt giá trị rỗng nếu không có tệp tin được chọn
             $scope.formProduct.url_image = []; // Đặt danh sách hình ảnh thành rỗng
         }
-    };
+    };*/
     // Thêm sản phẩm mới
 
 
@@ -475,7 +505,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -521,7 +551,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -567,7 +597,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -613,7 +643,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -659,7 +689,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -792,15 +822,16 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         if ($scope.searchPriceMax === "") {
             $scope.searchPriceMax = "Max"
         }
-        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'
+        if ($scope.searchColor === 'undefined' && $scope.searchDesign === 'undefined' && $scope.searchMaterial === 'undefined'&& $scope.searchCategory === 'undefined'
             && $scope.searchSize === 'undefined' && $scope.searchPriceMin === "" && $scope.searchPriceMax === "" && $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
-            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus)
+            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor + '/' + $scope.searchMaterial + '/' + $scope.searchSize + '/' + $scope.searchDesign + '/' + $scope.searchPriceMin + '/' + $scope.searchPriceMax + '/' + $scope.searchStatus+ '/' + $scope.searchCategory)
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
+                    $scope.pagerProducts.first()
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -826,7 +857,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         }
     }
     $scope.GetresetForm = function () {
-        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1")
+        $http.get(apiUrlProduct + '/search' + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "undefined" + '/' + "1"+ '/' + "undefined")
             .then(function (response) {
                 $scope.products = response.data;
                 console.log(response);
@@ -883,6 +914,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         $scope.searchDesign = "undefined";
         $scope.searchMaterial = "undefined";
         $scope.searchSize = "undefined";
+        $scope.searchCategory = "undefined";
         $scope.searchStatus = "1";
         $scope.searchPriceMin = "";
         $scope.searchPriceMax = "";

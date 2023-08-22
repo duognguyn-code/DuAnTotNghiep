@@ -63,9 +63,9 @@
 
           <td class="px-4 py-3 ">
             <button  ng-click="getOrder(order.id)" class="btn btn-success" style="border-radius:8px; width:100px;">
-              <a href="#!purchaseDetail" style="color:white;"><i class="fa fa-info-circle" aria-hidden="true" style="margin-right:3px;"></i>Chi tiết</a>
+              <a  style="color:white;"><i class="fa fa-info-circle" aria-hidden="true" style="margin-right:3px;"></i>Chi tiết</a>
             </button>
-            <button ng-click="huyDon(order.id)" ng-if="order.status<2" class="btn btn-warning" style="border-radius:8px; width:100px;margin-top:10px;">
+            <button ng-click="updateStatusCancel(order)" ng-if="order.status<2" class="btn btn-warning" style="border-radius:8px; width:100px;margin-top:10px;">
               Hủy đơn
             </button>
           </td>

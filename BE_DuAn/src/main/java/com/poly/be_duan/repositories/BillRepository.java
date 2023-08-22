@@ -18,6 +18,8 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query("SELECT p FROM Bill p WHERE p.id = ?1 ")
     public List<Bill> getBill(int id);
 
+
+
     @Query("UPDATE Bill set timeReceive= ?1, moneyShip=?2,statusBuy =?3,status=?4 where (id =?5)")
     public Bill UpdateBill(LocalDateTime date, BigDecimal moneyShip, Integer statusBuy, Integer status, Integer id);
 
@@ -46,12 +48,21 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query(value = "select sum(total_money) as'total money' from Bill \n" +
             "where create_date like  ?1% ",nativeQuery = true)
     public Integer chart(String chart);
+    @Query(value = "select sum(money_refund) as'total money' from bill_detail \n" +
+            "inner join bill on bill_detail.id_bills = bill.id_bills\n" +
+            "where bill.create_date like ?1%",nativeQuery = true)
+    public Integer sumMoneyRefurn(String year);
 
     @Query(value = "select count(id_bills) as'total money'  from Bill \n" +
             " where status like ?1% ",nativeQuery = true)
     public Integer SumStatus(String number);
+    @Query(value = "select count(status) as'total ' from Bill \n" +
+            "where create_date like ?1% and bill.status='5' ",nativeQuery = true)
+    public Integer sumBillStatus5(String date);
 
     @Query(value = "SELECT MAX(id_bills)\n" +
-            "FROM Bill; ",nativeQuery = true)
+            "FROM Bill ",nativeQuery = true)
     public Integer MaxIdBill();
+
+
 }

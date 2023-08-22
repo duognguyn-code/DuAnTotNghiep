@@ -101,17 +101,17 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
     $scope.editSize = function (size) {
         $scope.formSize = angular.copy(size);
     }
+    $scope.formSize.status=1
     $scope.updateSize = function () {
         var item = angular.copy($scope.formSize);
-        $http.put(apiUrlSize + '/' + item.id, item).then(resp => {
-            var index = $scope.sizes.findIndex(p => p.id == item.id);
-            $scope.sizes[index] = item;
-            // alert("");
+        $http.put(apiUrlSize + '/' + item.idSize, item).then(resp => {
+            var index = $scope.sizes.findIndex(p => p.idSize == item.idSize);
+
             $scope.message("Cập nhật thành công");
             $scope.resetSize();
             $scope.getSize();
         // }).catch(error => {
-            alert("");
+        //     alert("");
             $scope.message("Cập nhật thất bại");
             console.log("Error", error);
         });

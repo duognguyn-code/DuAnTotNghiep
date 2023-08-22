@@ -136,10 +136,11 @@ app.controller('design', function ($rootScope,$scope, $http) {
     $scope.editDesign = function (design) {
         $scope.formDesign = angular.copy(design);
     }
+    $scope.formDesign.status=1
     $scope.updateDesign = function () {
         var item = angular.copy($scope.formDesign);
-        $http.put(apiUrlDesign + '/' + item.id, item).then(resp => {
-            var index = $scope.designs.findIndex(p => p.id == item.id);
+        $http.put(apiUrlDesign + '/' + item.idDesign, item).then(resp => {
+            var index = $scope.designs.findIndex(p => p.idDesign == item.idDesign);
             $scope.designs[index] = item;
             // alert("");
             $scope.message("Cập nhật thành công");

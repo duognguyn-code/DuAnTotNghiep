@@ -26,7 +26,7 @@ app.controller('paymentController', function ($rootScope, $scope, $http ,$locati
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -68,6 +68,7 @@ app.controller('paymentController', function ($rootScope, $scope, $http ,$locati
         })
 
     }
+    $scope.getAcountActive();
     // Lấy danh sách sản phẩm
     $scope.getProducts = function () {
         $http.get(apiUrlProduct)

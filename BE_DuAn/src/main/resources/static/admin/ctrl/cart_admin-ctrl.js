@@ -33,7 +33,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -184,17 +184,42 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         }
     };
 
-
+// alert("12")
+    $scope.checkProduct=false
+    $scope.checkImg=0
     $scope.getP = {
         idP: null,
-        getID(id) {
-            this.idP = id
-            console.log(id)
-            $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
-                $scope.detailProduct = response.data;
-            }).catch(error => {
-                console.log(error, "lỗi")
-            })
+        getID(product) {
+            $scope.checkProduct=true
+            $scope.detailProduct = angular.copy(product)
+            $scope.searchDesign = $scope.detailProduct.design.idDesign
+            $scope.searchColor = $scope.detailProduct.color.idColor
+            $scope.searchMaterial = $scope.detailProduct.material.idMaterial
+            $scope.searchSize = $scope.detailProduct.size.idSize
+            // $scope.detailProduct.designs.idDesign = $scope.searchDesign
+            // alert( $scope.detailProduct.design.idDesign)
+            this.idP = $scope.detailProduct.category.idCategory
+            if ($scope.detailProduct.images.length===1){
+                $scope.checkImg=1
+            }
+            if ($scope.detailProduct.images.length===0){
+                $scope.checkImg=0
+            }
+            if ($scope.detailProduct.images.length===2){
+                $scope.checkImg=2
+            }
+            if ($scope.detailProduct.images.length===3){
+                $scope.checkImg=3
+            }
+            if ($scope.detailProduct.images.length===4){
+                $scope.checkImg=4
+            }
+            // console.log(id)
+            // $http.post(`/rest/guest/product/product_detail/` + id).then(function (response) {
+            //     $scope.detailProduct = response.data;
+            // }).catch(error => {
+            //     console.log(error, "lỗi")
+            // })
         }, getD() {
             if ($scope.tabs.length === 0 || $scope.checkTab == false) {
                 // alert("")
@@ -203,10 +228,39 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             }
             $http.get(apiUrlProduct + '/searchBill' + '/' + this.idP + '/' + $scope.searchDesign + '/' + $scope.searchMaterial + '/' + $scope.searchColor + '/' + $scope.searchSize)
                 .then(function (response) {
+                    // alert(JSON.stringify(response.data))
                     $scope.billProduct = response.data;
+                    if ( $scope.billProduct===null){
+                        alert("Sản phẩm không tồn tại")
+                        $scope.checkProduct=false
+                        return
+                    }
                     console.log(response);
                     $scope.cart.addP();
 
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },getProducta(){
+            $http.get(apiUrlProduct + '/searchBill' + '/' + this.idP + '/' + $scope.searchDesign + '/' + $scope.searchMaterial + '/' + $scope.searchColor + '/' + $scope.searchSize)
+                .then(function (response) {
+                    $scope.detailProduct=response.data;
+                    if ($scope.detailProduct==null){
+                        $scope.checkImg=0
+                    }
+                    if ($scope.detailProduct.images.length===1){
+                        $scope.checkImg=1
+                    }
+                    if ($scope.detailProduct.images.length===2){
+                        $scope.checkImg=2
+                    }
+                    if ($scope.detailProduct.images.length===3){
+                        $scope.checkImg=3
+                    }
+                    if ($scope.detailProduct.images.length===4){
+                        $scope.checkImg=4
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -422,6 +476,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         description: "Không có ghi chú",
         statusBuy: "1",
         status: "4",
+        userConfirm :" ",
         get billDetails() {
             return $scope.cart.av.map(item => {
                 return {
@@ -451,8 +506,10 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     // alert(us)
                     bill.account.username = us.username
                     bill.phoneTake = $scope.InforphoneTake
+                    bill.userConfirm = $scope.accountAdmin.username
                     bill.personTake = $scope.InforpersonTake
                     bill.totalMoney = $scope.cart.amount
+                    // alert(  bill.userConfirm)
                     var item = JSON.stringify(angular.copy(bill));
                     // alert(item)
                     $http.post(apiUrlBill, bill).then(resp => {
@@ -464,7 +521,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                         //     $scope.removeTab($scope.tabls);
                         // }
                     }).catch(error => {
-                        alert("Loi~")
+                        // alert("Loi~")
                         $scope.error("Đặt Hàng Thất Bại");
                         console.log(error)
                     })
@@ -487,10 +544,10 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     status: 1,
                     barcode: item.barcode,
                     category: {idCategory: item.category.idCategory},
-                    size: {id: item.size.id},
-                    color: {id: item.color.id},
-                    design: {id: item.design.id},
-                    material: {id: item.material.id},
+                    size: {idSize: item.size.idSize},
+                    color: {idColor: item.color.idColor},
+                    design: {idDesign: item.design.idDesign},
+                    material: {idMaterial: item.material.idMaterial},
                     // previousBillDetail:null
                 }
             })
@@ -502,6 +559,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             $http.put(apiUrlBillDetails + '/updatedt', bill).then(resp => {
                 $scope.InforpersonTake = ""
                 $scope.InforphoneTake = ""
+                $scope.getProducts();
             }).catch(error => {
                 // alert("Loi~")
                 console.log(error)
@@ -514,11 +572,11 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
 
         }
         if ($scope.searchColor1 === 'undefined' && $scope.searchDesign1 === 'undefined' && $scope.searchMaterial1 === 'undefined'
-            && $scope.searchSize1 === 'undefined'&& $scope.searchProducts === 'undefined'
+            && $scope.searchCategory === 'undefined'&& $scope.searchProducts === 'undefined'
         ) {
             $scope.getProducts();
         } else {
-            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor1 + '/' + $scope.searchMaterial1 + '/' + $scope.searchSize1 + '/' + $scope.searchDesign1 + '/' + $scope.searchPriceMin1 + '/' + $scope.searchPriceMax1 + '/' + $scope.searchStatus)
+            $http.get(apiUrlProduct + '/search' + '/' + $scope.searchProducts + '/' + $scope.searchColor1 + '/' + $scope.searchMaterial1 + '/' + "undefined" + '/' + $scope.searchDesign1 + '/' + $scope.searchPriceMin1 + '/' + $scope.searchPriceMax1 + '/' + $scope.searchStatus+ '/' + $scope.searchCategory)
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
@@ -653,7 +711,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         $scope.searchColor1 = "undefined";
         $scope.searchDesign1 = "undefined";
         $scope.searchMaterial1 = "undefined";
-        $scope.searchSize1 = "undefined";
+        $scope.searchCategory = "undefined";
         $scope.searchColor = "undefined";
         $scope.searchDesign = "undefined";
         $scope.searchMaterial = "undefined";
@@ -699,7 +757,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                                 Swal.fire({
                                     title: 'Đang thêm  mới vui lòng chờ!',
                                     html: 'Vui lòng chờ <b></b> milliseconds.',
-                                    timer: 5500,
+                                    timer: 1500,
                                     timerProgressBar: true,
                                     didOpen: () => {
                                         Swal.showLoading()

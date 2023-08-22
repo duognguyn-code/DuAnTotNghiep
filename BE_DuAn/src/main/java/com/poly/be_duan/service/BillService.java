@@ -3,6 +3,7 @@ package com.poly.be_duan.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
+import com.poly.be_duan.entities.Bill_detail;
 
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,7 @@ public interface BillService  {
 //    public List<Bill> searchByPhone(String phone);
 
 //    public Bill updateStatus(Integer sts,Integer id);
-
+public Integer sumBillStatus5(String date);
     public Bill updateStatus(Bill bill);
     public Optional<Bill> findBillByID(Integer id);
 
@@ -40,4 +41,8 @@ public interface BillService  {
     public Integer sumStatus(String number);
 
     public Integer MaxIdBill();
+    public Integer sumMoneyRefurn(String year);
+    public List<Bill_detail> findByMoneyShipOnBillDetail(Integer id);
+    public List<Bill_detail> findByMoneyShipOnBillDetail1(Integer id);
+
 }

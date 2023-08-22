@@ -3,12 +3,14 @@ package com.poly.be_duan.restcontrollers.admin;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.dto.ProductDetailDTO;
 import com.poly.be_duan.dto.ProductResponDTO;
+import com.poly.be_duan.dto.UpdatePasswordDTO;
 import com.poly.be_duan.entities.*;
 import com.poly.be_duan.service.*;
 import com.poly.be_duan.utils.Username;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -51,6 +53,7 @@ public class GuestRestController {
 
     @Autowired
     private SizeService sizeService;
+
 
 
     Account account = null;
@@ -107,11 +110,11 @@ public class GuestRestController {
             if (productNode != null && productNode.get("id") != null) {
                 bill_detail = new Bill_detail();
                 Optional<Product> product = productService.findById(productNode.get("id").asInt());
-                System.out.println(product.isPresent() + " ra true hay flase");
                 if (product.isPresent()) {
                     bill_detail.setProduct(product.get());
                     bill_detail.setBill(bill);
                     bill_detail.setStatus(1);
+                    bill_detail.setDescription("Không có ghi chú");
                     bill_detail.setQuantity(cartItems.get(i).get("quantity").asInt());
                     price = new BigDecimal(productNode.get("price").asDouble());
                     bill_detail.setPrice(price);
@@ -169,4 +172,20 @@ public class GuestRestController {
         return productService.getByPage(page,9,findProcuctAll);
     }
 
+    @PostMapping("/updatePassword")
+    public Boolean updatePassword (@RequestBody UpdatePasswordDTO updatePasswordDTO){
+
+        return accountService.updatePassword(updatePasswordDTO);
+    }
+
+    @GetMapping("/forgetPassword/{email}")
+    public void forgetPassword (@PathVariable("email")String email, Model model){
+        try {
+            if (email != null){
+                sendMailService.SendEmailChangePass("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp",email);
+            }
+        }catch (Exception e){
+            e.getMessage();
+        }
+    }
 }
