@@ -41,7 +41,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -58,7 +58,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -233,7 +233,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
                                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -252,7 +252,7 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
                                 toast: true,
                                 position: 'top-end',
                                 showConfirmButton: false,
-                                timer: 3000,
+                                timer: 1500,
                                 timerProgressBar: true,
                                 didOpen: (toast) => {
                                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -275,14 +275,14 @@ app.controller('address-form-ctrl', function ($rootScope,$http, $scope, $window)
     };
     $scope.setAddressDefault = function (addres) {
         $http.post(`${callApiAcounts}/setaddressdefault`,addres.idAddress,token).then(function () {
-            alert(token)
+            // alert(token)
             $window.location.href = '#!cart';
         }).catch(err=>{
             console.log(err)
         })
     }
     $scope.logOut= function () {
-        alert("dang xuat ben dia chi")
+        // alert("dang xuat ben dia chi")
         $rootScope.account=null;
         localStorage.removeItem('jwtToken');
     }

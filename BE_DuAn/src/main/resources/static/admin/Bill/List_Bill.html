@@ -45,7 +45,7 @@
                             </button>
                             <button ng-click="resetSearch()" style="margin-top: 10px;margin-left: 10px"
                                     class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Reset
+                                Làm Mới
                             </button>
                         </label>
                     </div>
@@ -73,6 +73,7 @@
                             <th class="px-4 py-3" scope="col">Tên Khách Hàng</th>
                             <th class="px-4 py-3" scope="col">Số Điện Thoại</th>
                             <th class="px-4 py-3" scope="col">Ngày Mua</th>
+                            <th class="px-4 py-3" scope="col">Nhân Viên Xác Nhận</th>
                             <th class="px-4 py-3" scope="col">Trạng Thái</th>
                             <th style="text-align: center" class="px-4 py-3" scope="col">Chức Năng</th>
                             <th class="px-4 py-3" scope="col">Chi Tiết Đơn Hàng</th>
@@ -93,6 +94,9 @@
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 {{bill.createDate | date:'yyyy-MM-dd HH:mm:ss'}}
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                {{bill.userConfirm}}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                  <span ng-if="bill.status==1">

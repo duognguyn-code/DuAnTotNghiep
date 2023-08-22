@@ -136,6 +136,7 @@ app.controller('material', function ($rootScope, $scope, $http) {
     $scope.editMaterial = function (material) {
         $scope.formMaterial = angular.copy(material);
     }
+    $scope.formMaterial.status=1
     $scope.updateMaterial = function () {
         var item = angular.copy($scope.formMaterial);
         $http.put(apiUrlMaterial + '/' + item.idMaterial, item).then(resp => {

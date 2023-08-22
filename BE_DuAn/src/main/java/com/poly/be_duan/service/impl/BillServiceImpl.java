@@ -143,4 +143,13 @@ public class BillServiceImpl implements BillService {
     public Integer sumMoneyRefurn(String year) {
         return billRepository.sumMoneyRefurn(year);
     }
+
+    @Override
+    public List<Bill_detail> findByMoneyShipOnBillDetail(Integer id) {
+        return billDetailRepository.findByMoneyShipOnBillDetail(id);
+    }
+    @Override
+    public List<Bill_detail> findByMoneyShipOnBillDetail1(Integer id) {
+        return billDetailRepository.findByMoneyShipOnBillDetail1(id);
+    }
 }

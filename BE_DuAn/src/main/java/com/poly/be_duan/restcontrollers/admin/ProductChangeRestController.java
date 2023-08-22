@@ -57,14 +57,18 @@ public class ProductChangeRestController {
                 bill_detail.setStatus(3);
                 billDetailService.update(bill_detail, bill_detail.getId());
                 for (MultipartFile multipartFile: productChangeDTO.getFiles()) {
-                    Map r = this.cloud.uploader().upload(multipartFile.getBytes(),
-                            ObjectUtils.asMap(
-                                    "cloud_name", "dcll6yp9s",
-                                    "api_key", "916219768485447",
-                                    "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
-                                    "resource_type", "video",
-                                    "folder", "c202a2cae1893315d8bccb24fd1e34b816"
-                            ));
+                    Map<String, String> params = ObjectUtils.asMap(
+                            "cloud_name", "dcll6yp9s",
+                            "api_key", "916219768485447",
+                            "api_secret", "zUlI7pdWryWsQ66Lrc7yCZW0Xxg",
+                            "folder", "c202a2cae1893315d8bccb24fd1e34b816"
+                    );
+
+                    String resourceType = multipartFile.getContentType().startsWith("image/") ? "image" : "video";
+                    params.put("resource_type", resourceType);
+
+                    Map r = this.cloud.uploader().upload(multipartFile.getBytes(), params);
+
                     Image image = new Image();
                     image.setUrlimage(r.get("secure_url").toString());
                     image.setProductChange(p);

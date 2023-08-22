@@ -9,7 +9,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 2000,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -65,6 +65,14 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                     return a = 0;
 
                 }
+                if ($scope.form.phone == acc.account.phone) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Số điện thoại đã tồn tại ',
+                    })
+                    return a = 0;
+
+                }
             })
             if (a == 1) {
                 console.log("Bắt đầu thêm mới")
@@ -105,14 +113,49 @@ app.controller("register-ctrl",function ($scope, $http,$window){
     }
     $scope.addAuthor= function (){
         var auth={
-            role :{  idRole: 1},
+            role :{  idRole: 3},
             account: { username: $scope.form.username}
         }
 
         $http.post(apiUrlAuthor,auth).then(response => {
-            alert("thanh cong")
+            $scope.message("Tạo Tài Khoản Thành Công")
         }).catch(error => {
-            alert("that bai")
+            $scope.error("Tạo Tài Khoản Thất Bại")
         });
+    }
+    $scope.message = function (mes) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        Toast.fire({
+            icon: 'success',
+            title: mes,
+        })
+    }
+    $scope.error = function (err) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: err,
+        })
     }
 } )

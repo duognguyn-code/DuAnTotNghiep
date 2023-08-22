@@ -114,6 +114,7 @@ public class GuestRestController {
                     bill_detail.setProduct(product.get());
                     bill_detail.setBill(bill);
                     bill_detail.setStatus(1);
+                    bill_detail.setDescription("Không có ghi chú");
                     bill_detail.setQuantity(cartItems.get(i).get("quantity").asInt());
                     price = new BigDecimal(productNode.get("price").asDouble());
                     bill_detail.setPrice(price);

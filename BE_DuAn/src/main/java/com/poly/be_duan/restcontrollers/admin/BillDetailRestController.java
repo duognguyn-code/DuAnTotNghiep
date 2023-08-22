@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,20 +59,61 @@ public class BillDetailRestController {
     @GetMapping("/getBillByID")
     public List<Bill> getBillByID() {
         int a = Integer.parseInt(cookieService.getValue("id",""));
-//        System.out.println(a+"id  s");
         return billService.getBill(a);
     }
 
         @PutMapping("{id}")
         public Bill update(@PathVariable("id") Integer id,@RequestBody Bill bill) {
-//        color.setId(id);
-//            System.out.println("abcccc");
             return billService.updateStatus(bill);
         }
         @PutMapping("/updateBillDetail")
         public Bill_detail update(@RequestBody Bill_detail bill_detail) {
-          return billDetailService.update(bill_detail);
+            List<Bill_detail> billDT = billService.findByMoneyShipOnBillDetail(bill_detail.getBill().getId());
+            if (bill_detail.getStatus()==5){
+            if (billDT.get(0).getBill().getTypePayment()==false) {
+                if (billDT.size() == 1) {
+                    System.out.println("1------------------------------------");
+                    BigDecimal quantity = BigDecimal.valueOf(bill_detail.getQuantity());
+                    bill_detail.setMoneyRefund((quantity.multiply(bill_detail.getPrice())).add(billDT.get(0).getBill().getMoneyShip()));
+
+                    return billDetailService.update(bill_detail);
+                } else {
+                    System.out.println("2------------------------------------");
+                    BigDecimal quantity = BigDecimal.valueOf(bill_detail.getQuantity());
+                    bill_detail.setMoneyRefund(quantity.multiply(bill_detail.getPrice()));
+                    return billDetailService.update(bill_detail);
+                }
+            }else{
+                return billDetailService.update(bill_detail);
+            }
+            }else{
+                return billDetailService.update(bill_detail);
+            }
         }
+    @PutMapping("/updateBillDetail1")
+    public Bill_detail update1(@RequestBody Bill_detail bill_detail) {
+        List<Bill_detail> billDT = billService.findByMoneyShipOnBillDetail1(bill_detail.getBill().getId());
+        if (bill_detail.getStatus()==5){
+            if (billDT.get(0).getBill().getTypePayment()==false) {
+                if (billDT.size() == 1) {
+                    System.out.println("1------------------------------------");
+                    BigDecimal quantity = BigDecimal.valueOf(bill_detail.getQuantity());
+                    bill_detail.setMoneyRefund((quantity.multiply(bill_detail.getPrice())).add(billDT.get(0).getBill().getMoneyShip()));
+
+                    return billDetailService.update(bill_detail);
+                } else {
+                    System.out.println("2------------------------------------");
+                    BigDecimal quantity = BigDecimal.valueOf(bill_detail.getQuantity());
+                    bill_detail.setMoneyRefund(quantity.multiply(bill_detail.getPrice()));
+                    return billDetailService.update(bill_detail);
+                }
+            }else{
+                return billDetailService.update(bill_detail);
+            }
+        }else{
+            return billDetailService.update(bill_detail);
+        }
+    }
 
 
     @GetMapping(value="/rest/user/{id}")
@@ -92,6 +134,7 @@ public class BillDetailRestController {
             status=2;
         }
         System.out.println("an");
+//        BigDecimal money = BigDecimal.valueOf(0);
         List<Bill_detail> detail = billDetailService.getBill_detail(id);
         for (int i = 0; i < detail.toArray().length; i++) {
 
@@ -100,6 +143,11 @@ public class BillDetailRestController {
                     Product products = productService.getId(detail.get(i).getProduct().getId());
                     products.setQuantity(products.getQuantity()+detail.get(i).getQuantity());
                     productService.save(products);
+                   if (detail.get(i).getBill().getTypePayment()==false) {
+                       BigDecimal quantity = BigDecimal.valueOf(detail.get(i).getQuantity());
+                       BigDecimal money = quantity.multiply(detail.get(i).getPrice());
+                       detail.get(i).setMoneyRefund(money);
+                   }
                 }
                 detail.get(i).setStatus(status);
                 billDetailService.save(detail.get(i));
