@@ -155,47 +155,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
         }
     }
     $scope.getProduct=function (bill){
-        // $scope.quantityBillDT = bill.quantity
 
-        // $http.get(apiUrlProduct+'/'+bill.product.id)
-        //     .then(function (response) {
-        //         $scope.formProductData = response.data;
-        //         console.log(response);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-        //
-        // $http.get(apiUrlBillDetails+'/forQuantityProduct'+'/'+bill.id)
-        //     .then(function (response) {
-        //         $scope.formBillDetailData = response.data;
-        //         var quantity = angular.copy($scope.formProductData)   // so luong product trong DB
-        //         var quantity1 = angular.copy($scope.formBillDetailData) //so luong cua sp trong productdetail
-        //         var qty = quantity1.quantity - bill.quantity
-        //         var qtyUpdate = null
-        //         if (qty < quantity1.quantity || qty ==0){
-        //              qtyUpdate = quantity.quantity + qty
-        //
-        //         }else{
-        //              qtyUpdate = quantity.quantity - qty
-        //         }
-        //
-        //         var product = angular.copy($scope.formProductData)
-        //         product.quantity = qtyUpdate
-        //         alert('sl db'+quantity.quantity+'          ' +'sl sp prdt: '+ quantity1.quantity+'      ' +"sl input: "+ bill.quantity)
-        //         $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
-        //             alert("Thay doi thanh cong")
-        //             qtyUpdate=null
-        //         }).catch(function (error) {
-        //             console.log(error);
-        //         });
-        //
-        //
-        //
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
     }
 
     $scope.CancelBillDetails= function (bill){
@@ -211,12 +171,21 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                     var item = angular.copy(bill);
                     item.status = 5;
                     var item1 = angular.copy(bill);
+                    alert(bill.bill.typePayment)
+                    if (bill.bill.typePayment==true){
+                        item1.status = 5;
+                        item1.quantity=0;
+                    }
+                    if (bill.bill.typePayment==false){
                     item1.status = 5;
-                    item1.quantity=0;
+                    item1.quantity=bill.quantity;
+                    }
+
                     $http.put(apiUrlBillDetails + '/updateBillDetail',item).then(resp => {
                         var index = $scope.billDetails.findIndex(p => p.id == item.id);
                         $scope.billDetails[index] = item;
                         var index1 = $scope.getBillDetailForMoney.findIndex(p => p.id == item1.id);
+                        // var index1 = $scope.getBillDetailForMoney.findIndex(p => p.id == item1.id&&p.bill.typePayment==true);
                         $scope.getBillDetailForMoney[index1] = item1;
                         // alert("Hủy hàng thành công");
                         $scope.messageSuccess("Hủy hàng thành công");
@@ -236,17 +205,6 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             .catch(function (error) {
                 console.log(error);
             });
-        // var product = angular.copy($scope.formProductData)
-        // // product.quantity = product.quantity + bill.quantity
-        // alert(JSON.stringify(product))
-        // alert(product.quantity +'   ' + bill.quantity)
-        // alert(product.quantity)
-        // $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
-        // }).catch(function (error) {
-        //     console.log(error);
-        // });
-
-
 
     }
     $scope.CancelBill= function (){
@@ -345,7 +303,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -363,7 +321,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)

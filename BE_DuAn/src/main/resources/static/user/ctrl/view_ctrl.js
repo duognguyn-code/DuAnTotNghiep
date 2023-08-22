@@ -32,8 +32,8 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.formChangePassMail = {
         email: ''
     };
-    $scope.logOut= function () {
-        $rootScope.account=null;
+    $scope.logOut = function () {
+        $rootScope.account = null;
         localStorage.removeItem('jwtToken');
     }
     $scope.messageSuccess = function (text) {
@@ -54,8 +54,15 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
 
-
-    $scope.message = function (mes){
+    $scope.validateSelections = function () {
+        return (
+            !$scope.checkDesign ||
+            !$scope.checkSize ||
+            !$scope.checkColor ||
+            !$scope.checkMaterial
+        );
+    };
+    $scope.message = function (mes) {
         const Toast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -79,7 +86,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                 console.log('sessuce ' + respon.data);
                 $window.location.href = '#!login';
             }).catch(error => {
-            console.log('lỗi ' +error);
+            console.log('lỗi ' + error);
         })
     }
 
@@ -107,8 +114,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             item.messageQuantity = "";
             if (item.quantity == 0) {
                 item.messageQuantity = "Số lượng không trống";
-            }
-            else if (item.quantity < 0) {
+            } else if (item.quantity < 0) {
                 item.messageQuantity = "Số lượng lớn hơn không.";
             } else if (item.quantity > dbProductQuantity) {
                 item.messageQuantity = "Số lượng này vượt quá số lượng hiện có.";
@@ -138,7 +144,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
     $scope.getAcount = function () {
-        $http.get(`http://localhost:8080/rest/user/getAccount`, token).then(function (respon) {
+        $http.get(`http://localhost:8080/rest/user/getAccount`).then(function (respon) {
             $scope.accountHome = respon.data;
         }).catch(err => {
 
@@ -148,6 +154,10 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     }
     $scope.getAcount();
     $scope.addCart = function (product, quantity) {
+        if ($scope.validateSelections()) {
+            $scope.messageError("Bạn phải chọn tất cả thuộc tính");
+            return;
+        }
         var totalQuantityInCart = 0;
         var selectedDesign = $scope.checkDesign.name;
         var selectedSize = $scope.checkSize.name;
@@ -161,7 +171,9 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
             size: selectedSize,
             color: selectedColor,
             material: selectedMaterial,
-            quantity: quantity
+            quantity: quantity,
+            description: "Không có ghi chú"
+
         };
 
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];

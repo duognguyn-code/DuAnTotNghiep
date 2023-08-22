@@ -40,7 +40,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -127,7 +127,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
             Swal.fire({
                 title: 'Đang gửi thông báo cho khách hàng!',
                 html: 'Vui lòng chờ <b></b> milliseconds.',
-                timer: 4000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading();

@@ -101,6 +101,7 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
     $scope.editSize = function (size) {
         $scope.formSize = angular.copy(size);
     }
+    $scope.formSize.status=1
     $scope.updateSize = function () {
         var item = angular.copy($scope.formSize);
         $http.put(apiUrlSize + '/' + item.idSize, item).then(resp => {
@@ -110,7 +111,7 @@ app.controller('size-ctrl', function ($rootScope,$scope, $http) {
             $scope.resetSize();
             $scope.getSize();
         // }).catch(error => {
-            alert("");
+        //     alert("");
             $scope.message("Cập nhật thất bại");
             console.log("Error", error);
         });

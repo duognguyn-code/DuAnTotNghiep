@@ -9,7 +9,7 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -21,6 +21,7 @@ app.controller('category-ctrl', function ($rootScope,$scope, $http) {
             title: mes,
         })
     }
+    $scope.formCategory.status=1
     $scope.error = function (err) {
         const Toast = Swal.mixin({
             toast: true,

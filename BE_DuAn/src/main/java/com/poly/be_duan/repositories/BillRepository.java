@@ -18,6 +18,8 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     @Query("SELECT p FROM Bill p WHERE p.id = ?1 ")
     public List<Bill> getBill(int id);
 
+
+
     @Query("UPDATE Bill set timeReceive= ?1, moneyShip=?2,statusBuy =?3,status=?4 where (id =?5)")
     public Bill UpdateBill(LocalDateTime date, BigDecimal moneyShip, Integer statusBuy, Integer status, Integer id);
 
@@ -59,6 +61,8 @@ public interface BillRepository extends JpaRepository<Bill, Integer> {
     public Integer sumBillStatus5(String date);
 
     @Query(value = "SELECT MAX(id_bills)\n" +
-            "FROM Bill; ",nativeQuery = true)
+            "FROM Bill ",nativeQuery = true)
     public Integer MaxIdBill();
+
+
 }

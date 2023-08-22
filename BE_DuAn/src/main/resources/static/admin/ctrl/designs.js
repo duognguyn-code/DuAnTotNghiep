@@ -136,6 +136,7 @@ app.controller('design', function ($rootScope,$scope, $http) {
     $scope.editDesign = function (design) {
         $scope.formDesign = angular.copy(design);
     }
+    $scope.formDesign.status=1
     $scope.updateDesign = function () {
         var item = angular.copy($scope.formDesign);
         $http.put(apiUrlDesign + '/' + item.idDesign, item).then(resp => {
