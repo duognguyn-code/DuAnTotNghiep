@@ -57,10 +57,13 @@
                         <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 5">Đổi máy thanh công</p>
                         <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 6">Hủy yêu cầu</p>
                     </td>
-                    <td class="px-4 py-3 " ng-if="shouldShowChangeButton(orderDetail)" ng-click="getProductChange(orderDetail)">
-                        <a ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2" style="color:black;"
+                    <td class="px-4 py-3 " ng-click="getProductChange(orderDetail)">
+                        <a ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2 " style="color:black;"
                            data-bs-target="#exampleModalPurchaseDetail" data-bs-toggle="modal"><i
                                 class="fa fa-info-circle" aria-hidden="true" style="margin-right:2px;"></i>Đổi hàng</a>
+                        <a ng-if="orderDetail.status !== 7 && orderDetail.status!==5 && orderDetail.status!==3&& orderDetail.status!==4" style="color:black;"
+                           ng-click="CancelBillDetails(billDetail)"><i
+                                class="fa fa-info-circle" aria-hidden="true" style="margin-right:2px;"></i>Hủy SP</a>
                     </td>
                 </tr>
                 </tbody>

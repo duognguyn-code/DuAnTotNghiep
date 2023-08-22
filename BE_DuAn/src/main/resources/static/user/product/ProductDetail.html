@@ -1,4 +1,4 @@
-<main class="row" ng-init="getDetailProduct(0)">
+
 <main class="row" ng-init="getDetailProduct(0)">
     <!-- Page Header Start -->
     <div class="container-fluid bg-secondary mb-5">
@@ -51,9 +51,9 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kiểu dáng:</p>
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
-                             ng-repeat="design in detailProduct.designs">
-                            <input type="radio" class="custom-control-input" id="design-{{design.name}}/"   name="design"
-                                   ng-model="selectedDesign" ng-checked="checkDesign!=0 ? true : false" ng-click="checkProduct(design.idDesign, 0)">
+                             ng-repeat="(index, design) in detailProduct.designs">
+                            <input type="radio" class="custom-control-input" id="design-{{design.name}}/"   name="design" ng-change="validateSelection()"
+                                   ng-model="selectedDesign" ng-value="index" ng-checked="checkDesign!=0 ? true : false" ng-click="checkProduct(design.idDesign, 0)">
                             <label class="custom-control-label" for="design-{{design.name}}/">{{design.name}}</label>
                         </div>
                     </form>
@@ -62,10 +62,10 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Kích cỡ:</p>
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
-                             ng-repeat="s in detailProduct.sizes">
-                            <input type="radio" class="custom-control-input" id="design-{{s.name}}+" name="size"
-                                   ng-model="selectedSize" ng-checked="checkSize!=0 ? true : false" ng-click="checkProduct(s.idSize, 1)">
-                            <label class="custom-control-label" for="design-{{s.name}}+">{{s.name}}</label>
+                             ng-repeat="(index, s) in detailProduct.sizes">
+                            <input type="radio"  name="size" class="custom-control-input" ng-change="validateSelection()"
+                                   ng-model="selectedSize" id="s-{{s.name}}=" ng-value="index" ng-checked="checkSize!=0 ? true : false" ng-click="checkProduct(s.idSize, 1)">
+                            <label  class="custom-control-label" for="s-{{s.name}}=">{{s.name}}</label>
                         </div>
                     </form>
                 </div>
@@ -73,10 +73,11 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Màu sắc:</p>
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
-                             ng-repeat="cor in detailProduct.colors">
-                            <input type="radio" ng-model="selectedColor" class="custom-control-input" id="{{cor.name}}-" name="color"
+                             ng-repeat="(index, cor) in detailProduct.colors">
+                            <input type="radio" ng-model="selectedColor" class="custom-control-input" ng-change="validateSelection()" id="cor-{{cor.name}}." name="color" ng-value="index"
                                    ng-checked="checkColor!=0 ? true : false" ng-click="checkProduct(cor.idColor, 2)">
-                            <label  class="custom-control-label" for="{{cor.name}}-">{{cor.name}}</label>
+
+                            <label  class="custom-control-label" for="cor-{{cor.name}}.">{{cor.name}}</label>
                         </div>
                     </form>
                 </div>
@@ -84,20 +85,20 @@
                     <p class="text-dark font-weight-medium mb-0 mr-3">Chất liệu:</p>
                     <form>
                         <div class="custom-control custom-radio custom-control-inline"
-                             ng-repeat="mat in detailProduct.materials">
-                            <input type="radio" class="custom-control-input"  id=".{{mat.name}}" name="material"
-                                   ng-model="selectedMaterial" ng-checked="checkMaterial!=0 ? true : false" ng-click="checkProduct(mat.idMaterial, 3)">
-                            <label  class="custom-control-label" for=".{{mat.name}}">{{mat.name}}</label>
+                             ng-repeat="(index, mat) in detailProduct.materials">
+                            <input type="radio" class="custom-control-input" ng-change="validateSelection()"  name="material" ng-value="index"
+                                   ng-model="selectedMaterial"  id="mat-{{mat.name}}1"ng-checked="checkMaterial!=0 ? true : false" ng-click="checkProduct(mat.idMaterial, 3)">
+                            <label  class="custom-control-label" for="mat-{{mat.name}}1" >{{mat.name}}</label>
                         </div>
                     </form>
                 </div>
-                <div class="d-flex align-items-center mb-4 pt-2">
-                    <button class="btn btn-primary px-3" ng-click="addCart(PrD,1)"><i
+                <div class="d-flex align-items-center mb-4 pt-2" >
+                    <button class="btn btn-primary px-3" ng-click="addCart(PrD,1)" ng-if="PrD.quantity !== 0 || PrD.quantity !== null" ng-disabled="PrD.id == undefined ? true : false"><i
                             class="fa fa-shopping-cart mr-1"></i> Add To Cart
                     </button>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <p ng-if="{{PrD.quantity}} == 0 "
+                    <p ng-if="PrD.quantity == 0 || PrD.quantity == null"
                        style="height: 70px; width: 100%; color: red; text-align: center ">Sản phẩm đã hết hàng
                     </p>
                 </div>

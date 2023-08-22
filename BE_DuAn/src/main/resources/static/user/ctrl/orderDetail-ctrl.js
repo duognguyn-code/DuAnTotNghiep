@@ -65,6 +65,76 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
             console.log(error);
         })
     }
+    $scope.CancelBill= function (){
+        var item = angular.copy($scope.formBill)
+        $http.put(apiUrlBill + '/updateStatus'+'/'+$routeParams.idBill,item,token).then(function (response) {
+            if (response.data) {
+            } else {
+            }
+        }).catch(error => {
+        });
+    }
+    $scope.updateToTalMoney=function (){
+        var totalMn = $scope.formBill.moneyShip + $scope.checktotal.checkbill
+        $http.put(apiUrlBill + '/updateTotalMoney' +'/'+totalMn +'/'+$routeParams.idBill).then(resp => {
+
+            $scope.formBill.totalMoney =totalMn;
+        }).catch(error => {
+            console.log("Error", error);
+        });
+
+    }
+    $scope.CancelBillDetails= function (bill){
+        $http.get('http://localhost:8080/api/product/'+bill.product.id)
+            .then(function (response) {
+                $scope.formProductData = response.data;
+                console.log(response);
+
+                var product = angular.copy($scope.formProductData)
+                product.quantity = product.quantity + bill.quantity
+                $http.put('http://localhost:8080/api/product/updatePr',product,token).then(function (response){
+
+                    var item = angular.copy(bill);
+                    item.status = 5;
+                    var item1 = angular.copy(bill);
+                    item1.status = 5;
+                    item1.quantity=0;
+                    $http.put('http://localhost:8080/api/billDetail/updateBillDetail',item).then(resp => {
+                        var index = $scope.billDetails.findIndex(p => p.id == item.id);
+                        $scope.billDetails[index] = item;
+                        var index1 = $scope.getBillDetailForMoney.findIndex(p => p.id == item1.id);
+                        $scope.getBillDetailForMoney[index1] = item1;
+                        // alert("Hủy hàng thành công");
+                        $scope.messageSuccess("Hủy hàng thành công");
+                        $scope.updateToTalMoney();
+                        $scope.CancelBill();
+                    }).catch(error => {
+                        // alert("Hủy hàng thất bại");
+                        $scope.messageError("Hủy hàng thất bại");
+                        console.log("Error", error);
+                    });
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        // var product = angular.copy($scope.formProductData)
+        // // product.quantity = product.quantity + bill.quantity
+        // alert(JSON.stringify(product))
+        // alert(product.quantity +'   ' + bill.quantity)
+        // alert(product.quantity)
+        // $http.put(apiUrlProduct+'/updatePr',product).then(function (response){
+        // }).catch(function (error) {
+        //     console.log(error);
+        // });
+
+
+
+    }
     $scope.getAcountActive();
     // $scope.saveProductChange = function (){
     //     Swal.fire({
@@ -272,42 +342,46 @@ app.controller('order-detail-ctrl',function($window,$rootScope,$scope,$http){
     }
     $scope.uploadFile = function (files) {
         $scope.files = files;
-        console.log($scope.files);
-        var previewImagesContainer = document.getElementById('previewImagesContainer');
-        var previewVideo = document.getElementById('previewVideo');
-        previewImagesContainer.innerHTML = ''; // Xóa bỏ các ảnh hiện có
-        previewVideo.style.display = 'none';
+        if (files.length > 3) {
+            $scope.error('Ảnh tối da 2 ảnh');
+        }else {
+            console.log($scope.files);
+            var previewImagesContainer = document.getElementById('previewImagesContainer');
+            var previewVideo = document.getElementById('previewVideo');
+            previewImagesContainer.innerHTML = '';
+            previewVideo.style.display = 'none';
 
-        var imageCount = 0;
+            var imageCount = 0;
 
-        // Biến đếm số lượng ảnh đã hiển thị
+            for (var i = 0; i < files.length; i++) {
+                if (imageCount > 3 ) {
 
-        for (var i = 0; i < files.length; i++) {
-            if (imageCount >= 3) {
-                break; // Đã đạt số lượng ảnh tối đa, thoát khỏi vòng lặp
+                    break;
+                }
+
+                var file = files[i];
+                var reader = new FileReader();
+
+                reader.onload = (function (file) {
+                    return function (e) {
+                        if (file.type.startsWith('video/')) {
+                            previewVideo.src = e.target.result;
+                            previewVideo.style.display = 'block';
+                        } else {
+                            var previewImage = document.createElement('img');
+                            previewImage.src = e.target.result;
+                            previewImage.className = 'previewImage';
+                            previewImage.width = '100'; // Chỉnh kích thước ảnh
+                            previewImagesContainer.appendChild(previewImage);
+                        }
+                        imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
+                    };
+                })(file);
+
+                reader.readAsDataURL(file);
             }
-
-            var file = files[i];
-            var reader = new FileReader();
-
-            reader.onload = (function (file) {
-                return function (e) {
-                    if (file.type.startsWith('video/')) {
-                        previewVideo.src = e.target.result;
-                        previewVideo.style.display = 'block';
-                    } else {
-                        var previewImage = document.createElement('img');
-                        previewImage.src = e.target.result;
-                        previewImage.className = 'previewImage';
-                        previewImage.width = '100'; // Chỉnh kích thước ảnh
-                        previewImagesContainer.appendChild(previewImage);
-                    }
-                    imageCount++; // Tăng biến đếm số lượng ảnh đã hiển thị
-                };
-            })(file);
-
-            reader.readAsDataURL(file);
         }
+
     };
     $scope.getAllByUser=function(){
         $http.get(urlOrder).then(function(response){

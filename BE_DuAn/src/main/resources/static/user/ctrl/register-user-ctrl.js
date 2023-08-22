@@ -65,6 +65,14 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                     return a = 0;
 
                 }
+                if ($scope.form.phone == acc.account.phone) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Phone đã tồn tại ',
+                    })
+                    return a = 0;
+
+                }
             })
             if (a == 1) {
                 console.log("Bắt đầu thêm mới")
@@ -80,9 +88,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                     ]
                 }
                 $http(req).then(response => {
-                    alert("1")
                     $scope.addAuthor();
-                    alert("2")
                     Toast.fire({
                         icon: 'success',
                         title: 'Đăng ký thành công!',
@@ -105,7 +111,7 @@ app.controller("register-ctrl",function ($scope, $http,$window){
     }
     $scope.addAuthor= function (){
         var auth={
-            role :{  idRole: 1},
+            role :{  idRole: 3},
             account: { username: $scope.form.username}
         }
 

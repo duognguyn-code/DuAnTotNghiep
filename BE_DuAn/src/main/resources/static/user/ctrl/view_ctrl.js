@@ -32,6 +32,14 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
     $scope.formChangePassMail = {
         email: ''
     };
+    $scope.validateSelections = function() {
+        return (
+            !$scope.checkDesign ||
+            !$scope.checkSize ||
+            !$scope.checkColor ||
+            !$scope.checkMaterial
+        );
+    };
     $scope.logOut= function () {
         $rootScope.account=null;
         localStorage.removeItem('jwtToken');
@@ -138,7 +146,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
     $scope.getAcount = function () {
-        $http.get(`http://localhost:8080/rest/user/getAccount`, token).then(function (respon) {
+        $http.get(`http://localhost:8080/rest/user/getAccount`).then(function (respon) {
             $scope.accountHome = respon.data;
         }).catch(err => {
 
@@ -147,7 +155,12 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
         })
     }
     $scope.getAcount();
+
     $scope.addCart = function (product, quantity) {
+        if ($scope.validateSelections()) {
+            $scope.messageError("Bạn phải chọn tất cả thuộc tính");
+            return;
+        }
         var totalQuantityInCart = 0;
         var selectedDesign = $scope.checkDesign.name;
         var selectedSize = $scope.checkSize.name;

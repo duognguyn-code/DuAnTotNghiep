@@ -52,7 +52,7 @@
                       data-bs-target="#exampleModalPassword"
                       data-bs-toggle="modal">Quên mật khẩu?</span>
             </div>
-            <button class="button-submit1" ng-click="onLogin()"
+            <button class="button-submit1" ng-click="onLogin()" ng-disabled="myForm1.$invalid"
                     style="align-self: flex-end;">Đăng nhập
             </button>
             <p class="p">Bạn không có tài khoản?<a href="#!register"> <span class="span"

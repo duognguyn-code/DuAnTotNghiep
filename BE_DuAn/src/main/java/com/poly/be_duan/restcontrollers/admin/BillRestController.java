@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Account;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
+import com.poly.be_duan.entities.Product;
 import com.poly.be_duan.service.*;
 import com.poly.be_duan.utils.Username;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,14 +178,19 @@ public class BillRestController {
     public Bill billChange(@RequestBody Bill bill) {
         Bill billOld = billService.findById(bill.getId()).get();
         List<Bill_detail> billDetails = billDetailService.findAllByOrder(billOld);
-        if (billOld.getStatus() < 2) {
-            billOld.setStatus(5);
-            billOld.setDescription(bill.getDescription());
-            billService.update(billOld, billOld.getId());
-            sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
-            System.out.println("gửi mail yahfnh công");
-            return billOld;
+        for (int i = 0; i < billDetails.toArray().length; i++) {
+                Product products = productService.getId(billDetails.get(i).getProduct().getId());
+                products.setQuantity(products.getQuantity() + billDetails.get(i).getQuantity());
+                productService.save(products);
+            if (billOld.getStatus() < 2) {
+                billOld.setStatus(5);
+                billOld.setDescription(bill.getDescription());
+                billService.update(billOld, billOld.getId());
+                sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+                System.out.println("gửi mail yahfnh công");
+            }
         }
+
         return null;
     }
 
