@@ -101,12 +101,20 @@ public class BillRestController {
             if (bill.getStatus() < billOld.getStatus()) {
                 return null;
             } else {
+                if (billOld.getTypePayment()==true){
                 billOld.setStatus(5);
                 billOld.setTotalMoney(BigDecimal.valueOf(0));
                 sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
                 System.out.println("gửi mail yahfnh công");
-                return billService.updateStatus(billOld);
-
+                 billService.updateStatus(billOld);
+                }
+                if (billOld.getTypePayment()==false){
+                    billOld.setStatus(5);
+//                    billOld.setTotalMoney(BigDecimal.valueOf(0));
+                    sendMailService.sendEmailBill("nguyentungduonglk1@gmail.com", "iscdvtuyqsfpwmbp", billOld.getAccount().getEmail(), billOld.getPersonTake(), billOld);
+                    System.out.println("gửi mail yahfnh công");
+                     billService.updateStatus(billOld);
+                }
             }
         } else {
             Bill billOld = billService.findBillByID(bill.getId()).get();
@@ -115,7 +123,9 @@ public class BillRestController {
                 return null;
             } else {
                 if (bill.getStatus()==5){
+                    if (billOld.getTypePayment()==true){
                     billOld.setTotalMoney(BigDecimal.valueOf(0));
+                    }
                 }
                 if (bill.getStatus()==7){
                     billOld.setTotalMoney(BigDecimal.valueOf(0));
@@ -137,7 +147,7 @@ public class BillRestController {
                 return billService.updateStatus(billOld);
 
             }
-        }
+        }return null;
     }
 
     @PostMapping()
@@ -155,7 +165,20 @@ public class BillRestController {
     public Bill updateTotalMoney(@PathVariable(value = "money") Integer money, @PathVariable(value = "id") Integer id) {
         BigDecimal mn = new BigDecimal(money);
         Bill bill = billService.findBillByID(id).get();
+        if (bill.getTypePayment()==true){
         bill.setTotalMoney(mn);
+
+        }
+        if (bill.getTypePayment()==false){
+            BigDecimal mon = BigDecimal.valueOf(0);
+            List<Bill_detail> billDetails = billDetailService.getBill_detail(id);
+            for (int i = 0; i <billDetails.toArray().length ; i++) {
+                BigDecimal quantity = BigDecimal.valueOf(billDetails.get(i).getQuantity());
+                mon = mon.add(quantity.multiply(billDetails.get(i).getPrice()));
+            }
+            bill.setTotalMoney(mon);
+
+        }
         return billService.updateStatus(bill);
     }
 

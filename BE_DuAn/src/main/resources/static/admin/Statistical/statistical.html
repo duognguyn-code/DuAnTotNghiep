@@ -408,36 +408,45 @@
 <!--  <script src="../asset/soft-ui-dashboard.min.js?v=1.0.7"></script>-->
 
 
-    <span style="margin-top: 100px;margin-left: 20px;margin-right: 10px"  class="text-gray-700 dark:text-gray-400">Năm:</span>
-    <select ng-change="getYear()"  ng-model="searchYear">
+    <span style=";margin-right: 10px;font-size:18px;font-weight:bold; margin-top:15px"  class="text-gray-700 dark:text-gray-400">Năm:</span>
+    <select ng-change="getYear()"  ng-model="searchYear" style="font-size:18px; width:100px; border: 1px solid black;margin-top:15px">
         <option value="2023" >2023</option>
         <option value="2022" >2022</option>
         <option value="2021" >2021</option>
     </select>
-    <div class="grid gap-6 mb-8 md md:grid-cols-2">
+    <div class="row" style="margin-top:15px">
 <!--        <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">-->
-    <label class="block text-sm">
-        <span class="text-gray-700 dark:text-gray-400">Tổng Tiền Đơn Thành Công</span>
-        <input
-                value="{{inputTotalMoney| number}} VNĐ"
-                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-        />
-    </label>
-        <label class="block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Tổng Tài Khoản Mới</span>
-            <input
-                    value="{{inputTotalAccount}}"
-                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            />
-        </label>
-        <label class="block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Tổng Đơn Hủy</span>
-            <input
-                   value="{{inputTotalBillCancel}}"
-                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-            />
-        </label>
-<!--        </div>-->
+        <div class="col-md-4">
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Tổng Tiền Đơn Thành Công</span>
+                <input
+                        value="{{inputTotalMoney| number}} VNĐ"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        disabled
+                />
+            </label>
+        </div>
+        <div class="col-md-4">
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Tổng Tài Khoản Mới</span>
+                <input
+                        value="{{inputTotalAccount}}"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        disabled
+                />
+            </label>
+        </div>
+        <div class="col-md-4">
+            <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Tổng Đơn Hủy</span>
+                <input
+                        value="{{inputTotalBillCancel}}"
+                        class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                        disabled
+                />
+            </label>
+        </div>
+    <!--        </div>-->
     </div>
   <div style="margin-top: 50px" class="container">
       <div class="title">Thống Kê</div>

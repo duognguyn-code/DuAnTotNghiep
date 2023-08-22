@@ -92,12 +92,12 @@
                     </form>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <button class="btn btn-primary px-3" ng-click="addCart(PrD,1)"><i
+                    <button class="btn btn-primary px-3" ng-click="addCart(PrD,1)" ng-if="PrD.quantity !== 0 || PrD.quantity !== null" ng-disabled="PrD.id == undefined ? true : false"><i
                             class="fa fa-shopping-cart mr-1"></i> Add To Cart
                     </button>
                 </div>
                 <div class="d-flex align-items-center mb-4 pt-2">
-                    <p ng-if="{{PrD.quantity}} == 0 "
+                    <p ng-if="PrD.quantity == 0 || PrD.quantity == null "
                        style="height: 70px; width: 100%; color: red; text-align: center ">Sản phẩm đã hết hàng
                     </p>
                 </div>

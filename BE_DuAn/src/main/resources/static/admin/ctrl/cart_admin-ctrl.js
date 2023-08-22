@@ -33,7 +33,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -757,7 +757,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                                 Swal.fire({
                                     title: 'Đang thêm  mới vui lòng chờ!',
                                     html: 'Vui lòng chờ <b></b> milliseconds.',
-                                    timer: 5500,
+                                    timer: 1500,
                                     timerProgressBar: true,
                                     didOpen: () => {
                                         Swal.showLoading()

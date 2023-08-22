@@ -25,7 +25,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -209,7 +209,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -238,6 +238,14 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             $location.path('/Pageupdateproduct/').search({id: productId});
         }
     };
+    $scope.formMaterial.status=1
+    $scope.formSize.status=1
+    $scope.formDesign.status=1
+    $scope.formColor.status=1
+    $scope.formCategory.status=1
+    $scope.refreshUpdate=function (){
+        $scope.getProductDataUpdate();
+    }
     $scope.getProductDataUpdate = function () {
         var productId = $routeParams.id;
         $http.get('/api/product/search/' + productId)
@@ -293,7 +301,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang cập nhật, vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading();
@@ -370,7 +378,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             Swal.fire({
                 title: 'Đang lưu mới!',
                 html: 'Vui lòng chờ <b></b> milliseconds.',
-                timer: 2500,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: () => {
                     Swal.showLoading()
@@ -497,7 +505,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -543,7 +551,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -589,7 +597,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -635,7 +643,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -681,7 +689,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
         Swal.fire({
             title: 'Đang thêm  mới vui lòng chờ!',
             html: 'Vui lòng chờ <b></b> milliseconds.',
-            timer: 5500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading()
@@ -823,6 +831,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
                 .then(function (response) {
                     $scope.products = response.data;
                     console.log(response);
+                    $scope.pagerProducts.first()
                 })
                 .catch(function (error) {
                     console.log(error);

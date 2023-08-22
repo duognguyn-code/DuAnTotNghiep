@@ -17,7 +17,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 1500,
             timerProgressBar: true,
             didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -50,7 +50,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
     }
 
     $scope.form = function () {
-        alert("Chạy method form")
+        // alert("Chạy method form")
         var account = angular.copy($scope.form);
 
         if (account.fullName.trim() == null) {
@@ -92,7 +92,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
                 icon: 'error',
                 text: 'Vui lòng thêm địa chỉ!!!',
             })
-            alert("bên profile");
+            // alert("bên profile");
             console.log(err)
             $window.location.href='#!address';
         })
@@ -104,7 +104,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -124,7 +124,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
-                timer: 3000,
+                timer: 1500,
                 timerProgressBar: true,
                 didOpen: (toast) => {
                     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -184,7 +184,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
     }
 
     $scope.logOut= function () {
-        alert("Bên profile")
+        // alert("Bên profile")
         localStorage.removeItem('jwtToken');
         $rootScope.account=null;
     }

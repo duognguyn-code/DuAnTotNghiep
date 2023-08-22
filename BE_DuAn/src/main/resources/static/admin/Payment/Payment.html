@@ -173,8 +173,8 @@
                                             {{detailProduct.name}}</h5>
                                         <p ng-if="checkProduct==true" class="card-text"
                                            style="font-size:18px;font-weight:500;margin-top:10px;">
-                                            <i style="margin-right: 90px"> Số Lượng: {{detailProduct.quantity}}</i>
-                                            <i >Giá:  {{detailProduct.price | number}} VNĐ</i>
+                                        <h5 style="font-size:20px;font-weight:500;margin-bottom:10px">Giá:  {{detailProduct.price | number}} VNĐ</h5>
+                                        <h5 style="font-size:20px;font-weight:500;"> Số Lượng: {{detailProduct.quantity}}</h5>
                                         </p>
                                         <p ng-if="checkProduct==false" class="card-title"  style="font-size:20px;font-weight:500;">
                                             Sản Phẩm Không Tồn Tại</p>
@@ -276,7 +276,7 @@
                             <img style="width:150px;height:100px;"  src="{{item.images.length>0?item.images[0].urlimage:''}}" class="img-fluid rounded-start" alt="...">
 
                         </div>
-                        <div class="col-md-6">
+                            <div class="col-md-5" style="margin-left:10px; margin-right:10px">
                             <h5 class="card-title" style="font-size:18px;font-weight:500;">{{item.name}}</h5>
                             <p class="card-text" style="font-size:18px;font-weight:500;margin-top:10px;">
                                 {{item.price |number}} vnđ</p>
@@ -305,7 +305,7 @@
                             <button ng-click="cart.remove(item.id)"
                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                     aria-label="Delete"
-                                    style="float:right; margin-top:20px;"
+                                    style="float:right; margin-top:60px;"
                             >
                                 <svg
                                         class="w-5 h-5"
