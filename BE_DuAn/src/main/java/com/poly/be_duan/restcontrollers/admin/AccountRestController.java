@@ -71,6 +71,11 @@ public class AccountRestController {
         System.out.println(accountService.findByPhone(phone));
         return accountService.findByPhone(phone);
     }
+    @GetMapping("/findByEmail/{email}")
+    public Account findByEmail(@PathVariable(value = "email")String email){
+//        System.out.println(accountService.findByEmail1(email));
+        return accountService.findByEmail1(email);
+    }
 
 }
 

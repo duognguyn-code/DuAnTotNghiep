@@ -49,7 +49,7 @@ public interface AccountService {
 
     Role getRoleByUserName(String userName);
 
-
+    public Account findByEmail1(String email);
 
     List<AccountDTO> getAllAccountResponseDTO();
 

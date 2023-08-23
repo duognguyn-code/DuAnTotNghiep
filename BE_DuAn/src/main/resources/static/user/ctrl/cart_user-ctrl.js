@@ -230,7 +230,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                         Swal.fire('Giỏ hàng trống!', 'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.', 'warning');
                         return;
                     }
-
                     if ($scope.checkBuy) {
                         var vnp_OrderInfo = 'thanh toan hoa don';
                         var orderType = 'other';
@@ -285,7 +284,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                         $scope.bills.statusBuy = 0;
                         $scope.bills.moneyShip = $scope.ship;
                         $scope.bills.typePayment = true;
-
                         let timerInterval;
                         Swal.fire({
                             title: 'Đang thanh toán vui lòng chờ!',
@@ -304,26 +302,41 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                             }
                         });
 
-                        try {
-                            const addOrderResponse = await $http.post(urlOrder + '/add', $scope.bills);
-                            if (addOrderResponse.data) {
-                                const addOrderDetailResponse = await $http.post(urlOrderDetail + '/add', $scope.cartItems);
-                                $scope.clearCart();
-                                $window.location.href = '/user/cart/buy-cod-success.html';
+                        $http.post(urlOrder + '/add', $scope.bills).then(res => {
+                            if (res.data) {
+                                $http.post(urlOrderDetail + '/add', $scope.cartItems).then(res => {
+                                    $scope.clearCart();
+                                    $window.location.href = '/user/cart/buycode-success.html';
+
+                                }).catch(err => {
+                                    swal.fire({
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        title: err.data.message,
+                                        timer: 5000
+                                    });
+                                })
                             }
-                        } catch (err) {
-                            Swal.fire('Thanh toán thất bại!', '', 'error');
-                            if (err.status == 401) {
+
+                        }).catch(err => {
+                            Swal.fire(
+                                'Thanh toán thất bại!',
+                                '',
+                                'error'
+                            )
+                            if (error.status == 401) {
                                 $scope.isLoading = false;
                                 setTimeout(() => {
                                     document.location = '/admin#!/login';
                                 }, 2000);
                                 sweetError('Mời bạn đăng nhập !');
+                                return;
                             }
-                            console.log("err order", err);
-                            alert(err + "lỗi");
-                        }
+                            console.log("err order", err)
+                            alert(err + "lỗi")
+                        })
                     }
+
                 }
             });
         }
