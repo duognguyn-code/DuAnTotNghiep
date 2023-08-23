@@ -11,25 +11,25 @@
                     <div  class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
                         <label  class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.NamePositionGuest']}}</span>
-                            <input ng-model="formBill.personTake"
+                            <input ng-model="formBill.personTake" disabled
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Phone']}}</span>
-                            <input   ng-model="formBill.phoneTake"
+                            <input   ng-model="formBill.phoneTake"disabled
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Address']}}</span>
-                            <input disabled ng-model="formBill.address"
+                            <input disabled ng-model="formBill.address"disabled
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.DateBuy']}}</span>
-                            <input disabled ng-model="formBill.createDate |date: ' HH:mm dd-MM-yyyy '"
+                            <input disabled ng-model="formBill.createDate |date: ' HH:mm dd-MM-yyyy '"disabled
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
@@ -39,13 +39,13 @@
                         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Receivingtime']}}</span>
-                            <input disabled ng-model="formBill.timeReceive |date: ' HH:mm dd-MM-yyyy '"
+                            <input disabled ng-model="formBill.timeReceive |date: ' HH:mm dd-MM-yyyy '"disabled
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
                         <label class="block text-sm">
                             <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.MoneySHip']}}</span>
-                            <input disabled ng-model="formBill.moneyShip" type="text"
+                            <input disabled ng-model="formBill.moneyShip | number" type="text"disabled
                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                             />
                         </label>
@@ -53,13 +53,13 @@
                         <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
                             <label class="block text-sm">
                                 <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.TotalMoney']}}</span>
-                                <input disabled ng-model="formBill.totalMoney" type="text"
+                                <input disabled ng-model="formBill.totalMoney | number" type="text"disabled
                                         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 />
                             </label>
                             <label class="block text-sm">
                                 <span  class="text-gray-700 dark:text-gray-400">{{languageNav['Admin.nav.Note']}}</span>
-                                <textarea ng-model="formBill.description"
+                                <textarea ng-model="formBill.description"disabled
                                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                 >
                             </textarea>
@@ -101,7 +101,7 @@
                                 {{billDetail.product.name}}
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                {{billDetail.price}}
+                                {{billDetail.price | number}}
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 <input  type="number" style="width: 100px" ng-change="checkQuantityPr(billDetail)"
@@ -132,7 +132,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3">
-                                <button ng-if="billDetail.status!==7 &&billDetail.status!==5 &&formBill.status!==1&&formBill.status!==3&&formBill.status!==4 && formBill.bill.typePayment==true"
+                                <button ng-if="billDetail.status!==7 &&billDetail.status!==5 &&formBill.status!==1&&formBill.status!==3&&formBill.status!==4 && billDetail.bill.typePayment==true"
                                         class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
                                         aria-label="Edit"ng-click="updateQuantity(billDetail)"
                                 >{{languageNav['Admin.nav.Change']}}

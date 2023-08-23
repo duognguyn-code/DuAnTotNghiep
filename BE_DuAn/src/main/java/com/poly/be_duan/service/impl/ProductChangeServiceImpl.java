@@ -96,4 +96,9 @@ public class ProductChangeServiceImpl implements ProductChangeService {
     public Integer sumStatus(String number) {
         return productChangeRepository.SumStatus(number);
     }
+
+    @Override
+    public ProductChange getByIDbILLdt(Integer id) {
+        return productChangeRepository.getByIDbILLdt(id);
+    }
 }

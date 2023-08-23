@@ -4,19 +4,34 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Random;
 
 public class VNPayConfig {
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_Returnurl = "http://localhost:8080/user/cart/buy-cod-success.html";
+    public static String vnp_Returnurl = "http://localhost:8080/user/cart/buy-cod-success.html?";
 //    public static String vnp_ReturnurlCustomer = "http://localhost/frontend_Customer/index.html";
 
     public static String vnp_TmnCode = "JEOCTN5X";
-    public static String vnp_Version = "2.1.0";
+
     public static String vnp_Command = "pay";
     public static String vnp_HashSecret = "XSCIISHEZTOTPKQXZYTMHPRTWYWWPASL";
     public static String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
 
+    public static String getUrl(
+            String amoutParam,
+            String personTake,
+            String phoneTake,
+            String address,
+            Boolean typePayment,
+            String moneyShip
+
+    ) {
+        vnp_Returnurl = vnp_Returnurl
+                + "amoutParam=" + amoutParam + "&personTake=" + personTake + "&phoneTake="
+                + phoneTake + "&address=" + address + "&typePayment="
+                + typePayment + "&moneyShip=" + moneyShip ;
+        return vnp_Returnurl;
+    }
     public static String hmacSHA512(final String key, final String data) {
         try {
 

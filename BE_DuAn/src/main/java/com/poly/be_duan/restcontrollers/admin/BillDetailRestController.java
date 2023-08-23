@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.poly.be_duan.entities.Bill;
 import com.poly.be_duan.entities.Bill_detail;
 import com.poly.be_duan.entities.Product;
-import com.poly.be_duan.service.BillDetailService;
-import com.poly.be_duan.service.BillService;
-import com.poly.be_duan.service.CookieService;
-import com.poly.be_duan.service.ProductService;
+import com.poly.be_duan.entities.ProductChange;
+import com.poly.be_duan.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -161,7 +159,11 @@ public class BillDetailRestController {
         return billDetailService.savealldt(products);
 //        return billDetailService.savealldt(bill_detail);
     }
-
-
+@Autowired
+    ProductChangeService productChangeService;
+    @GetMapping("/productchange/{id}")
+    public ProductChange getPrdChange(@PathVariable(value = "id") Integer id) {
+        return productChangeService.getByIDbILLdt(id);
+    }
 
 }
