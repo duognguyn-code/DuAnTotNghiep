@@ -16,7 +16,10 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                         .then(function (response) {
                             $scope.checkUsername = response.data;
                             if ($scope.checkUsername.length === 0) {
-
+                                $http.get(apiUrlAccount + '/findByEmail' + '/' + $scope.formAccount.email)
+                                    .then(function (response) {
+                                        $scope.checkUsername = response.data;
+                                        if ($scope.checkUsername.length === 0) {
                                 var colorData = angular.copy($scope.formAccount)
                                 var req = {
                                     method: 'POST',
@@ -46,7 +49,15 @@ app.controller('account-ctrl', function ($rootScope, $scope, $http, $location, $
                                 }).catch(error => {
                                     $scope.error('Thêm  mới thất bại');
                                 });
-
+                                        } else {
+                                            $scope.error('Email Đã Tồn Tại');
+                                            return
+                                        }
+                                        console.log(response);
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });
 
                             } else {
                                 $scope.error('Số Điện Thoại Đã Tồn Tại');

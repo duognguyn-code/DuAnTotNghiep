@@ -166,6 +166,11 @@ public class AccountServiceImpl implements AccountService {
         return null;
     }
 
+    @Override
+    public Account findByEmail1(String email) {
+        return repository.findByEmail1(email);
+    }
+
 
     @Override
     public List<AccountDTO> getAllAccountResponseDTO() {
