@@ -51,7 +51,6 @@ public class QLProductChangeRestController {
                 productChangeService.save(productChange);
                 bill_detail = productChange.getBillDetail();
                 bill_detail.setStatus(5);
-
                 billDetailService.update(bill_detail, bill_detail.getId());
                 int productChangeQuantity = productChange.getQuantityProductChange();
                 Product product = productChange.getBillDetail().getProduct();
@@ -73,6 +72,9 @@ public class QLProductChangeRestController {
                 if(product.getStatus()==1){
                     product.setStatus(5);
                     productChangeService.save(product);
+                    Bill_detail bill_detail = product.getBillDetail();
+                    bill_detail.setStatus(6);
+                    billDetailService.update(bill_detail, bill_detail.getId());
                 }else if(product.getStatus()==4){
                     System.out.println("không thể hủy ");
                 }

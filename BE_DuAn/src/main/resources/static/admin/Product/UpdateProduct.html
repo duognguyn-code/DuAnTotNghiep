@@ -27,14 +27,14 @@
                                          src="{{productData.images.length>0?productData.images[0].urlimage:''}}"
                                          alt=""
                                     >
-                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0"
+                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0 && productData.images.length==2||checkimg==0 && productData.images.length==3||checkimg==0 && productData.images.length==4"
                                          src="{{productData.images.length>0?productData.images[1].urlimage:''}}"
                                          alt=""
-                                    ><img style="width: 90px;height: 90px" ng-if="checkimg==0" class="img-fluid w-10"
+                                    ><img style="width: 90px;height: 90px" ng-if="checkimg==0 &&productData.images.length==3||checkimg==0 && productData.images.length==4" class="img-fluid w-10"
                                           src="{{productData.images.length>0?productData.images[2].urlimage:''}}"
                                           alt=""
                                 >
-                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0" class="img-fluid w-10"
+                                    <img style="width: 90px;height: 90px" ng-if="checkimg==0 &&productData.images.length==4" class="img-fluid w-10"
                                          src="{{productData.images.length>0?productData.images[3].urlimage:''}}"
                                          alt=""
                                     >

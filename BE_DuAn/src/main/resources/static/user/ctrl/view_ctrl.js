@@ -487,7 +487,7 @@ app.controller('UserController', function ($rootScope, $scope, $http, $window, $
                 }
             }).catch(error => {
                 console.log(error, 'lỗi check product')
-                alert(error);
+                // alert(error);
             })
         }
     }

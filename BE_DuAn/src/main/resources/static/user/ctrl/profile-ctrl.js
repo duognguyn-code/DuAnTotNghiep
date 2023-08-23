@@ -119,7 +119,7 @@ app.controller('profile-ctl', function ($rootScope,$scope,$http, $window) {
             console.log($scope.accountActive)
 
         }).catch(error => {
-            alert(error + "Lỗi")
+            // alert(error + "Lỗi")
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',

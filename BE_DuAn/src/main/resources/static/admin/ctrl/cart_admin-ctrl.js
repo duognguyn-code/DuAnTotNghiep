@@ -231,8 +231,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     // alert(JSON.stringify(response.data))
                     $scope.billProduct = response.data;
                     if ( $scope.billProduct===null){
-                        alert("Sản phẩm không tồn tại")
-                        $scope.checkProduct=false
+                        $scope.error("Sản phẩm không tồn tại")
                         return
                     }
                     console.log(response);
@@ -248,6 +247,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                     $scope.detailProduct=response.data;
                     if ($scope.detailProduct==null){
                         $scope.checkImg=0
+                        $scope.checkProduct=false
                     }
                     if ($scope.detailProduct.images.length===1){
                         $scope.checkImg=1
@@ -720,6 +720,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
         $scope.searchPriceMin = "";
         $scope.searchPriceMax = "";
         $scope.searchProducts = " ";
+        $scope.getProducts();
         $('#sizeSearch').prop('selectedIndex', 0);
         $scope.GetresetForm();
     }

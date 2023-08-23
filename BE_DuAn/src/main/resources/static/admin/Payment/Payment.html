@@ -171,18 +171,19 @@
                                     <div class="col-md-8">
                                         <h5 ng-if="checkProduct==true"class="card-title" style="font-size:20px;font-weight:500;">
                                             {{detailProduct.name}}</h5>
+                                        <h5 ng-if="checkProduct==false" class="card-title"  style="font-size:20px;font-weight:500;">
+                                            Sản Phẩm Không Tồn Tại</h5>
                                         <p ng-if="checkProduct==true" class="card-text"
                                            style="font-size:18px;font-weight:500;margin-top:10px;">
                                         <h5 style="font-size:20px;font-weight:500;margin-bottom:10px">Giá:  {{detailProduct.price | number}} VNĐ</h5>
                                         <h5 style="font-size:20px;font-weight:500;"> Số Lượng: {{detailProduct.quantity}}</h5>
                                         </p>
-                                        <p ng-if="checkProduct==false" class="card-title"  style="font-size:20px;font-weight:500;">
-                                            Sản Phẩm Không Tồn Tại</p>
-                                        <p ng-if="checkProduct==false" class="card-text"
-                                           style="font-size:18px;font-weight:500;margin-top:10px;">
-                                            <a style="margin-right: 100px"> Số Lượng: 0</a>
-                                            <a style="margin-right: 100px"> Giá: 0 VNĐ</a>
-                                        </p>
+
+<!--                                        <p ng-if="checkProduct==false" class="card-text"-->
+<!--                                           style="font-size:18px;font-weight:500;margin-top:10px;">-->
+<!--                                            <a style="margin-right: 100px"> Số Lượng: 0</a>-->
+<!--                                            <a style="margin-right: 100px"> Giá: 0 VNĐ</a>-->
+<!--                                        </p>-->
                                         <div class="row d-flex mb-3" style="margin-top:10px;">
                                             <div class="col-md-3">
                                             <p class="text-dark font-weight-medium mb-0 mr-3"

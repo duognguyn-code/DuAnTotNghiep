@@ -171,7 +171,7 @@ app.controller('billDetails-ctrl', function ($rootScope,$scope, $http,$routePara
                     var item = angular.copy(bill);
                     item.status = 5;
                     var item1 = angular.copy(bill);
-                    alert(bill.bill.typePayment)
+                    // alert(bill.bill.typePayment)
                     if (bill.bill.typePayment==true){
                         item1.status = 5;
                         item1.quantity=0;
