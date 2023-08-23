@@ -647,7 +647,7 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                         width: 500,
                     }]
                 };
-                pdfMake.createPdf(docDefinition).download("test.pdf");
+                pdfMake.createPdf(docDefinition).download("bill.pdf");
                 $scope.removeTab($scope.tabls);
             }
         });
@@ -747,7 +747,10 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                         .then(function (response) {
                             $scope.checkUsername = response.data;
                             if ($scope.checkUsername.length === 0) {
-
+                                $http.get(apiUrlAccount + '/findByEmail' + '/' + $scope.formAccount.email)
+                                    .then(function (response) {
+                                        $scope.checkUsername = response.data;
+                                        if ($scope.checkUsername.length === 0) {
                                 var colorData = angular.copy($scope.formAccount)
                                 var req = {
                                     method: 'POST',
@@ -779,7 +782,16 @@ app.controller('cart_admin-ctrl', function ($rootScope, $scope, $http, $filter) 
                                 }).catch(error => {
                                     $scope.error('Thêm  mới thất bại');
                                 });
-                            } else {
+                                        } else {
+                                            // alert("Số Điện Thoại Đã Tồn Tại")
+                                            $scope.error("Email Đã Tồn Tại");
+                                            return
+                                        }
+                                        console.log(response);
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });} else {
                                 // alert("Số Điện Thoại Đã Tồn Tại")
                                 $scope.error("Số Điện Thoại Đã Tồn Tại");
                                 return

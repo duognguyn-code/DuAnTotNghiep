@@ -29,6 +29,8 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     @Query(value = "SELECT *  FROM Account where phone like ?1 ", nativeQuery = true)
     public Account findByPhone(String phone);
+    @Query(value = "SELECT *  FROM Account where email like ?1 ", nativeQuery = true)
+    public Account findByEmail1(String email);
 
 
 
