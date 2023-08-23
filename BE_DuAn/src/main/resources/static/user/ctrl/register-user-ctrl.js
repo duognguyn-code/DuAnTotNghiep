@@ -88,9 +88,9 @@ app.controller("register-ctrl",function ($scope, $http,$window){
                     ]
                 }
                 $http(req).then(response => {
-                    alert("1")
+                    // alert("1")
                     $scope.addAuthor();
-                    alert("2")
+                    // alert("2")
                     Toast.fire({
                         icon: 'success',
                         title: 'Đăng ký thành công!',

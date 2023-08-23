@@ -22,7 +22,11 @@ public class PaymentVNPRestController {
     public ResponseEntity<JsonNode> PostAPI(HttpServletRequest req,
                                             @RequestParam(name = "vnp_OrderInfo") String vnp_OrderInfo,
                                             @RequestParam(name = "ordertype") String orderType, @RequestParam(name = "amount") String amoutParam,
-                                            @RequestParam(name = "bankcode") String bank_code, @RequestParam(name = "language") String locate)
+                                            @RequestParam(name = "bankcode") String bank_code, @RequestParam(name = "language") String locate,
+                                            @RequestParam(name = "personTake") String personTake,
+                                            @RequestParam(name = "phoneTake") String phoneTake,
+                                            @RequestParam(name = "address") String address,
+                                            @RequestParam(name = "typePayment") Boolean typePayment, @RequestParam(name = "moneyShip") String moneyShip)
             throws UnsupportedEncodingException {
         ObjectMapper mapper;
         ObjectNode node = null;
@@ -52,7 +56,8 @@ public class PaymentVNPRestController {
         } else {
             vnp_Params.put("vnp_Locale", "vn");
         }
-        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.vnp_Returnurl);
+        vnp_Params.put("vnp_ReturnUrl", VNPayConfig.getUrl(amoutParam, personTake, phoneTake, address, false, moneyShip
+        ));
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
 

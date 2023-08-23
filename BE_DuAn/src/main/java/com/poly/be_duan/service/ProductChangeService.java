@@ -13,5 +13,6 @@ public interface ProductChangeService extends GenericService<ProductChange, Inte
     public List<ProductChange> findByStatusSendEmail(Integer idChange);
 
     public Integer sumStatus(String number);
+    public ProductChange getByIDbILLdt(Integer id);
 
 }

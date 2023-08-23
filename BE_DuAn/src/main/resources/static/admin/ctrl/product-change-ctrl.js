@@ -335,7 +335,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
         account: {username: " "},
         phoneTake: "",
         personTake: "",
-        timeReceive: new Date(),
+        timeReceive: "",
         totalMoney: "",
         moneyShip: "0",
         typePayment: 1,
@@ -364,7 +364,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
                     bill.phoneTake =  $scope.formAddBill1.billDetail.bill.phoneTake
                     bill.personTake =  $scope.formAddBill1.billDetail.bill.personTake
                     bill.totalMoney = $scope.totalMoneyBill
-                    bill.description =  $scope.formAddBill1.billDetail.bill.address
+                    bill.description =  "Không có ghi chú"
                     bill.oldBill.id =  $scope.formAddBill1.billDetail.bill.id
 
                     $http.post(`/rest/staff/productchange/CreateBillChange`, bill).then(resp => {
@@ -389,6 +389,7 @@ app.controller('product-change',function($rootScope,$scope,$http, $window){
         $http.put(`/rest/staff/productchange/updateBill`+`/`+id+`/`+"cancel").then(response => {
             $scope.sumStatus();
             // alert("Thành Công")
+            $scope.searchBill()
             $scope.message("Trả thành công");
         }).catch(error => {
             $scope.error("Trả thất bại");

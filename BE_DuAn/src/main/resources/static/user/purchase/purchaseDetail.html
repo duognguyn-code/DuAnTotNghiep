@@ -52,13 +52,14 @@
 <!--                        <p ng-if="orderDetail.status == 1 ">Chờ xác nhận </p>-->
                         <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2">Có thể đổi trả</p>
                         <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 3">Chờ xác nhận đổi trả</p>
-                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 4">Vui lòng chờ</p>
+                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 4">Xác nhận đổi trả</p>
                         <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 5">Đổi giày thành công</p>
                         <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 6">Hủy yêu cầu</p>
                     </td>
                     <td class="px-4 py-3 " ng-if="!shouldShowChangeButton(orderDetail)">
                         <p ng-if="orderDetail.status == 1 ">Chờ xác nhận </p>
                         <p ng-if="orderDetail.status == 2 ">Đã xác nhận </p>
+                        <p ng-if="orderDetail.status == 5 ">Đã hủy </p>
 <!--                        <p ng-if="orderDetail.status == 3 ">Đang giao hàng </p>-->
 <!--                        <p ng-if="orderDetail.status == 4 ">Đổi trả thành công </p>-->
 <!--                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2">Có thể đổi trả</p>-->
@@ -70,9 +71,11 @@
 <!--                        <p ng-if="orderDetail.bill.status == 4 && orderDetail.status == 6">Hủy yêu cầu</p>-->
                     </td>
                     <td class="px-4 py-3 " ng-click="getProductChange(orderDetail)">
-                        <a ng-if="orderDetail.bill.status == 4 && orderDetail.status == 2 && shouldShowChangeButton(orderDetail)" style="color:black;"
+                        <a ng-if="orderDetail.bill.status == 4 && orderDetail.previousBillDetail ==null && orderDetail.status == 2 && shouldShowChangeButton(orderDetail)" style="color:black;"
                            data-bs-target="#exampleModalPurchaseDetail" data-bs-toggle="modal"><i
                                 class="fa fa-info-circle" aria-hidden="true" style="margin-right:2px;"></i>Đổi hàng</a>
+                        <p ng-if="orderDetail.previousBillDetail!==null" style="color:black;"
+                           >Không Thể Đổi Trả</p>
                         <a ng-if="orderDetail.status == 1 " style="color:black;"
                            ng-click="CancelBillDetails(orderDetail)"><i
                                 class="fa fa-info-circle" aria-hidden="true" style="margin-right:2px;"></i>Hủy SP</a>

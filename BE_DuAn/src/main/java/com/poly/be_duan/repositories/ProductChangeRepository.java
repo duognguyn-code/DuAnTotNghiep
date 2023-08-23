@@ -32,4 +32,7 @@ public interface ProductChangeRepository extends JpaRepository<ProductChange, In
     @Query(value = " select count(id_change_product) as 'total ' from change_product\n" +
             " where status like ?1% ",nativeQuery = true)
     public Integer SumStatus(String number);
+    @Query(value = " select * from change_product\n" +
+            "where id_bill_detail =?1% ",nativeQuery = true)
+    public ProductChange getByIDbILLdt(Integer id);
 }

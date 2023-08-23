@@ -315,7 +315,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
             }
         });
         if ($scope.checkimg==1) {
-            alert("1")
+            // alert("1")
             $http.put(apiUrlProduct + '/deleteByProduct'+'/'+productId).then(resp => {
                 $http(req)
                     .then(response => {
@@ -334,7 +334,7 @@ app.controller('productController', function ($rootScope, $scope, $http, $locati
 
         }
         if ($scope.checkimg==0) {
-            alert("0")
+            // alert("0")
             $http(req)
                 .then(response => {
                     console.log("ddd " + response.data);

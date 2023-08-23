@@ -72,6 +72,134 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
         }
     };
 
+//     $scope.buyCart = async function () {
+//         $scope.messageQuantity = '';
+//         if (!$rootScope.account) {
+//             Swal.fire({
+//                 title: 'Bạn chưa đăng nhập',
+//                 text: "quay lại đăng nhập !",
+//                 icon: 'info',
+//                 showCancelButton: true,
+//                 confirmButtonColor: '#3085d6',
+//                 cancelButtonColor: '#d33',
+//                 confirmButtonText: 'Xác nhận!'
+//             }).then((result) => {
+//                 $window.location.href = '/login';
+//             });
+//         } else {
+//             Swal.fire({
+//                 title: 'Xác nhận thanh toán?',
+//                 text: "Xác nhận thanh toán để mua hàng!",
+//                 icon: 'info',
+//                 showCancelButton: true,
+//                 confirmButtonColor: '#3085d6',
+//                 cancelButtonColor: '#d33',
+//                 confirmButtonText: 'Xác nhận!'
+//             }).then(async (result) => {
+//                 if (result.isConfirmed) {
+//                     var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+//                     if (cartItems === null || cartItems.length === 0) {
+//                         Swal.fire('Giỏ hàng trống!', 'Vui lòng thêm sản phẩm vào giỏ hàng trước khi thanh toán.', 'warning');
+//                         return;
+//                     }
+//
+//                     if ($scope.checkBuy) {
+//                         await $scope.ThanhToanBillvabilldetail();
+//                         var vnp_OrderInfo = 'thanh toan hoa don';
+//                         var orderType = 'other';
+//                         var amount = $scope.calculateTotalAmount();
+//                         var bankcode = ''; // Optional
+//                         var language = 'vn'; // Optional
+//                         var personTake = $scope.addressAccount.personTake;
+//                         var phoneTake = $scope.addressAccount.phoneTake;
+//                         var addressDetail = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
+//                         var status = 1;
+//                         var statusBuy = 0;
+//                         var moneyShip = $scope.ship;
+//                         var typePayment = false;
+//                         try {
+//                             const vnpResponse = await $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}&personTake=${personTake}&phoneTake=${phoneTake}&address=${addressDetail}&typePayment=${typePayment}&moneyShip=${moneyShip}
+// `);
+//                             window.location.href = vnpResponse.data.value;
+//                         } catch (err) {
+//                             try {
+//                                 $scope.bills.personTake = $scope.addressAccount.personTake;
+//                                 $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
+//                                 $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
+//                                 $scope.bills.totalMoney = $scope.calculateTotalAmount();
+//                                 $scope.bills.status = 1;
+//                                 $scope.bills.description = "Không có ghi chú";
+//                                 $scope.bills.statusBuy = 0;
+//                                 $scope.bills.moneyShip = $scope.ship;
+//                                 $scope.bills.typePayment = false;
+//
+//                                 const addOrderResponse = await $http.post(urlOrder + '/add', $scope.bills);
+//
+//                                 if (addOrderResponse.data) {
+//                                     const addOrderDetailResponse = await $http.post(urlOrderDetail + '/add', $scope.cartItems);
+//                                     $scope.clearCart();
+//                                     console.log("orderDetail", addOrderDetailResponse.data);
+//                                 } else {
+//                                     Swal.fire('Thanh toán thất bại!', '', 'error');
+//                                 }
+//                             } catch (error) {
+//                                 Swal.fire('Thanh toán thất bại!', '', 'error');
+//                             }
+//                             Swal.fire('Thanh toán thất bại!', '', 'error');
+//                         }
+//                     } else {
+//                         $scope.bills.personTake = $scope.addressAccount.personTake;
+//                         $scope.bills.phoneTake = $scope.addressAccount.phoneTake;
+//                         $scope.bills.address = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
+//                         $scope.bills.totalMoney = $scope.calculateTotalAmount();
+//                         $scope.bills.status = 1;
+//                         $scope.bills.description = "Không có ghi chú";
+//                         $scope.bills.statusBuy = 0;
+//                         $scope.bills.moneyShip = $scope.ship;
+//                         $scope.bills.typePayment = true;
+//
+//                         let timerInterval;
+//                         Swal.fire({
+//                             title: 'Đang thanh toán vui lòng chờ!',
+//                             html: 'Vui lòng chờ <b></b> milliseconds.',
+//                             timer: 1500,
+//                             timerProgressBar: true,
+//                             didOpen: () => {
+//                                 Swal.showLoading();
+//                                 const b = Swal.getHtmlContainer().querySelector('b');
+//                                 timerInterval = setInterval(() => {
+//                                     b.textContent = Swal.getTimerLeft();
+//                                 }, 100);
+//                             },
+//                             willClose: () => {
+//                                 clearInterval(timerInterval);
+//                             }
+//                         });
+//
+//                         try {
+//                             const addOrderResponse = await $http.post(urlOrder + '/add', $scope.bills);
+//                             if (addOrderResponse.data) {
+//                                 const addOrderDetailResponse = await $http.post(urlOrderDetail + '/add', $scope.cartItems);
+//                                 $scope.clearCart();
+//                                 $window.location.href = '/user/cart/buy-cod-success.html';
+//                             }
+//                         } catch (err) {
+//                             Swal.fire('Thanh toán thất bại!', '', 'error');
+//                             if (err.status == 401) {
+//                                 $scope.isLoading = false;
+//                                 setTimeout(() => {
+//                                     document.location = '/admin#!/login';
+//                                 }, 2000);
+//                                 sweetError('Mời bạn đăng nhập !');
+//                             }
+//                             console.log("err order", err);
+//                             alert(err + "lỗi");
+//                         }
+//                     }
+//                 }
+//             });
+//         }
+//     };
     $scope.buyCart = async function () {
         $scope.messageQuantity = '';
         if (!$rootScope.account) {
@@ -104,14 +232,21 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                     }
 
                     if ($scope.checkBuy) {
-                        await $scope.ThanhToanBillvabilldetail();
                         var vnp_OrderInfo = 'thanh toan hoa don';
                         var orderType = 'other';
                         var amount = $scope.calculateTotalAmount();
                         var bankcode = ''; // Optional
-                        var language = 'vn'; // Optional
+                        var language = 'vn';
+                        var personTake = $scope.addressAccount.personTake;
+                        var phoneTake = $scope.addressAccount.phoneTake;
+                        var addressDetail = $scope.addressAccount.addressDetail + ", " + $scope.addressAccount.addressTake;
+                        var status = 1;
+                        var statusBuy = 0;
+                        var moneyShip = $scope.ship;
+                        var typePayment = false;
+                        var cartItems = JSON.parse(localStorage.getItem('cartItems'));
                         try {
-                            const vnpResponse = await $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}`);
+                            const vnpResponse = await $http.post(`${urlPaymentVNP}?vnp_OrderInfo=${vnp_OrderInfo}&ordertype=${orderType}&amount=${amount}&bankcode=&language=${language}&personTake=${personTake}&phoneTake=${phoneTake}&address=${addressDetail}&typePayment=${typePayment}&moneyShip=${moneyShip}`);
                             window.location.href = vnpResponse.data.value;
                         } catch (err) {
                             try {
@@ -126,6 +261,7 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
                                 $scope.bills.typePayment = false;
 
                                 const addOrderResponse = await $http.post(urlOrder + '/add', $scope.bills);
+
 
                                 if (addOrderResponse.data) {
                                     const addOrderDetailResponse = await $http.post(urlOrderDetail + '/add', $scope.cartItems);
@@ -192,7 +328,6 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
             });
         }
     };
-
     $scope.clearCart = function () {
         localStorage.removeItem('cartItems');
         $rootScope.qtyCart = 0;
@@ -319,18 +454,18 @@ app.controller('cart_user-ctrl', function ($rootScope, $scope, $http, $window, $
         }
     }
     $scope.getShippingOder = function () {
-        $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="
-            + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
-            + "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
-            $scope.ship = respon.data.body.data.total;
-            console.log(respon.data.body.data.total)
-        })
-        $http.get(urlShippingOder + "?from_district_id=1542&service_id=53321&to_district_id="
-            + $scope.to_district_id + "&to_ward_code=360204"
-            + "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
-            $scope.ship = respon.data.body.data.total;
-            console.log(respon.data.body.data.total)
-        })
+        // $http.get(urlShippingOder + "?from_district_id=1542&service_id=53320&to_district_id="
+        //     + $scope.to_district_id + "&to_ward_code=" + $scope.to_ward_code
+        //     + "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
+        //     $scope.ship = respon.data.body.data.total;
+        //     console.log(respon.data.body.data.total)
+        // })
+        // $http.get(urlShippingOder + "?from_district_id=1542&service_id=53321&to_district_id="
+        //     + $scope.to_district_id + "&to_ward_code=360204"
+        //     + "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
+        //     $scope.ship = respon.data.body.data.total;
+        //     console.log(respon.data.body.data.total)
+        // })
         $http.get(urlShippingOder + "?from_district_id=1542&service_id=53322&to_district_id="
             + $scope.to_district_id + "&to_ward_code=360204"
             + "&weight=200&insurance_value=" + $scope.calculateTotalAmount()).then(function (respon) {
